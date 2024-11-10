@@ -36,6 +36,11 @@ export class ProvinceComponent {
     const response : BaseResponseModel = await this.service.GetProvinces();
     if(response.isSuccess) {
       this.provinces = response.data;
+      if(this.selectedProvinceId === 0) {
+        this.selectedProvinceId = this.provinces[0].provinceId;
+      }
+      console.log('đã tới đây', this.selectedProvinceId);
+      
     }
   }
 

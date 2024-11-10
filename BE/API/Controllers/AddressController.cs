@@ -1,6 +1,7 @@
 ﻿using BLL.Interface;
 using DTO.Address;
 using DTO.Responses;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -20,24 +21,14 @@ namespace API.Controllers
         public IActionResult GetById(int Id)
         {
             BaseResponseModel res = this.address.GetById(Id);
-
-            if (res.IsSuccess)
-            {
-                return Ok(res);
-            }
-            return BadRequest(res);
+            return res.IsSuccess ? Ok(res) : BadRequest(res);
         }
 
         [HttpPost]
         public IActionResult Post(AddressRequestModule req)
         {
             BaseResponseModel model = this.address.Post(req);
-
-            if (model.IsSuccess)
-            {
-                return Ok(model);
-            }
-            return BadRequest(model);
+            return model.IsSuccess ? Ok(model) : BadRequest(model);
         }
 
         [HttpGet("Get Id")]
@@ -50,11 +41,15 @@ namespace API.Controllers
                 Note = note 
             }; 
             BaseResponseModel model = this.address.GetAddressID(req); 
-            if (model.IsSuccess) 
-            { 
-                return Ok(model); 
-            } 
-            return BadRequest(model); 
+            return model.IsSuccess ? Ok(model) : BadRequest(model);
+        }
+
+        [Authorize]
+        [HttpGet("Get string address")]
+        public IActionResult GetFullAddress()
+        {
+            BaseResponseModel req = this.address.GetAddressString();
+            return req.IsSuccess ? Ok(req) : BadRequest(req);
         }
     }
 }

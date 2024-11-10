@@ -5,6 +5,11 @@ export interface Address {
   note: string;
 }
 
+export interface AddressString {
+  key: number,
+  value: string
+}
+
 export function ConstructorAddress() {
   return {
     addressId: 0,

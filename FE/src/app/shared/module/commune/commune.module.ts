@@ -4,11 +4,6 @@ export interface CommuneResponseModel {
   districtId: number;
 }
 
-// @NgModule({
-//   declarations: [],
-//   imports: [CommonModule],
-// })
-// export class CommuneModule {}
 export function ConstructorCommune() {
   return {
     communeId: -1,

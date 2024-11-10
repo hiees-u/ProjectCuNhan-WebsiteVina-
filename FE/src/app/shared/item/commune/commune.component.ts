@@ -71,10 +71,12 @@ export class CommuneComponent {
 
   //-- ẩn hiện input nhập xã mới
   isCommuneChange() {
-    this.isShowInput = !this.isShowInput;
-    this.communeInput.communeName = '';
-    if(!this.isShowInput) {
-      this.communeInput.communeId = this.selectedCommuneId;
+    if(this.commune.length > 0) {
+      this.isShowInput = !this.isShowInput;
+      this.communeInput.communeName = '';
+      if(!this.isShowInput) {
+        this.communeInput.communeId = this.selectedCommuneId;
+      }
     }
   }
 
@@ -84,6 +86,13 @@ export class CommuneComponent {
       await this.service.GetComunesByDistrictId(districtId);
     if (response.isSuccess) {
       this.commune = response.data;
+
+      if(this.commune.length > 0) {
+        this.selectedCommuneId = this.commune[0].communeId;
+        this.isShowInput = false;
+      } else {
+        this.isShowInput = true;
+      }
     }
   }
 }

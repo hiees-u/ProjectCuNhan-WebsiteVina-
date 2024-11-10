@@ -1,5 +1,6 @@
 ﻿using BLL.Interface;
 using BLL.LoginBLL;
+using DLL.Models;
 using DTO.Address;
 using DTO.Responses;
 using System.Data;
@@ -158,6 +159,45 @@ namespace BLL
                     IsSuccess = false,
                     Message = $"Lỗi trong quá trình: {ex}",
                     Data = addressID
+                };
+            }
+        }
+
+        public BaseResponseModel GetAddressString()
+        {
+            List<KeyValuePair<int, string>> address = new List<KeyValuePair<int, string>>();
+            try
+            {
+                using (var conn = new SqlConnection(ConnectionStringHelper.Get()))
+                {
+                    using (var cmd = new SqlCommand("SP_GetFullAddress", conn))
+                    {
+                        cmd.CommandType= CommandType.StoredProcedure;
+
+                        conn.Open();
+
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                address.Add(new KeyValuePair<int, string>(reader.GetInt32(0), reader.GetString(1)));
+                            }
+                        }
+                    }
+                }
+                return new BaseResponseModel()
+                {
+                    IsSuccess = true,
+                    Message = $"Thành Công!",
+                    Data = address
+                };
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponseModel()
+                {
+                    IsSuccess = false,
+                    Message = $"Lỗi trong quá trình: {ex}",
                 };
             }
         }

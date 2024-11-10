@@ -30,6 +30,32 @@ export class CustomerService {
     }
   }
 
+  //lấy danh sách address của khách hàng
+  async getStringAddresses(): Promise<BaseResponseModel> {
+    //https://localhost:7060/api/Address/Get string address
+    const url = `${this.apiUrl}Address/Get string address`
+    const option = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${this.token}`,
+      }
+    };
+
+    try {
+      const response = await fetch(url, option);
+
+      if(!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      return await response.json();
+    } catch (error) {
+      console.error('Error:', error);
+      throw error;
+    }
+  }
+
   async putUserInfo(uf: UserInfoRequestModel): Promise<BaseResponseModel> {
     //https://localhost:7060/api/UserInfo
     const url = `${this.apiUrl}UserInfo`;
