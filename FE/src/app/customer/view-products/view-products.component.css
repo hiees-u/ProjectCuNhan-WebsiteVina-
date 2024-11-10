@@ -1,0 +1,144 @@
+.container {
+  width: var(width);
+  margin: 100px auto;
+  display: flex;
+  justify-content: space-between;
+  animation: slide-right-in 0.5s ease-in-out;
+}
+
+.secon-content {
+  width: 25%;
+  min-height: fit-content;
+  padding: 5%;
+}
+
+.content {
+  position: relative;
+  width: 70%;
+}
+
+.content-wrapper {
+  padding: 5%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.header-secon {
+  font-family: sans-serif;
+}
+
+.filet-price,
+.sub-categorys,
+.search-box,
+.categorys {
+  margin: 50px 0;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+ul li {
+  font-size: 0.8em;
+  color: var(--secon-text-color);
+  font-family: var(--main-style);
+  margin: 10px 0;
+  cursor: pointer;
+  transition: all 0.5s ease;
+}
+
+ul li:hover {
+  color: var(--main-color);
+}
+
+li i {
+  color: var(--main-color);
+  margin-right: 20px;
+}
+
+.br {
+  width: 100%;
+  border-bottom: 1px solid #858484;
+}
+
+.sort-content {
+  position: absolute;
+  right: 0px;
+  top: 0;
+}
+
+.sort-content label {
+  font-family: monospace;
+  font-size: 1.4em;
+}
+
+.sort-content select {
+  padding: 5px;
+  margin-left: 15px;
+  outline: none;
+}
+
+.pagination {
+  height: 40px;
+  width: 40%;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pagination-item {
+  font-size: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 15px;
+  cursor: pointer;
+  height: 15px;
+  padding: 10px;
+  text-align: center;
+  background-color: var(--secon-color);
+  font-weight: 600;
+  margin: 0 5px;
+  color: #000;
+  transition: all 0.5s ease;
+}
+
+.pagination-item.active {
+  color: #fff;
+}
+
+.pagination-item:hover {
+  color: #fff;
+  animation: jumpUp 0.5s ease;
+}
+
+.cate-item:hover,
+.sub-cate-item:hover {
+  animation: jumpLeft 0.5s ease;
+}
+
+.content-wrapper {
+  width: 90%;
+  animation: fadeInFromTop 1.5s ease-in-out;
+}
+
+ul li .Active {
+  color: var(--main-color) !important;
+  margin-left: 10px;
+}
+
+.error {
+  text-align: center;
+  width: 100%;
+  display: block;
+}
+
+.search-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}

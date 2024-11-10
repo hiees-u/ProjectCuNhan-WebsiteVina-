@@ -1,0 +1,69 @@
+.container {
+  padding: 10px 20px;
+  border-radius: 10px 0 0 10px;
+  color: #fff;
+  display: block;
+}
+
+.error {
+  background-color: rgb(244, 87, 87);
+}
+
+.success {
+  background-color: #53a7f5;
+}
+
+.hidden {
+  display: none;
+}
+
+.message {
+  font-family: "New Amsterdam";
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 15px;
+  position: relative;
+  top: 0;
+  left: 100%;
+  transition: left 0.5s ease;
+}
+
+.show {
+  left: 0;
+}
+
+.hiden {
+    left: 100%;
+}
+
+@keyframes slideInNotifi {
+  from {
+    left: 100%;
+  }
+  to {
+    left: 0;
+  }
+}
+
+@keyframes slideOutNotifi {
+    from {
+      left: 0;
+    }
+    to {
+      left: 100%;
+    }
+  }
+
+.message h2,
+.message p {
+  margin: 0;
+}
+
+.message.show {
+  animation: slideInNotifi 0.5s forwards; /* Thực hiện animation khi có class `show` */
+}
+.message.hiden {
+    animation: slideOutNotifi 0.5s forwards; /* Thực hiện animation khi có class `show` */
+  }

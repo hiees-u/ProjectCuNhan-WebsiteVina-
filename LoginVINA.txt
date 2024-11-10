@@ -1,0 +1,22 @@
+hieu2 - 123@@
+string - 123@
+hieu1 - 123@
+hieu3 - 123@@@
+HiuModerator - 123@
+Hiu1WarehouseEmployee -123@
+HiusOrderApprover - 123@@
+
+{
+  "accountName": "hieu3",
+  "password": "123"
+}
+
+--
+Cài đặt các chức năng + giao diện
+
+
+viết procedure 
+
+get role
+
+create các loại nhân viên

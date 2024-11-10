@@ -1,0 +1,29 @@
+.container {
+    width: fit-content;
+    font-size: inherit;
+    display: flex;
+    justify-content: space-between;
+    color: inherit;
+    align-items: center;
+}
+
+input{
+    padding: 5px 10px;
+    border: none;
+    background-color: transparent;
+    outline: none;
+    font-size: inherit;
+    /* width: 100px; */
+    color: inherit;
+    max-width: 80px;
+    min-width: 60px;
+}
+
+span {
+    font-size: 2em;
+    color: var(--secon-text-color);
+}
+
+.inpNote {
+    text-align: right;
+}

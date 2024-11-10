@@ -1,0 +1,45 @@
+.wapper {
+  width: 250px;
+  height: fit-content;
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+  margin: 25px 0;
+  cursor: pointer;
+}
+
+.wapper:hover .name-product {
+  animation: jumpLeftRight 0.5s ease-in-out infinite;
+}
+
+.wapper:hover img {
+  transform: scale(1.4);
+}
+
+.wapper:hover .price-product {
+  font-weight: 600;
+  font-size: 1.2em;
+  font-style: italic;
+}
+
+.wapper img {
+  width: fit-content;
+  height: 250px;
+  transition: all .5s ease-in-out;
+}
+
+.wapper .name-product {
+  font-size: 1.5em;
+  font-family: var(--main-style);
+  font-weight: 400;
+  z-index: 999;
+  max-width: 100%;
+}
+
+.wapper .price-product {
+  margin: 0;
+  color: var(--main-color);
+  transition: all .5s ease-in-out;
+}

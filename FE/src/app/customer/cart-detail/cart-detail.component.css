@@ -1,0 +1,235 @@
+.container {
+  padding: 50px;
+  margin: auto;
+  animation: slide-right-in 0.5s ease-in-out;
+}
+
+.header {
+  display: flex;
+  height: 20px;
+  justify-content: space-between;
+}
+
+.product-header,
+.check-all,
+.price-header,
+.quantity-header,
+.total-price-header,
+.operation-header {
+  color: rgba(0, 0, 0, 0.8);
+  font-size: 1em;
+  line-height: 20px;
+}
+
+.header .product-header {
+  padding-left: 30px;
+  width: calc(45% - 30px);
+}
+
+.product-header {
+  font-size: 1.25em;
+  width: 45%;
+  text-align: left;
+}
+
+.check-all {
+  width: 3%;
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.price-header,
+.quantity-header,
+.total-price-header,
+.operation-header {
+  width: 13%;
+  text-align: center;
+  font-size: 1.25em;
+}
+
+/* ---- */
+.cart-item {
+  min-height: 130px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.product-header .img-content {
+  width: 25%;
+}
+
+.img-content img {
+  width: 100%;
+}
+
+.product-name-content {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.product-name {
+  font-size: 0.9em;
+  display: inline-block;
+  max-width: 330px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+  line-height: 35px;
+}
+
+.operation-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 70px;
+  width: 13%;
+}
+
+.btn {
+  border: none;
+  outline: none;
+  color: #fff;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 5px;
+  background-color: var(--main-color);
+  transition: all 0.5s ease-in-out;
+  margin: 1px 0;
+  width: 80px;
+}
+
+/* .del-btn {
+
+} */
+
+/* .up-btn {
+} */
+
+.del-btn:hover {
+  animation: jumpLeftRight 0.5s ease infinite;
+}
+
+.check-all input {
+  cursor: pointer;
+  outline: none;
+}
+
+/* -- footer cart */
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.footer .check-all {
+  width: 30%;
+}
+
+.footer .check-all label {
+  font-size: 1.5em;
+  width: 100%;
+  text-align: center;
+}
+
+.thanhToan {
+  border: none;
+  outline: none;
+  color: #fff;
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 10px 20px;
+  border-radius: 5px;
+  background-color: var(--main-color);
+  transition: all 0.5s ease-in-out;
+}
+
+.operation-footer {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.thanhToan:not(.disable):hover {
+  animation: jumpLeftRight 0.5s ease infinite;
+}
+
+.disable {
+  cursor: not-allowed;
+}
+
+.btn-thanhtoan {
+  width: 150px;
+}
+
+.total-product-check {
+  font-size: 1.1em;
+}
+
+.content {
+  border-top: 1px solid #dbdbdb;
+  border-bottom: 1px solid #dbdbdb;
+  margin: 10px 0;
+}
+
+.quantity-header div button i {
+  font-size: 0.7em;
+}
+
+.quantity-header {
+  display: flex;
+  justify-content: space-around;
+}
+
+.quantity-header div button {
+  border: none;
+  cursor: pointer;
+  outline: none;
+  background-color: transparent;
+}
+
+.box {
+  height: 20px;
+  display: flex;
+  border: 1px solid #616161b6;
+}
+
+.quantity-header .box span {
+  width: 20px;
+  display: block;
+  height: 20px;
+  border-left: 1px solid #616161b6;
+  border-right: 1px solid #616161b6;
+  text-align: center;
+  padding: 0 5px;
+}
+
+/* NOTIFICATION */
+
+.notification {
+  position: fixed;
+  top: 130px;
+  right: 0;
+  z-index: 9999;
+}
+
+.err-not-item {
+  text-align: center;
+  margin: 50px;
+  font-size: 2em;
+  font-family: monospace;
+}
+.err-not-item marquee {
+  color: var(--main-color);
+}
+
+.disable {
+  background-color: #616161b6;
+}

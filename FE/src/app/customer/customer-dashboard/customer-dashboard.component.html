@@ -1,0 +1,98 @@
+<div class="container">
+  <div class="wrapper-header">
+    <div class="header">
+      <div class="logo">
+        <img src="/assets/Logo/logo2.png" alt="logo" />
+      </div>
+      <ul class="menu-ul">
+        <li
+          class="no-select menu-li menu-li-content"
+          [ngClass]="{ active: isActive === 1 }"
+          (click)="changeActive(1)"
+        >
+          Trang Chủ
+        </li>
+        <li
+          class="no-select menu-li menu-li-content"
+          (click)="navigateToOrderProduct()"
+          [ngClass]="{ active: isActive === 2 }"
+          (click)="changeActive(2)"
+        >
+          Về Chúng Tôi
+        </li>
+        <li
+          class="no-select menu-li menu-li-content"
+          (click)="navigateToViewProduct()"
+          [ngClass]="{ active: isActive === 3 }"
+          (click)="changeActive(3)"
+        >
+          Sản Phẩm
+        </li>
+        <li
+          class="no-select menu-li menu-li-content"
+          [ngClass]="{ active: isActive === 4 }"
+          (click)="changeActive(4)"
+        >
+          Liên Hệ
+        </li>
+        <li
+          *ngIf="!isLogin"
+          (click)="showLogin()"
+          class="no-select menu-li login menu-li-content"
+        >
+          Đăng Nhập
+        </li>
+        <li *ngIf="isLogin" class="no-select menu-li cart-user">
+          <div class="cart" (click)="showCartDetail()">
+            <i class="fa-solid fa-cart-shopping"></i>
+          </div>
+          <div class="user">
+            <i class="fa-solid fa-user"></i>
+            <div class="box-user">
+              <button class="btn" (click)="showUserDetail()">
+                Tài khoản của tôi
+              </button>
+              <button class="btn" (click)="logOutHandler()">Đăng Xuất</button>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="background-main">
+    <div class="wrapper-1">
+      <marquee class="text no-select" behavior="" direction=""
+        >Chào Mừng Bạn Đến Với</marquee
+      >
+      <!-- <div class="text no-select">Chào Mừng Bạn Đến Với</div> -->
+      <div class="wrapper">
+        <p class="text-main no-select">VINA CAFE</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+    <router-outlet></router-outlet>
+  </div>
+
+  <div class="footer">
+    <p class="copyright-text">
+      <a href="https://www.facebook.com/profile.php?id=100037555039651">
+        Nguyễn Minh Hiếu
+      </a>
+      © 2024. All rights reserved.
+    </p>
+    <div class="logo-ft">
+      <img src="/assets/Logo/logo2.png" alt="logo" />
+    </div>
+    <div class="group-btn">
+      <a href="https://www.facebook.com/profile.php?id=100037555039651">
+        <i class="fa-brands fa-facebook"></i>
+      </a>
+      <a href="https://www.instagram.com/hiees.u/">
+        <i class="fa-brands fa-instagram"></i
+      ></a>
+    </div>
+  </div>
+</div>

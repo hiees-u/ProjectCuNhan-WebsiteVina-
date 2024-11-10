@@ -1,0 +1,120 @@
+<div class="notification">
+  <app-notification [data]="dataNotification" [trigger]="trigger"></app-notification>
+</div>
+<div class="container">
+  <div class="content-f">
+    <div class="User-header">
+      <i class="fa-regular fa-user"></i>
+      <span>
+        {{ userInfo.accountName }}
+      </span>
+    </div>
+    <ul>
+      <li
+        class="dashboard-item"
+        [ngClass]="{ active: isActive === 1 }"
+        (click)="changeActive(1)"
+      >
+        <i class="fa-solid fa-address-book"></i>
+        <span>Hồ Sơ</span>
+      </li>
+      <li
+        class="dashboard-item"
+        [ngClass]="{ active: isActive === 2 }"
+        (click)="changeActive(2)"
+      >
+        <i class="fa-solid fa-truck"></i>
+        <span>Đơn Mua</span>
+      </li>
+    </ul>
+  </div>
+  <div class="content-r">
+    <div class="content-ho-so content" *ngIf="isActive === 1">
+      <div class="header">
+        <span>Hồ Sơ Của Tôi</span>
+      </div>
+      <div class="br"></div>
+      <div class="secon-content">
+        <div class="box-content">
+          <label for="userName">Tên Đăng Nhập:</label>
+          <div class="box-input">
+            <input
+              type="text"
+              disabled=""
+              id="userName"
+              [(ngModel)]="userInfo.accountName"
+            />
+          </div>
+        </div>
+        <div class="box-content">
+          <label for="Name">Họ và tên:</label>
+          <div class="box-input">
+            <input type="text" id="Name" [(ngModel)]="userInfo.fullName" />
+          </div>
+        </div>
+        <div class="box-content">
+          <label for="email">Email:</label>
+          <div class="box-input">
+            <input type="text" id="email" [(ngModel)]="userInfo.email" />
+          </div>
+        </div>
+        <div class="box-content">
+          <label>Địa chỉ:</label>
+          <div class="box-input">
+            <div class="box-edit-address">
+              <app-address
+                [address]="address"
+                (addressChange)="getAddressChangeChildComponent($event)"
+              ></app-address>
+              <app-commune
+              [selectedCommuneId]="userInfo.commune"
+              [selectedDistrictId]="userInfo.district!"
+              (communeOutput)="getCommutNameChangeChildComponent($event)"
+              ></app-commune>  
+              <app-district
+                [selectedProvinceId]="userInfo.province!"
+                (selectedDistrictIdChange)="getDistrictIDChangeChildComponent($event)"
+                [selectedDistrictId]="userInfo.district!"
+              ></app-district>
+              <app-province
+                [selectedProvinceId]="userInfo.province!"
+                (selectedProvinceIdChange)="getProvinceIDChangeChildComponent($event)"
+              ></app-province> 
+            </div>
+          </div>
+        </div>
+        <div class="box-content">
+          <label for="sdt">Số điện thoại:</label>
+          <div class="box-input">
+            <input type="text" id="sdt" [(ngModel)]="userInfo.phone" />
+          </div>
+        </div>
+        <div class="box-content">
+          <label for="gender">Giới tính:</label>
+          <div class="box-input">
+            <select name="gender" id="gender" [(ngModel)]="userInfo.gender">
+              <option value="0">Nữ</option>
+              <option value="1">Nam</option>
+            </select>
+          </div>
+        </div>
+        <div class="box-content">
+          <label for="typeCus">Khách hàng:</label>
+          <div class="box-input">
+            <input
+              type="text"
+              disabled="true"
+              id="typeCus"
+              [(ngModel)]="userInfo.customerType"
+            />
+          </div>
+        </div>
+
+        <div class="button-main" (click)="isHandleUpdate()">Cập Nhật</div>
+      </div>
+    </div>
+    <div class="content-don-mua content" *ngIf="isActive === 2">
+      <p>Đon mua</p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,104 @@
+<div class="container">
+  <div class="notification">
+    <app-notification
+      [data]="dataNotification"
+      [trigger]="trigger"
+    ></app-notification>
+  </div>
+  <div class="header">
+    <div class="check-all">
+      <input
+        type="checkbox"
+        name="check-all"
+        id="check-all"
+        (change)="onCheckAll($event)"
+      />
+    </div>
+    <span class="product-header" id="check-all">Sản phẩm</span>
+    <span class="price-header">Đơn giá</span>
+    <span class="quantity-header">Số lượng</span>
+    <span class="total-price-header">Số tiền</span>
+    <span class="operation-header">Thao tác</span>
+  </div>
+
+  <div class="content">
+    <div class="err-not-item" *ngIf="cartItems.length === 0">
+      <marquee behavior="" direction="" scrollamount="15">
+        Không có sản phẩm nào trong giỏ hàng!!
+      </marquee>
+    </div>
+    <div class="cart-item" *ngFor="let item of cartItems">
+      <div class="check-all">
+        <input
+          type="checkbox"
+          name="check"
+          id="check{{ item.productId }}"
+          [checked]="item.checked"
+          (change)="onCheckboxChange(item, $event)"
+        />
+      </div>
+      <div class="product-header product-name-content">
+        <div class="img-content">
+          <img [src]="'assets/Products/' + item.image" alt="" />
+        </div>
+        <span class="product-name">
+          {{ item.productName }}
+        </span>
+        <!-- <span>{{item.productId}}</span> -->
+      </div>
+      <div class="price-header">{{ item.price | customCurrency }}</div>
+      <div class="quantity-header">
+        <div class="box">
+          <button class="btn-decrea" (click)="InDeCrease(item.productId, -1)">
+            <i class="fa-solid fa-minus"></i>
+          </button>
+          <span>{{ item.quantity }}</span>
+          <button class="btn-increa" (click)="InDeCrease(item.productId, 1)">
+            <i class="fa-solid fa-plus"></i>
+          </button>
+        </div>
+      </div>
+      <div class="total-price-header color-var-main">
+        {{ item.quantity * item.price | customCurrency }}
+      </div>
+      <div class="operation-content">
+        <button class="del-btn btn" (click)="deleteCart(item.productId)">
+          Xóa
+        </button>
+        <button
+          class="up-btn btn"
+          (click)="updateCart(item.productId, item.quantity)"
+        >
+          Cập Nhật
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="check-all">
+      <input
+        type="checkbox"
+        name="check-all-f"
+        id="check-all-f"
+        (change)="onCheckAll($event)"
+      />
+      <label for="check-all-f">Chọn tất cả ({{ cartItems.length }})</label>
+    </div>
+    <div class="operation-footer">
+      <span class="total-product-check"
+        >Tổng thanh toán ( 0 sản phẩm):
+        <span class="color-var-main">0 vnd</span></span
+      >
+      <div class="btn-thanhtoan">
+        <button
+          (click)="onOrder()"
+          class="thanhToan"
+          [ngClass]="{ disable: isDisabled }"
+        >
+          Đặt Hàng
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

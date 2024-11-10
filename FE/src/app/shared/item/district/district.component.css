@@ -1,0 +1,14 @@
+.container {
+    width: fit-content;
+    font-size: inherit;
+    color: inherit;
+}
+
+select {
+    padding: 5px 10px;
+    color: inherit;
+    border: none;
+    background-color: transparent;
+    outline: none;
+    font-size: inherit;
+}

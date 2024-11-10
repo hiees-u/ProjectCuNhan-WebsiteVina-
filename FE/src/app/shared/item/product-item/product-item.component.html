@@ -1,0 +1,10 @@
+<div 
+  class="wapper" 
+  (click)="sendData(data?.productName)
+">
+  <img src="/assets/Products/{{ data?.image }}" alt="" />
+  <h1 class="name-product">{{ data?.productName }}</h1>
+  <p class="price-product">
+    {{ data?.price ?? 0 | customCurrency }}
+  </p>
+</div>

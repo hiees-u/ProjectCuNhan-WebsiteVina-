@@ -1,0 +1,22 @@
+<div class="container">
+    <div class="order-info"></div>
+    <div class="order-list">
+        <div class="ol-header">
+            <span class="ol-text-header header w55">Sản Phẩm</span>
+            <span class="ol-text-header w20 text-center">Giá</span>
+            <span class="ol-text-header w20 text-center">Số Lượng</span>
+            <span class="ol-text-header w15 text-center">Thành Tiền</span>
+        </div>
+        <div class="ol-content-item" *ngFor="let item of data">
+            <div class="content-first w55">
+                <div class="image w20">
+                    <img src="/assets/Products/{{ item.image }}" alt="">
+                </div>
+                <span>{{item.productName}}</span>
+            </div>
+            <span class="content-second w20 text-center">{{item.price | customCurrency}}</span>
+            <span class="content-second w20 text-center">{{item.quantity}}</span>
+            <span class="content-second w15 text-center">{{item.totalPrice | customCurrency}}</span>
+        </div>
+    </div>
+</div>

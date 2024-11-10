@@ -1,0 +1,50 @@
+<div class="login-container">
+  <button
+    (click)="backToHomePage()"
+    class="button-back-to-home"
+    style="vertical-align: middle"
+  >
+    <span>Home </span>
+  </button>
+  <div class="login-content">
+    <h2>Đăng Nhập</h2>
+    <form (ngSubmit)="onLogin()" #loginForm="ngForm">
+      <div class="box-input">
+        <label for="username">Tên đăng nhập:</label>
+        <input
+          type="text"
+          id="username"
+          name="username"
+          required
+          [(ngModel)]="loginData.accountName"
+          #username="ngModel"
+        />
+        <div *ngIf="username.invalid && username.touched" class="error">
+          Vui lòng nhập tên đăng nhập
+        </div>
+      </div>
+
+      <div class="box-input">
+        <label for="password">Mật khẩu:</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          required
+          [(ngModel)]="loginData.password"
+          #password="ngModel"
+        />
+        <div *ngIf="password.invalid && password.touched" class="error">
+          Vui lòng nhập mật khẩu
+        </div>
+      </div>
+
+      <button type="submit" (click)="onLogin()" [disabled]="loginForm.invalid">Đăng Nhập</button>
+      <p class="error" *ngIf="response">{{ response }}</p>
+      <p class="register">
+        Bạn chưa có tài khoản:
+        <span (click)="goToRegister()">Đăng ký</span>
+      </p>
+    </form>
+  </div>
+</div>

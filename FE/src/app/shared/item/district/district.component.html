@@ -1,0 +1,15 @@
+<div class="container">
+  <select
+    name="province"
+    [(ngModel)]="selectedDistrictId"
+    (change)="onDistrictChange()"
+  >
+    <option
+      *ngFor="let item of districts"
+      [value]="item.districtId"
+      id="{{ item.districtId }}"
+    >
+      {{ item.districtName }}
+    </option>
+  </select>
+</div>

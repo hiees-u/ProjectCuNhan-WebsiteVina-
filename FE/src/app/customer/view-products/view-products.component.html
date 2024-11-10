@@ -1,0 +1,149 @@
+<div class="container">
+  <div class="secon-content">
+    <div class="search-box">
+      <p class="header-secon">Tìm kiếm:</p>
+      <app-search-box></app-search-box>
+    </div>
+    <div class="br"></div>
+    <div class="filet-price">
+      <p class="header-secon">Bộ lọc giá:</p>
+      <app-filter-price></app-filter-price>
+    </div>
+    <div class="br"></div>
+    <div class="categorys">
+      <p class="header-secon">Loại Sản Phẩm:</p>
+      <ul>
+        <li
+          *ngFor="let item of cate"
+          class="cate-item"
+          [ngStyle]="{
+            color:
+              cateActive === item.categoryId
+                ? 'var(--main-color)'
+                : 'var(--secon-text-color)',
+            'margin-left': cateActive === item.categoryId ? '10px' : '0'
+          }"
+          (click)="handleCateActive(item.categoryId)"
+        >
+          <i class="fa-solid fa-caret-right"></i>{{ item.categoryName }}
+        </li>
+      </ul>
+    </div>
+    <div class="br"></div>
+    <div class="sub-categorys">
+      <p class="header-secon">Loại Sản Phẩm Phụ:</p>
+      <ul>
+        <li
+          *ngFor="let item of subCate"
+          class="sub-cate-item"
+          [ngStyle]="{
+            color:
+              subCateActive === item.subCategoryId
+                ? 'var(--main-color)'
+                : 'var(--secon-text-color)',
+            'margin-left': subCateActive === item.subCategoryId ? '10px' : '0'
+          }"
+          (click)="handleSubCateActive(item.subCategoryId)"
+        >
+          <i class="fa-solid fa-caret-right"></i>{{ item.subCategoryName }}
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="content">
+    <div class="sort-content">
+      <label for="sort">Sắp Xếp:</label>
+      <select name="sort" id="sort">
+        <option value="0" selected>Giảm Dần Theo Tên</option>
+        <option value="1" selected>Tăng Dần Theo Tên</option>
+        <option value="2" selected>Giảm Dần Theo Giá</option>
+        <option value="3" selected>Tăng Dần Theo Giá</option>
+      </select>
+    </div>
+    <div class="content-wrapper">
+      <p class="error" *ngIf="products.length === 0">
+        {{logError}}
+      </p>
+      <div class="wapper" *ngFor="let item of products">
+        <app-product-item
+          (dataChange)="handleDataChange(item)"
+          [data]="item"
+        ></app-product-item>
+      </div>
+    </div>
+    <div class="pagination">
+      <span
+        *ngFor="let page of pages"
+        class="pagination-item"
+        [ngClass]="{ active: pageActive === page }"
+        (click)="handlePageClick(page)"
+        >{{ page }}</span
+      >
+      <span class="pagination-item">
+        <i class="fa-solid fa-ellipsis"></i>
+      </span>
+      <span class="pagination-item">
+        <i class="fa-solid fa-angles-right"></i>
+      </span>
+    </div>
+  </div>
+  <div class="product-detail"
+    [ngClass]="{ show: show === 1, hiden: show === -1, hiden2: show === 0 }"
+  >
+    <button class="product-detail-close-btn" (click)="handleClose()">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+
+    <div class="product-detail-left">
+      <img [src]="'/assets/Products/' + receivedData?.image" />
+    </div>
+
+    <div class="product-detail-right">
+      <p class="product-detail-name no-select">
+        {{
+          receivedData?.productName +
+            " | " +
+            supplierProductDetail?.supplierName
+        }}
+      </p>
+      <span class="product-detail-price">
+        Giá: {{ receivedData?.price ?? 0 | customCurrency }}
+        <span> Còn {{ receivedData?.totalQuantity }} sản phẩm</span>
+      </span>
+      <p class="product-detail-description">
+        {{ receivedData?.description }}
+      </p>
+      <div>
+        <ul>
+          <li class="cate-item">
+            <i class="fa-solid fa-caret-right"></i>{{ cateProductDetail }}
+          </li>
+        </ul>
+        <ul>
+          <li class="sub-cate-item">
+            <i class="fa-solid fa-caret-right"></i>{{ subCateProductDetail }}
+          </li>
+        </ul>
+      </div>
+      <div class="product-detail-bottom-box">
+        <div class="product-detail-quantity-box">
+          <button class="btn-decrea" (click)="InDeCrease(-1)">
+            <i class="fa-solid fa-minus"></i>
+          </button>
+          <span>{{ cart.quantity }}</span>
+          <button class="btn-increa" (click)="InDeCrease(1)">
+            <i class="fa-solid fa-plus"></i>
+          </button>
+        </div>
+        <div class="product-detail-btn">
+          <button class="add-cart btn" (click)="handleAddCart()">Thêm vào giỏ hàng</button>
+          <button class="buy-product btn">Mua ngay</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="notification">
+    <app-notification [data]="dataNotification" [trigger]="trigger"></app-notification>
+  </div>
+
+</div>

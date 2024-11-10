@@ -1,0 +1,235 @@
+.container {
+  /* height: 100vh; */
+  margin-top: 30px;
+  display: flex;
+  justify-content: space-between;
+  animation: slide-right-in 0.5s ease-in-out;
+  transition: all 0.6s ease-in-out;
+}
+
+.content-f {
+  background-color: #fff;
+  width: 20%;
+  transition: all 0.6s ease-in-out;
+}
+
+.User-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* height: 150px; */
+}
+
+.User-header i {
+  display: none;
+  font-size: 4em;
+  background-color: #c6c4c4;
+  padding: 25px;
+  border-radius: 50%;
+  color: aliceblue;
+  font-weight: bolder;
+}
+
+.User-header span {
+  font-size: 2.8em;
+  font-style: italic;
+  color: var(--main-color);
+  font-weight: 600;
+  font-family: monospace;
+}
+
+.content-f ul {
+  list-style-type: none;
+  margin: 10px 0 0 0;
+  padding: 0;
+  transition: all 0.6s ease-in-out;
+}
+
+.content-f ul li {
+  margin: 10px 20px;
+  cursor: pointer;
+  padding: 0;
+  width: calc(100% - 55px);
+  padding: 10px 18px;
+  font-size: 1.4em;
+}
+
+.dashboard-item {
+  font-size: 1.6em;
+  font-family: var(--main-style);
+  transition: all 0.5s ease-in-out;
+  border-radius: 15px 0 0 15px;
+}
+
+.dashboard-item i {
+  margin-right: 15px;
+  transition: all 0.7s ease-in-out;
+}
+
+.dashboard-item span {
+  font-size: 0.7em;
+  transition: all 0.7s ease-in-out;
+}
+
+.dashboard-item.active {
+  background-color: #c6c4c4;
+}
+
+.dashboard-item.active i {
+  color: var(--main-color);
+}
+
+.dashboard-item.active span {
+  color: var(--main-color);
+  animation: colorChange 0.6s ease-in-out;
+}
+
+.dashboard-item:hover {
+  background-color: #c6c4c4;
+}
+
+.dashboard-item:hover i {
+  color: var(--main-color);
+}
+
+.content-r {
+  width: 80%;
+  border-radius: 15px;
+  min-height: 50vh;
+  overflow: hidden;
+  background-color: transparent;
+  transition: all 0.6s ease-in-out;
+}
+
+.content {
+  height: calc(100% - 30px);
+  width: calc(100% - 30px);
+  padding: 15px;
+  background-color: #c6c4c4;
+  animation: slide-left-in 1s ease-in-out;
+  transition: all 0.6s ease-in-out;
+  border-radius: 15px;
+}
+
+p {
+  margin: 0;
+}
+
+.header {
+  width: 100%;
+  height: 50px;
+}
+
+.header span {
+  font-size: 1.6em;
+  font-family: var(--main-style);
+  color: var(--main-text-color);
+}
+
+.secon-content {
+  margin-top: 30px;
+  border-radius: 15px;
+  padding: 5px;
+  transition: all 0.6s ease-in-out;
+  width: calc(100% - 10px);
+}
+
+.box-content {
+  font-size: 1.5em;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  margin: 15px 0;
+  transition: all 0.6s ease-in-out;
+}
+
+.box-content label {
+  width: calc(30% - 10%);
+  font-size: 0.6em;
+  text-align: end;
+  font-family: var(--main-style);
+  color: var(--secon-text-color);
+  font-style: italic;
+  padding-right: 5%;
+}
+
+.box-content input,
+.box-input,
+.box-input select {
+  width: calc(80% - 20px);
+  padding: 8px 10px;
+  font-size: 0.7em;
+  border: 1px solid var(--secon-text-color);
+  outline: none;
+  background-color: transparent;
+  color: var(--main-text-color);
+}
+
+select {
+  width: calc(100% + 2px) !important;
+}
+
+.box-input {
+  border: none;
+  padding: 0;
+}
+
+.box-input input,
+.box-input select {
+  height: 100%;
+  width: calc(100% - 20px);
+}
+
+.button-main {
+  width: fit-content;
+  margin: 0 0 0 auto;
+  padding: 10px 40px;
+  color: var(--secon-text-color);
+  background-color: var(--secon-color);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.6s ease-in-out;
+}
+
+.button-main:hover {
+  color: #fff;
+  background-color: var(--main-color);
+}
+
+.edit-adress {
+  font-size: 0.7em;
+  padding: 10px;
+  font-style: italic;
+  cursor: pointer;
+  color: var(--main-color);
+  transition: all 0.5s ease-in-out;
+}
+
+.edit-adress:hover {
+  color: var(--secon-color);
+}
+
+.box-edit-address {
+  transition: all 0.5s ease-in-out;
+  /* background-color: aqua; */
+  height: 100px;
+  width: 100px;
+  color: var(--main-text-color);
+  font-size: 0.6em;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+  height: 31px;
+  border: 1px solid var(--secon-text-color);
+  width: 100%;
+  height: fit-content;
+  padding: 5px 0;
+}
+
+.notification {
+  position: fixed;
+  top: 130px;
+  right: 0;
+  z-index: 9999;
+}

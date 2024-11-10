@@ -1,0 +1,15 @@
+<div class="container">
+  <input
+    type="text"
+    class="inpNote"
+    [(ngModel)]="address.note"
+    (ngModelChange)="onInputChange()"
+  />
+  <span>/</span>
+  <input
+    type="text"
+    class="inpStreet"
+    [(ngModel)]="address.houseNumber"
+    (ngModelChange)="onInputChange()"
+  />
+</div>

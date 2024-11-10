@@ -1,0 +1,13 @@
+<div
+  [ngClass]="{
+    container: true,
+    message: true,
+    error: data.status === 'error',
+    success: data.status === 'success',
+    show: show,
+    hiden: !show
+  }"
+>
+  <h2>{{lable}}</h2>
+  <p>{{ data.messages }}</p>
+</div>

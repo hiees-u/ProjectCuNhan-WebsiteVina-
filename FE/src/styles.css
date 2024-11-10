@@ -1,0 +1,210 @@
+/* You can add global styles to this file, and also import other style files */
+body {
+  margin: 0;
+  overflow-x: hidden;
+}
+
+:root {
+  --main-color: #ca8922;
+  --secon-color: #eab35a;
+  --main-style: cursive;
+  --main-width: 1080px;
+  --secon-text-color: #767676;
+  --secon-text-color2: #504f4f;
+  --main-text-color: #383435;
+}
+
+/* Định nghĩa hiệu ứng cho animation */
+@keyframes slide-up {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-in-right {
+  0% {
+    right: -100%;
+    opacity: 0;
+  }
+  100% {
+    right: 5%;
+    opacity: 1;
+  }
+}
+
+@keyframes jumpUp {
+  0% {
+    margin-bottom: 0;
+  }
+  50% {
+    margin-bottom: 10px;
+  }
+  100% {
+    margin-bottom: 0;
+  }
+}
+
+@keyframes jumpUp-position {
+  /* 0% {
+    right: 3%;
+  } */
+  25% {
+    right: 2.5%;
+  }
+  50% {
+    right: 2%;
+  }
+  75% {
+    right: 1.5%;
+  }
+  /* 100% {
+    right: 3%;
+  } */
+}
+
+@keyframes jumpLeft {
+  0% {
+    margin-left: 0;
+  }
+  50% {
+    margin-left: 10px;
+  }
+  100% {
+    margin-left: 0;
+  }
+}
+
+@keyframes jumpLeftRight {
+  0% {
+    margin-left: 0px;
+  }
+  25% {
+    margin-left: 10px;
+  }
+  50% {
+    margin-left: 0px;
+  }
+  75% {
+    margin-left: -10px;
+  }
+  100% {
+    margin-left: 0;
+  }
+}
+
+@keyframes slide-right-in {
+  0% {
+    margin-right: -100%;
+    opacity: 0;
+  }
+  100% {
+    margin-right: 0;
+    opacity: 1;
+  }
+}
+
+@keyframes slide-left-in {
+  0% {
+    margin-left: 100%;
+    opacity: 0;
+  }
+  100% {
+    margin-left: 0;
+    opacity: 1;
+  }
+}
+
+@keyframes slide-right-out {
+  0% {
+    margin-right: 0;
+    opacity: 1;
+  }
+  100% {
+    margin-right: -100%;
+    opacity: 0;
+  }
+}
+
+@keyframes fadeInFromTop {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-2px);
+  }
+  50% {
+    transform: translateX(2px);
+  }
+  75% {
+    transform: translateX(-2px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes colorChange {
+  from {
+    color: inherit; /* Màu ban đầu */
+  }
+  to {
+    color: var(--main-color); /* Màu sau khi thay đổi */
+  }
+}
+
+.no-select {
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Standard syntax */
+}
+
+a {
+  color: inherit; /* Xóa màu sắc */
+  text-decoration: none; /* Xóa gạch chân */
+  background: none; /* Xóa nền */
+}
+
+.color-var-main {
+  color: var(--main-color) !important;
+}
+
+.none-margin {
+  margin: 0 !important;
+}
+
+.btn {
+  border: none;
+  outline: none;
+  width: 100%;
+  padding: 5px;
+  border-radius: 5px;
+  margin: 5px 0;
+  color: var(--main-color);
+  cursor: pointer;
+}
+
+.btn:hover {
+  animation: shake 0.5s ease-in-out infinite;
+}
+
+.br {
+  width: 100%;
+  border-bottom: 1px solid #858484;
+}
+
+.text-center {
+  text-align: center;
+}
