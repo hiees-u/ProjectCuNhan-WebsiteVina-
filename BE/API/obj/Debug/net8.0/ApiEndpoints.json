@@ -58,6 +58,16 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "API.Controllers.AddressController",
+    "Method": "GetFullAddress",
+    "RelativePath": "api/Address/Get string address",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "API.Controllers.CartController",
     "Method": "Get",
     "RelativePath": "api/Cart",

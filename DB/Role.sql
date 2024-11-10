@@ -709,6 +709,46 @@ GRANT EXECUTE ON OBJECT::dbo.SP_GetUserInfoByUserName TO  Customer;
 --RUN
 EXEC SP_GetUserInfoByUserName;
 go
+--#########################################################################GET All Address#####################################################################################
+CREATE PROCEDURE SP_GetFullAddress
+AS
+BEGIN
+	DECLARE @UserName VARCHAR(25);
+	SET @UserName = SUSER_NAME();
+    
+	-- Khai báo biến kiểu TABLE
+	DECLARE @AddressTable TABLE (
+		AddressID INT
+	);
+
+	-- Chèn dữ liệu vào biến @AddressTable từ câu lệnh SELECT đầu tiên
+	INSERT INTO @AddressTable (AddressID)
+	SELECT DISTINCT uf.address_id
+	FROM UserInfo uf
+	WHERE uf.AccountName = @UserName;
+
+	-- Chèn dữ liệu vào biến @AddressTable từ câu lệnh SELECT thứ hai
+	INSERT INTO @AddressTable (AddressID)
+	SELECT DISTINCT o.Adress_ID
+	FROM UserInfo uf
+	JOIN [Order] o ON o.CreateBy = uf.customer_Id
+	WHERE uf.AccountName = @UserName;
+
+	-- Truy vấn và trả về kết quả đầy đủ của địa chỉ
+	SELECT a.AddressID ,
+		a.Note + N', Xã ' + co.CommuneName + N', Huyện ' + di.DistrictName + N', Tỉnh ' + pr.ProvinceName AS N'Địa Chỉ'
+	FROM @AddressTable ad
+	JOIN Address a ON a.AddressID = ad.AddressID
+	JOIN Commune co ON a.CommuneID = co.CommuneID
+	JOIN District di ON co.DistrictID = di.DistrictID
+	JOIN Province pr ON di.ProvinceID = pr.ProvinceID;
+END;
+
+--phân quyền
+GRANT EXECUTE ON OBJECT::dbo.SP_GetFullAddress TO  Customer;
+--RUN
+EXEC SP_GetFullAddress;
+go
 --#########################################################################GET User Province#####################################################################################
 CREATE PROCEDURE SP_GetProvinces
 AS

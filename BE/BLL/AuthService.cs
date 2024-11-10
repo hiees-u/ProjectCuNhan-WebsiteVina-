@@ -37,7 +37,7 @@ namespace BLL
                 issuer: _issuer, // Địa chỉ cục bộ
                 audience: _audience, // Địa chỉ cục bộ
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(30),
+                expires: DateTime.Now.AddMinutes(300),
                 signingCredentials: creds
             );
 

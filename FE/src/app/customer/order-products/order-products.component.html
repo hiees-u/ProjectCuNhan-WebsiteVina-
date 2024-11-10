@@ -1,22 +1,99 @@
+<div class="notification">
+    <app-notification [data]="dataNotification" [trigger]="trigger"></app-notification>
+  </div>
 <div class="container">
-    <div class="order-info"></div>
-    <div class="order-list">
-        <div class="ol-header">
-            <span class="ol-text-header header w55">Sản Phẩm</span>
-            <span class="ol-text-header w20 text-center">Giá</span>
-            <span class="ol-text-header w20 text-center">Số Lượng</span>
-            <span class="ol-text-header w15 text-center">Thành Tiền</span>
+  <div class="order-info">
+    <span class="oi-header">
+      <i class="fa-solid fa-location-dot"></i>
+      Địa chỉ nhận hàng
+    </span>
+    <div class="oi-content">
+      <div class="name">
+        <input type="text" name="name" id="name" [(ngModel)]="Order.nameRecipient">
+        <!-- <br /> -->
+        <input type="text" name="phone" id="phone" [(ngModel)]="Order.phone">
+      </div>
+      <div class="address">
+        <select
+          *ngIf="!isShowInsertAddress"
+          name="address"
+          id="address"
+          (change)="onSelectChange($event)"
+        >
+          <option *ngFor="let item of address" value="{{ item.key }}">
+            {{ item.value }}
+          </option>
+        </select>
+        <div class="insertAddress" *ngIf="isShowInsertAddress">
+            <div class="box-edit-address">
+                <app-address
+                  [address]="addre"
+                  (addressChange)="getAddressChangeChildComponent($event)"
+                ></app-address>
+                <app-commune
+                [selectedCommuneId]="communenInsert.communeId"
+                [selectedDistrictId]="districtSelect"
+                (communeOutput)="getCommutNameChangeChildComponent($event)"
+                ></app-commune>  
+                <app-district
+                  [selectedProvinceId]="provinceSelect"
+                  (selectedDistrictIdChange)="getDistrictIDChangeChildComponent($event)"
+                  [selectedDistrictId]="districtSelect"
+                ></app-district>
+                <app-province
+                  [selectedProvinceId]="provinceSelect"
+                  (selectedProvinceIdChange)="getProvinceIDChangeChildComponent($event)"
+                ></app-province> 
+              </div>
         </div>
-        <div class="ol-content-item" *ngFor="let item of data">
-            <div class="content-first w55">
-                <div class="image w20">
-                    <img src="/assets/Products/{{ item.image }}" alt="">
-                </div>
-                <span>{{item.productName}}</span>
-            </div>
-            <span class="content-second w20 text-center">{{item.price | customCurrency}}</span>
-            <span class="content-second w20 text-center">{{item.quantity}}</span>
-            <span class="content-second w15 text-center">{{item.totalPrice | customCurrency}}</span>
-        </div>
+      </div>
+      <div class="operation">
+        <button (click)="onShowInsertAddress()">
+          <span *ngIf="!isShowInsertAddress">Thêm Địa Chỉ</span>
+          <i *ngIf="isShowInsertAddress" class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
     </div>
+  </div>
+  <div class="order-list">
+    <div class="ol-header">
+      <span class="ol-text-header header w55">Sản Phẩm</span>
+      <span class="ol-text-header w20 text-center">Giá</span>
+      <span class="ol-text-header w20 text-center">Số Lượng</span>
+      <span class="ol-text-header w15 text-center">Thành Tiền</span>
+    </div>
+    <div class="ol-content-item" *ngFor="let item of data">
+      <div class="content-first w55">
+        <div class="image w20">
+          <img src="/assets/Products/{{ item.image }}" alt="" />
+        </div>
+        <span>{{ item.productName }}</span>
+      </div>
+      <span class="content-second w20 text-center">{{
+        item.price | customCurrency
+      }}</span>
+      <span class="content-second w20 text-center">{{ item.quantity }}</span>
+      <span class="content-second w15 text-center">{{
+        item.totalPrice | customCurrency
+      }}</span>
+    </div>
+  </div>
+  <div class="order-bottom">
+    <div class="header">
+      <span class="no-select">Phương thức thanh toán</span>
+      <div class="paymentMethod">
+        <span class="no-select">Thanh toán khi nhận hàng</span>
+        <button class="no-select">Thay đổi</button>
+      </div>
+    </div>
+    <div class="content">
+      <div class="content-item">
+        <span>Tổng Thanh Toán:</span>
+        <span class="price">{{ResponseOrder.totalPayment| customCurrency}}</span>
+      </div>
+    </div>
+    <div class="footer no-select">
+      <button>Đặt Hàng</button>
+    </div>
+  </div>
 </div>

@@ -21,7 +21,7 @@ import { FormsModule } from '@angular/forms';
 export class DistrictComponent {
   districts: DistrictResponseModel[] = [];
 
-  @Input() selectedProvinceId: number = 0; //tinh
+  @Input() selectedProvinceId: number = 62; //tinh
   @Input() selectedDistrictId: number = 0;
   @Output() selectedDistrictIdChange = new EventEmitter<number>();
 
@@ -54,20 +54,23 @@ export class DistrictComponent {
   }
 
   async ngOnInit(): Promise<void> {
-    // console.log('thời gian: ', new Date().toLocaleString());
-
-    const response: BaseResponseModel = await this.service.GetDistricts();
+    // const response: BaseResponseModel = await this.service.GetDistricts();
+    const response: BaseResponseModel =
+          await this.service.GetDistrictsByProvinceId(this.selectedProvinceId);
     if (response.isSuccess) {
       this.districts = response.data;
+      console.log(this.selectedProvinceId + ' Tỉnh đang được selected');
+
+      if (this.selectedDistrictId === 0)
+        this.selectedDistrictId = this.districts[0].districtId;
+
+      this.onDistrictChange();
     }
   }
 
   async onDistrictChange() {
+    console.log(this.selectedDistrictId + ' => Ở DISTRICT ID');
+
     await this.selectedDistrictIdChange.emit(this.selectedDistrictId);
-    // console.log('========================================');
-    // console.log(
-    //   'Huyện ID đã được trả Component cha = ' + this.selectedDistrictId
-    // );
-    // console.log('thời gian: ', new Date().toLocaleString());
   }
 }

@@ -141,11 +141,6 @@ export class UserDetailComponent {
   //nhận tỉnh id đang được selected từ component con
   getProvinceIDChangeChildComponent(provinceId: number) {
     this.userInfo.province = provinceId;
-    // console.log('========================================');
-    // console.log(
-    //   'Nhận Được Tỉnh: ' + this.userInfo.province + ' từ Component Con => ',
-    //   new Date().toLocaleString()
-    // );
   }
 
   //-- Gọi API lấy dữ liệu UserInfo

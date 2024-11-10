@@ -1,7 +1,7 @@
 .container {
   width: 100vw;
-  height: 100vh;
   animation: left-to-right 0.75s ease;
+  background-color: #f0f0f047;
 }
 
 .wrapper-header {
@@ -84,8 +84,13 @@
 }
 
 /* FOOTER */
-
 .footer {
+  width: 100%;
+  background-color: #fff;
+  border-top: 1px solid #ccc;
+}
+
+.footer- {
   width: var(--main-width);
   height: 210px;
   margin: auto;
