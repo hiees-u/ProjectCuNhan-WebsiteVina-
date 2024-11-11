@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import { BaseResponseModel } from '../shared/module/base-response/base-response.module';
 import { CartItem, CartResponse } from '../shared/module/cart/cart.module';
 import { UserInfoRequestModel } from '../shared/module/user-info/user-info.module';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { AddressRequest } from '../shared/module/address/address.module';
+import { OrderRequestModule } from '../shared/module/order/order.module';
 
 @Injectable({
   providedIn: 'root',
@@ -30,22 +32,62 @@ export class CustomerService {
     }
   }
 
+  //post order
+  async postOrder(order: OrderRequestModule) : Promise<BaseResponseModel> {
+    //https://localhost:7060/api/Order
+    const url = `${this.apiUrl}Order`;
+
+    return fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${this.token}`,
+      },
+      body: JSON.stringify(order),
+    }).then((response) => {
+      if (!response.ok) {
+        throw new Error('Lỗi ở Post Order');
+      }
+      return response.json() as Promise<BaseResponseModel>;
+    });
+  }
+
+  //post address
+  async postAddress(address: AddressRequest) : Promise<BaseResponseModel> {
+    // https://localhost:7060/api/Address
+    const url = `${this.apiUrl}Address`;
+
+    return fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${this.token}`,
+      },
+      body: JSON.stringify(address),
+    }).then((response) => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json() as Promise<BaseResponseModel>;
+    });
+  }
+
   //lấy danh sách address của khách hàng
   async getStringAddresses(): Promise<BaseResponseModel> {
     //https://localhost:7060/api/Address/Get string address
-    const url = `${this.apiUrl}Address/Get string address`
+    const url = `${this.apiUrl}Address/Get string address`;
     const option = {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${this.token}`,
-      }
+      },
     };
 
     try {
       const response = await fetch(url, option);
 
-      if(!response.ok) {
+      if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 

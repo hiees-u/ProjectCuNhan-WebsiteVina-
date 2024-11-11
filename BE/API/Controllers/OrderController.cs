@@ -19,7 +19,7 @@ namespace API.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Customer")]
-        public IActionResult Order(OrderRequestModule request)
+        public IActionResult Order([FromBody] OrderRequestModule request)
         {
             BaseResponseModel model = order.Post(request);
 

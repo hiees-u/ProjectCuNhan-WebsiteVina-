@@ -14,7 +14,9 @@
         (change)="onCheckAll($event)"
       />
     </div>
-    <span class="product-header" id="check-all">Sản phẩm</span>
+    <label for="check-all" class="product-header" id="check-all"
+      >Sản phẩm</label
+    >
     <span class="price-header">Đơn giá</span>
     <span class="quantity-header">Số lượng</span>
     <span class="total-price-header">Số tiền</span>
@@ -32,16 +34,17 @@
         <input
           type="checkbox"
           name="check"
+          [(ngModel)]="isChecked"
           id="check{{ item.productId }}"
           [checked]="item.checked"
           (change)="onCheckboxChange(item, $event)"
         />
       </div>
       <div class="product-header product-name-content">
-        <div class="img-content">
+        <div class="img-content" (click)="onCheckboxChangev2(item)">
           <img [src]="'assets/Products/' + item.image" alt="" />
         </div>
-        <span class="product-name">
+        <span class="product-name" (click)="onCheckboxChangev2(item)">
           {{ item.productName }}
         </span>
         <!-- <span>{{item.productId}}</span> -->
@@ -78,12 +81,13 @@
   <div class="footer">
     <div class="check-all">
       <input
+        [(ngModel)]="isChecked"
         type="checkbox"
-        name="check-all-f"
-        id="check-all-f"
+        name="check-all"
+        id="check-all"
         (change)="onCheckAll($event)"
       />
-      <label for="check-all-f">Chọn tất cả ({{ cartItems.length }})</label>
+      <label for="check-all">Chọn tất cả ({{ cartItems.length }})</label>
     </div>
     <div class="operation-footer">
       <span class="total-product-check"

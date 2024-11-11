@@ -10,12 +10,14 @@ import {
   Notification,
 } from '../../shared/module/notification/notification.module';
 import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-cart-detail',
   standalone: true,
   imports: [
     CommonModule,
+    FormsModule,
     CustomCurrencyPipe,
     NotificationComponent
 ],
@@ -23,6 +25,8 @@ import { Router } from '@angular/router';
   styleUrl: './cart-detail.component.css',
 })
 export class CartDetailComponent {
+
+  isChecked = false;
 
   isDisabled: boolean = false;
 
@@ -85,7 +89,8 @@ export class CartDetailComponent {
     } else {
       this.isDisabled = false;
     }
-
+    console.log(this.cartItems);
+    
     console.log(this.isDisabled);
     
   }
@@ -106,10 +111,12 @@ export class CartDetailComponent {
 
   onCheckAll(event: any) {
     if(event.target.checked) {
+      this.isChecked = true;
       this.cartItems.forEach(item => {
         item.checked = true;
       });
     } else {
+      this.isChecked = false;
       this.cartItems.forEach(item => {
         item.checked = false;
       });
@@ -119,6 +126,10 @@ export class CartDetailComponent {
   onCheckboxChange(item: CartItem, event: any): void {
     item.checked = event.target.checked;
     console.log(item.productId + 'is' + (item.checked ? 'checked' : 'uncheck'));    
+  }
+
+  onCheckboxChangev2(item: CartItem) {
+    item.checked = !item.checked;
   }
 
   onOrder() {
