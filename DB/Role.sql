@@ -757,8 +757,7 @@ BEGIN
 	WHERE uf.AccountName = @UserName;
 
 	-- Truy vấn và trả về kết quả đầy đủ của địa chỉ
-	SELECT a.AddressID ,
-		a.Note + N', Xã ' + co.CommuneName + N', Huyện ' + di.DistrictName + N', Tỉnh ' + pr.ProvinceName AS N'Địa Chỉ'
+	SELECT DISTINCT a.AddressID, a.Note + N', Xã ' + co.CommuneName + N', Huyện ' + di.DistrictName + N', Tỉnh ' + pr.ProvinceName AS N'Địa Chỉ'
 	FROM @AddressTable ad
 	JOIN Address a ON a.AddressID = ad.AddressID
 	JOIN Commune co ON a.CommuneID = co.CommuneID
@@ -945,4 +944,44 @@ GRANT EXEC ON OBJECT::dbo.GetAddressID TO  Moderator;
 GRANT EXEC ON OBJECT::dbo.GetAddressID TO  WarehouseEmployee;
 --RUN
 EXEC GetAddressID @CommuneID = 15,  @HouseNumber = N'String', @Note = N'string'
-
+--#########################################################################GET Order By STATE INPUT#####################################################################################
+go
+CREATE PROCEDURE SP_GetOrderDetailsByState 
+	@OrderState INT AS 
+BEGIN
+	DECLARE @AccountName NVARCHAR(50); 
+	SET @AccountName = SUSER_NAME(); 
+	DECLARE @CustomerID INT;
+	-- Lấy CustomerID từ UserInfo dựa trên AccountName hiện tại 
+	SELECT @CustomerID = U.customer_Id 
+	FROM UserInfo U 
+	WHERE U.AccountName = @AccountName; 
+	-- Kiểm tra nếu CustomerID không rỗng 
+	IF @CustomerID IS NOT NULL 
+	BEGIN 
+		-- Kiểm tra nếu @OrderState = -1 thì chọn tất cả các đơn hàng 
+		IF @OrderState = -1 
+		BEGIN 
+			SELECT P.product_name, P.image, PH.price, OD.Quantity, PH.price * OD.Quantity AS N'TỔNG TIỀN', O.State
+			FROM [Order] O 
+			JOIN OrderDetail OD ON O.Order_ID = OD.Order_Id 
+			JOIN PriceHistory PH ON PH.priceHistoryId = OD.priceHistoryId 
+			JOIN Product P ON P.product_id = PH.product_id 
+			WHERE O.CreateBy = @CustomerID; 
+		END 
+		ELSE 
+			BEGIN 
+			SELECT P.product_name, P.image, PH.price, OD.Quantity, PH.price * OD.Quantity AS N'TỔNG TIỀN', O.State
+			FROM [Order] O JOIN OrderDetail OD ON O.Order_ID = OD.Order_Id 
+			JOIN PriceHistory PH ON PH.priceHistoryId = OD.priceHistoryId 
+			JOIN Product P ON P.product_id = PH.product_id 
+			WHERE O.CreateBy = @CustomerID AND O.State = @OrderState; 
+		END 
+	END 
+	ELSE 
+	BEGIN
+		PRINT 'No customer record found for the current user.'; 
+	END
+END
+--Phân quyền
+GRANT EXEC ON OBJECT::dbo.SP_GetOrderDetailsByState TO  Customer;

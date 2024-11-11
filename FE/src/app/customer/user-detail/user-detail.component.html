@@ -1,5 +1,8 @@
 <div class="notification">
-  <app-notification [data]="dataNotification" [trigger]="trigger"></app-notification>
+  <app-notification
+    [data]="dataNotification"
+    [trigger]="trigger"
+  ></app-notification>
 </div>
 <div class="container">
   <div class="content-f">
@@ -11,7 +14,7 @@
     </div>
     <ul>
       <li
-        class="dashboard-item"
+        class="dashboard-item no-select"
         [ngClass]="{ active: isActive === 1 }"
         (click)="changeActive(1)"
       >
@@ -19,7 +22,7 @@
         <span>Hồ Sơ</span>
       </li>
       <li
-        class="dashboard-item"
+        class="dashboard-item no-select"
         [ngClass]="{ active: isActive === 2 }"
         (click)="changeActive(2)"
       >
@@ -35,7 +38,7 @@
       </div>
       <div class="br"></div>
       <div class="secon-content">
-        <div class="box-content">
+        <div class="box-content no-select">
           <label for="userName">Tên Đăng Nhập:</label>
           <div class="box-input">
             <input
@@ -46,19 +49,19 @@
             />
           </div>
         </div>
-        <div class="box-content">
+        <div class="box-content no-select">
           <label for="Name">Họ và tên:</label>
           <div class="box-input">
             <input type="text" id="Name" [(ngModel)]="userInfo.fullName" />
           </div>
         </div>
-        <div class="box-content">
+        <div class="box-content no-select">
           <label for="email">Email:</label>
           <div class="box-input">
             <input type="text" id="email" [(ngModel)]="userInfo.email" />
           </div>
         </div>
-        <div class="box-content">
+        <div class="box-content no-select">
           <label>Địa chỉ:</label>
           <div class="box-input">
             <div class="box-edit-address">
@@ -67,29 +70,33 @@
                 (addressChange)="getAddressChangeChildComponent($event)"
               ></app-address>
               <app-commune
-              [selectedCommuneId]="userInfo.commune"
-              [selectedDistrictId]="userInfo.district!"
-              (communeOutput)="getCommutNameChangeChildComponent($event)"
-              ></app-commune>  
+                [selectedCommuneId]="userInfo.commune"
+                [selectedDistrictId]="userInfo.district!"
+                (communeOutput)="getCommutNameChangeChildComponent($event)"
+              ></app-commune>
               <app-district
                 [selectedProvinceId]="userInfo.province!"
-                (selectedDistrictIdChange)="getDistrictIDChangeChildComponent($event)"
+                (selectedDistrictIdChange)="
+                  getDistrictIDChangeChildComponent($event)
+                "
                 [selectedDistrictId]="userInfo.district!"
               ></app-district>
               <app-province
                 [selectedProvinceId]="userInfo.province!"
-                (selectedProvinceIdChange)="getProvinceIDChangeChildComponent($event)"
-              ></app-province> 
+                (selectedProvinceIdChange)="
+                  getProvinceIDChangeChildComponent($event)
+                "
+              ></app-province>
             </div>
           </div>
         </div>
-        <div class="box-content">
+        <div class="box-content no-select">
           <label for="sdt">Số điện thoại:</label>
           <div class="box-input">
             <input type="text" id="sdt" [(ngModel)]="userInfo.phone" />
           </div>
         </div>
-        <div class="box-content">
+        <div class="box-content no-select">
           <label for="gender">Giới tính:</label>
           <div class="box-input">
             <select name="gender" id="gender" [(ngModel)]="userInfo.gender">
@@ -98,7 +105,7 @@
             </select>
           </div>
         </div>
-        <div class="box-content">
+        <div class="box-content no-select">
           <label for="typeCus">Khách hàng:</label>
           <div class="box-input">
             <input
@@ -110,11 +117,79 @@
           </div>
         </div>
 
-        <div class="button-main" (click)="isHandleUpdate()">Cập Nhật</div>
+        <div class="button-main no-select" (click)="isHandleUpdate()">
+          Cập Nhật
+        </div>
       </div>
     </div>
     <div class="content-don-mua content" *ngIf="isActive === 2">
-      <p>Đon mua</p>
+      <div class="header-order">
+        <ul>
+          <li
+            class="order-header-item no-select"
+            [ngClass]="{ active: underActive === 0 }"
+            (click)="moveUnderline(0)"
+          >
+            <span>Tất cả</span>
+          </li>
+          <li
+            class="order-header-item no-select"
+            [ngClass]="{ active: underActive === 1 }"
+            (click)="moveUnderline(1)"
+          >
+            <span>Đã Xác Nhận Đơn</span>
+          </li>
+          <li
+            class="order-header-item no-select"
+            [ngClass]="{ active: underActive === 2 }"
+            (click)="moveUnderline(2)"
+          >
+            <span>Đang xử lý</span>
+          </li>
+          <li
+            class="order-header-item no-select"
+            [ngClass]="{ active: underActive === 3 }"
+            (click)="moveUnderline(3)"
+          >
+            <span>Đang Vận chuyển</span>
+          </li>
+          <li
+            class="order-header-item no-select"
+            [ngClass]="{ active: underActive === 4 }"
+            (click)="moveUnderline(4)"
+          >
+            <span>Đã Giao</span>
+          </li>
+          <li
+            class="order-header-item no-select"
+            [ngClass]="{ active: underActive === 5 }"
+            (click)="moveUnderline(5)"
+          >
+            <span>Đã Hủy</span>
+          </li>
+          <div
+            class="unline"
+            [ngStyle]="{ transform: underlineTransform }"
+          ></div>
+        </ul>
+      </div>
+
+      <div class="content-order">
+        <div class="content-order-header">
+          <span>Đã hủy</span>
+          <div class="content-order-content">
+            <div>
+              <img [src]="'assets/Products/' + 'p1.png'" alt="" />
+              <span class="name">Robusta Mộc Phin - Buôn Mê Coffee</span>
+            </div>
+            <span class="price">100.000đ</span>
+          </div>
+        </div>
+        <div class="content-order-footer">
+          <span class="deleteBy">Đã hủy bởi bạn</span>
+          <span class="total-price">Thành tiền <span>100.000đ</span></span>
+        </div>
+      </div>
     </div>
   </div>
 </div>

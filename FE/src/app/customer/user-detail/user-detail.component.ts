@@ -54,6 +54,10 @@ export class UserDetailComponent {
   trigger: any;
   dataNotification: Notification = ConstructerNotification();
 
+  //--
+  underlineTransform = 'translateX(0%)';
+  underActive = 0;
+
   constructor(
     private service: CustomerService,
     private servicee: ServicesService
@@ -113,7 +117,6 @@ export class UserDetailComponent {
     }
     this.trigger = Date.now();
     console.log(response);
-    
   }
 
   getCommutNameChangeChildComponent(commune: CommuneResponseModel) {
@@ -159,5 +162,11 @@ export class UserDetailComponent {
 
   changeActive(number: number) {
     this.isActive = number;
+  }
+
+  moveUnderline(index: number): void {
+    this.underActive = index;
+    const percentage = (index * 100); // 16.6666% cho mỗi mục
+    this.underlineTransform = `translateX(${percentage}%)`;
   }
 }

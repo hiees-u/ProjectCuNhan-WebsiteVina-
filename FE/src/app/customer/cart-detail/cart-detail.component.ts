@@ -33,11 +33,22 @@ export class CartDetailComponent {
   trigger: any;
   dataNotification: Notification = ConstructerNotification();
 
+  totalPrice: number = 0;
+
   cartItems: CartItem[] = [];
   constructor(private Customer: CustomerService, private router: Router) {}
 
   ngOnInit(): void {
     this.getCart();     
+    this.onTotalPrice();
+  }
+
+  onTotalPrice() {
+    this.totalPrice = 0;
+    this.cartItems.forEach(c => {
+      if(c.checked)
+        this.totalPrice += c.price * c.quantity;
+    })
   }
 
   async updateCart(productId: number, quantity: number) {
@@ -121,15 +132,18 @@ export class CartDetailComponent {
         item.checked = false;
       });
     }
+    this.onTotalPrice();
   }
   
   onCheckboxChange(item: CartItem, event: any): void {
     item.checked = event.target.checked;
+    this.onTotalPrice();
     console.log(item.productId + 'is' + (item.checked ? 'checked' : 'uncheck'));    
   }
 
   onCheckboxChangev2(item: CartItem) {
     item.checked = !item.checked;
+    this.onTotalPrice();
   }
 
   onOrder() {

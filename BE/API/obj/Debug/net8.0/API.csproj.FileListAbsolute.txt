@@ -700,7 +700,6 @@ C:\Users\ADMIN\Desktop\ProjectCuNhan-WebsiteVina-\BE\API\obj\Debug\net8.0\API.Ge
 C:\Users\ADMIN\Desktop\ProjectCuNhan-WebsiteVina-\BE\API\obj\Debug\net8.0\API.AssemblyInfoInputs.cache
 C:\Users\ADMIN\Desktop\ProjectCuNhan-WebsiteVina-\BE\API\obj\Debug\net8.0\API.AssemblyInfo.cs
 C:\Users\ADMIN\Desktop\ProjectCuNhan-WebsiteVina-\BE\API\obj\Debug\net8.0\API.csproj.CoreCompileInputs.cache
-C:\Users\ADMIN\Desktop\ProjectCuNhan-WebsiteVina-\BE\API\obj\Debug\net8.0\API.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\ADMIN\Desktop\ProjectCuNhan-WebsiteVina-\BE\API\obj\Debug\net8.0\API.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\ADMIN\Desktop\ProjectCuNhan-WebsiteVina-\BE\API\obj\Debug\net8.0\API.sourcelink.json
 C:\Users\ADMIN\Desktop\ProjectCuNhan-WebsiteVina-\BE\API\obj\Debug\net8.0\staticwebassets.build.json
