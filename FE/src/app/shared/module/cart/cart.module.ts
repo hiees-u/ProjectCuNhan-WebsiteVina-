@@ -1,5 +1,5 @@
 export interface CartItem {
-  CartId: number,
+  CartId: number;
   image: string;
   productName: string;
   price: number;
@@ -7,18 +7,19 @@ export interface CartItem {
   totalPrice: number;
   productId: number;
   checked?: boolean;
+  priceHistoryId: number;
 }
 
 export interface CartResponse {
-  productId: number,
+  productId: number;
   quantity: number;
 }
 
 export function constructorCartResponse(): CartResponse {
   return {
     productId: 0,
-    quantity: 0
-  }
+    quantity: 0,
+  };
 }
 
 export function constructorCartItem(): CartItem {
@@ -29,7 +30,7 @@ export function constructorCartItem(): CartItem {
     price: 0, // default price
     quantity: 1, // default quantity
     totalPrice: 0,
-    productId: 0
-  }
+    productId: 0,
+    priceHistoryId: 0,
+  };
 }
-

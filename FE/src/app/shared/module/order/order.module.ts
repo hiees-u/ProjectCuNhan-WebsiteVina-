@@ -2,6 +2,7 @@ export interface OrderRequestModule {
   phone: string;
   addressId: number;
   nameRecipient: string;
+  products: ProductQuantity[];
 }
 
 export interface OrderResponseModel {
@@ -13,6 +14,11 @@ export interface OrderResponseModel {
   totalPayment: number;
   createAt?: Date;
   state: number;
+}
+
+export interface ProductQuantity {
+  PriceHistoryId: number;
+  Quantity: number;
 }
 
 export function constructorOrderRequestModule() {
@@ -31,7 +37,7 @@ export function constructorOrderResponseModel() {
     nameRecipient: '',
     createBy: 0,
     totalPayment: 0,
-    createAt: new Date,
+    createAt: new Date(),
     state: 0,
   };
 }

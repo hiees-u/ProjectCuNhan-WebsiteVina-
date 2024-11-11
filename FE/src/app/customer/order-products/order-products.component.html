@@ -17,6 +17,7 @@
         <select
           *ngIf="!isShowInsertAddress"
           name="address"
+          [(ngModel)]="addressSelectKey"
           id="address"
           (change)="onSelectChange($event)"
         >
@@ -93,7 +94,7 @@
       </div>
     </div>
     <div class="footer no-select">
-      <button>Đặt Hàng</button>
+      <button (click)="handleOrder()">Đặt Hàng</button>
     </div>
   </div>
 </div>

@@ -603,15 +603,24 @@ GRANT EXECUTE ON OBJECT::dbo.SP_UpdateCart TO  Customer;
 
 EXEC SP_UpdateCart @ProductID = 4, @Quantity = 1
 go
---#########################################################################Create Order Customer#####################################################################################
-CREATE PROCEDURE SP_InsertOrder
+--#########################################################################Create Order + Order Detail Customer#####################################################################################
+CREATE TYPE ProductQuantityType AS TABLE
+(
+    PriceHistoryId INT,
+    Quantity INT
+);
+GO
+CREATE PROCEDURE SP_InsertOrderWithDetails
     @Phone NVARCHAR(11),
     @Address_ID INT,
-    @Name_Recipient NVARCHAR(50)
+    @Name_Recipient NVARCHAR(50),
+    @ProductQuantities ProductQuantityType READONLY
 AS
 BEGIN
     DECLARE @IdCustomer INT;
     DECLARE @AccountName NVARCHAR(50);
+    DECLARE @OrderID INT;
+    DECLARE @TotalPayment DECIMAL(10, 0);
 
     -- Lấy tên tài khoản hiện tại
     SET @AccountName = SUSER_NAME();
@@ -625,9 +634,21 @@ BEGIN
     -- Kiểm tra xem IdCustomer có giá trị hay không
     IF @IdCustomer IS NOT NULL
     BEGIN
-        -- Chèn dữ liệu vào bảng Order
-        INSERT INTO [Order] (Phone, Adress_ID, Name_Recipient, CreateBy)
-        VALUES (@Phone, @Address_ID, @Name_Recipient, @IdCustomer);
+        -- Tính tổng số tiền
+        SELECT @TotalPayment = SUM(ph.price * pq.Quantity)
+        FROM @ProductQuantities pq
+        JOIN PriceHistory ph ON ph.priceHistoryId = pq.PriceHistoryId;
+
+        -- Chèn dữ liệu vào bảng Order và lấy OrderID mới tạo
+        INSERT INTO [Order] (Phone, Adress_ID, Name_Recipient, CreateBy, Total_Payment)
+        VALUES (@Phone, @Address_ID, @Name_Recipient, @IdCustomer, @TotalPayment);
+
+        SET @OrderID = SCOPE_IDENTITY();
+
+        -- Chèn dữ liệu vào bảng OrderDetail
+        INSERT INTO OrderDetail (Order_Id, priceHistoryId, Quantity)
+        SELECT @OrderID, pq.PriceHistoryId AS ProductID, pq.Quantity
+        FROM @ProductQuantities pq;
     END
     ELSE
     BEGIN
@@ -635,10 +656,11 @@ BEGIN
     END
 END;
 
+
 --phân quyền
-GRANT EXECUTE ON OBJECT::dbo.SP_InsertOrder TO  Customer;
+GRANT EXECUTE ON TYPE::dbo.ProductQuantityType TO Customer;
+GRANT EXECUTE ON OBJECT::dbo.SP_InsertOrderWithDetails TO  Customer;
 --RUN EXAMPLE
-EXEC SP_InsertOrder @Phone = '0393370172', @Address_ID = 1, @Name_Recipient = N'mhieu';
 
 --#########################################################################Update User Info#####################################################################################
 CREATE PROCEDURE SP_UpdateUserInfo

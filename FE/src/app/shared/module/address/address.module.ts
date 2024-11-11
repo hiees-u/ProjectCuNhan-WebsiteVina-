@@ -5,6 +5,14 @@ export interface Address {
   note: string;
 }
 
+export interface AddressRequest {
+  communeId: number;
+  houseNumber: string;
+  note: string;
+  communeName: string;
+  districtId: number;
+}
+
 export interface AddressString {
   key: number,
   value: string
