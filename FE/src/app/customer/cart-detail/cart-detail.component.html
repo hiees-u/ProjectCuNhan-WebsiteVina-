@@ -87,12 +87,12 @@
         id="check-all"
         (change)="onCheckAll($event)"
       />
-      <label for="check-all">Chọn tất cả ({{ cartItems.length }})</label>
+      <label class="no-select" for="check-all">Chọn tất cả ({{ cartItems.length }})</label>
     </div>
     <div class="operation-footer">
-      <span class="total-product-check"
+      <span class="total-product-check no-select"
         >Tổng thanh toán ( 0 sản phẩm):
-        <span class="color-var-main">0 vnd</span></span
+        <span class="color-var-main">{{ totalPrice | customCurrency }}</span></span
       >
       <div class="btn-thanhtoan">
         <button

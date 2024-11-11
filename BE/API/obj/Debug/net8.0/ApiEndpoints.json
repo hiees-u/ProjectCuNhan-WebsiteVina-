@@ -221,6 +221,22 @@
   },
   {
     "ContainingType": "API.Controllers.OrderController",
+    "Method": "Get",
+    "RelativePath": "api/Order",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "orderState",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.OrderController",
     "Method": "Order",
     "RelativePath": "api/Order",
     "HttpMethod": "POST",

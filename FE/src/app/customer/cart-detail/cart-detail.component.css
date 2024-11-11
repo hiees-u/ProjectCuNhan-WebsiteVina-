@@ -133,7 +133,8 @@
 }
 
 .footer .check-all label {
-  font-size: 1.5em;
+  font-size: 1.2em;
+  font-family: var(--main-style);
   width: 100%;
   text-align: center;
   cursor: pointer;

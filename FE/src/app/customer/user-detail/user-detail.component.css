@@ -1,6 +1,6 @@
 .container {
   /* height: 100vh; */
-  margin-top: 30px;
+  margin: 30px 0;
   display: flex;
   justify-content: space-between;
   animation: slide-right-in 0.5s ease-in-out;
@@ -232,4 +232,126 @@ select {
   top: 130px;
   right: 0;
   z-index: 9999;
+}
+
+/* -- Order */
+
+/* .header-order {
+} */
+
+.header-order ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  background-color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8em;
+  font-family: var(--main-style);
+  font-style: italic;
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+.header-order ul li {
+  padding: 10px 15px;
+  width: 15%;
+  text-align: center;
+  cursor: pointer;
+}
+
+.unline {
+  height: 2px;
+  background-color: var(--main-color);
+  position: absolute;
+  bottom: 0;
+  width: 16.6666%;
+  z-index: 2;
+  pointer-events: none;
+  transition: transform 0.35s;
+  transform: translateX(0); /* Sử dụng translateX để di chuyển */
+}
+
+.active {
+  color: var(--main-color);
+}
+
+.content-order {
+  background-color: transparent;
+  /* width: calc(100% - 20px); */
+  /* padding: 10px; */
+  min-height: calc(100px - 20px);
+  margin-top: 10px;
+  border-radius: 0 0 5px 5px;
+}
+
+.content-order-header {
+  background-color: #fff;
+  border-radius: 0 0 5px 5px;
+  padding: 10px;
+}
+
+.content-order-header > span {
+  width: calc(100% - 20px);
+  padding: 10px;
+  font-size: 1.3em;
+  font-style: italic;
+  text-align: end;
+  color: var(--secon-color);
+  display: block;
+  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.3);
+}
+
+.content-order-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.content-order-content>div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.content-order-content div img {
+  width: 100px;
+}
+
+.content-order-content>.price {
+  color: var(--main-color);
+  font-size: 1.2em;
+  font-style: italic;
+  font-family: var(--main-style);
+}
+
+.content-order-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: calc(100% - 30px);
+  padding: 15px;
+  border-radius: 5px 5px 0 0;
+  background-color: #fff;
+  margin-top: 1px;
+}
+
+.content-order-footer .deleteBy {
+  font-size: .9em;
+  color: var(--secon-text-color);
+  font-family: var(--main-style);
+}
+
+.content-order-footer .total-price {
+  font-size: 1.2em;
+}
+
+.content-order-footer .total-price span {
+  font-size: 1.6em;
+  font-family: cursive;
+  color: var(--main-color);
+  margin-left: 15px;
+  font-family: var(--main-style);
 }

@@ -17,6 +17,15 @@ namespace API.Controllers
             this.order = order;
         }
 
+        [HttpGet]
+        [Authorize(Roles = "Customer")]
+        public IActionResult Get(int orderState)
+        {
+            BaseResponseModel model = order.Get(orderState);
+
+            return model.IsSuccess ? Ok(model) : BadRequest(model);
+        }
+
         [HttpPost]
         [Authorize(Roles = "Customer")]
         public IActionResult Order([FromBody] OrderRequestModule request)

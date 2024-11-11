@@ -1,9 +1,11 @@
 ﻿using BLL.Interface;
 using BLL.LoginBLL;
+using DLL.Models;
 using DTO.Order;
 using DTO.Responses;
 using System.Data;
 using System.Data.SqlClient;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace BLL
 {
@@ -70,6 +72,61 @@ namespace BLL
                 dt.Rows.Add(pq.PriceHistoryId, pq.Quantity);
             }
             return dt;
+        }
+
+        public BaseResponseModel Get(int orderState)
+        {
+            if (orderState < 0 || orderState > 4) {
+                return new BaseResponseModel()
+                {
+                    IsSuccess = false,
+                    Message = "Lỗi tham số truyền vào [0,1,2,3,4]"
+                };
+            }
+
+            List<OrderResponseModelv2> repon = new List<OrderResponseModelv2>();
+            try
+            {
+                using (var conn = new SqlConnection(ConnectionStringHelper.Get()))
+                {
+                    conn.Open();
+                    using (SqlCommand command = new SqlCommand("SP_GetOrderDetailsByState", conn))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.Add(new SqlParameter("@OrderState", orderState));
+
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                repon.Add(new OrderResponseModelv2()
+                                {
+                                    productname = reader.GetString(reader.GetOrdinal("product_name")),
+                                    image = reader.GetString(reader.GetOrdinal("image")),
+                                    price = reader.GetDecimal(reader.GetOrdinal("price")),
+                                    quantity = reader.GetInt32(reader.GetOrdinal("Quantity")),
+                                    totalprice = reader.GetDecimal(reader.GetOrdinal("TỔNG TIỀN")),
+                                    state = reader.GetInt32(reader.GetOrdinal("state")),
+                                });
+                            }
+                        }
+                    }    
+                }
+                return new BaseResponseModel()
+                {
+                    IsSuccess = true,
+                    Message = "Lấy Thành Công!",
+                    Data = repon
+                };
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponseModel()
+                {
+                    IsSuccess = false,
+                    Message = $"Lỗi trong quá trình Lấy Đơn Đặt Hàng: {ex}"
+                };
+            }
         }
     }
 }

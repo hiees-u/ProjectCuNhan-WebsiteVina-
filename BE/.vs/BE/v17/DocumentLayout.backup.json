@@ -3,10 +3,6 @@
   "WorkspaceRootPath": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{3CABEDD8-6AA0-489D-85F4-0B26DB10AFCB}|DTO\\DTO.csproj|c:\\users\\admin\\desktop\\projectcunhan-websitevina-\\be\\dto\\order\\orderrequestmodule.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3CABEDD8-6AA0-489D-85F4-0B26DB10AFCB}|DTO\\DTO.csproj|solutionrelative:dto\\order\\orderrequestmodule.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{DE969023-0A53-4B48-B5F6-48BF28880A70}|BLL\\BLL.csproj|c:\\users\\admin\\desktop\\projectcunhan-websitevina-\\be\\bll\\orderbll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{DE969023-0A53-4B48-B5F6-48BF28880A70}|BLL\\BLL.csproj|solutionrelative:bll\\orderbll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -15,8 +11,20 @@
       "RelativeMoniker": "D:0:0:{1D0D98A9-8C32-4F25-AA4F-2F66D6654FA5}|API\\API.csproj|solutionrelative:api\\controllers\\ordercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{3CABEDD8-6AA0-489D-85F4-0B26DB10AFCB}|DTO\\DTO.csproj|c:\\users\\admin\\desktop\\projectcunhan-websitevina-\\be\\dto\\order\\orderresponsemodelv2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3CABEDD8-6AA0-489D-85F4-0B26DB10AFCB}|DTO\\DTO.csproj|solutionrelative:dto\\order\\orderresponsemodelv2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{DE969023-0A53-4B48-B5F6-48BF28880A70}|BLL\\BLL.csproj|c:\\users\\admin\\desktop\\projectcunhan-websitevina-\\be\\bll\\interface\\iorder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{DE969023-0A53-4B48-B5F6-48BF28880A70}|BLL\\BLL.csproj|solutionrelative:bll\\interface\\iorder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3CABEDD8-6AA0-489D-85F4-0B26DB10AFCB}|DTO\\DTO.csproj|c:\\users\\admin\\desktop\\projectcunhan-websitevina-\\be\\dto\\order\\orderresponsemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3CABEDD8-6AA0-489D-85F4-0B26DB10AFCB}|DTO\\DTO.csproj|solutionrelative:dto\\order\\orderresponsemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3CABEDD8-6AA0-489D-85F4-0B26DB10AFCB}|DTO\\DTO.csproj|c:\\users\\admin\\desktop\\projectcunhan-websitevina-\\be\\dto\\order\\orderrequestmodule.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3CABEDD8-6AA0-489D-85F4-0B26DB10AFCB}|DTO\\DTO.csproj|solutionrelative:dto\\order\\orderrequestmodule.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{DE969023-0A53-4B48-B5F6-48BF28880A70}|BLL\\BLL.csproj|c:\\users\\admin\\desktop\\projectcunhan-websitevina-\\be\\bll\\userbll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -37,10 +45,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{1D0D98A9-8C32-4F25-AA4F-2F66D6654FA5}|API\\API.csproj|c:\\users\\admin\\desktop\\projectcunhan-websitevina-\\be\\api\\controllers\\addresscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1D0D98A9-8C32-4F25-AA4F-2F66D6654FA5}|API\\API.csproj|solutionrelative:api\\controllers\\addresscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3CABEDD8-6AA0-489D-85F4-0B26DB10AFCB}|DTO\\DTO.csproj|c:\\users\\admin\\desktop\\projectcunhan-websitevina-\\be\\dto\\order\\orderresponsemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3CABEDD8-6AA0-489D-85F4-0B26DB10AFCB}|DTO\\DTO.csproj|solutionrelative:dto\\order\\orderresponsemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{DE969023-0A53-4B48-B5F6-48BF28880A70}|BLL\\BLL.csproj|c:\\users\\admin\\desktop\\projectcunhan-websitevina-\\be\\bll\\communebll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -76,7 +80,7 @@
               "RelativeDocumentMoniker": "BLL\\Interface\\IOrder.cs",
               "ToolTip": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\Interface\\IOrder.cs",
               "RelativeToolTip": "BLL\\Interface\\IOrder.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAABCAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAgAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-09T18:30:26.895Z",
               "IsPinned": true,
@@ -88,7 +92,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 2,
+              "Title": "OrderResponseModelv2.cs",
+              "DocumentMoniker": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\DTO\\Order\\OrderResponseModelv2.cs",
+              "RelativeDocumentMoniker": "DTO\\Order\\OrderResponseModelv2.cs",
+              "ToolTip": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\DTO\\Order\\OrderResponseModelv2.cs",
+              "RelativeToolTip": "DTO\\Order\\OrderResponseModelv2.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-11T17:53:32.482Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
               "Title": "CartBLL.cs",
               "DocumentMoniker": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\CartBLL.cs",
               "RelativeDocumentMoniker": "BLL\\CartBLL.cs",
@@ -96,12 +113,11 @@
               "RelativeToolTip": "BLL\\CartBLL.cs",
               "ViewState": "AgIAADcAAAAAAAAAAAAQwCAAAABeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-11T10:53:14.706Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-11T10:53:14.706Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 8,
               "Title": "ProductBLL.cs",
               "DocumentMoniker": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\ProductBLL.cs",
               "RelativeDocumentMoniker": "BLL\\ProductBLL.cs",
@@ -109,12 +125,11 @@
               "RelativeToolTip": "BLL\\ProductBLL.cs",
               "ViewState": "AgIAAAMAAAAAAAAAAAAAACoAAABeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-11T10:52:43.578Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-11T10:52:43.578Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "CommuneBLL.cs",
               "DocumentMoniker": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\CommuneBLL.cs",
               "RelativeDocumentMoniker": "BLL\\CommuneBLL.cs",
@@ -122,25 +137,24 @@
               "RelativeToolTip": "BLL\\CommuneBLL.cs",
               "ViewState": "AgIAAFoAAAAAAAAAAAAYwBEAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-11T09:13:08.52Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-11T09:13:08.52Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 4,
               "Title": "OrderResponseModel.cs",
               "DocumentMoniker": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\DTO\\Order\\OrderResponseModel.cs",
               "RelativeDocumentMoniker": "DTO\\Order\\OrderResponseModel.cs",
               "ToolTip": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\DTO\\Order\\OrderResponseModel.cs",
               "RelativeToolTip": "DTO\\Order\\OrderResponseModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAApAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAjAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-10T20:15:59.975Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "Order.cs",
               "DocumentMoniker": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\DLL\\Models\\Order.cs",
               "RelativeDocumentMoniker": "DLL\\Models\\Order.cs",
@@ -152,7 +166,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 10,
               "Title": "AddressController.cs",
               "DocumentMoniker": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\API\\Controllers\\AddressController.cs",
               "RelativeDocumentMoniker": "API\\Controllers\\AddressController.cs",
@@ -160,12 +174,11 @@
               "RelativeToolTip": "API\\Controllers\\AddressController.cs",
               "ViewState": "AgIAAAcAAAAAAAAAAAAuwA4AAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-10T17:42:22.31Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-10T17:42:22.31Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 14,
               "Title": "IAddress.cs",
               "DocumentMoniker": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\Interface\\IAddress.cs",
               "RelativeDocumentMoniker": "BLL\\Interface\\IAddress.cs",
@@ -177,7 +190,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 9,
               "Title": "AddressBLL.cs",
               "DocumentMoniker": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\AddressBLL.cs",
               "RelativeDocumentMoniker": "BLL\\AddressBLL.cs",
@@ -185,12 +198,11 @@
               "RelativeToolTip": "BLL\\AddressBLL.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAvwHUAAABLAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-10T17:32:19.211Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-10T17:32:19.211Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "AuthService.cs",
               "DocumentMoniker": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\AuthService.cs",
               "RelativeDocumentMoniker": "BLL\\AuthService.cs",
@@ -202,7 +214,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
               "Title": "UserBLL.cs",
               "DocumentMoniker": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\UserBLL.cs",
               "RelativeDocumentMoniker": "BLL\\UserBLL.cs",
@@ -215,39 +227,39 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "OrderController.cs",
               "DocumentMoniker": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\API\\Controllers\\OrderController.cs",
               "RelativeDocumentMoniker": "API\\Controllers\\OrderController.cs",
               "ToolTip": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\API\\Controllers\\OrderController.cs",
               "RelativeToolTip": "API\\Controllers\\OrderController.cs",
-              "ViewState": "AgIAAAoAAAAAAAAAAAAywBcAAAAMAAAAAAAAAA==",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAswBIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-09T18:40:39.413Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "OrderBLL.cs",
               "DocumentMoniker": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\OrderBLL.cs",
               "RelativeDocumentMoniker": "BLL\\OrderBLL.cs",
               "ToolTip": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\OrderBLL.cs",
               "RelativeToolTip": "BLL\\OrderBLL.cs",
-              "ViewState": "AgIAABoAAAAAAAAAAAAMwA8AAAAQAAAAAAAAAA==",
+              "ViewState": "AgIAADkAAAAAAAAAAAAtwFIAAABCAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-09T18:30:14.769Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 5,
               "Title": "OrderRequestModule.cs",
               "DocumentMoniker": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\DTO\\Order\\OrderRequestModule.cs",
               "RelativeDocumentMoniker": "DTO\\Order\\OrderRequestModule.cs",
               "ToolTip": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\DTO\\Order\\OrderRequestModule.cs",
               "RelativeToolTip": "DTO\\Order\\OrderRequestModule.cs",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAIwB0AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAsAAAAAAAAAAAD4vxsAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-09T18:20:36.756Z",
               "EditorCaption": ""
