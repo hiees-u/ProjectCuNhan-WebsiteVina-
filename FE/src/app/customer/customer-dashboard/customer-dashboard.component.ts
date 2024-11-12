@@ -26,7 +26,13 @@ export class CustomerDashboardComponent {
   checkLogin() {
     if (typeof window !== 'undefined') {
       const token = localStorage.getItem('token');
-      if (token) {
+      console.log('check login!!!');
+      console.log(token);
+      if (token === null) {
+        console.log('token null');
+        this.isLogin = false;
+      } else {
+        console.log('vào đây');
         this.isLogin = true;
       }
     }

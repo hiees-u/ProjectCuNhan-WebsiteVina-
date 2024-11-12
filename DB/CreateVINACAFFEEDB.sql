@@ -24,6 +24,7 @@ CREATE TABLE Cart (
 
 GO
 
+
 --Product
 CREATE TABLE PRODUCT (
 	product_id int IDENTITY(1,1) NOT NULL Primary key,

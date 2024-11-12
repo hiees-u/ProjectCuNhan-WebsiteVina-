@@ -1,4 +1,5 @@
-﻿using DTO.Responses;
+﻿using DTO.Register;
+using DTO.Responses;
 using DTO.User;
 
 namespace BLL.Interface
@@ -7,7 +8,7 @@ namespace BLL.Interface
     {
         public BaseResponseModel Login(LoginRequestModule module);
 
-        public BaseResponseModel Register(LoginRequestModule customer);
+        public BaseResponseModel Register(RegisterRequestModule customer);
 
         public BaseResponseModel ChangePassword(LoginChangePassRequestModule module);
 

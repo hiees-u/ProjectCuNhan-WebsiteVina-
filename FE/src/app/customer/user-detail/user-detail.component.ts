@@ -43,7 +43,10 @@ import { CustomCurrencyPipe } from '../../shared/module/customCurrency';
     CustomCurrencyPipe
   ],
   templateUrl: './user-detail.component.html',
-  styleUrl: './user-detail.component.css',
+  styleUrls: [
+    './user-detail.component.css',
+    './user-detail.component-v2.css'
+  ],
 })
 export class UserDetailComponent {
   addressString: string = '';
@@ -174,7 +177,7 @@ export class UserDetailComponent {
 
   moveUnderline(index: number): void {
     this.underActive = index;
-    const percentage = (index * 100); // 16.6666% cho mỗi mục
+    const percentage = (index * 100);
     this.underlineTransform = `translateX(${percentage}%)`;
   }
 
