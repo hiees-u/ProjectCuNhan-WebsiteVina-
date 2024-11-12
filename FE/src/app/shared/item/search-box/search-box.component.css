@@ -72,6 +72,15 @@ body {
 .search-bar input::-webkit-search-decoration {
   -webkit-appearance: none;
 }
+/* Thêm phần này để ẩn biểu tượng xóa */
+input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+}
+input[type="search"]::-moz-search-cancel-button {
+  -moz-appearance: none;
+  appearance: none;
+}
 .search-bar input:focus,
 .search-bar input:valid {
   background: #fff;
@@ -87,6 +96,15 @@ body {
   transform: translate(0.25em, 0.25em) rotate(45deg) scale(0.25, 0.125);
   transform-origin: 0 50%;
 }
+
+.search-btn > i {
+  color: var(--main-color);
+  position: absolute;
+  top: 50%;
+  right: 40px;
+  transform: translate(-50%, -50%);
+}
+
 .search-btn:before,
 .search-btn:after {
   content: "";

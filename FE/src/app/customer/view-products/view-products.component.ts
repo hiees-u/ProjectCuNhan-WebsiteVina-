@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { OrderProductsComponent } from '../order-products/order-products.component';
 import { NgIf } from '@angular/common';
 import { NgFor } from '@angular/common';
 import { NgClass } from '@angular/common';
@@ -38,7 +37,7 @@ import {
     NgIf,
     NgFor,
     NgClass,
-    FilterPriceComponent,
+    // FilterPriceComponent,
     ProductItemComponent,
     SearchBoxComponent,
     CustomCurrencyPipe,
@@ -48,7 +47,6 @@ import {
   styleUrls: ['./view-products.component.css', './product-detail.css'],
 })
 export class ViewProductsComponent {
-  
   trigger: any;
   dataNotification: Notification = ConstructerNotification();
 
@@ -71,8 +69,80 @@ export class ViewProductsComponent {
   pages = [1, 2, 3];
   //--
   logError: string = '';
+  //-- Đang lấy dữ liệu theo search?
+  searchString: string | undefined;
+
+  //SORT
+  sortByName: number = 0;
+  sortByPrice: number = 0;
 
   constructor(private customer_service: CustomerService) {}
+
+  //Sort Handle
+  handleSort(event: Event) {
+    const selectElement = event.target as HTMLSelectElement;
+    const value = selectElement.value;
+    console.log(`Value đang được select: ${value}`);
+    
+    switch ( parseInt(value, 10)) {
+      case 1:
+        this.sortByName = -1;
+        this.sortByPrice = 0;
+        break;
+      case 2:
+        this.sortByName = 1;
+        this.sortByPrice = 0;
+        break;
+      case 3:
+        this.sortByName = 0;
+        this.sortByPrice = -1;
+        break;
+      case 4:
+        this.sortByName = 0;
+        this.sortByPrice = 1;
+        break;
+
+      default:
+        this.sortByName = 0;
+        this.sortByPrice = 0;
+        break;
+    }
+    this.getProduct(
+      null,
+      this.cateActive,
+      this.subCateActive,
+      null,
+      this.searchString,
+      this.pageActive,
+      8,
+      this.sortByName,
+      this.sortByPrice,
+    );
+    console.log(this.cateActive);
+    console.log(this.subCateActive);
+    console.log(this.searchString);
+    console.log(this.pageActive);
+    console.log(this.sortByName);
+    console.log(this.sortByPrice);    
+  }
+
+  //nhận dữ liệu từ Search Box
+  receiveData(data: string) {
+    this.searchString = data;
+    this.pageActive = 1;
+    console.log(`Nhận lại ${this.searchString}`);
+    this.getProduct(
+      null,
+      this.cateActive,
+      this.subCateActive,
+      null,
+      this.searchString,
+      this.pageActive,
+      8,
+      this.sortByName,
+      this.sortByPrice
+    );
+  }
 
   async handleAddCart() {
     try {
@@ -107,26 +177,28 @@ export class ViewProductsComponent {
       this.cateActive,
       this.subCateActive,
       null,
-      null,
+      this.searchString,
       this.pageActive,
       8,
-      0,
-      0
+      this.sortByName,
+      this.sortByPrice
     );
   }
 
   handlePageClick(page: number) {
     this.pageActive = page;
+    console.log(`CLICK VÀO PAGE NUMBER ${page}`, new Date());
+    //lấy dữ liệu như bình thường
     this.getProduct(
       null,
       this.cateActive,
       this.subCateActive,
       null,
-      null,
+      this.searchString,
       this.pageActive,
       8,
-      0,
-      0
+      this.sortByName,
+      this.sortByPrice
     );
   }
 
@@ -137,11 +209,11 @@ export class ViewProductsComponent {
       this.cateActive,
       this.subCateActive,
       null,
-      null,
+      this.searchString,
       this.pageActive,
       8,
-      0,
-      0
+      this.sortByName,
+      this.sortByPrice
     );
   }
 
@@ -216,7 +288,7 @@ export class ViewProductsComponent {
       if (response.isSuccess) {
         this.products = response.data;
         console.log(this.products);
-        
+        console.log(`CHẠY LẠI GET PRODUCT ${new Date()}`);
       } else {
         console.log('Failed to get products');
       }
