@@ -963,7 +963,7 @@ BEGIN
 		-- Kiểm tra nếu @OrderState = -1 thì chọn tất cả các đơn hàng 
 		IF @OrderState = -1 
 		BEGIN 
-			SELECT P.product_name, P.image, PH.price, OD.Quantity, PH.price * OD.Quantity AS N'TỔNG TIỀN', OD.State as N'Trạng Thái', O.Order_ID as N'Mã Đơn Hàng'
+			SELECT P.product_name, P.image, PH.price, OD.Quantity, PH.price * OD.Quantity AS N'TỔNG TIỀN', OD.State as N'Trạng Thái', O.Order_ID as N'Mã Đơn Hàng', PH.priceHistoryId as N'Mã Giá'
 			FROM [Order] O 
 			JOIN OrderDetail OD ON O.Order_ID = OD.Order_Id 
 			JOIN PriceHistory PH ON PH.priceHistoryId = OD.priceHistoryId 
@@ -972,7 +972,7 @@ BEGIN
 		END 
 		ELSE 
 			BEGIN 
-			SELECT P.product_name, P.image, PH.price, OD.Quantity, PH.price * OD.Quantity AS N'TỔNG TIỀN', OD.State as N'Trạng Thái', O.Order_ID as N'Mã Đơn Hàng'
+			SELECT P.product_name, P.image, PH.price, OD.Quantity, PH.price * OD.Quantity AS N'TỔNG TIỀN', OD.State as N'Trạng Thái', O.Order_ID as N'Mã Đơn Hàng', PH.priceHistoryId as N'Mã Giá'
 			FROM [Order] O 
 			JOIN OrderDetail OD ON O.Order_ID = OD.Order_Id 
 			JOIN PriceHistory PH ON PH.priceHistoryId = OD.priceHistoryId 
@@ -987,3 +987,39 @@ BEGIN
 END
 --Phân quyền
 GRANT EXEC ON OBJECT::dbo.SP_GetOrderDetailsByState TO  Customer;
+--#########################################################################DELETE Order DETAIL#####################################################################################
+CREATE PROCEDURE SP_DeleteOrderDetailState
+    @OrderId INT,
+    @PriceHistoryId INT
+AS
+BEGIN
+    -- Kiểm tra xem Order_Id và PriceHistoryId có tồn tại hay không
+    IF EXISTS (SELECT 1 FROM OrderDetail WHERE Order_Id = @OrderId AND priceHistoryId = @PriceHistoryId)
+    BEGIN
+        -- Cập nhật trạng thái nếu Order_Id và PriceHistoryId tồn tại
+        UPDATE OrderDetail
+        SET State = 0
+        WHERE Order_Id = @OrderId AND priceHistoryId = @PriceHistoryId;
+        
+        -- Kiểm tra nếu tất cả OrderDetail có trạng thái 0 thì cập nhật trạng thái của Order
+        IF NOT EXISTS (SELECT 1 FROM OrderDetail WHERE Order_Id = @OrderId AND State <> 0)
+        BEGIN
+            UPDATE [Order]
+            SET State = 0
+            WHERE Order_ID = @OrderId;
+        END
+
+        -- Trả về thông báo thành công
+        SELECT 'Update successful' AS Message;
+    END
+    ELSE
+    BEGIN
+        -- Trả về thông báo lỗi nếu không tìm thấy Order_Id và PriceHistoryId
+        SELECT 'Order_Id or PriceHistoryId not found' AS Message;
+    END
+END;
+
+--Phân quyền
+GRANT EXEC ON OBJECT::dbo.SP_DeleteOrderDetailState TO  Customer;
+--RUN
+EXEC SP_DeleteOrderDetailState @OrderId = 12, @PriceHistoryId = 3

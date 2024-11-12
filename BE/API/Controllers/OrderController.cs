@@ -32,12 +32,16 @@ namespace API.Controllers
         {
             BaseResponseModel model = order.Post(request);
 
-            if (model.IsSuccess)
-            {
-                return Ok(model);
-            }
+            return model.IsSuccess ? Ok(model) : NotFound(model);
+        }
 
-            return BadRequest(model);
+        [HttpDelete]
+        [Authorize(Roles = "Customer")]
+        public IActionResult Delete(int OrderId, int PriceHistory)
+        {
+            BaseResponseModel response = order.Delete(OrderId, PriceHistory);
+
+            return response.IsSuccess ? Ok(response) : BadRequest(response);
         }
     }
 }

@@ -51,6 +51,23 @@ export class CustomerService {
     });
   }
 
+  //Delete Order detail
+  async deleteOrder(orderId: Number, priceHistoryId: number): Promise<BaseResponseModel> {
+    //https://localhost:7060/api/Order?OrderId=12&PriceHistory=1
+    const url = `${this.apiUrl}Order?OrderId=${orderId}&PriceHistory=${priceHistoryId}`;
+    return await fetch(url, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${this.token}`,
+      }
+    }).then((response) => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json() as Promise<BaseResponseModel>;
+    });
+  }
 
   //post order
   async postOrder(order: OrderRequestModule) : Promise<BaseResponseModel> {

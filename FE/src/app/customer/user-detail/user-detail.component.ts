@@ -60,7 +60,7 @@ export class UserDetailComponent {
   //--
   underlineTransform = 'translateX(0%)';
   underActive = 0;
-
+  Active: number = -1;
   orders: OrderDetailModel[] = [];
 
 
@@ -72,7 +72,7 @@ export class UserDetailComponent {
   ngOnInit() {
     this.getUserInfo();
     console.log(this.userInfo);
-    this.getOrder(0);
+    this.getOrder(-1);    
   }
 
   async getAddressById(idAddress: number) {
@@ -179,11 +179,29 @@ export class UserDetailComponent {
   }
 
   //-- select Order
-  async getOrder(oredrState: number) {
+  async getOrder(oredrState: number | undefined) {
+    if(oredrState === undefined)
+      oredrState = this.Active;
+    else
+      this.Active = oredrState;
     const response: BaseResponseModel = await this.service.getOrder(oredrState);
     if(response.isSuccess) {
       this.orders = response.data;
-      console.log(this.orders);      
     }
+  }
+
+  async deleteOrder(orderId: Number, priceHistoryId: number) {
+    console.log('OrderId: ', orderId);    
+    console.log('priceHistoryId: ', priceHistoryId);
+    const response: BaseResponseModel = await this.service.deleteOrder(orderId, priceHistoryId);
+    this.trigger = new Date()
+    this.dataNotification.messages = response.message ? response.message : '';
+    if(response.isSuccess) {
+      this.dataNotification.status = 'success'
+      this.getOrder(undefined);
+    } else {
+      this.dataNotification.status = 'error';
+    }
+
   }
 }
