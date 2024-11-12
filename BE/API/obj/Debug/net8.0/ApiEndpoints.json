@@ -442,7 +442,7 @@
     "Parameters": [
       {
         "Name": "customer",
-        "Type": "DTO.User.LoginRequestModule",
+        "Type": "DTO.Register.RegisterRequestModule",
         "IsRequired": true
       }
     ],

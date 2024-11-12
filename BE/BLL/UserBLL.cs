@@ -1,6 +1,7 @@
 ﻿using BLL.Interface;
 using BLL.LoginBLL;
 using DLL.Models;
+using DTO.Register;
 using DTO.Responses;
 using DTO.User;
 using Microsoft.EntityFrameworkCore;
@@ -74,7 +75,7 @@ namespace BLL
             }
         }
 
-        public BaseResponseModel Register(LoginRequestModule customer)
+        public BaseResponseModel Register(RegisterRequestModule customer)
         {
             if (!customer.Validate())
             {
@@ -117,7 +118,7 @@ namespace BLL
             return new BaseResponseModel()
             {
                 IsSuccess = true,
-                Message = "Tạo Tài Khoản Thành Công!"
+                Message = "Tạo Tài Khoản Thành Công! Vui Lòng Đăng Nhập..."
             };
         }
 

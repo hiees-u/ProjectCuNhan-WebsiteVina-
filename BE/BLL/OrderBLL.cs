@@ -1,11 +1,9 @@
 ﻿using BLL.Interface;
 using BLL.LoginBLL;
-using DLL.Models;
 using DTO.Order;
 using DTO.Responses;
 using System.Data;
 using System.Data.SqlClient;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace BLL
 {

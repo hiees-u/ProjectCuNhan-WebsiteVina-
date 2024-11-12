@@ -1,3 +1,9 @@
+<div class="notification">
+  <app-notification
+    [data]="dataNotification"
+    [trigger]="trigger"
+  ></app-notification>
+</div>
 <div class="register-container">
   <button (click)="backToHomePage()" class="button-back-to-home" style="vertical-align: middle">
     <span>Home </span>
@@ -12,7 +18,7 @@
           id="username"
           name="username"
           required
-          [(ngModel)]="loginData.userName"
+          [(ngModel)]="data.accountName"
           #username="ngModel"
         />
         <div *ngIf="username.invalid && username.touched" class="error">
@@ -27,7 +33,7 @@
           id="password"
           name="password"
           required
-          [(ngModel)]="loginData.passWord"
+          [(ngModel)]="data.password"
           #password="ngModel"
         />
         <div *ngIf="password.invalid && password.touched" class="error">
@@ -42,7 +48,7 @@
           id="repassword"
           name="repassword"
           required
-          [(ngModel)]="loginData.re_passWord"
+          [(ngModel)]="data.rePassword"
           #repassword="ngModel"
         />
         <div *ngIf="repassword.invalid && repassword.touched" class="error">

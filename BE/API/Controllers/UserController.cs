@@ -4,6 +4,7 @@ using DTO.Responses;
 using BLL.Interface;
 using Microsoft.AspNetCore.Authorization;
 using BLL;
+using DTO.Register;
 
 namespace API.Controllers
 {
@@ -35,7 +36,7 @@ namespace API.Controllers
         }
 
         [HttpPost("Register")]
-        public IActionResult Register([FromBody] LoginRequestModule customer)
+        public IActionResult Register([FromBody] RegisterRequestModule customer)
         {
             try
             {

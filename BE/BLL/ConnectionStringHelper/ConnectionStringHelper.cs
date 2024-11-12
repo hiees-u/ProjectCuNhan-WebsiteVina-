@@ -4,7 +4,10 @@ namespace BLL.LoginBLL
 {
     public static class ConnectionStringHelper
     {
-        private static string defaultConnectionString = "Data Source=DESKTOP-L6DVGTI;Initial Catalog=CAFFEE_VINA_DBv1;User ID=sa;Password=12345;Encrypt=False";
+        //private static string defaultConnectionString = "Data Source=DESKTOP-L6DVGTI;Initial Catalog=CAFFEE_VINA_DBv1;User ID=sa;Password=123;Encrypt=False";
+        private static string defaultConnectionString = "Data Source=DESKTOP-L6DVGTI;Initial Catalog=CAFFEE_VINA_DBv1;User ID=sa; Password=123; Encrypt=False";
+        //Data Source=DESKTOP-L6DVGTI;Initial Catalog=CAFFEE_VINA_DBv1;User ID=sa;Encrypt=False
+        //Data Source=DESKTOP-L6DVGTI;Initial Catalog=CAFFEE_VINA_DBv1;User ID=sa;Encrypt=False;Trust Server Certificate=True
 
         private static string connectionString = defaultConnectionString;
     
