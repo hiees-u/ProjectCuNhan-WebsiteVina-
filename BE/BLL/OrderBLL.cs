@@ -76,7 +76,7 @@ namespace BLL
 
         public BaseResponseModel Get(int orderState)
         {
-            if (orderState < 0 || orderState > 4) {
+            if (orderState < -1 || orderState > 4) {
                 return new BaseResponseModel()
                 {
                     IsSuccess = false,
@@ -106,7 +106,8 @@ namespace BLL
                                     price = reader.GetDecimal(reader.GetOrdinal("price")),
                                     quantity = reader.GetInt32(reader.GetOrdinal("Quantity")),
                                     totalprice = reader.GetDecimal(reader.GetOrdinal("TỔNG TIỀN")),
-                                    state = reader.GetInt32(reader.GetOrdinal("state")),
+                                    state = reader.GetInt32(reader.GetOrdinal("Trạng Thái")),
+                                    orderid = reader.GetInt32(reader.GetOrdinal("Mã Đơn Hàng"))
                                 });
                             }
                         }

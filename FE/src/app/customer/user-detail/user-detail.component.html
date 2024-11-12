@@ -129,6 +129,7 @@
             class="order-header-item no-select"
             [ngClass]="{ active: underActive === 0 }"
             (click)="moveUnderline(0)"
+            (click)="getOrder(-1)"
           >
             <span>Tất cả</span>
           </li>
@@ -136,6 +137,7 @@
             class="order-header-item no-select"
             [ngClass]="{ active: underActive === 1 }"
             (click)="moveUnderline(1)"
+            (click)="getOrder(1)"
           >
             <span>Đã Xác Nhận Đơn</span>
           </li>
@@ -143,6 +145,7 @@
             class="order-header-item no-select"
             [ngClass]="{ active: underActive === 2 }"
             (click)="moveUnderline(2)"
+            (click)="getOrder(2)"
           >
             <span>Đang xử lý</span>
           </li>
@@ -150,6 +153,7 @@
             class="order-header-item no-select"
             [ngClass]="{ active: underActive === 3 }"
             (click)="moveUnderline(3)"
+            (click)="getOrder(3)"
           >
             <span>Đang Vận chuyển</span>
           </li>
@@ -157,6 +161,7 @@
             class="order-header-item no-select"
             [ngClass]="{ active: underActive === 4 }"
             (click)="moveUnderline(4)"
+            (click)="getOrder(4)"
           >
             <span>Đã Giao</span>
           </li>
@@ -164,6 +169,7 @@
             class="order-header-item no-select"
             [ngClass]="{ active: underActive === 5 }"
             (click)="moveUnderline(5)"
+            (click)="getOrder(0)"
           >
             <span>Đã Hủy</span>
           </li>
@@ -174,20 +180,37 @@
         </ul>
       </div>
 
-      <div class="content-order">
+      <div class="content-order" *ngFor="let item of orders">
         <div class="content-order-header">
-          <span>Đã hủy</span>
+          <span [ngSwitch]="item.state">
+            <span *ngSwitchCase="0">Đã Hủy</span>
+            <span *ngSwitchCase="1">Đã Xác Nhận Đơn</span>
+            <span *ngSwitchCase="2">Đang xử lý</span>
+            <span *ngSwitchCase="4">Đã Giao</span>
+            <span *ngSwitchCase="3">Đang Vận chuyển</span>
+          </span>
           <div class="content-order-content">
             <div>
-              <img [src]="'assets/Products/' + 'p1.png'" alt="" />
-              <span class="name">Robusta Mộc Phin - Buôn Mê Coffee</span>
+              <img [src]="'assets/Products/' + item.image" alt="" />
+              <span class="name"
+                >{{ item.productname }}
+                <br />
+                <span class="quantity">
+                  <i class="fa-solid fa-xmark"></i>
+                  {{ item.quantity }}
+                </span>
+              </span>
             </div>
-            <span class="price">100.000đ</span>
+            <span class="price">{{ item.price | customCurrency }}</span>
           </div>
         </div>
         <div class="content-order-footer">
-          <span class="deleteBy">Đã hủy bởi bạn</span>
-          <span class="total-price">Thành tiền <span>100.000đ</span></span>
+          <!-- <span class="deleteBy">Đã hủy bởi bạn</span> -->
+          <button class="deleteOrder" *ngIf="item.state === 1">Hủy đơn</button>
+          <span class="total-price"
+            >Thành tiền
+            <span>{{ item.totalprice | customCurrency }}</span></span
+          >
         </div>
       </div>
     </div>

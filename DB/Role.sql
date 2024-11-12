@@ -366,6 +366,7 @@ GRANT EXECUTE ON GetAllProducts TO Moderator;
 GRANT EXECUTE ON GetAllProducts TO WarehouseEmployee;
 --#########################################################################PROCEDURE GET CATE BY PRODUCT NAME DELETIME IS NULL#####################################################################################
 go
+
 CREATE FUNCTION dbo.GetCategoryName (
     @ProductID INT
 )
@@ -962,7 +963,7 @@ BEGIN
 		-- Kiểm tra nếu @OrderState = -1 thì chọn tất cả các đơn hàng 
 		IF @OrderState = -1 
 		BEGIN 
-			SELECT P.product_name, P.image, PH.price, OD.Quantity, PH.price * OD.Quantity AS N'TỔNG TIỀN', O.State
+			SELECT P.product_name, P.image, PH.price, OD.Quantity, PH.price * OD.Quantity AS N'TỔNG TIỀN', OD.State as N'Trạng Thái', O.Order_ID as N'Mã Đơn Hàng'
 			FROM [Order] O 
 			JOIN OrderDetail OD ON O.Order_ID = OD.Order_Id 
 			JOIN PriceHistory PH ON PH.priceHistoryId = OD.priceHistoryId 
@@ -971,11 +972,12 @@ BEGIN
 		END 
 		ELSE 
 			BEGIN 
-			SELECT P.product_name, P.image, PH.price, OD.Quantity, PH.price * OD.Quantity AS N'TỔNG TIỀN', O.State
-			FROM [Order] O JOIN OrderDetail OD ON O.Order_ID = OD.Order_Id 
+			SELECT P.product_name, P.image, PH.price, OD.Quantity, PH.price * OD.Quantity AS N'TỔNG TIỀN', OD.State as N'Trạng Thái', O.Order_ID as N'Mã Đơn Hàng'
+			FROM [Order] O 
+			JOIN OrderDetail OD ON O.Order_ID = OD.Order_Id 
 			JOIN PriceHistory PH ON PH.priceHistoryId = OD.priceHistoryId 
 			JOIN Product P ON P.product_id = PH.product_id 
-			WHERE O.CreateBy = @CustomerID AND O.State = @OrderState; 
+			WHERE O.CreateBy = @CustomerID AND OD.State = @OrderState; 
 		END 
 	END 
 	ELSE 

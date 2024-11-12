@@ -16,6 +16,16 @@ export interface OrderResponseModel {
   state: number;
 }
 
+export interface OrderDetailModel {
+  productname: string;
+  image: string;
+  price: number;
+  quantity: number;
+  totalprice: number;
+  state: number;
+  orderid: number;  // Thêm thuộc tính orderid
+}
+
 export interface ProductQuantity {
   PriceHistoryId: number;
   Quantity: number;
@@ -39,5 +49,16 @@ export function constructorOrderResponseModel() {
     totalPayment: 0,
     createAt: new Date(),
     state: 0,
+  };
+}
+
+export function constructorOrderDetailModel() {
+  return {
+    productname: '',
+    image: '',
+    price: -1,
+    quantity: -1,
+    totalprice: -1,
+    state: -1,
   };
 }
