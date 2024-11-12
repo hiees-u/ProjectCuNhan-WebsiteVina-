@@ -24,6 +24,7 @@ export interface OrderDetailModel {
   totalprice: number;
   state: number;
   orderid: number;  // Thêm thuộc tính orderid
+  pricehistoryid: number;
 }
 
 export interface ProductQuantity {
@@ -60,5 +61,6 @@ export function constructorOrderDetailModel() {
     quantity: -1,
     totalprice: -1,
     state: -1,
+    pricehistoryid: -1
   };
 }

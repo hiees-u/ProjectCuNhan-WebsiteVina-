@@ -100,14 +100,16 @@ namespace BLL
                             while (reader.Read())
                             {
                                 repon.Add(new OrderResponseModelv2()
-                                {
-                                    productname = reader.GetString(reader.GetOrdinal("product_name")),
-                                    image = reader.GetString(reader.GetOrdinal("image")),
-                                    price = reader.GetDecimal(reader.GetOrdinal("price")),
-                                    quantity = reader.GetInt32(reader.GetOrdinal("Quantity")),
-                                    totalprice = reader.GetDecimal(reader.GetOrdinal("TỔNG TIỀN")),
-                                    state = reader.GetInt32(reader.GetOrdinal("Trạng Thái")),
-                                    orderid = reader.GetInt32(reader.GetOrdinal("Mã Đơn Hàng"))
+                                {                                    
+                                    productname = reader.IsDBNull(reader.GetOrdinal("product_name")) ? null : reader.GetString(reader.GetOrdinal("product_name")), 
+                                    image = reader.IsDBNull(reader.GetOrdinal("image")) ? null : reader.GetString(reader.GetOrdinal("image")), 
+                                    price = reader.IsDBNull(reader.GetOrdinal("price")) ? 0 : reader.GetDecimal(reader.GetOrdinal("price")), 
+                                    quantity = reader.IsDBNull(reader.GetOrdinal("Quantity")) ? 0 : reader.GetInt32(reader.GetOrdinal("Quantity")), 
+                                    totalprice = reader.IsDBNull(reader.GetOrdinal("TỔNG TIỀN")) ? 0 : reader.GetDecimal(reader.GetOrdinal("TỔNG TIỀN")), 
+                                    state = reader.IsDBNull(reader.GetOrdinal("Trạng Thái")) ? 0 : reader.GetInt32(reader.GetOrdinal("Trạng Thái")), 
+                                    orderid = reader.IsDBNull(reader.GetOrdinal("Mã Đơn Hàng")) ? 0 : reader.GetInt32(reader.GetOrdinal("Mã Đơn Hàng")), 
+                                    pricehistoryid = reader.IsDBNull(reader.GetOrdinal("Mã Giá")) ? 0 : reader.GetInt32(reader.GetOrdinal("Mã Giá"))
+                                    
                                 });
                             }
                         }
@@ -118,6 +120,39 @@ namespace BLL
                     IsSuccess = true,
                     Message = "Lấy Thành Công!",
                     Data = repon
+                };
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponseModel()
+                {
+                    IsSuccess = false,
+                    Message = $"Lỗi trong quá trình Lấy Đơn Đặt Hàng: {ex}"
+                };
+            }
+        }
+
+        public BaseResponseModel Delete(int OrderId, int PriceHistory)
+        {
+            try
+            {
+                using (var conn = new SqlConnection(ConnectionStringHelper.Get()))
+                {
+                    conn.Open();
+                    using (SqlCommand command = new SqlCommand("SP_DeleteOrderDetailState", conn))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        command.Parameters.Add(new SqlParameter("@OrderId", OrderId));
+                        command.Parameters.Add(new SqlParameter("@PriceHistoryId", PriceHistory));
+
+                        command.ExecuteNonQuery();
+                    }
+                }
+                return new BaseResponseModel()
+                {
+                    IsSuccess = true,
+                    Message = "Xóa Đơn Hàng Thành Công!"
                 };
             }
             catch (Exception ex)

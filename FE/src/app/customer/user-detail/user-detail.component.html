@@ -206,7 +206,7 @@
         </div>
         <div class="content-order-footer">
           <!-- <span class="deleteBy">Đã hủy bởi bạn</span> -->
-          <button class="deleteOrder" *ngIf="item.state === 1">Hủy đơn</button>
+          <button class="deleteOrder" *ngIf="item.state === 1" (click)="deleteOrder(item.orderid, item.pricehistoryid)">Hủy đơn</button>
           <span class="total-price"
             >Thành tiền
             <span>{{ item.totalprice | customCurrency }}</span></span

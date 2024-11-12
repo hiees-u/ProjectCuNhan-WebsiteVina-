@@ -252,6 +252,27 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "API.Controllers.OrderController",
+    "Method": "Delete",
+    "RelativePath": "api/Order",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "OrderId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "PriceHistory",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "API.Controllers.ProductController",
     "Method": "Get",
     "RelativePath": "api/Product",
