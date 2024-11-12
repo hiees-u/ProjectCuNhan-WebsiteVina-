@@ -349,21 +349,26 @@ EXEC CreateOrderApprover 'HiusOrderApprover', '123@@';
 --#########################################################################PROCEDURE GET ALL PRODUCT DELETIME IS NULL#####################################################################################
 go
 
-CREATE PROCEDURE GetAllProducts
+CREATE PROCEDURE SP_GetAllProducts
 AS
 BEGIN
-	select p.* , ph.price, ph.priceHistoryId
-	from Product p, PriceHistory ph 
-	where p.product_id = ph.product_id and ph. isActive = 0 and totalQuantity > 0 and p.DeleteTime is NULL
-	Order By p.CreateTime Desc
+	SELECT p.*, ph.price, ph.priceHistoryId, sc.SubCategoryName, c.category_name
+	FROM Product p
+	JOIN PriceHistory ph ON p.product_id = ph.product_id
+	JOIN SubCategory sc ON sc.SubCategoryID = p.SubCategoryID
+	JOIN Category c ON c.category_id = p.Category_id
+	WHERE ph.isActive = 0 
+	  AND p.totalQuantity > 0 
+	  AND p.DeleteTime IS NULL
+	ORDER BY p.CreateTime DESC;
 END;
 
-exec GetAllProducts;
+exec SP_GetAllProducts;
 
-GRANT EXECUTE ON GetAllProducts TO Customer;
-GRANT EXECUTE ON GetAllProducts TO OrderApprover;
-GRANT EXECUTE ON GetAllProducts TO Moderator;
-GRANT EXECUTE ON GetAllProducts TO WarehouseEmployee;
+GRANT EXECUTE ON SP_GetAllProducts TO Customer;
+GRANT EXECUTE ON SP_GetAllProducts TO OrderApprover;
+GRANT EXECUTE ON SP_GetAllProducts TO Moderator;
+GRANT EXECUTE ON SP_GetAllProducts TO WarehouseEmployee;
 --#########################################################################PROCEDURE GET CATE BY PRODUCT NAME DELETIME IS NULL#####################################################################################
 go
 

@@ -422,6 +422,8 @@ export class CustomerService {
       sortByName,
       sortByPrice,
     };
+    console.log(params);
+    
     const queryString = Object.keys(params)
       .filter((key) => params[key] !== null && params[key] !== undefined)
       .map(
@@ -430,8 +432,6 @@ export class CustomerService {
       .join('&');
     const url = `${this.apiUrl}Product?${queryString}`;
     console.log(url);
-
-    // const token = localStorage.getItem('token');
 
     try {
       const response = await fetch(url, {

@@ -8,7 +8,17 @@ namespace BLL
 {
     public class ProductBLL : IProduct
     {
-        public BaseResponseModel GetProducts(int? productId, int? cateId, int? subCateId, int? supplierId, string? productName, int pageNumber = 1, int pageSize = 10, int sortByName = 0 /*1: tăng, -1: giảm, 0:*/, int sortByPrice = 0)
+        public BaseResponseModel GetProducts(
+            int? productId,
+            int? cateId,
+            int? subCateId,
+            int? supplierId,
+            string? productName,
+            int pageNumber = 1,
+            int pageSize = 10,
+            int sortByName = 0 /*1: tăng, -1: giảm, 0:*/, 
+            int sortByPrice = 0 /*1: tăng, -1: giảm, 0:*/
+        )
         {
             List<ProductViewUserResponseModel> products = new List<ProductViewUserResponseModel>();
             try
@@ -16,7 +26,7 @@ namespace BLL
                 using (var conn = new SqlConnection(ConnectionStringHelper.Get()))
                 {
                     conn.Open();
-                    using (var command = new SqlCommand("GetAllProducts", conn))
+                    using (var command = new SqlCommand("SP_GetAllProducts", conn))
                     {
                         command.CommandType = System.Data.CommandType.StoredProcedure;
 
@@ -40,7 +50,9 @@ namespace BLL
                                     ModifiedTime = Convert.ToDateTime(reader["ModifiedTime"]),
                                     DeleteTime = reader["DeleteTime"] != DBNull.Value ? Convert.ToDateTime(reader["DeleteTime"]) : null,
                                     Price = Convert.ToDecimal(reader["price"]),
-                                    priceHistoryId = Convert.ToInt32(reader["priceHistoryId"])
+                                    priceHistoryId = Convert.ToInt32(reader["priceHistoryId"]),
+                                    categoryName = Convert.ToString(reader["category_name"]) as string ?? string.Empty,
+                                    subCategoryName = Convert.ToString(reader["SubCategoryName"]) as string ?? string.Empty
                                 };
 
                                 products.Add(product);
@@ -73,7 +85,12 @@ namespace BLL
                         //check if productName has value
                         if (!string.IsNullOrEmpty(productName))
                         {
-                            products = products.Where(p => p.ProductName.Equals(productName)).ToList();
+                            productName = productName.Trim().ToLower();
+                            products = products.Where(
+                                p => p.ProductName.ToLower().Contains(productName) || 
+                                p.categoryName.ToLower().Contains(productName) || 
+                                p.subCategoryName.ToLower().Contains(productName) 
+                            ).ToList();
                         }
 
                         if(sortByName != 0)
@@ -83,7 +100,7 @@ namespace BLL
 
                         if (sortByPrice != 0)
                         {
-                            products = sortByName >= 1 ? products.OrderBy(p => p.ProductName).ToList() : products.OrderByDescending(p => p.ProductName).ToList();
+                            products = sortByPrice >= 1 ? products.OrderBy(p => p.Price).ToList() : products.OrderByDescending(p => p.Price).ToList();
                         }
 
                         //Phân trang

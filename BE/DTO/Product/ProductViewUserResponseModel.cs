@@ -13,6 +13,8 @@
         public string? ModifiedBy { get; set; }
         public decimal Price { get; set; }
         public int priceHistoryId { get; set; }
+        public string subCategoryName { get; set; }
+        public string categoryName { get; set; }
         public DateTime? ExpriryDate { get; set; }
         public DateTime CreateTime { get; set; }
         public DateTime? ModifiedTime { get; set; }

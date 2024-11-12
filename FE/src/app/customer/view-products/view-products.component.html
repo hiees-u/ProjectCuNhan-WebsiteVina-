@@ -2,12 +2,7 @@
   <div class="secon-content">
     <div class="search-box">
       <p class="header-secon">Tìm kiếm:</p>
-      <app-search-box></app-search-box>
-    </div>
-    <div class="br"></div>
-    <div class="filet-price">
-      <p class="header-secon">Bộ lọc giá:</p>
-      <app-filter-price></app-filter-price>
+      <app-search-box (products)="receiveData($event)"></app-search-box>
     </div>
     <div class="br"></div>
     <div class="categorys">
@@ -53,16 +48,17 @@
   <div class="content">
     <div class="sort-content">
       <label for="sort">Sắp Xếp:</label>
-      <select name="sort" id="sort">
-        <option value="0" selected>Giảm Dần Theo Tên</option>
-        <option value="1" selected>Tăng Dần Theo Tên</option>
-        <option value="2" selected>Giảm Dần Theo Giá</option>
-        <option value="3" selected>Tăng Dần Theo Giá</option>
+      <select (change)="handleSort($event)" name="sort" id="sort">
+        <option value="0" selected>Mới Nhất</option>
+        <option value="1">Giảm Dần Theo Tên</option>
+        <option value="2">Tăng Dần Theo Tên</option>
+        <option value="3">Giảm Dần Theo Giá</option>
+        <option value="4">Tăng Dần Theo Giá</option>
       </select>
     </div>
     <div class="content-wrapper">
       <p class="error" *ngIf="products.length === 0">
-        {{logError}}
+        {{ logError }}
       </p>
       <div class="wapper" *ngFor="let item of products">
         <app-product-item
@@ -87,7 +83,8 @@
       </span>
     </div>
   </div>
-  <div class="product-detail"
+  <div
+    class="product-detail"
     [ngClass]="{ show: show === 1, hiden: show === -1, hiden2: show === 0 }"
   >
     <button class="product-detail-close-btn" (click)="handleClose()">
@@ -136,14 +133,18 @@
           </button>
         </div>
         <div class="product-detail-btn">
-          <button class="add-cart btn" (click)="handleAddCart()">Thêm vào giỏ hàng</button>
+          <button class="add-cart btn" (click)="handleAddCart()">
+            Thêm vào giỏ hàng
+          </button>
           <button class="buy-product btn">Mua ngay</button>
         </div>
       </div>
     </div>
   </div>
   <div class="notification">
-    <app-notification [data]="dataNotification" [trigger]="trigger"></app-notification>
+    <app-notification
+      [data]="dataNotification"
+      [trigger]="trigger"
+    ></app-notification>
   </div>
-
 </div>

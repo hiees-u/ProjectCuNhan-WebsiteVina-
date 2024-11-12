@@ -1,7 +1,15 @@
 <div class="container">
   <form action="" class="search-bar">
-    <input type="search" name="search" pattern=".*\S.*" required />
-    <button class="search-btn" type="submit">
+    <input
+      type="search"
+      name="search"
+      [(ngModel)]="searchBox"
+      autocomplete="off"
+      pattern=".*\S.*"
+      required
+    />
+    <button class="search-btn" (click)="onSearch()" type="submit">
+      <i class="fa-regular fa-circle-xmark" (click)="resetSearchBox()"></i>
       <span>Search</span>
     </button>
   </form>
