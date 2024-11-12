@@ -26,6 +26,8 @@ import {
   ConstructerNotification,
   Notification,
 } from '../../shared/module/notification/notification.module';
+import { OrderDetailModel } from '../../shared/module/order/order.module';
+import { CustomCurrencyPipe } from '../../shared/module/customCurrency';
 
 @Component({
   selector: 'app-user-detail',
@@ -38,6 +40,7 @@ import {
     CommuneComponent,
     AddressComponent,
     NotificationComponent,
+    CustomCurrencyPipe
   ],
   templateUrl: './user-detail.component.html',
   styleUrl: './user-detail.component.css',
@@ -58,6 +61,9 @@ export class UserDetailComponent {
   underlineTransform = 'translateX(0%)';
   underActive = 0;
 
+  orders: OrderDetailModel[] = [];
+
+
   constructor(
     private service: CustomerService,
     private servicee: ServicesService
@@ -66,6 +72,7 @@ export class UserDetailComponent {
   ngOnInit() {
     this.getUserInfo();
     console.log(this.userInfo);
+    this.getOrder(0);
   }
 
   async getAddressById(idAddress: number) {
@@ -162,11 +169,21 @@ export class UserDetailComponent {
 
   changeActive(number: number) {
     this.isActive = number;
+    this.getOrder(-1);
   }
 
   moveUnderline(index: number): void {
     this.underActive = index;
     const percentage = (index * 100); // 16.6666% cho mỗi mục
     this.underlineTransform = `translateX(${percentage}%)`;
+  }
+
+  //-- select Order
+  async getOrder(oredrState: number) {
+    const response: BaseResponseModel = await this.service.getOrder(oredrState);
+    if(response.isSuccess) {
+      this.orders = response.data;
+      console.log(this.orders);      
+    }
   }
 }

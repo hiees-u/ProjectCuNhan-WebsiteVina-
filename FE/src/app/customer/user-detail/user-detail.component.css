@@ -102,13 +102,14 @@
 }
 
 .content {
-  height: calc(100% - 30px);
+  /* height: calc(100% - 30px); */
   width: calc(100% - 30px);
   padding: 15px;
   background-color: #c6c4c4;
   animation: slide-left-in 1s ease-in-out;
   transition: all 0.6s ease-in-out;
   border-radius: 15px;
+  min-height: 100%;
 }
 
 p {
@@ -310,7 +311,7 @@ select {
   align-items: center;
 }
 
-.content-order-content>div {
+.content-order-content > div {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -320,7 +321,7 @@ select {
   width: 100px;
 }
 
-.content-order-content>.price {
+.content-order-content > .price {
   color: var(--main-color);
   font-size: 1.2em;
   font-style: italic;
@@ -329,7 +330,7 @@ select {
 
 .content-order-footer {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   width: calc(100% - 30px);
   padding: 15px;
@@ -339,7 +340,7 @@ select {
 }
 
 .content-order-footer .deleteBy {
-  font-size: .9em;
+  font-size: 0.9em;
   color: var(--secon-text-color);
   font-family: var(--main-style);
 }
@@ -354,4 +355,24 @@ select {
   color: var(--main-color);
   margin-left: 15px;
   font-family: var(--main-style);
+}
+
+.quantity i {
+  font-size: 0.7em;
+}
+
+.quantity {
+  color: var(--secon-text-color);
+}
+
+.deleteOrder {
+  margin-right: 15px;
+  padding: 10px 20px;
+  border: 0;
+  outline: 0;
+  color: #fff;
+  background-color: var(--secon-color);
+  font-family: var(--main-style);
+  border-radius: 10px;
+  cursor: pointer;
 }
