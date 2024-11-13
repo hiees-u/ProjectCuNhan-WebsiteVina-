@@ -118,12 +118,12 @@ export class ViewProductsComponent {
       this.sortByName,
       this.sortByPrice,
     );
-    console.log(this.cateActive);
-    console.log(this.subCateActive);
-    console.log(this.searchString);
-    console.log(this.pageActive);
-    console.log(this.sortByName);
-    console.log(this.sortByPrice);    
+    // console.log(this.cateActive);
+    // console.log(this.subCateActive);
+    // console.log(this.searchString);
+    // console.log(this.pageActive);
+    // console.log(this.sortByName);
+    // console.log(this.sortByPrice);    
   }
 
   //nhận dữ liệu từ Search Box
@@ -164,6 +164,10 @@ export class ViewProductsComponent {
       console.error('Error:', error);
       if (this.responseMessage) {
         this.responseMessage.isSuccess = false;
+        console.log('Bắn ra lỗi');
+        this.dataNotification.status = 'error';
+        this.dataNotification.messages = "Vui lòng đăng nhập";
+        this.trigger = new Date(); 
         this.responseMessage.message =
           'An error occurred while adding the product to cart.';
       }

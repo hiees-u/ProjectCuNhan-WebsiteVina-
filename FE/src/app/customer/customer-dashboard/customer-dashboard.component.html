@@ -14,7 +14,7 @@
         </li>
         <li
           class="no-select menu-li menu-li-content"
-          (click)="navigateToOrderProduct()"
+          (click)="navigateToAboutUs()"
           [ngClass]="{ active: isActive === 2 }"
           (click)="changeActive(2)"
         >
@@ -32,30 +32,10 @@
           class="no-select menu-li menu-li-content"
           [ngClass]="{ active: isActive === 4 }"
           (click)="changeActive(4)"
+          (click)="navigateToContact()"
         >
           Liên Hệ
         </li>
-        <!-- <li
-          *ngIf="!isLogin"
-          (click)="showLogin()"
-          class="no-select menu-li login menu-li-content"
-        >
-          Đăng Nhập
-        </li>
-        <li *ngIf="isLogin" class="no-select menu-li cart-user">
-          <div class="cart" (click)="showCartDetail()">
-            <i class="fa-solid fa-cart-shopping"></i>
-          </div>
-          <div class="user">
-            <i class="fa-solid fa-user"></i>
-            <div class="box-user">
-              <button class="btn" (click)="showUserDetail()">
-                Tài khoản của tôi
-              </button>
-              <button class="btn" (click)="logOutHandler()">Đăng Xuất</button>
-            </div>
-          </div>
-        </li> -->
         <li
           *ngIf="!isLogin; else loggedInTemplate"
           (click)="showLogin()"

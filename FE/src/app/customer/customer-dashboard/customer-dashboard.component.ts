@@ -43,12 +43,17 @@ export class CustomerDashboardComponent {
     this.isActive = activeNumber;
   }
 
+  navigateToContact() {
+    // this.isActive = 4;
+    this.router.navigate(['/customer/contact']);
+  }
+
   navigateToViewProduct() {
     this.router.navigate(['/customer/view-product']);
   }
 
-  navigateToOrderProduct() {
-    this.router.navigate(['/customer/order-product']);
+  navigateToAboutUs() {
+    this.router.navigate(['/customer/about-us']);
   }
 
   showCartDetail() {
