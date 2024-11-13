@@ -39,5 +39,22 @@ mặt hàng
 :- Nhân viên duyệt đơn 'Order Approver' (Xử lý đơn hàng, xuất hóa đơn) 
 	=> [Insert DeliveryNote/ DeliveryNoteDetail];
 	=> [Update Order(state)]
-:- Nhân viên quản lý 'Moderator' ( Insert / Update / Delete [Quản lý: Loại hàng, Mặt hàng, Khách hàng, Nhà Sản xuất, Loai khách hàng, Nhân viên, phòng ban]) 
+:- Nhân viên quản lý 'Moderator' ( Insert / Update / Delete [Quản lý: 
+Loại hàng, => DONE DB
+Mặt hàng, => DONE DB
+Khách hàng,
+Nhà Sản xuất, => DONE DB
+Loai khách hàng, => DONE DB
+Nhân viên, 
+phòng ban => 
 và (Quản lý CRUD nhân viên, [thay đổi quyền của nhân viên])
+
+
+vấn đề về Loại Customer
+khi xóa => 
+kiểm tra xem có khách hàng nào có loại đó không |- có -> chọn loại thay thế cho khách
+						|
+						|- không =>xóa bình thường
+
+
+
