@@ -20,17 +20,6 @@ Grant Select On Commune to Customer
 Grant Select On District to Customer
 Grant Select On Province to Customer
 
-go 
---create role Moderator
-Create ROLE Moderator;
-Grant Select, Update, Insert On dbo.UserInfo to Moderator
-Grant Select On dbo.Province to Moderator
-Grant Select On dbo.Users to Moderator
-Grant Select, Insert On dbo.District to Moderator
-Grant Select, Insert On dbo.Commune to Moderator
-Grant Select, Insert On dbo.Address to Moderator
-
-----procedure update state Order
 
 --create role Warehouse Employee
 Create ROLE WarehouseEmployee;
