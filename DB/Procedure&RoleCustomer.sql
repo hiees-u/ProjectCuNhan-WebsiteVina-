@@ -605,10 +605,11 @@ CREATE TYPE ProductQuantityType AS TABLE
     Quantity INT
 );
 GO
-CREATE PROCEDURE SP_InsertOrderWithDetails
+CREATE PROCEDURE SP_InsertOrfaderWithDetails
     @Phone NVARCHAR(11),
     @Address_ID INT,
     @Name_Recipient NVARCHAR(50),
+	@PaymentStatus BIT = 0,
     @ProductQuantities ProductQuantityType READONLY
 AS
 BEGIN
@@ -635,8 +636,8 @@ BEGIN
         JOIN PriceHistory ph ON ph.priceHistoryId = pq.PriceHistoryId;
 
         -- Chèn dữ liệu vào bảng Order và lấy OrderID mới tạo
-        INSERT INTO [Order] (Phone, Adress_ID, Name_Recipient, CreateBy, Total_Payment)
-        VALUES (@Phone, @Address_ID, @Name_Recipient, @IdCustomer, @TotalPayment);
+        INSERT INTO [Order] (Phone, Adress_ID, Name_Recipient, CreateBy, Total_Payment, paymentStatus)
+        VALUES (@Phone, @Address_ID, @Name_Recipient, @IdCustomer, @TotalPayment, @PaymentStatus);
 
         SET @OrderID = SCOPE_IDENTITY();
 
@@ -957,21 +958,24 @@ BEGIN
 		-- Kiểm tra nếu @OrderState = -1 thì chọn tất cả các đơn hàng 
 		IF @OrderState = -1 
 		BEGIN 
-			SELECT P.product_name, P.image, PH.price, OD.Quantity, PH.price * OD.Quantity AS N'TỔNG TIỀN', OD.State as N'Trạng Thái', O.Order_ID as N'Mã Đơn Hàng', PH.priceHistoryId as N'Mã Giá'
+		--trả ra trạng thái thanh toán
+			SELECT P.product_name, P.image, PH.price, OD.Quantity, PH.price * OD.Quantity AS N'TỔNG TIỀN', OD.State as N'Trạng Thái', O.Order_ID as N'Mã Đơn Hàng', PH.priceHistoryId as N'Mã Giá', O.paymentStatus as N'Trạng Thái Thanh Toán'
 			FROM [Order] O 
 			JOIN OrderDetail OD ON O.Order_ID = OD.Order_Id 
 			JOIN PriceHistory PH ON PH.priceHistoryId = OD.priceHistoryId 
 			JOIN Product P ON P.product_id = PH.product_id 
-			WHERE O.CreateBy = @CustomerID; 
+			WHERE O.CreateBy = @CustomerID
+			ORDER BY O.Create_At DESC;
 		END 
 		ELSE 
 			BEGIN 
-			SELECT P.product_name, P.image, PH.price, OD.Quantity, PH.price * OD.Quantity AS N'TỔNG TIỀN', OD.State as N'Trạng Thái', O.Order_ID as N'Mã Đơn Hàng', PH.priceHistoryId as N'Mã Giá'
+			SELECT P.product_name, P.image, PH.price, OD.Quantity, PH.price * OD.Quantity AS N'TỔNG TIỀN', OD.State as N'Trạng Thái', O.Order_ID as N'Mã Đơn Hàng', PH.priceHistoryId as N'Mã Giá', O.paymentStatus as N'Trạng Thái Thanh Toán'
 			FROM [Order] O 
 			JOIN OrderDetail OD ON O.Order_ID = OD.Order_Id 
 			JOIN PriceHistory PH ON PH.priceHistoryId = OD.priceHistoryId 
 			JOIN Product P ON P.product_id = PH.product_id 
-			WHERE O.CreateBy = @CustomerID AND OD.State = @OrderState; 
+			WHERE O.CreateBy = @CustomerID AND OD.State = @OrderState
+			ORDER BY O.Create_At DESC;
 		END 
 	END 
 	ELSE 

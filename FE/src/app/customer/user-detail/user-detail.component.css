@@ -72,24 +72,24 @@
 }
 
 .dashboard-item.active {
-  background-color: #c6c4c4;
+  background-color: #f294009e;
 }
 
 .dashboard-item.active i {
-  color: var(--main-color);
+  color: #fff;
 }
 
 .dashboard-item.active span {
-  color: var(--main-color);
+  color: #fff;
   animation: colorChange 0.6s ease-in-out;
 }
 
 .dashboard-item:hover {
-  background-color: #c6c4c4;
+  background-color: #f294009e;
 }
 
 .dashboard-item:hover i {
-  color: var(--main-color);
+  color: #fff;
 }
 
 .content-r {
@@ -104,11 +104,15 @@
 .content {
   /* height: calc(100% - 30px); */
   width: calc(100% - 30px);
+  margin-left: 1px;
   padding: 15px;
-  background-color: #c6c4c4;
+  background-color: #f294009e;
   animation: slide-left-in 1s ease-in-out;
   transition: all 0.6s ease-in-out;
   border-radius: 15px;
-  min-height: 100%;
+  min-height: calc(100% - 30px);
 }
 
+.no-change {
+  background-color: #e3dddd !important; 
+}

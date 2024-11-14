@@ -2,6 +2,7 @@ export interface OrderRequestModule {
   phone: string;
   addressId: number;
   nameRecipient: string;
+  paymentStatus: boolean;
   products: ProductQuantity[];
 }
 
@@ -25,6 +26,7 @@ export interface OrderDetailModel {
   state: number;
   orderid: number;  // Thêm thuộc tính orderid
   pricehistoryid: number;
+  paymentStatus: boolean;
 }
 
 export interface ProductQuantity {

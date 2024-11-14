@@ -15,7 +15,7 @@ namespace BLL
             int? supplierId,
             string? productName,
             int pageNumber = 1,
-            int pageSize = 10,
+            int pageSize = 8,
             int sortByName = 0 /*1: tăng, -1: giảm, 0:*/, 
             int sortByPrice = 0 /*1: tăng, -1: giảm, 0:*/
         )
@@ -103,6 +103,8 @@ namespace BLL
                             products = sortByPrice >= 1 ? products.OrderBy(p => p.Price).ToList() : products.OrderByDescending(p => p.Price).ToList();
                         }
 
+                        int totalPages = (int)Math.Ceiling((double)products.Count / pageSize);
+
                         //Phân trang
                         products = products.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
 
@@ -110,7 +112,11 @@ namespace BLL
                         {
                             IsSuccess = true,
                             Message = "Lấy thành công tất cả sản phẩm!",
-                            Data = products
+                            Data = new
+                            {
+                                products = products!,
+                                totalPages = totalPages!,
+                            }
                         };
                     }
                 }
