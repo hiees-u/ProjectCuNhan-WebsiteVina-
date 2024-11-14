@@ -51,7 +51,7 @@ export class OrderProductsComponent {
   address: AddressString[] = [];
   addressSelectKey: number = 0;
   isShowInsertAddress: boolean = false;
-
+  isPayment: boolean = false;
   //--
   trigger: any;
   dataNotification: Notification = ConstructerNotification();
@@ -71,6 +71,7 @@ export class OrderProductsComponent {
     addressId: 0,
     nameRecipient: 'Hieu',
     phone: '101',
+    paymentStatus: false,
     products: []
   };
   
@@ -117,6 +118,7 @@ export class OrderProductsComponent {
       orderProducts.push(product);
     })
 
+    this.Order.paymentStatus = this.isPayment;
     this.Order.products = orderProducts;
 
     console.log(this.Order);

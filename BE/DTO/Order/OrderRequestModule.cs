@@ -5,6 +5,7 @@
         public string phone { get; set; } = null!;
         public int addressId { get; set; }
         public string namerecipient { get; set; } = null!;
+        public bool paymendStatus { get; set; }
         public List<ProductQuantity> products { get; set; }
 
         public bool isLength(int maxLength, string request)
@@ -18,6 +19,7 @@
         {
             if(string.IsNullOrWhiteSpace(namerecipient)) return false;
             if(string.IsNullOrWhiteSpace(phone)) return false;
+            if(paymendStatus == null) paymendStatus = false;
             if(products.Count == 0) return false;
             if(addressId <= 0) return false;
 

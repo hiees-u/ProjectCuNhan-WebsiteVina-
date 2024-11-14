@@ -32,6 +32,7 @@ namespace BLL
                         command.Parameters.Add(new SqlParameter("@Phone", System.Data.SqlDbType.NVarChar, 11) { Value = request.phone });
                         command.Parameters.Add(new SqlParameter("@Address_ID", System.Data.SqlDbType.Int) { Value = request.addressId });
                         command.Parameters.Add(new SqlParameter("@Name_Recipient", System.Data.SqlDbType.NVarChar, 50) { Value = request.namerecipient });
+                        command.Parameters.Add(new SqlParameter("@PaymentStatus", SqlDbType.Bit) { Value = request.paymendStatus});
 
                         SqlParameter tvpParam = command.Parameters.AddWithValue("@ProductQuantities", CreateProductQuantityDataTable(request.products));
                         tvpParam.SqlDbType = SqlDbType.Structured;
@@ -97,18 +98,29 @@ namespace BLL
                         {
                             while (reader.Read())
                             {
+                                try
+                                {
+                                    int columnIndex = reader.GetOrdinal("Trạng Thái Thanh Toán");
+                                    bool paymentStatus = !reader.IsDBNull(columnIndex) && reader.GetBoolean(columnIndex);
+                                }
+                                catch (IndexOutOfRangeException ex)
+                                {
+                                    Console.WriteLine("Cột 'Trạng Thái Thanh Toán' không tồn tại: " + ex.Message);
+                                }
+
                                 repon.Add(new OrderResponseModelv2()
-                                {                                    
-                                    productname = reader.IsDBNull(reader.GetOrdinal("product_name")) ? null : reader.GetString(reader.GetOrdinal("product_name")), 
-                                    image = reader.IsDBNull(reader.GetOrdinal("image")) ? null : reader.GetString(reader.GetOrdinal("image")), 
-                                    price = reader.IsDBNull(reader.GetOrdinal("price")) ? 0 : reader.GetDecimal(reader.GetOrdinal("price")), 
-                                    quantity = reader.IsDBNull(reader.GetOrdinal("Quantity")) ? 0 : reader.GetInt32(reader.GetOrdinal("Quantity")), 
-                                    totalprice = reader.IsDBNull(reader.GetOrdinal("TỔNG TIỀN")) ? 0 : reader.GetDecimal(reader.GetOrdinal("TỔNG TIỀN")), 
-                                    state = reader.IsDBNull(reader.GetOrdinal("Trạng Thái")) ? 0 : reader.GetInt32(reader.GetOrdinal("Trạng Thái")), 
-                                    orderid = reader.IsDBNull(reader.GetOrdinal("Mã Đơn Hàng")) ? 0 : reader.GetInt32(reader.GetOrdinal("Mã Đơn Hàng")), 
-                                    pricehistoryid = reader.IsDBNull(reader.GetOrdinal("Mã Giá")) ? 0 : reader.GetInt32(reader.GetOrdinal("Mã Giá"))
-                                    
+                                {
+                                    productname = reader.IsDBNull(reader.GetOrdinal("product_name")) ? null : reader.GetString(reader.GetOrdinal("product_name")),
+                                    image = reader.IsDBNull(reader.GetOrdinal("image")) ? null : reader.GetString(reader.GetOrdinal("image")),
+                                    price = reader.IsDBNull(reader.GetOrdinal("price")) ? 0 : reader.GetDecimal(reader.GetOrdinal("price")),
+                                    quantity = reader.IsDBNull(reader.GetOrdinal("Quantity")) ? 0 : reader.GetInt32(reader.GetOrdinal("Quantity")),
+                                    totalprice = reader.IsDBNull(reader.GetOrdinal("TỔNG TIỀN")) ? 0 : reader.GetDecimal(reader.GetOrdinal("TỔNG TIỀN")),
+                                    state = reader.IsDBNull(reader.GetOrdinal("Trạng Thái")) ? 0 : reader.GetInt32(reader.GetOrdinal("Trạng Thái")),
+                                    orderid = reader.IsDBNull(reader.GetOrdinal("Mã Đơn Hàng")) ? 0 : reader.GetInt32(reader.GetOrdinal("Mã Đơn Hàng")),
+                                    pricehistoryid = reader.IsDBNull(reader.GetOrdinal("Mã Giá")) ? 0 : reader.GetInt32(reader.GetOrdinal("Mã Giá")),
+                                    paymentStatus = !reader.IsDBNull(reader.GetOrdinal("Trạng Thái Thanh Toán")) && reader.GetBoolean(reader.GetOrdinal("Trạng Thái Thanh Toán"))
                                 });
+
                             }
                         }
                     }    

@@ -163,6 +163,9 @@ export class CustomerService {
   async getUserInfo(): Promise<BaseResponseModel> {
     //https://localhost:7060/api/UserInfo
     const url = `${this.apiUrl}UserInfo`;
+    if (typeof window !== 'undefined') {
+      this.token = localStorage.getItem('token') || '';
+    }
 
     try {
       const response = await fetch(url, {

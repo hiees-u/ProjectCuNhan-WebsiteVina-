@@ -41,6 +41,8 @@ export class CartDetailComponent {
   ngOnInit(): void {
     this.getCart();     
     this.onTotalPrice();
+    console.log('đang oninit');
+    
   }
 
   onTotalPrice() {

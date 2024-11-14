@@ -28,6 +28,7 @@ import {
 } from '../../shared/module/notification/notification.module';
 import { OrderDetailModel } from '../../shared/module/order/order.module';
 import { CustomCurrencyPipe } from '../../shared/module/customCurrency';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-detail',
@@ -69,7 +70,8 @@ export class UserDetailComponent {
 
   constructor(
     private service: CustomerService,
-    private servicee: ServicesService
+    private servicee: ServicesService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -144,11 +146,6 @@ export class UserDetailComponent {
   //nhận huyện id đang được selected từ component con
   getDistrictIDChangeChildComponent(districtId: number) {
     this.userInfo.district = districtId;
-    // console.log('========================================');
-    // console.log(
-    //   'Nhận Được Huyện: ' + this.userInfo.district + ' từ Component Con => ',
-    //   new Date().toLocaleString()
-    // );
   }
 
   //nhận tỉnh id đang được selected từ component con
@@ -173,6 +170,12 @@ export class UserDetailComponent {
   changeActive(number: number) {
     this.isActive = number;
     this.getOrder(-1);
+  }
+
+  logOutHandler() {
+    // this.isActive = 3;
+    this.router.navigate(['/customer/view-product']);
+    localStorage.removeItem('token');
   }
 
   moveUnderline(index: number): void {

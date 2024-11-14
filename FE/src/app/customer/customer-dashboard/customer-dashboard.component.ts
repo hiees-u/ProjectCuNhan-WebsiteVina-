@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ViewProductsComponent } from '../view-products/view-products.component';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 
@@ -17,6 +17,11 @@ export class CustomerDashboardComponent {
 
   constructor(private router: Router) {
     this.checkLogin();
+    this.router.events.subscribe(event => {
+      if(event instanceof NavigationEnd) {
+        this.checkLogin();
+      }
+    })
   }
 
   OnInit() {

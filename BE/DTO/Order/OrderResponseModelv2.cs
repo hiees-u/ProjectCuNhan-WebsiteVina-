@@ -10,5 +10,6 @@
         public int state { get; set; }
         public int orderid { get; set; }
         public int pricehistoryid { get; set; }
+        public bool paymentStatus { get; set; }
     }
 }

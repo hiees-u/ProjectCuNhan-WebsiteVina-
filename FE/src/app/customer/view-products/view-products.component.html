@@ -68,18 +68,18 @@
       </div>
     </div>
     <div class="pagination">
+      <span class="pagination-item" (click)="handlePageClick(1)">
+        <i class="fa-solid fa-angle-left"></i>
+      </span>
       <span
-        *ngFor="let page of pages"
+        *ngFor="let page of pageShow"
         class="pagination-item"
         [ngClass]="{ active: pageActive === page }"
         (click)="handlePageClick(page)"
         >{{ page }}</span
       >
-      <span class="pagination-item">
-        <i class="fa-solid fa-ellipsis"></i>
-      </span>
-      <span class="pagination-item">
-        <i class="fa-solid fa-angles-right"></i>
+      <span class="pagination-item" (click)="handlePageClick(pages[pages.length-1])">
+        <i class="fa-solid fa-angle-right"></i>
       </span>
     </div>
   </div>

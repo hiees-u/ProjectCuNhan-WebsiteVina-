@@ -1,4 +1,3 @@
-
 p {
   margin: 0;
 }
@@ -36,7 +35,7 @@ p {
   font-size: 0.6em;
   text-align: end;
   font-family: var(--main-style);
-  color: var(--secon-text-color);
+  color: #fff;
   font-style: italic;
   padding-right: 5%;
 }
@@ -46,11 +45,12 @@ p {
 .box-input,
 .box-input select {
   width: calc(80% - 20px);
+  border: none;
   padding: 8px 10px;
   font-size: 0.7em;
-  border: 1px solid var(--secon-text-color);
+  /* border: 1px solid var(--secon-text-color); */
   outline: none;
-  background-color: transparent;
+  background-color: #fff;
   color: var(--main-text-color);
 }
 
@@ -73,8 +73,8 @@ select {
   width: fit-content;
   margin: 0 0 0 auto;
   padding: 10px 40px;
-  color: var(--secon-text-color);
-  background-color: var(--secon-color);
+  color: #000;
+  background-color: #fff;
   border-radius: 10px;
   cursor: pointer;
   transition: all 0.6s ease-in-out;
@@ -110,7 +110,7 @@ select {
   flex-direction: row;
   align-items: center;
   height: 31px;
-  border: 1px solid var(--secon-text-color);
+  /* border: 1px solid var(--secon-text-color); */
   width: 100%;
   height: fit-content;
   padding: 5px 0;
@@ -182,15 +182,17 @@ select {
   padding: 10px;
 }
 
-.content-order-header > span {
-  width: calc(100% - 20px);
+.content-order-header-header {
+  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: space-between;
+}
+
+.content-order-header > .content-order-header-header > span {
   padding: 10px;
   font-size: 1.3em;
   font-style: italic;
-  text-align: end;
   color: var(--secon-color);
-  display: block;
-  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.3);
 }
 
 .content-order-content {
