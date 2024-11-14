@@ -45,7 +45,7 @@ Mặt hàng, => DONE DB
 Khách hàng,
 Nhà Sản xuất, => DONE DB
 Loai khách hàng, => DONE DB
-Nhân viên, 
+Nhân viên, => DONE DB
 phòng ban => DONE DB
 và (Quản lý CRUD nhân viên, [thay đổi quyền của nhân viên])
 

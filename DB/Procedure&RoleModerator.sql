@@ -8,6 +8,9 @@ Grant Select On dbo.Province to Moderator
 Grant Select, Insert On dbo.District to Moderator
 Grant Select, Insert On dbo.Commune to Moderator
 Grant Select, Insert On dbo.Address to Moderator
+GRANT ALTER ANY ROLE TO Moderator;
+GRANT ALTER ANY USER TO Moderator;
+
 
 -- P -- R -- O -- C -- E -- D -- U -- R -- E -- 
 
@@ -756,6 +759,8 @@ EXEC SP_GetEmployees @DepartmentID = 4
 EXEC SP_GetEmployees @EmployeeTypeID = 4
 EXEC SP_GetEmployees @EmployeeTypeID = 5, @DepartmentID = 4
 
+select * from Employee e, UserInfo u where u.Employ_ID = e.EmployeeID
+
 GO --INSERT
 CREATE PROCEDURE SP_InsertEmployee
 	@EmployeeTypeID INT,
@@ -835,15 +840,17 @@ AS
 BEGIN
     SET NOCOUNT ON;
     DECLARE @AccountName NVARCHAR(50);
+    DECLARE @CurrentEmployeeTypeID INT;
     DECLARE @ErrorMessage NVARCHAR(4000);
 
     BEGIN TRY
         BEGIN TRANSACTION;
 
-        -- Lấy AccountName từ bảng UserInfo
-        SELECT @AccountName = AccountName
-        FROM UserInfo
-        WHERE Employ_ID = @EmployeeID;
+        -- Lấy AccountName và loại nhân viên hiện tại từ bảng UserInfo và Employee
+        SELECT @AccountName = UF.AccountName, @CurrentEmployeeTypeID = E.EmployeeTypeID
+        FROM UserInfo UF
+        JOIN Employee E ON UF.Employ_ID = E.EmployeeID
+        WHERE E.EmployeeID = @EmployeeID;
 
         -- Cập nhật bảng Employee
         UPDATE Employee
@@ -866,6 +873,26 @@ BEGIN
             ModifiedTime = GETDATE()
         WHERE Employ_ID = @EmployeeID;
 
+        -- Nếu loại nhân viên thay đổi, cập nhật quyền
+        IF @CurrentEmployeeTypeID <> @EmployeeTypeID
+        BEGIN
+            -- Lấy tên loại nhân viên mới
+            DECLARE @NewEmployeeType NVARCHAR(30);
+            SELECT @NewEmployeeType = EmployeeTypeName
+            FROM EmployeeType 
+            WHERE EmployeeTypeID = @EmployeeTypeID;
+
+            -- Xóa quyền cũ
+            DECLARE @OldEmployeeType NVARCHAR(30);
+            SELECT @OldEmployeeType = EmployeeTypeName
+            FROM EmployeeType 
+            WHERE EmployeeTypeID = @CurrentEmployeeTypeID;
+            EXEC sp_droprolemember @OldEmployeeType, @AccountName;
+
+            -- Gán quyền mới
+            EXEC sp_addrolemember @NewEmployeeType, @AccountName;
+        END
+
         COMMIT TRANSACTION;
     END TRY
     BEGIN CATCH
@@ -876,18 +903,29 @@ BEGIN
     END CATCH
 END
 
+select * from EmployeeType
+select * from Department
+
+SELECT EmployeeTypeName
+            FROM EmployeeType 
+            WHERE EmployeeTypeID = 1;
+
+
+
+
 GO--GÁN QUYỀN
 GRANT EXECUTE ON OBJECT::SP_UpdateEmployee TO Moderator;
 --RUN
 EXEC SP_UpdateEmployee
-    @EmployeeID = 123,
-    @EmployeeTypeID = 1,
+    @EmployeeID = 20,
+    @EmployeeTypeID = 5,
     @DepartmentID = 2,
-    @FullName = N'Nguyễn Văn A',
+    @FullName = N'Nguyễn Văn B',
     @Email = 'nguyenvana@example.com',
-    @AddressID = 101,
+    @AddressID = 1,
     @Phone = '0123456789',
-    @Gender = 1;
+    @Gender = 0;
+
 
 
 GO--DELETE
