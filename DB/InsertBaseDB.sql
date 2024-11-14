@@ -232,3 +232,31 @@ values(N'Ô 1- 3', 3, 'HiuDev')
 
 select * from Users u, Roles r, UserInfo uf, Employee e
 where u.role_id = r.role_id and uf.AccountName =u.AccountName and e.EmployeeID = uf.Employ_ID
+
+--
+GO
+CREATE TRIGGER trg_UniqueShelvesNamePerWarehouse
+ON Shelve
+AFTER INSERT, UPDATE
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Kiểm tra nếu có tên kệ trùng lặp trong cùng một WarehouseID
+    IF EXISTS (
+        SELECT 
+            s.ShelvesName, s.WarehouseID
+        FROM 
+            Shelve s
+        JOIN 
+            inserted i ON s.ShelvesName = i.ShelvesName 
+                       AND s.WarehouseID = i.WarehouseID
+                       AND s.ShelvesID <> i.ShelvesID
+    )
+    BEGIN
+        -- Nếu phát hiện trùng lặp, rollback transaction và thông báo lỗi
+        ROLLBACK TRANSACTION;
+        RAISERROR (N'Tên kệ đã tồn tại trong kho này, vui lòng chọn tên khác.', 16, 1);
+    END
+END;
+GO

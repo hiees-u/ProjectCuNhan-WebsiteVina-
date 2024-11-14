@@ -135,11 +135,6 @@ namespace BLL
             if (!resquest.validateQuantity()) //quantity <= 0 --> delete
             {
                 return this.Delete(resquest.ProductId);
-                //return new BaseResponseModel()
-                //{
-                //    IsSuccess = false,
-                //    Message = $"Lỗi trong quá trình Cập Nhật Giỏ Hàng:"
-                //};
             }
             else
             {

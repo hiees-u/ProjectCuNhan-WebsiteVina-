@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 
 import { AuthService } from '../auth.service';
 import { Login } from '../../shared/module/login/login.module';
-import { error } from 'console';
 
 @Component({
   selector: 'app-login',
