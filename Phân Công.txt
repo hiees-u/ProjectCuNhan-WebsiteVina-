@@ -4,13 +4,13 @@
 	+ Tra cứu sản phẩm, Loại sản phẩm, 
 	+ Đặt hàng, hủy hàng
  - Quản lý danh mục:
-	- Loại hàng,
-	- Mặt hàng,
+	- Loại hàng, => DONE DB
+	- Mặt hàng, => DONE DB
 	- Khách hàng,
-	- Nhà Sản xuất,
-	- Loai khách hàng, 
+	- Nhà Sản xuất, => DONE DB
+	- Loai khách hàng,  => DONE DB
 	- Nhân viên, 
-	- phòng ban
+	- phòng ban => DONE DB
  - Thiết kế, cài đặt cơ sở dữ liệu.
 
 Vinh:
