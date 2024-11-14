@@ -260,3 +260,8 @@ BEGIN
     END
 END;
 GO
+
+
+--alter
+alter table [Order]
+add paymentStatus bit default 0
