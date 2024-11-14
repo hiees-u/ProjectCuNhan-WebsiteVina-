@@ -46,7 +46,7 @@ Khách hàng,
 Nhà Sản xuất, => DONE DB
 Loai khách hàng, => DONE DB
 Nhân viên, 
-phòng ban => 
+phòng ban => DONE DB
 và (Quản lý CRUD nhân viên, [thay đổi quyền của nhân viên])
 
 
@@ -56,5 +56,9 @@ kiểm tra xem có khách hàng nào có loại đó không |- có -> chọn lo�
 						|
 						|- không =>xóa bình thường
 
+phòng ban => kiểm tra có nhân viên nào thuộc phòng ban đó không nếu có
+=====> 	|-> 'không' xóa bình thường
+	|-> 'có' => 	|-> chọn phòng thay thế
+		 	|-> vẫn xóa phòng sẽ được gán thành phòng 'vô gia cư'
 
 
