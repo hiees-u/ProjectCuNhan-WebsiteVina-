@@ -712,10 +712,247 @@ GO
 EXEC SP_SoftDeleteDepartment 5
 --##################################################################################################################
 GO									--Employee [ Nhân Viên ]
---SELECT
---INSERT
---UPDATE
---DELETE
+GO --SELECT
+CREATE PROCEDURE SP_GetEmployees
+    @DepartmentID INT = NULL,
+    @EmployeeTypeID INT = NULL
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT 
+		E.EmployeeID,
+		UF.AccountName, 
+		UF.full_name, 
+		ET.EmployeeTypeID, 
+		ET.EmployeeTypeName, 
+		D.DepartmentID, 
+		D.DepartmentName,
+		UF.gender,
+		UF.address_id,
+		A.Note + ' / ' + A.HouseNumber + ', ' + C.CommuneName + ', ' + DI.DistrictName + ', ' + PR.ProvinceName AS N'ĐỊA CHỈ'
+	FROM Employee E
+		JOIN UserInfo UF ON UF.Employ_ID = E.EmployeeID
+		JOIN EmployeeType ET ON ET.EmployeeTypeID = E.EmployeeTypeID
+		JOIN Department D ON D.DepartmentID = E.DepartmentID
+		LEFT JOIN Address A ON UF.address_id = A.AddressID
+		LEFT JOIN Commune C ON C.CommuneID = A.CommuneID
+		LEFT JOIN District DI ON DI.DistrictID = C.DistrictID
+		LEFT JOIN Province PR ON PR.ProvinceID = DI.ProvinceID
+	WHERE 
+		E.DeleteTime IS NULL 
+		AND ET.DeleteTime IS NULL 
+		AND D.DeleteTime IS NULL 
+		AND UF.DeleteTime IS NULL
+        AND (@DepartmentID IS NULL OR E.DepartmentID = @DepartmentID)
+        AND (@EmployeeTypeID IS NULL OR E.EmployeeTypeID = @EmployeeTypeID);
+END
+--GÁN QUYỀN
+GRANT EXECUTE ON OBJECT::SP_GetEmployees TO Moderator;
+GO
+--RUN
+EXEC SP_GetEmployees
+EXEC SP_GetEmployees @DepartmentID = 4
+EXEC SP_GetEmployees @EmployeeTypeID = 4
+EXEC SP_GetEmployees @EmployeeTypeID = 5, @DepartmentID = 4
+
+GO --INSERT
+CREATE PROCEDURE SP_InsertEmployee
+	@EmployeeTypeID INT,
+	@DepartmentID INT,
+	@AccountName VARCHAR(25)
+AS
+BEGIN
+	SET NOCOUNT ON;
+	DECLARE @NewEmployeeID INT;
+	DECLARE @EmployeeType NVARCHAR(30);
+	DECLARE @ROLE INT;
+	DECLARE @ErrorMessage NVARCHAR(4000);
+
+	BEGIN TRY
+		BEGIN TRANSACTION;
+		INSERT INTO Employee(EmployeeTypeID, DepartmentID, ModifiedBy)
+		VALUES (@EmployeeTypeID, @DepartmentID, SUSER_NAME());
+
+		SET @NewEmployeeID = SCOPE_IDENTITY();
+
+		--LẤY RA TÊN LOẠI NHÂN VIÊN ĐỂ GÁN QUYỀN
+		SELECT @EmployeeType = EmployeeTypeName
+		FROM EmployeeType WHERE EmployeeTypeID = @EmployeeTypeID;
+
+		--> Tạo Login
+		DECLARE @Sql NVARCHAR(MAX)
+		SET @Sql = 'CREATE LOGIN [' + @AccountName + '] WITH PASSWORD = ''123'';'
+		EXEC sp_executesql @Sql;
+
+		-- Tạo User trong database hiện tại
+		SET @Sql = 'CREATE USER [' + @AccountName + '] FOR LOGIN [' + @AccountName + '];'
+		EXEC sp_executesql @Sql;
+
+		-- Gán quyền cho User
+		EXEC sp_addrolemember @EmployeeType, @AccountName;
+
+		-- Gán Login vào server role 'CustomerServerRole' -- được phép sửa xóa login sqlserver
+		SET @Sql = 'ALTER SERVER ROLE CustomerServerRole ADD MEMBER [' + @AccountName + '];'
+		EXEC sp_executesql @Sql
+
+		--LẤY RA ROLE
+		SELECT @ROLE = R.role_id FROM Roles R WHERE R.role_name = @EmployeeType
+
+		-- INSERT BẢNG Users
+		INSERT INTO Users (AccountName, role_id)
+		VALUES (@AccountName, @ROLE)
+
+		--INSERT BẢNG USERSINFO
+		INSERT INTO UserInfo (AccountName, Employ_ID, ModifiedBy)
+		VALUES (@AccountName, @NewEmployeeID, SUSER_NAME())
+		COMMIT TRANSACTION;
+	END TRY
+	BEGIN CATCH
+		-- Rollback nếu có lỗi xảy ra 
+		ROLLBACK TRANSACTION; 
+		SET @ErrorMessage = ERROR_MESSAGE(); 
+		RAISERROR(@ErrorMessage, 16, 1);
+	END CATCH
+END
+GO
+--GÁN QUYỀN
+GRANT EXECUTE ON OBJECT::SP_InsertEmployee TO Moderator;
+--RUN
+EXEC SP_InsertEmployee @EmployeeTypeID = 6, @DepartmentID = 7, @AccountName = 'TEST1'
+
+GO--UPDATE
+CREATE PROCEDURE SP_UpdateEmployee
+    @EmployeeID INT,
+    @EmployeeTypeID INT,
+    @DepartmentID INT,
+    @FullName NVARCHAR(100),
+    @Email NVARCHAR(100),
+    @AddressID INT,
+    @Phone NVARCHAR(15),
+    @Gender INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    DECLARE @AccountName NVARCHAR(50);
+    DECLARE @ErrorMessage NVARCHAR(4000);
+
+    BEGIN TRY
+        BEGIN TRANSACTION;
+
+        -- Lấy AccountName từ bảng UserInfo
+        SELECT @AccountName = AccountName
+        FROM UserInfo
+        WHERE Employ_ID = @EmployeeID;
+
+        -- Cập nhật bảng Employee
+        UPDATE Employee
+        SET 
+            EmployeeTypeID = @EmployeeTypeID,
+            DepartmentID = @DepartmentID,
+            ModifiedBy = SUSER_NAME(),
+            ModifiedTime = GETDATE()
+        WHERE EmployeeID = @EmployeeID;
+
+        -- Cập nhật bảng UserInfo
+        UPDATE UserInfo
+        SET 
+            full_name = @FullName,
+            email = @Email,
+            address_id = @AddressID,
+            phone = @Phone,
+            gender = @Gender,
+            ModifiedBy = SUSER_NAME(),
+            ModifiedTime = GETDATE()
+        WHERE Employ_ID = @EmployeeID;
+
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        -- Rollback nếu có lỗi xảy ra
+        ROLLBACK TRANSACTION;
+        SET @ErrorMessage = ERROR_MESSAGE();
+        RAISERROR(@ErrorMessage, 16, 1);
+    END CATCH
+END
+
+GO--GÁN QUYỀN
+GRANT EXECUTE ON OBJECT::SP_UpdateEmployee TO Moderator;
+--RUN
+EXEC SP_UpdateEmployee
+    @EmployeeID = 123,
+    @EmployeeTypeID = 1,
+    @DepartmentID = 2,
+    @FullName = N'Nguyễn Văn A',
+    @Email = 'nguyenvana@example.com',
+    @AddressID = 101,
+    @Phone = '0123456789',
+    @Gender = 1;
+
+
+GO--DELETE
+CREATE PROCEDURE SP_DeleteEmployee
+    @EmployeeID INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    DECLARE @AccountName NVARCHAR(50);
+    DECLARE @ErrorMessage NVARCHAR(4000);
+
+    BEGIN TRY
+        BEGIN TRANSACTION;
+
+        -- Lấy AccountName từ bảng UserInfo
+        SELECT @AccountName = AccountName
+        FROM UserInfo
+        WHERE Employ_ID = @EmployeeID;
+
+        -- Cập nhật ModifiedTime, ModifiedBy và DeleteTime trong bảng Employee
+        UPDATE Employee
+        SET 
+            ModifiedTime = GETDATE(),
+            ModifiedBy = SUSER_NAME(),
+            DeleteTime = GETDATE()
+        WHERE EmployeeID = @EmployeeID;
+
+        -- Cập nhật ModifiedTime, ModifiedBy và DeleteTime trong bảng UserInfo
+        UPDATE UserInfo
+        SET 
+            ModifiedTime = GETDATE(),
+            ModifiedBy = SUSER_NAME(),
+            DeleteTime = GETDATE()
+        WHERE Employ_ID = @EmployeeID;
+
+        -- Xóa login và user trong SQL Server nếu tồn tại
+        DECLARE @Sql NVARCHAR(MAX);
+
+        IF EXISTS (SELECT 1 FROM sys.server_principals WHERE name = @AccountName)
+        BEGIN
+            SET @Sql = 'DROP LOGIN [' + @AccountName + '];';
+            EXEC sp_executesql @Sql;
+        END
+
+        IF EXISTS (SELECT 1 FROM sys.database_principals WHERE name = @AccountName)
+        BEGIN
+            SET @Sql = 'DROP USER [' + @AccountName + '];';
+            EXEC sp_executesql @Sql;
+        END
+
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        -- Rollback nếu có lỗi xảy ra
+        ROLLBACK TRANSACTION;
+        SET @ErrorMessage = ERROR_MESSAGE();
+        RAISERROR(@ErrorMessage, 16, 1);
+    END CATCH
+END
+GO
+--GÁN QUYỀN
+GRANT EXECUTE ON OBJECT::SP_DeleteEmployee TO Moderator;
+--RUN
+EXEC SP_DeleteEmployee @EmployeeID = 19;
+
 --##################################################################################################################
 GO									--Customer [ Khách Hàng ]
 --SELECT
