@@ -127,8 +127,18 @@
   },
   {
     "ContainingType": "API.Controllers.CategoryController",
+    "Method": "GetTop10CateName",
+    "RelativePath": "api/Category/Get 10 Category",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.CategoryController",
     "Method": "GetCateNameByProductID",
-    "RelativePath": "api/Category",
+    "RelativePath": "api/Category/Get By Id Product",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -143,12 +153,33 @@
   },
   {
     "ContainingType": "API.Controllers.CategoryController",
-    "Method": "GetTop10CateName",
-    "RelativePath": "api/Category/Get 10 Category",
+    "Method": "GetPagition",
+    "RelativePath": "api/Category/Get Pagition",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [],
+    "Parameters": [
+      {
+        "Name": "cateId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "cateName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "pageNumber",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "pageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
     "ReturnTypes": []
   },
   {
@@ -358,6 +389,37 @@
     "Parameters": [
       {
         "Name": "productID",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.SubCategoryController",
+    "Method": "GetPagition",
+    "RelativePath": "api/SubCategory/Get Pagition",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "subCateId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "subCateName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "pageNumber",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "pageSize",
         "Type": "System.Int32",
         "IsRequired": false
       }

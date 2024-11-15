@@ -21,12 +21,7 @@ namespace API.Controllers
         {
             BaseResponseModel result = subSategory.GetSubCateNameByProductID(productID);
 
-            if (result.IsSuccess)
-            {
-                return Ok(result);
-            }
-
-            return BadRequest(result);
+            return result.IsSuccess ? Ok(result) : BadRequest(result);
         }
 
         [HttpGet("Get 10 Sub Category")]
@@ -34,12 +29,15 @@ namespace API.Controllers
         {
             BaseResponseModel result = subSategory.GetTop10();
 
-            if (result.IsSuccess)
-            {
-                return Ok(result);
-            }
+            return result.IsSuccess ? Ok(result) : BadRequest(result);
+        }
 
-            return BadRequest(result);
+        [HttpGet("Get Pagition")]
+        public IActionResult GetPagition(int? subCateId = null, string? subCateName = null, int pageNumber = 1, int pageSize = 8)
+        {
+            BaseResponseModel result = subSategory.GetPagition(subCateId, subCateName, pageNumber, pageSize);
+
+            return result.IsSuccess ? Ok(result) : BadRequest(result);
         }
     }
 }

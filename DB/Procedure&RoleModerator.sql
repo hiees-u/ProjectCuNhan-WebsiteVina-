@@ -1,7 +1,7 @@
 ﻿go 
 --create role Moderator
 Create ROLE Moderator;
--- R -- O -- L -- E
+-- R -- O -- L -- E --
 Grant Select On dbo.Users to Moderator
 Grant Select, Update, Insert On dbo.UserInfo to Moderator
 Grant Select On dbo.Province to Moderator
@@ -58,14 +58,15 @@ BEGIN
 
     IF @category_id IS NULL AND @category_name IS NULL
     BEGIN
-        SELECT * FROM Category WHERE DeleteTime IS NULL;
+        SELECT * FROM Category WHERE DeleteTime IS NULL ORDER BY ModifiedTime DESC;
     END
     ELSE
     BEGIN
         SELECT * FROM Category
         WHERE (@category_id IS NULL OR category_id = @category_id)
           AND (@category_name IS NULL OR category_name LIKE N'%' + @category_name + N'%')
-		  AND DeleteTime IS NULL;
+		  AND DeleteTime IS NULL
+		ORDER BY ModifiedTime DESC;
     END
 END;
 --GÁN QUYỀN
@@ -156,13 +157,15 @@ BEGIN
     IF @subCategory_id IS NULL AND @subCategory_name IS NULL
     BEGIN
         SELECT * FROM SubCategory WHERE DeleteTime IS NULL
+		ORDER BY ModifiedTime DESC;
     END
     ELSE
     BEGIN
         SELECT * FROM SubCategory
         WHERE DeleteTime IS NULL
           AND (@subCategory_name IS NULL OR SubCategoryName LIKE N'%' + @subCategory_name + N'%')
-		  AND (@subCategory_id IS NULL OR SubCategoryID = @subCategory_id);
+		  AND (@subCategory_id IS NULL OR SubCategoryID = @subCategory_id)
+		ORDER BY ModifiedTime DESC;
     END
 END;
 
@@ -171,7 +174,7 @@ GRANT EXECUTE ON OBJECT::SP_GetSubCategory TO Moderator;
 --RUN
 EXEC SP_GetSubCategory
 EXEC SP_GetSubCategory @subCategory_id = 3
-EXEC SP_GetSubCategory @subCategory_id = 3, @subCategory_name = N''
+EXEC SP_GetSubCategory @subCategory_id = 3, @subCategory_name = N'ca'
 EXEC SP_GetSubCategory @subCategory_name = N'Ca'
 GO
 --DELETE
