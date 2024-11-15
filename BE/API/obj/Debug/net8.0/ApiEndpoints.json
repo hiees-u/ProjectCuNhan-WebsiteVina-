@@ -370,6 +370,70 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "API.Controllers.ShelveController",
+    "Method": "Delete",
+    "RelativePath": "api/Shelve/DeleteShelve/{shelveId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "shelveId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.ShelveController",
+    "Method": "GetShelveOfWarehousehouse",
+    "RelativePath": "api/Shelve/GetShelveOfWarehouse/{warehouseID}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "warehouseID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.ShelveController",
+    "Method": "Post",
+    "RelativePath": "api/Shelve/PostShelve",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "DTO.Shevle.ShelvePostRequestModule",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.ShelveController",
+    "Method": "Put",
+    "RelativePath": "api/Shelve/PutWarehouse",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "DTO.Shevle.ShelveRequestModule",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "API.Controllers.SubCategoryController",
     "Method": "GetTop10CateName",
     "RelativePath": "api/SubCategory/Get 10 Sub Category",
@@ -531,6 +595,80 @@
       {
         "Name": "req",
         "Type": "DTO.UserInfo.UserInfoRequestModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.WarehouseController",
+    "Method": "Delete",
+    "RelativePath": "api/Warehouse/DeleteWareHouse/{warehouseId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "warehouseId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.WarehouseController",
+    "Method": "GetWareHouseID",
+    "RelativePath": "api/Warehouse/GetInForWarehouseID/{warehouseID}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "warehouseID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.WarehouseController",
+    "Method": "Get",
+    "RelativePath": "api/Warehouse/GetWarehouse",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.WarehouseController",
+    "Method": "Post",
+    "RelativePath": "api/Warehouse/PostWarehouse",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "DTO.WareHouse.WareHousePostRequestModule",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.WarehouseController",
+    "Method": "Put",
+    "RelativePath": "api/Warehouse/PutWarehouse",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "DTO.WareHouse.WareHouseRequestModule",
         "IsRequired": true
       }
     ],
