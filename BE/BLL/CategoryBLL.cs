@@ -1,7 +1,9 @@
 ﻿using BLL.Interface;
 using BLL.LoginBLL;
 using DLL.Models;
+using DTO.Category;
 using DTO.Responses;
+using Microsoft.IdentityModel.Tokens;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -97,6 +99,71 @@ namespace BLL
                         Data = categories
                     };
                 }
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponseModel()
+                {
+                    IsSuccess = false,
+                    Message = $"Lỗi trong quá trình: {ex}"
+                };
+            }
+        }
+        
+        public BaseResponseModel GetPagition(int? cateId = null, string? cateName = null, int pageNumber = 1, int pageSize = 8)
+        {
+            try
+            {
+                List<CategoryReponseModule> lst = new List<CategoryReponseModule>();
+
+                using (var connection = new SqlConnection(ConnectionStringHelper.Get()))
+                {
+                    connection.Open();
+                    using (var command = new SqlCommand("SP_SelectCategory", connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        command.Parameters.Add(new SqlParameter("@category_id", SqlDbType.Int) {
+                            Value = cateId.HasValue ? (object)cateId.Value : DBNull.Value 
+                        });
+
+                        if(cateId.HasValue)
+                        {
+                            command.Parameters.Add(new SqlParameter("category_id", SqlDbType.Int) { Value = cateId });
+                        }
+
+                        if (!string.IsNullOrEmpty(cateName))
+                        {
+                            command.Parameters.Add(new SqlParameter("@category_name", SqlDbType.NVarChar, 30) { Value = cateName });
+                        }
+
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read()) {
+                                CategoryReponseModule cate = new CategoryReponseModule()
+                                {
+                                    CategoryId = reader.GetInt32(0),
+                                    CategoryName = reader.GetString(1)
+                                };
+                                lst.Add(cate);
+                            }
+                        }
+                    }
+                }
+
+                //Phân trang
+                int totalPages = (int)Math.Ceiling((double)lst.Count / pageSize);
+                lst = lst.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+                return new BaseResponseModel()
+                {
+                    IsSuccess = true,
+                    Message = "Lấy Danh Sách LOẠI SẢN PHẨM Thành Công!",
+                    Data = new
+                    {
+                        data = lst,
+                        totalPages
+                    }
+                };
             }
             catch (Exception ex)
             {

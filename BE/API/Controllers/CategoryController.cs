@@ -15,7 +15,7 @@ namespace API.Controllers
             this.category = category;
         }
 
-        [HttpGet]
+        [HttpGet("Get By Id Product")]
         public IActionResult GetCateNameByProductID([FromQuery] int productID) 
         {
             BaseResponseModel result = category.GetCateNameByProductID(productID);
@@ -39,6 +39,13 @@ namespace API.Controllers
             }
 
             return BadRequest(result);
+        }
+
+        [HttpGet("Get Pagition")]
+        public IActionResult GetPagition(int? cateId = null, string? cateName = null, int pageNumber = 1, int pageSize = 8)
+        {
+            BaseResponseModel res = category.GetPagition(cateId, cateName, pageNumber, pageSize);
+            return res.IsSuccess ? Ok(res) : BadRequest(res);
         }
     }
 }

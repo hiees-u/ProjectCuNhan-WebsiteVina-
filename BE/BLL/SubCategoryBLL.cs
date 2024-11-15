@@ -2,6 +2,7 @@
 using BLL.LoginBLL;
 using DLL.Models;
 using DTO.Responses;
+using DTO.Subcategory;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -9,6 +10,66 @@ namespace BLL
 {
     public class SubCategoryBLL : ISubCategory
     {
+        public BaseResponseModel GetPagition(int? subCateId = null, string? subCateName = null, int pageNumber = 1, int pageSize = 8)
+        {
+            try
+            {
+                List<SubcategoryReponseModel> subCates = new List<SubcategoryReponseModel>();
+
+                using (var connection = new SqlConnection(ConnectionStringHelper.Get()))
+                {
+                    connection.Open();
+                    using (SqlCommand cmd = new SqlCommand("SP_GetSubCategory", connection))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        if(subCateId.HasValue)
+                        {
+                            cmd.Parameters.Add(new SqlParameter("@subCategory_id", SqlDbType.Int) { Value = subCateId });
+                        }
+                        if(!string.IsNullOrEmpty(subCateName))
+                        {
+                            cmd.Parameters.Add(new SqlParameter("@subCategory_name", SqlDbType.NVarChar) { Value = subCateName });
+                        }
+
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                SubcategoryReponseModel res = new SubcategoryReponseModel()
+                                {
+                                    SubCategoryId = reader.GetInt32(0),
+                                    SubCategoryName = reader.GetString(1),
+                                };
+                                subCates.Add(res); 
+                            }
+                        }
+                    }
+                }
+                //Phân trang
+                int totalPages = (int)Math.Ceiling((double)subCates.Count / pageSize);
+                subCates = subCates.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+                return new BaseResponseModel()
+                {
+                    IsSuccess = true,
+                    Message = "Lấy Danh Sách LOẠI SẢN PHẨM PHỤ Thành Công!",
+                    Data = new
+                    {
+                        data = subCates,
+                        totalPages
+                    }
+                };
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponseModel()
+                {
+                    IsSuccess = false,
+                    Message = $"Lỗi trong quá trình: {ex}"
+                };
+            }
+        }
+
         public BaseResponseModel GetSubCateNameByProductID(int productID)
         {
             try

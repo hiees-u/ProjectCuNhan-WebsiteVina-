@@ -28,7 +28,6 @@ namespace BLL
                     {
                         command.CommandType = System.Data.CommandType.StoredProcedure;
 
-                        //command.Parameters.AddWithValue("@Phone", request.phone);
                         command.Parameters.Add(new SqlParameter("@Phone", System.Data.SqlDbType.NVarChar, 11) { Value = request.phone });
                         command.Parameters.Add(new SqlParameter("@Address_ID", System.Data.SqlDbType.Int) { Value = request.addressId });
                         command.Parameters.Add(new SqlParameter("@Name_Recipient", System.Data.SqlDbType.NVarChar, 50) { Value = request.namerecipient });
