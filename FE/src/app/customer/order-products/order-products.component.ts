@@ -144,11 +144,15 @@ export class OrderProductsComponent {
 
 
   onShowInsertAddress() {
+    console.log(this.address);
+    
     if (this.address.length <= 0) {
       this.isShowInsertAddress = true;
+      console.log('SHOW ADDRESS INSERT');
+      
+    } else {
+      this.isShowInsertAddress = !this.isShowInsertAddress;
     }
-
-    this.isShowInsertAddress = !this.isShowInsertAddress;
 
     if (this.isShowInsertAddress === false) {
       console.log('Ẩn Input thêm địa chỉ!');

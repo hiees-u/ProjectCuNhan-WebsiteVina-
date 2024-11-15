@@ -42,11 +42,14 @@
 }
 
 .name input {
-  width: 45%;
+  min-width: 35%;
+  border: 1px solid #ccc;
+  width: 40%;
   outline: none;
-  border: none;
+  /* border: none; */
   font-weight: inherit;
-  font-size: inherit;
+  font-size: 0.7em;
+  padding: 5px 10px;
 }
 
 .address {

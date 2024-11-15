@@ -74,6 +74,11 @@ export class CustomerService {
     //https://localhost:7060/api/Order
     const url = `${this.apiUrl}Order`;
 
+    console.log('log order ở service');
+    console.log(order);
+    
+    
+
     return fetch(url, {
       method: 'POST',
       headers: {

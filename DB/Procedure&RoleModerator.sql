@@ -8,6 +8,9 @@ Grant Select On dbo.Province to Moderator
 Grant Select, Insert On dbo.District to Moderator
 Grant Select, Insert On dbo.Commune to Moderator
 Grant Select, Insert On dbo.Address to Moderator
+GRANT ALTER ANY ROLE TO Moderator;
+GRANT ALTER ANY USER TO Moderator;
+
 
 -- P -- R -- O -- C -- E -- D -- U -- R -- E -- 
 
@@ -756,6 +759,8 @@ EXEC SP_GetEmployees @DepartmentID = 4
 EXEC SP_GetEmployees @EmployeeTypeID = 4
 EXEC SP_GetEmployees @EmployeeTypeID = 5, @DepartmentID = 4
 
+select * from Employee e, UserInfo u where u.Employ_ID = e.EmployeeID
+
 GO --INSERT
 CREATE PROCEDURE SP_InsertEmployee
 	@EmployeeTypeID INT,
@@ -835,15 +840,17 @@ AS
 BEGIN
     SET NOCOUNT ON;
     DECLARE @AccountName NVARCHAR(50);
+    DECLARE @CurrentEmployeeTypeID INT;
     DECLARE @ErrorMessage NVARCHAR(4000);
 
     BEGIN TRY
         BEGIN TRANSACTION;
 
-        -- Lấy AccountName từ bảng UserInfo
-        SELECT @AccountName = AccountName
-        FROM UserInfo
-        WHERE Employ_ID = @EmployeeID;
+        -- Lấy AccountName và loại nhân viên hiện tại từ bảng UserInfo và Employee
+        SELECT @AccountName = UF.AccountName, @CurrentEmployeeTypeID = E.EmployeeTypeID
+        FROM UserInfo UF
+        JOIN Employee E ON UF.Employ_ID = E.EmployeeID
+        WHERE E.EmployeeID = @EmployeeID;
 
         -- Cập nhật bảng Employee
         UPDATE Employee
@@ -866,6 +873,26 @@ BEGIN
             ModifiedTime = GETDATE()
         WHERE Employ_ID = @EmployeeID;
 
+        -- Nếu loại nhân viên thay đổi, cập nhật quyền
+        IF @CurrentEmployeeTypeID <> @EmployeeTypeID
+        BEGIN
+            -- Lấy tên loại nhân viên mới
+            DECLARE @NewEmployeeType NVARCHAR(30);
+            SELECT @NewEmployeeType = EmployeeTypeName
+            FROM EmployeeType 
+            WHERE EmployeeTypeID = @EmployeeTypeID;
+
+            -- Xóa quyền cũ
+            DECLARE @OldEmployeeType NVARCHAR(30);
+            SELECT @OldEmployeeType = EmployeeTypeName
+            FROM EmployeeType 
+            WHERE EmployeeTypeID = @CurrentEmployeeTypeID;
+            EXEC sp_droprolemember @OldEmployeeType, @AccountName;
+
+            -- Gán quyền mới
+            EXEC sp_addrolemember @NewEmployeeType, @AccountName;
+        END
+
         COMMIT TRANSACTION;
     END TRY
     BEGIN CATCH
@@ -876,18 +903,29 @@ BEGIN
     END CATCH
 END
 
+select * from EmployeeType
+select * from Department
+
+SELECT EmployeeTypeName
+            FROM EmployeeType 
+            WHERE EmployeeTypeID = 1;
+
+
+
+
 GO--GÁN QUYỀN
 GRANT EXECUTE ON OBJECT::SP_UpdateEmployee TO Moderator;
 --RUN
 EXEC SP_UpdateEmployee
-    @EmployeeID = 123,
-    @EmployeeTypeID = 1,
+    @EmployeeID = 20,
+    @EmployeeTypeID = 5,
     @DepartmentID = 2,
-    @FullName = N'Nguyễn Văn A',
+    @FullName = N'Nguyễn Văn B',
     @Email = 'nguyenvana@example.com',
-    @AddressID = 101,
+    @AddressID = 1,
     @Phone = '0123456789',
-    @Gender = 1;
+    @Gender = 0;
+
 
 
 GO--DELETE
@@ -956,6 +994,151 @@ EXEC SP_DeleteEmployee @EmployeeID = 19;
 --##################################################################################################################
 GO									--Customer [ Khách Hàng ]
 --SELECT
---INSERT
---UPDATE
---DELETE
+--> theo loại khách hàng
+CREATE PROCEDURE SP_GetCustomer
+    @TypeCustomerID INT = NULL
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT 
+        UF.AccountName, 
+        UF.full_name, 
+        UF.email, 
+        UF.phone, 
+        UF.gender, 
+        CT.type_customer_name, 
+        A.AddressID,
+        A.Note + ' / ' + A.HouseNumber + ' , ' + CO.CommuneName + ' , ' + DI.DistrictName + ' , ' + PR.ProvinceName AS [ĐỊA CHỈ]
+    FROM UserInfo UF
+    JOIN Customer C ON C.customerId = UF.customer_Id
+    JOIN CustomerType CT ON CT.type_customer_id = C.type_customer_id
+    LEFT JOIN Address A ON A.AddressID = UF.address_id
+    LEFT JOIN Commune CO ON CO.CommuneID = A.CommuneID
+    LEFT JOIN District DI ON DI.DistrictID = CO.DistrictID
+    LEFT JOIN Province PR ON PR.ProvinceID = DI.ProvinceID
+    WHERE 
+		@TypeCustomerID IS NULL OR C.type_customer_id = @TypeCustomerID
+		AND UF.DeleteTime IS NULL AND C.DeleteTime IS NULL
+    ORDER BY UF.CreateTime DESC;
+END
+GO
+--GÁN QUYỀN
+GRANT EXECUTE ON OBJECT::SP_GetCustomer TO Moderator;
+--RUN
+EXEC SP_GetCustomer @TypeCustomerID = 2;
+
+GO--UPDATE
+CREATE PROCEDURE SP_UpdateCustomer
+    @AccountName NVARCHAR(50),
+    @NewTypeCustomerID INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    DECLARE @ErrorMessage NVARCHAR(4000);
+    
+    BEGIN TRY
+        BEGIN TRANSACTION;
+
+        -- Cập nhật loại khách hàng trong bảng Customer dựa trên AccountName
+        UPDATE Customer
+        SET type_customer_id = @NewTypeCustomerID, ModifiedBy = SUSER_NAME(), ModifiedTime = GETDATE()
+        WHERE customerId = (SELECT customer_Id FROM UserInfo WHERE AccountName = @AccountName)
+
+        COMMIT TRANSACTION;
+        
+        -- Thông báo hoàn thành
+        PRINT N'Đã cập nhật loại khách hàng thành công!';
+    END TRY
+    BEGIN CATCH
+        -- Rollback nếu có lỗi xảy ra
+        ROLLBACK TRANSACTION;
+        SET @ErrorMessage = ERROR_MESSAGE();
+        RAISERROR(@ErrorMessage, 16, 1);
+    END CATCH
+END
+GO--GÁN QUYỀN
+GRANT EXECUTE ON OBJECT::SP_UpdateCustomer TO Moderator;
+GO--RUN
+EXEC SP_UpdateCustomer @AccountName = N'john_doe', @NewTypeCustomerID = 2
+
+GO--DELETE
+CREATE PROCEDURE SP_DeleteCustomer
+    @AccountName NVARCHAR(50)
+AS
+BEGIN
+    SET NOCOUNT ON;
+    DECLARE @ErrorMessage NVARCHAR(4000);
+    DECLARE @CustomerID INT;
+
+    BEGIN TRY
+        BEGIN TRANSACTION;
+
+        -- Lấy CustomerID từ bảng UserInfo
+        SELECT @CustomerID = customer_Id
+        FROM UserInfo
+        WHERE AccountName = @AccountName;
+
+        -- Kiểm tra xem khách hàng có đơn đặt hàng hay không
+        IF EXISTS (SELECT 1 FROM [Order] WHERE CreateBy = @CustomerID)
+        BEGIN
+            -- Xóa mềm (Soft delete)
+            UPDATE Customer
+            SET 
+                DeleteTime = GETDATE(),
+                ModifiedBy = SUSER_NAME()
+            WHERE customerId = @CustomerID;
+
+            UPDATE UserInfo
+            SET 
+                DeleteTime = GETDATE(),
+                ModifiedBy = SUSER_NAME()
+            WHERE AccountName = @AccountName;
+        END
+        ELSE
+        BEGIN
+            -- Xóa tất cả cart của user đó
+            DELETE FROM Cart
+            WHERE customerId = @CustomerID;
+
+            -- Xóa thông tin trong bảng UserInfo
+            DELETE FROM UserInfo
+            WHERE AccountName = @AccountName;
+
+            -- Xóa user từ bảng Users
+            DELETE FROM Users
+            WHERE AccountName = @AccountName;
+
+            -- Xóa thông tin trong bảng Customer
+            DELETE FROM Customer
+            WHERE customerId = @CustomerID;
+        END
+		 -- Xóa login và user trong SQL Server
+        DECLARE @Sql NVARCHAR(MAX);
+        IF EXISTS (SELECT 1 FROM sys.server_principals WHERE name = @AccountName)
+        BEGIN
+            SET @Sql = 'DROP LOGIN [' + @AccountName + '];';
+            EXEC sp_executesql @Sql;
+        END
+
+        IF EXISTS (SELECT 1 FROM sys.database_principals WHERE name = @AccountName)
+        BEGIN
+            SET @Sql = 'DROP USER [' + @AccountName + '];';
+            EXEC sp_executesql @Sql;
+        END
+        COMMIT TRANSACTION;
+        
+        -- Thông báo hoàn thành
+        PRINT N'Đã xóa khách hàng thành công!';
+    END TRY
+    BEGIN CATCH
+        -- Rollback nếu có lỗi xảy ra
+        ROLLBACK TRANSACTION;
+        SET @ErrorMessage = ERROR_MESSAGE();
+        RAISERROR(@ErrorMessage, 16, 1);
+    END CATCH
+END
+GO--GÁN QUYỀN
+GRANT EXECUTE ON OBJECT::SP_DeleteCustomer TO Moderator;
+GO--RUN
+EXEC SP_DeleteCustomer @AccountName = N'hieuThu3'
