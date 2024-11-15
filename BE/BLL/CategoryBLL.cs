@@ -3,7 +3,6 @@ using BLL.LoginBLL;
 using DLL.Models;
 using DTO.Category;
 using DTO.Responses;
-using Microsoft.IdentityModel.Tokens;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -173,6 +172,39 @@ namespace BLL
                     Message = $"Lỗi trong quá trình: {ex}"
                 };
             }
+        }
+    
+        public BaseResponseModel Put(CategoryRequestModule req)
+        {
+            if(req.validateCateRes())
+            {
+                try
+                {
+                    using (var connection = new SqlConnection(ConnectionStringHelper.Get()))
+                    {
+                        using (var command = new SqlCommand("SP_UpdateCategory", connection))
+                        {
+
+                        }
+                    }
+                    return new BaseResponseModel()
+                    {
+                        IsSuccess = true,
+                        Message = $"Cập Nhật Thành Công."
+                    };
+                }
+                catch (Exception ex)
+                {
+                    return new BaseResponseModel()
+                    {
+                        IsSuccess = false,
+                        Message = $"Lỗi trong quá trình: {ex}"
+                    };
+                }
+            }
+            return new BaseResponseModel() {
+                IsSuccess = false,
+                Message = "Lỗi..."
         }
     }
 }
