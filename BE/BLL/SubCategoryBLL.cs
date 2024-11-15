@@ -168,5 +168,160 @@ namespace BLL
                 };
             }
         }
+    
+        public BaseResponseModel Put(SubcategoryRequestModel req)
+        {
+            if (req.isValidate())
+            {
+                try
+                {
+                    using (var connection = new SqlConnection(ConnectionStringHelper.Get()))
+                    {
+                        connection.Open();
+                        using (var cmd = new SqlCommand("SP_UpdateSubCategory", connection))
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
+
+                            cmd.Parameters.Add(new SqlParameter("@subCategory_id", SqlDbType.Int)
+                            {
+                                Value = req.SubCategoryId
+                            });
+
+                            cmd.Parameters.Add(new SqlParameter("@subCategory_name", SqlDbType.NVarChar)
+                            {
+                                Value = req.SubCategoryName
+                            });
+
+                            //thực thi
+                            cmd.ExecuteNonQuery();
+
+                            return new BaseResponseModel()
+                            {
+                                IsSuccess = true,
+                                Message = "Cập Nhật Thành Công!"
+                            };
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return new BaseResponseModel()
+                    {
+                        IsSuccess = false,
+                        Message = $"Lỗi trong quá trình: {ex}"
+                    };
+                }
+            }
+            return new BaseResponseModel()
+            {
+                IsSuccess = false,
+                Message = "Lỗi Validate.."
+            };
+        }
+
+        public BaseResponseModel Delete(int subCateId)
+        {
+            //SP_DeleteSubCategory
+            try
+            {
+                using (var connection = new SqlConnection(ConnectionStringHelper.Get()))
+                {
+                    connection.Open();
+                    using (var cmd = new SqlCommand("SP_DeleteSubCategory", connection))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add(new SqlParameter("@subCategory_id", SqlDbType.Int)
+                        {
+                            Value = subCateId
+                        });
+
+                        //thực thi
+                        //cmd.ExecuteNonQuery();
+                        SqlParameter resultParameter = new SqlParameter();
+                        resultParameter.ParameterName = "@ReturnVal";
+                        resultParameter.SqlDbType = SqlDbType.Int;
+                        resultParameter.Direction = ParameterDirection.ReturnValue;
+                        cmd.Parameters.Add(resultParameter);
+
+                        cmd.ExecuteNonQuery();
+
+                        int result = (int)cmd.Parameters["@ReturnVal"].Value;
+
+                        if (result == 0)
+                        {
+                            return new BaseResponseModel()
+                            {
+                                IsSuccess = false,
+                                Message = "Không thể xóa danh mục phụ vì vẫn còn sản phẩm liên quan!!"
+                            };
+                        }
+                        return new BaseResponseModel()
+                        {
+                            IsSuccess = true,
+                            Message = "Xóa thành công!"
+                        };
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponseModel()
+                {
+                    IsSuccess = false,
+                    Message = $"Lỗi trong quá trình: {ex}"
+                };
+            }
+        }
+
+        public BaseResponseModel Post(string SubcategoryName)
+        {
+            if (!string.IsNullOrEmpty(SubcategoryName))
+            {
+                try
+                {
+                    using (var connection = new SqlConnection(ConnectionStringHelper.Get()))
+                    {
+                        connection.Open();
+                        using (var cmd = new SqlCommand("SP_InsertSubCategory", connection))
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
+
+                            cmd.Parameters.Add(new SqlParameter("@subCategory_name", SqlDbType.NVarChar, 30)
+                            {
+                                Value = SubcategoryName
+                            });
+
+                            int rowsAffected = cmd.ExecuteNonQuery();
+
+                            if (rowsAffected > 0)
+                                return new BaseResponseModel()
+                                {
+                                    IsSuccess = true,
+                                    Message = "Thêm loại sản phẩm phụ Thành Công"
+                                };
+                        }
+                    }
+                    return new BaseResponseModel
+                    {
+                        IsSuccess = false,
+                        Message = "Thêm loại sản phẩm thất bại..."
+                    };
+                }
+                catch (Exception ex)
+                {
+                    return new BaseResponseModel()
+                    {
+                        IsSuccess = false,
+                        Message = $"Lỗi trong quá trình: {ex}"
+                    };
+                }
+            }
+            return new BaseResponseModel()
+            {
+                IsSuccess = false,
+                Message = "Vui lòng kiểm tra Tên Loại sản phẩm phụ!"
+            };
+        }
     }
 }

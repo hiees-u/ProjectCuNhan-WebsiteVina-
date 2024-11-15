@@ -182,15 +182,128 @@ namespace BLL
                 {
                     using (var connection = new SqlConnection(ConnectionStringHelper.Get()))
                     {
-                        using (var command = new SqlCommand("SP_UpdateCategory", connection))
+                        connection.Open();
+                        using (var cmd = new SqlCommand("SP_UpdateCategory", connection))
                         {
+                            cmd.CommandType = CommandType.StoredProcedure;
 
+                            cmd.Parameters.Add(new SqlParameter("@category_id", SqlDbType.Int)
+                            {
+                                Value = req.CategoryId
+                            });
+
+                            cmd.Parameters.Add(new SqlParameter("@category_name", SqlDbType.NVarChar)
+                            {
+                                Value = req.CategoryName
+                            });
+
+                            //thực thi
+                            cmd.ExecuteNonQuery();
+
+                            return new BaseResponseModel()
+                            {
+                                IsSuccess = true,
+                                Message = "Cập Nhật Thành Công!"
+                            };
                         }
                     }
+                }
+                catch (Exception ex)
+                {
                     return new BaseResponseModel()
                     {
-                        IsSuccess = true,
-                        Message = $"Cập Nhật Thành Công."
+                        IsSuccess = false,
+                        Message = $"Lỗi trong quá trình: {ex}"
+                    };
+                }
+            }
+            return new BaseResponseModel()
+            {
+                IsSuccess = false,
+                Message = "Lỗi Validate.."
+            };
+        }
+
+        public BaseResponseModel Delete(int cateId)
+        {
+            try
+            {
+                using (var connection = new SqlConnection(ConnectionStringHelper.Get()))
+                {
+                    connection.Open();
+                    using (var cmd = new SqlCommand("SP_DeleteCategory", connection))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add(new SqlParameter("@category_id", SqlDbType.Int) { Value = cateId });
+
+                        SqlParameter resultParameter = new SqlParameter();
+                        resultParameter.ParameterName = "@ReturnVal";
+                        resultParameter.SqlDbType = SqlDbType.Int;
+                        resultParameter.Direction = ParameterDirection.ReturnValue;
+                        cmd.Parameters.Add(resultParameter);
+
+                        cmd.ExecuteNonQuery();
+
+                        int result = (int)cmd.Parameters["@ReturnVal"].Value;
+
+                        if (result == 0)
+                        {
+                            return new BaseResponseModel()
+                            {
+                                IsSuccess = false,
+                                Message = "Không thể xóa loại sản phẩm về vẫn còn sản phẩm liên quan!!"
+                            };
+                        }
+                        return new BaseResponseModel()
+                        {
+                            IsSuccess = true,
+                            Message = "Xóa thành công!"
+                        };
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponseModel()
+                {
+                    IsSuccess = false,
+                    Message = $"Lỗi trong quá trình: {ex}"
+                };
+            }
+        }
+
+        public BaseResponseModel Post(string CategoryName)
+        {
+            if (!string.IsNullOrEmpty(CategoryName))
+            {
+                try
+                {
+                    using (var connection = new SqlConnection(ConnectionStringHelper.Get()))
+                    {
+                        connection.Open();
+                        using (var cmd = new SqlCommand("SP_InsertCategory", connection))
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
+
+                            cmd.Parameters.Add(new SqlParameter("@category_name", SqlDbType.NVarChar, 30) {
+                                Value = CategoryName 
+                            });
+
+                            int rowsAffected = cmd.ExecuteNonQuery();
+
+                            if (rowsAffected > 0)
+                                return new BaseResponseModel()
+                                {
+                                    IsSuccess = true,
+                                    Message = "Thêm loại sản phẩm Thành Công"
+                                };
+                        }
+                    }
+                    return new BaseResponseModel
+                    {
+                        IsSuccess = false,
+                        Message = "Thêm loại sản phẩm thất bại..."
                     };
                 }
                 catch (Exception ex)
@@ -202,9 +315,11 @@ namespace BLL
                     };
                 }
             }
-            return new BaseResponseModel() {
+            return new BaseResponseModel()
+            {
                 IsSuccess = false,
-                Message = "Lỗi..."
+                Message = "Vui lòng kiểm tra Tên Loại sản phẩm!"
+            };
         }
     }
 }

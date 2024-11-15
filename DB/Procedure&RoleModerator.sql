@@ -111,6 +111,8 @@ GRANT EXECUTE ON OBJECT::SP_DeleteCategory TO Moderator;
 EXEC SP_DeleteCategory @category_id = 5
 
 
+
+
 GO									--Sub Category [LOẠI SẢN PHẨM PHỤ]
 
 --UPDATE
@@ -205,6 +207,8 @@ END;
 GRANT EXECUTE ON OBJECT::SP_DeleteSubCategory TO Moderator;
 --RUN
 EXEC SP_DeleteSubCategory @subCategory_id = 5
+
+
 
 GO									--PRODUCT [ SẢN PHẨM ]
 

@@ -63,7 +63,6 @@ namespace API.Controllers
             return BadRequest(res);
         }
 
-        [Authorize(Roles = "Customer")]
         [HttpPost("LogOut")]
         public IActionResult LogOut()
         {

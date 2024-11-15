@@ -1,6 +1,5 @@
 ﻿using BLL.Interface;
 using DTO.Responses;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
