@@ -39,6 +39,10 @@ export class LoginComponent {
           if ((await this.authService.getRole()).data == 4) {
             this.router.navigate(['/employee']);
           }
+          else {
+            console.log('lỗi role=>', await this.authService.getRole());
+            
+          }
         } else {
           console.log(res.isSuccess + ' / ' + res.message);
           this.response = res.message;

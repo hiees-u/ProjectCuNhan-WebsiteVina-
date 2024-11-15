@@ -6,10 +6,10 @@
  - Quản lý danh mục:
 	- Loại hàng, => DONE DB
 	- Mặt hàng, => DONE DB
-	- Khách hàng,
+	- Khách hàng, => DONE DB
 	- Nhà Sản xuất, => DONE DB
 	- Loai khách hàng,  => DONE DB
-	- Nhân viên, 
+	- Nhân viên,  => DONE DB
 	- phòng ban => DONE DB
  - Thiết kế, cài đặt cơ sở dữ liệu.
 
