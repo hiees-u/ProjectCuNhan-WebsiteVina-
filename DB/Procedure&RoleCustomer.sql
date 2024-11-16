@@ -354,9 +354,9 @@ END;
 
 exec SP_GetAllProducts;
 
+GRANT EXECUTE ON SP_GetAllProducts TO Moderator;
 GRANT EXECUTE ON SP_GetAllProducts TO Customer;
 GRANT EXECUTE ON SP_GetAllProducts TO OrderApprover;
-GRANT EXECUTE ON SP_GetAllProducts TO Moderator;
 GRANT EXECUTE ON SP_GetAllProducts TO WarehouseEmployee;
 --#########################################################################PROCEDURE GET CATE BY PRODUCT NAME DELETIME IS NULL#####################################################################################
 go

@@ -211,7 +211,24 @@ EXEC SP_DeleteSubCategory @subCategory_id = 5
 
 
 GO									--PRODUCT [ SẢN PHẨM ]
+--GET
+CREATE PROCEDURE SP_GetAllProductsModerator
+AS
+BEGIN
+	SELECT p.*, ph.price, ph.priceHistoryId, sc.SubCategoryName, c.category_name
+	FROM Product p
+	JOIN PriceHistory ph ON p.product_id = ph.product_id
+	JOIN SubCategory sc ON sc.SubCategoryID = p.SubCategoryID
+	JOIN Category c ON c.category_id = p.Category_id
+	WHERE ph.isActive = 0 
+	  AND p.DeleteTime IS NULL
+	ORDER BY p.CreateTime DESC;
+END;
 
+exec SP_GetAllProductsModerator;
+
+GRANT EXECUTE ON SP_GetAllProductsModerator TO Moderator;
+GO
 --UPDATE
 CREATE PROCEDURE SP_UpdateProduct
     @ProductID INT,
