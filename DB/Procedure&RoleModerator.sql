@@ -244,7 +244,7 @@ BEGIN
     WHERE 
         product_id = @ProductID
 
-    -- Check if the input price is different from the current active price
+    -- Kiểm tra xem giá đầu vào có khác với giá hiện tại đang hoạt động không
     SELECT @CurrentPrice = price
     FROM PriceHistory
     WHERE 
@@ -254,7 +254,7 @@ BEGIN
 
     IF @CurrentPrice <> @Price
     BEGIN
-        -- Check if the new price exists in PriceHistory and is not deleted
+        -- Kiểm tra xem giá mới có tồn tại trong PriceHistory và không bị xóa không
         SELECT @ExistingPriceHistoryID = priceHistoryId
         FROM PriceHistory
         WHERE 
@@ -264,7 +264,7 @@ BEGIN
 
         IF @ExistingPriceHistoryID IS NOT NULL
         BEGIN
-            -- If the price exists, set its isActive to 0
+            -- Nếu giá tồn tại, hãy đặt isActive của nó thành 0
             UPDATE PriceHistory
             SET 
                 isActive = 0,
@@ -273,7 +273,7 @@ BEGIN
             WHERE 
                 priceHistoryId = @ExistingPriceHistoryID
 
-            -- Set the old active price to 1
+            -- Cập nhật giá cũ thành 1 => không active
             UPDATE PriceHistory
             SET 
                 isActive = 1,
@@ -286,11 +286,11 @@ BEGIN
         END
         ELSE
         BEGIN
-            -- If the price does not exist, insert the new price
+            -- Nếu giá không tồn tại, chèn giá mới
             INSERT INTO PriceHistory (product_id, price, CreateDate, ModifiedBy, ModifiedTime, isActive)
             VALUES (@ProductID, @Price, GETDATE(), @ModifiedBy, GETDATE(), 0)
 
-            -- Set the old active price to 1
+            -- Cập nhật giá cũ thành 1 => không active
             UPDATE PriceHistory
             SET 
                 isActive = 1,
@@ -378,6 +378,8 @@ GO
 --Cell thông báo sản phẩm còn trong CELLS
 --CART xóa cả sản phẩm bên trong CART
 --SELECT
+
+--BỎ
 CREATE PROCEDURE SP_GetProductsByModerator
 AS
 BEGIN
@@ -394,6 +396,8 @@ GRANT EXECUTE ON OBJECT::SP_GetProductsByModerator TO Moderator;
 GO
 --RUN
 EXEC SP_GetProductsByModerator
+
+exec SP_GetAllProducts;
 GO
 
 GO									--SUPPLIER [ Nhà Sản xuất ]

@@ -530,6 +530,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "API.Controllers.ProductController",
+    "Method": "Put",
+    "RelativePath": "api/Product",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "req",
+        "Type": "DTO.Product.ProductRequesModule",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "API.Controllers.ProvinceController",
     "Method": "Get",
     "RelativePath": "api/Province",
