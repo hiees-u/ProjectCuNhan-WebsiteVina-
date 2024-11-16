@@ -308,15 +308,15 @@ GRANT EXECUTE ON OBJECT::SP_UpdateProduct TO Moderator;
 GO
 --RUN
 EXEC SP_UpdateProduct 
-@ProductID = 20,
-@ProductName = N'Tên Sản Phẩm2',
-@Image = 'Hình Ảnh2',
-@CategoryID = 3,
-@Supplier = 5, 
-@SubCategoryID = 3, 
-@ExpiryDate = '2024-11-13', 
-@Description = N'Mô tả sản phẩm2', 
-@Price = 102
+	@ProductID = 20,
+	@ProductName = N'Tên Sản Phẩm2',
+	@Image = 'Hình Ảnh2',
+	@CategoryID = 3,
+	@Supplier = 5, 
+	@SubCategoryID = 3, 
+	@ExpiryDate = '2024-11-13', 
+	@Description = N'Mô tả sản phẩm2', 
+	@Price = 102
 --INSERT --> khi thêm sản phẩm nhập giá => insert PriceHistory trạng thái là 0
 go
 CREATE PROCEDURE SP_InsertProduct
@@ -621,7 +621,7 @@ GO									--Department [ Phòng Ban ]
 CREATE PROCEDURE SP_GetDepartment
 AS
 BEGIN
-    SELECT * 
+    SELECT DepartmentID, DepartmentName
     FROM Department
     WHERE DeleteTime IS NULL
 END

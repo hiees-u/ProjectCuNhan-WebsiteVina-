@@ -8,9 +8,9 @@
 	- Mặt hàng, => DONE DB
 	- Khách hàng, => DONE DB
 	- Nhà Sản xuất, => DONE DB, BE
-	- Loai khách hàng,  => DONE DB
+	- Loai khách hàng,  => DONE DB, BE [CRUD]
 	- Nhân viên,  => DONE DB
-	- phòng ban => DONE DB
+	- phòng ban => DONE DB, BE [CRUD]
  - Thiết kế, cài đặt cơ sở dữ liệu.
 
 Vinh:
