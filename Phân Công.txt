@@ -4,10 +4,10 @@
 	+ Tra cứu sản phẩm, Loại sản phẩm, 
 	+ Đặt hàng, hủy hàng
  - Quản lý danh mục:
-	- Loại hàng, => DONE DB
+	- Loại hàng, => DONE DB, BE
 	- Mặt hàng, => DONE DB
 	- Khách hàng, => DONE DB
-	- Nhà Sản xuất, => DONE DB
+	- Nhà Sản xuất, => DONE DB, BE
 	- Loai khách hàng,  => DONE DB
 	- Nhân viên,  => DONE DB
 	- phòng ban => DONE DB

@@ -398,6 +398,8 @@ GO
 
 GO									--SUPPLIER [ Nhà Sản xuất ]
 --GET
+
+
 CREATE PROCEDURE SP_GetSupplier
     @ProductID INT = NULL
 AS
@@ -406,13 +408,14 @@ BEGIN
     BEGIN
         SELECT S.*
         FROM Supplier S
+		WHERE S.DeleteTime IS NULL;
     END
     ELSE
     BEGIN
         SELECT S.*
         FROM Supplier S
         JOIN Product P ON S.SupplierID = P.Supplier
-        WHERE P.product_id = @ProductID
+        WHERE P.product_id = @ProductID AND S.DeleteTime IS NULL;
     END
 END
 --GÁN QUYỀN
