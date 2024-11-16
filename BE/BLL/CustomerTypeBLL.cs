@@ -1,6 +1,5 @@
 ﻿using BLL.Interface;
 using BLL.LoginBLL;
-using DLL.Models;
 using DTO.CustomerType;
 using DTO.Responses;
 using System.Data;

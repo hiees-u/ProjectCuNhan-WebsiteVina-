@@ -777,94 +777,115 @@ select * from Employee e, UserInfo u where u.Employ_ID = e.EmployeeID
 
 GO --INSERT
 CREATE PROCEDURE SP_InsertEmployee
-	@EmployeeTypeID INT,
-	@DepartmentID INT,
-	@AccountName VARCHAR(25)
+    @EmployeeTypeID INT,
+    @DepartmentID INT,
+    @AccountName VARCHAR(25),
+    @RowCount INT OUTPUT
 AS
 BEGIN
-	SET NOCOUNT ON;
-	DECLARE @NewEmployeeID INT;
-	DECLARE @EmployeeType NVARCHAR(30);
-	DECLARE @ROLE INT;
-	DECLARE @ErrorMessage NVARCHAR(4000);
+    SET NOCOUNT ON;
+    DECLARE @NewEmployeeID INT;
+    DECLARE @EmployeeType NVARCHAR(30);
+    DECLARE @ROLE INT;
+    DECLARE @ErrorMessage NVARCHAR(4000);
 
-	BEGIN TRY
-		BEGIN TRANSACTION;
-		INSERT INTO Employee(EmployeeTypeID, DepartmentID, ModifiedBy)
-		VALUES (@EmployeeTypeID, @DepartmentID, SUSER_NAME());
+    BEGIN TRY
+        BEGIN TRANSACTION;
 
-		SET @NewEmployeeID = SCOPE_IDENTITY();
+        IF EXISTS (SELECT 1 FROM Users WHERE AccountName = @AccountName) 
+        BEGIN 
+            RAISERROR('Tên tài khoản đã tồn tại.', 16, 1); 
+            ROLLBACK TRANSACTION; 
+            SET @RowCount = 0;  -- Đặt số hàng bị ảnh hưởng về 0 nếu có lỗi
+            RETURN; 
+        END
 
-		--LẤY RA TÊN LOẠI NHÂN VIÊN ĐỂ GÁN QUYỀN
-		SELECT @EmployeeType = EmployeeTypeName
-		FROM EmployeeType WHERE EmployeeTypeID = @EmployeeTypeID;
+        INSERT INTO Employee (EmployeeTypeID, DepartmentID, ModifiedBy)
+        VALUES (@EmployeeTypeID, @DepartmentID, SUSER_NAME());
 
-		--> Tạo Login
-		DECLARE @Sql NVARCHAR(MAX)
-		SET @Sql = 'CREATE LOGIN [' + @AccountName + '] WITH PASSWORD = ''123'';'
-		EXEC sp_executesql @Sql;
+        SET @NewEmployeeID = SCOPE_IDENTITY();
+        SET @RowCount = @@ROWCOUNT;  -- Lưu lại số hàng bị ảnh hưởng
 
-		-- Tạo User trong database hiện tại
-		SET @Sql = 'CREATE USER [' + @AccountName + '] FOR LOGIN [' + @AccountName + '];'
-		EXEC sp_executesql @Sql;
+        -- Lấy ra tên loại nhân viên để gán quyền
+        SELECT @EmployeeType = EmployeeTypeName
+        FROM EmployeeType 
+        WHERE EmployeeTypeID = @EmployeeTypeID;
 
-		-- Gán quyền cho User
-		EXEC sp_addrolemember @EmployeeType, @AccountName;
+        -- Tạo Login
+        DECLARE @Sql NVARCHAR(MAX);
+        SET @Sql = 'CREATE LOGIN [' + @AccountName + '] WITH PASSWORD = ''123'';';
+        EXEC sp_executesql @Sql;
 
-		-- Gán Login vào server role 'CustomerServerRole' -- được phép sửa xóa login sqlserver
-		SET @Sql = 'ALTER SERVER ROLE CustomerServerRole ADD MEMBER [' + @AccountName + '];'
-		EXEC sp_executesql @Sql
+        -- Tạo User trong database hiện tại
+        SET @Sql = 'CREATE USER [' + @AccountName + '] FOR LOGIN [' + @AccountName + '];';
+        EXEC sp_executesql @Sql;
 
-		--LẤY RA ROLE
-		SELECT @ROLE = R.role_id FROM Roles R WHERE R.role_name = @EmployeeType
+        -- Gán quyền cho User
+        EXEC sp_addrolemember @EmployeeType, @AccountName;
 
-		-- INSERT BẢNG Users
-		INSERT INTO Users (AccountName, role_id)
-		VALUES (@AccountName, @ROLE)
+        -- Gán Login vào server role 'CustomerServerRole' -- được phép sửa xóa login sqlserver
+        SET @Sql = 'ALTER SERVER ROLE CustomerServerRole ADD MEMBER [' + @AccountName + '];';
+        EXEC sp_executesql @Sql;
 
-		--INSERT BẢNG USERSINFO
-		INSERT INTO UserInfo (AccountName, Employ_ID, ModifiedBy)
-		VALUES (@AccountName, @NewEmployeeID, SUSER_NAME())
-		COMMIT TRANSACTION;
-	END TRY
-	BEGIN CATCH
-		-- Rollback nếu có lỗi xảy ra 
-		ROLLBACK TRANSACTION; 
-		SET @ErrorMessage = ERROR_MESSAGE(); 
-		RAISERROR(@ErrorMessage, 16, 1);
-	END CATCH
-END
+        -- Lấy ra ROLE
+        SELECT @ROLE = R.role_id 
+        FROM Roles R 
+        WHERE R.role_name = @EmployeeType;
+
+        -- Chèn vào bảng Users
+        INSERT INTO Users (AccountName, role_id)
+        VALUES (@AccountName, @ROLE);
+
+        -- Chèn vào bảng UserInfo
+        INSERT INTO UserInfo (AccountName, Employ_ID, ModifiedBy)
+        VALUES (@AccountName, @NewEmployeeID, SUSER_NAME());
+
+        -- Cộng dồn số hàng bị ảnh hưởng
+        SET @RowCount = @RowCount + @@ROWCOUNT;
+
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        -- Rollback nếu có lỗi xảy ra
+        ROLLBACK TRANSACTION;
+        SET @ErrorMessage = ERROR_MESSAGE();
+        RAISERROR(@ErrorMessage, 16, 1);
+        SET @RowCount = 0;  -- Đặt số hàng bị ảnh hưởng về 0 nếu có lỗi
+    END CATCH
+END;
+
 GO
 --GÁN QUYỀN
 GRANT EXECUTE ON OBJECT::SP_InsertEmployee TO Moderator;
 --RUN
-EXEC SP_InsertEmployee @EmployeeTypeID = 6, @DepartmentID = 7, @AccountName = 'TEST1'
+EXEC SP_InsertEmployee @EmployeeTypeID = 6, @DepartmentID = 7, @AccountName = 'HIU'
 
 GO--UPDATE
 CREATE PROCEDURE SP_UpdateEmployee
-    @EmployeeID INT,
+    @AccountName NVARCHAR(50),
     @EmployeeTypeID INT,
     @DepartmentID INT,
     @FullName NVARCHAR(100),
     @Email NVARCHAR(100),
     @AddressID INT,
     @Phone NVARCHAR(15),
-    @Gender INT
+    @Gender INT,
+    @RowCount INT OUTPUT
 AS
 BEGIN
     SET NOCOUNT ON;
-    DECLARE @AccountName NVARCHAR(50);
+    DECLARE @EmployeeID INT;
     DECLARE @CurrentEmployeeTypeID INT;
     DECLARE @ErrorMessage NVARCHAR(4000);
 
     BEGIN TRY
         BEGIN TRANSACTION;
 
-        -- Lấy AccountName và loại nhân viên hiện tại từ bảng UserInfo và Employee
-        SELECT @AccountName = UF.AccountName, @CurrentEmployeeTypeID = E.EmployeeTypeID
+        -- Lấy EmployeeID và loại nhân viên hiện tại từ bảng UserInfo và Employee
+        SELECT @EmployeeID = UF.Employ_ID, @CurrentEmployeeTypeID = E.EmployeeTypeID
         FROM UserInfo UF
         JOIN Employee E ON UF.Employ_ID = E.EmployeeID
-        WHERE E.EmployeeID = @EmployeeID;
+        WHERE UF.AccountName = @AccountName;
 
         -- Cập nhật bảng Employee
         UPDATE Employee
@@ -874,6 +895,9 @@ BEGIN
             ModifiedBy = SUSER_NAME(),
             ModifiedTime = GETDATE()
         WHERE EmployeeID = @EmployeeID;
+
+        -- Thiết lập số hàng bị ảnh hưởng
+        SET @RowCount = @@ROWCOUNT;
 
         -- Cập nhật bảng UserInfo
         UPDATE UserInfo
@@ -885,7 +909,10 @@ BEGIN
             gender = @Gender,
             ModifiedBy = SUSER_NAME(),
             ModifiedTime = GETDATE()
-        WHERE Employ_ID = @EmployeeID;
+        WHERE AccountName = @AccountName;
+
+        -- Cộng dồn số hàng bị ảnh hưởng
+        SET @RowCount = @RowCount + @@ROWCOUNT;
 
         -- Nếu loại nhân viên thay đổi, cập nhật quyền
         IF @CurrentEmployeeTypeID <> @EmployeeTypeID
@@ -914,22 +941,13 @@ BEGIN
         ROLLBACK TRANSACTION;
         SET @ErrorMessage = ERROR_MESSAGE();
         RAISERROR(@ErrorMessage, 16, 1);
+        SET @RowCount = 0;  -- Đặt số hàng bị ảnh hưởng về 0 nếu có lỗi
     END CATCH
-END
-
-select * from EmployeeType
-select * from Department
-
-SELECT EmployeeTypeName
-            FROM EmployeeType 
-            WHERE EmployeeTypeID = 1;
-
-
-
+END;
 
 GO--GÁN QUYỀN
 GRANT EXECUTE ON OBJECT::SP_UpdateEmployee TO Moderator;
---RUN
+GO--RUN
 EXEC SP_UpdateEmployee
     @EmployeeID = 20,
     @EmployeeTypeID = 5,
@@ -944,20 +962,21 @@ EXEC SP_UpdateEmployee
 
 GO--DELETE
 CREATE PROCEDURE SP_DeleteEmployee
-    @EmployeeID INT
+    @AccountName NVARCHAR(50),
+    @RowCount INT OUTPUT
 AS
 BEGIN
     SET NOCOUNT ON;
-    DECLARE @AccountName NVARCHAR(50);
+    DECLARE @EmployeeID INT;
     DECLARE @ErrorMessage NVARCHAR(4000);
 
     BEGIN TRY
         BEGIN TRANSACTION;
 
-        -- Lấy AccountName từ bảng UserInfo
-        SELECT @AccountName = AccountName
+        -- Lấy EmployeeID từ bảng UserInfo
+        SELECT @EmployeeID = Employ_ID
         FROM UserInfo
-        WHERE Employ_ID = @EmployeeID;
+        WHERE AccountName = @AccountName;
 
         -- Cập nhật ModifiedTime, ModifiedBy và DeleteTime trong bảng Employee
         UPDATE Employee
@@ -967,13 +986,19 @@ BEGIN
             DeleteTime = GETDATE()
         WHERE EmployeeID = @EmployeeID;
 
+        -- Kiểm tra số hàng bị ảnh hưởng
+        SET @RowCount = @@ROWCOUNT;
+
         -- Cập nhật ModifiedTime, ModifiedBy và DeleteTime trong bảng UserInfo
         UPDATE UserInfo
         SET 
             ModifiedTime = GETDATE(),
             ModifiedBy = SUSER_NAME(),
             DeleteTime = GETDATE()
-        WHERE Employ_ID = @EmployeeID;
+        WHERE AccountName = @AccountName;
+
+        -- Cộng dồn số hàng bị ảnh hưởng
+        SET @RowCount = @RowCount + @@ROWCOUNT;
 
         -- Xóa login và user trong SQL Server nếu tồn tại
         DECLARE @Sql NVARCHAR(MAX);
@@ -997,13 +1022,16 @@ BEGIN
         ROLLBACK TRANSACTION;
         SET @ErrorMessage = ERROR_MESSAGE();
         RAISERROR(@ErrorMessage, 16, 1);
+        SET @RowCount = 0; -- Đặt số hàng bị ảnh hưởng về 0 nếu có lỗi
     END CATCH
-END
+END;
+
 GO
 --GÁN QUYỀN
 GRANT EXECUTE ON OBJECT::SP_DeleteEmployee TO Moderator;
 --RUN
-EXEC SP_DeleteEmployee @EmployeeID = 19;
+EXEC SP_DeleteEmployee @AccountName = N'hiutest1';
+
 
 --##################################################################################################################
 GO									--Customer [ Khách Hàng ]

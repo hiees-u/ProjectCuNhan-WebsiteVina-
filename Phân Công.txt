@@ -4,12 +4,12 @@
 	+ Tra cứu sản phẩm, Loại sản phẩm, 
 	+ Đặt hàng, hủy hàng
  - Quản lý danh mục:
-	- Loại hàng, => DONE DB, BE
-	- Mặt hàng, => DONE DB
+	- Loại hàng, => DONE DB, BE [CRUD]
+	- Mặt hàng, => DONE DB, BE [CRUD]
 	- Khách hàng, => DONE DB
-	- Nhà Sản xuất, => DONE DB, BE
+	- Nhà Sản xuất, => DONE DB, BE [CRUD]
 	- Loai khách hàng,  => DONE DB, BE [CRUD]
-	- Nhân viên,  => DONE DB
+	- Nhân viên,  => DONE DB, BE [CRUD]
 	- phòng ban => DONE DB, BE [CRUD]
  - Thiết kế, cài đặt cơ sở dữ liệu.
 
