@@ -2,6 +2,7 @@
 using BLL.LoginBLL;
 using DTO.Product;
 using DTO.Responses;
+using System.Data;
 using System.Data.SqlClient;
 
 namespace BLL
@@ -129,6 +130,66 @@ namespace BLL
                     Message = $"Lỗi trong quá trình lấy tất cả sản phẩm: {ex}"
                 };
             }
+        }
+    
+        public BaseResponseModel Put( ProductRequesModule req )
+        {
+            if(req.IsValid())
+            {
+                try
+                {
+                    using (var connection = new SqlConnection(ConnectionStringHelper.Get()))
+                    {
+                        connection.Open();
+                        using (var cmd = new SqlCommand("SP_UpdateProduct", connection))
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
+
+                            cmd.Parameters.Add(new SqlParameter("@ProductID", SqlDbType.Int) { Value = req.ProductId });
+                            cmd.Parameters.Add(new SqlParameter("@ProductName", SqlDbType.NVarChar) { Value = req.ProductName });
+                            cmd.Parameters.Add(new SqlParameter("@Image", SqlDbType.NVarChar) { Value = req.Image });
+                            cmd.Parameters.Add(new SqlParameter("@CategoryID", SqlDbType.Int) { Value = req.CategoryId });
+                            cmd.Parameters.Add(new SqlParameter("@Supplier", SqlDbType.Int) { Value = req.Supplier });
+                            cmd.Parameters.Add(new SqlParameter("@SubCategoryID", SqlDbType.Int) { Value = req.SubCategoryId });
+                            cmd.Parameters.Add(new SqlParameter("@ExpiryDate", SqlDbType.DateTime) { Value = req.ExpiryDate });
+                            cmd.Parameters.Add(new SqlParameter("@Description", SqlDbType.NVarChar) { Value = req.Description });
+                            cmd.Parameters.Add(new SqlParameter("@Price", SqlDbType.Decimal) { Value = req.Price });
+
+                            try
+                            {
+                                int rowAffected = cmd.ExecuteNonQuery();
+
+                                return new BaseResponseModel()
+                                {
+                                    IsSuccess = true,
+                                    Message = rowAffected > 0 ? "Cập nhật sản phẩm thành công..!" : "Cập nhật thất bại. Vui lòng kiểm tra lại..!",
+                                };
+                            }
+                            catch (Exception ex)
+                            {
+                                return new BaseResponseModel()
+                                {
+                                    IsSuccess = false,
+                                    Message = $"Lỗi trong quá trình thực thi: {ex}"
+                                };
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return new BaseResponseModel()
+                    {
+                        IsSuccess = false,
+                        Message = $"Lỗi trong quá trình: {ex}"
+                    };
+                }
+            }
+            return new BaseResponseModel()
+            {
+                IsSuccess = false,
+                Message = "Vui lòng kiểm tra lại thông tin..!"
+            };
         }
     }
 }

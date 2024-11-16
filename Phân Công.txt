@@ -41,8 +41,8 @@ mặt hàng
 	=> [Update Order(state)]
 :- Nhân viên quản lý 'Moderator' ( Insert / Update / Delete [Quản lý: 
 Loại hàng, => DONE DB
-Mặt hàng, => DONE DB
-Khách hàng,
+Mặt hàng, => DONE DB, BE [RU]
+Khách hàng, => DONE DB
 Nhà Sản xuất, => DONE DB
 Loai khách hàng, => DONE DB
 Nhân viên, => DONE DB

@@ -1,6 +1,7 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-v1\\BE\\",
+<<<<<<< Updated upstream
   "Documents": [
     {
       "AbsoluteMoniker": "D:0:0:{DE969023-0A53-4B48-B5F6-48BF28880A70}|BLL\\BLL.csproj|c:\\users\\admin\\desktop\\projectcunhan-websitevina-v1\\be\\bll\\departmentbll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -55,6 +56,9 @@
       "RelativeMoniker": "D:0:0:{3CABEDD8-6AA0-489D-85F4-0B26DB10AFCB}|DTO\\DTO.csproj|solutionrelative:dto\\subcategory\\subcategoryrequestmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
+=======
+  "Documents": [],
+>>>>>>> Stashed changes
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -62,11 +66,16 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
+<<<<<<< Updated upstream
           "SelectedChildIndex": 2,
+=======
+          "SelectedChildIndex": -1,
+>>>>>>> Stashed changes
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+<<<<<<< Updated upstream
             },
             {
               "$type": "Document",
@@ -230,6 +239,8 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-15T17:57:31.477Z"
+=======
+>>>>>>> Stashed changes
             }
           ]
         }

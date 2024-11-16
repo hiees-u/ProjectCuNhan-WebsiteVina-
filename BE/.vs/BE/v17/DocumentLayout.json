@@ -3,6 +3,7 @@
   "WorkspaceRootPath": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-v1\\BE\\",
   "Documents": [
     {
+<<<<<<< Updated upstream
       "AbsoluteMoniker": "D:0:0:{1D0D98A9-8C32-4F25-AA4F-2F66D6654FA5}|API\\API.csproj|c:\\users\\admin\\desktop\\projectcunhan-websitevina-v1\\be\\api\\controllers\\departmentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1D0D98A9-8C32-4F25-AA4F-2F66D6654FA5}|API\\API.csproj|solutionrelative:api\\controllers\\departmentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -53,6 +54,10 @@
     {
       "AbsoluteMoniker": "D:0:0:{3CABEDD8-6AA0-489D-85F4-0B26DB10AFCB}|DTO\\DTO.csproj|c:\\users\\admin\\desktop\\projectcunhan-websitevina-v1\\be\\dto\\subcategory\\subcategoryrequestmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{3CABEDD8-6AA0-489D-85F4-0B26DB10AFCB}|DTO\\DTO.csproj|solutionrelative:dto\\subcategory\\subcategoryrequestmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+=======
+      "AbsoluteMoniker": "D:0:0:{DE969023-0A53-4B48-B5F6-48BF28880A70}|BLL\\BLL.csproj|c:\\users\\admin\\desktop\\projectcunhan-websitevina-v1\\be\\bll\\productbll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DE969023-0A53-4B48-B5F6-48BF28880A70}|BLL\\BLL.csproj|solutionrelative:bll\\productbll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+>>>>>>> Stashed changes
     }
   ],
   "DocumentGroupContainers": [
@@ -71,6 +76,7 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+<<<<<<< Updated upstream
               "Title": "DepartmentController.cs",
               "DocumentMoniker": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-v1\\BE\\API\\Controllers\\DepartmentController.cs",
               "RelativeDocumentMoniker": "API\\Controllers\\DepartmentController.cs",
@@ -230,6 +236,17 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-15T17:57:31.477Z"
+=======
+              "Title": "ProductBLL.cs",
+              "DocumentMoniker": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-v1\\BE\\BLL\\ProductBLL.cs",
+              "RelativeDocumentMoniker": "BLL\\ProductBLL.cs",
+              "ToolTip": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-v1\\BE\\BLL\\ProductBLL.cs",
+              "RelativeToolTip": "BLL\\ProductBLL.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAMEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-16T17:35:01.091Z",
+              "EditorCaption": ""
+>>>>>>> Stashed changes
             }
           ]
         }
