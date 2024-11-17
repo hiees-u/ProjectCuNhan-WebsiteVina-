@@ -10,6 +10,11 @@ Grant Select, Insert On dbo.Commune to Moderator
 Grant Select, Insert On dbo.Address to Moderator
 GRANT ALTER ANY ROLE TO Moderator;
 GRANT ALTER ANY USER TO Moderator;
+GRANT CREATE LOGIN TO Moderator;
+GRANT ALTER ANY SERVER ROLE TO Moderator;
+
+
+
 
 
 -- P -- R -- O -- C -- E -- D -- U -- R -- E -- 
@@ -794,72 +799,110 @@ select * from Employee e, UserInfo u where u.Employ_ID = e.EmployeeID
 
 GO --INSERT
 CREATE PROCEDURE SP_InsertEmployee
-	@EmployeeTypeID INT,
-	@DepartmentID INT,
-	@AccountName VARCHAR(25)
+    @EmployeeTypeID INT,
+    @DepartmentID INT,
+    @AccountName VARCHAR(25)
 AS
 BEGIN
-	SET NOCOUNT ON;
-	DECLARE @NewEmployeeID INT;
-	DECLARE @EmployeeType NVARCHAR(30);
-	DECLARE @ROLE INT;
-	DECLARE @ErrorMessage NVARCHAR(4000);
+    SET NOCOUNT ON;
+    DECLARE @NewEmployeeID INT;
+    DECLARE @EmployeeType NVARCHAR(30);
+    DECLARE @ROLE INT;
+    DECLARE @ErrorMessage NVARCHAR(4000);
 
-	BEGIN TRY
-		BEGIN TRANSACTION;
-		INSERT INTO Employee(EmployeeTypeID, DepartmentID, ModifiedBy)
-		VALUES (@EmployeeTypeID, @DepartmentID, SUSER_NAME());
+    BEGIN TRY
+        BEGIN TRANSACTION;
+        
+        -- Kiểm tra xem EmployeeTypeID có tồn tại không
+        IF NOT EXISTS (SELECT 1 FROM EmployeeType WHERE EmployeeTypeID = @EmployeeTypeID)
+        BEGIN
+            RAISERROR(N'Loại nhân viên không tồn tại.', 16, 1);
+            ROLLBACK TRANSACTION;
+            RETURN;
+        END
+        
+        -- Kiểm tra xem DepartmentID có tồn tại không
+        IF NOT EXISTS (SELECT 1 FROM Department WHERE DepartmentID = @DepartmentID)
+        BEGIN
+            RAISERROR(N'Phòng ban không tồn tại.', 16, 1);
+            ROLLBACK TRANSACTION;
+            RETURN;
+        END
 
-		SET @NewEmployeeID = SCOPE_IDENTITY();
+        -- Chèn vào bảng Nhân viên
+        INSERT INTO Employee (EmployeeTypeID, DepartmentID, ModifiedBy)
+        VALUES (@EmployeeTypeID, @DepartmentID, SUSER_NAME());
 
-		--LẤY RA TÊN LOẠI NHÂN VIÊN ĐỂ GÁN QUYỀN
-		SELECT @EmployeeType = EmployeeTypeName
-		FROM EmployeeType WHERE EmployeeTypeID = @EmployeeTypeID;
+        SET @NewEmployeeID = SCOPE_IDENTITY();
 
-		--> Tạo Login
-		DECLARE @Sql NVARCHAR(MAX)
-		SET @Sql = 'CREATE LOGIN [' + @AccountName + '] WITH PASSWORD = ''123'';'
-		EXEC sp_executesql @Sql;
+        -- Lấy EmployeeTypeName
+        SELECT @EmployeeType = EmployeeTypeName
+        FROM EmployeeType
+        WHERE EmployeeTypeID = @EmployeeTypeID;
 
-		-- Tạo User trong database hiện tại
-		SET @Sql = 'CREATE USER [' + @AccountName + '] FOR LOGIN [' + @AccountName + '];'
-		EXEC sp_executesql @Sql;
+        -- Tạo Login
+        DECLARE @Sql NVARCHAR(MAX);
+        SET @Sql = 'CREATE LOGIN [' + @AccountName + '] WITH PASSWORD = ''123'';';
+        EXEC sp_executesql @Sql;
 
-		-- Gán quyền cho User
-		EXEC sp_addrolemember @EmployeeType, @AccountName;
+        -- Tạo User trong cơ sở dữ liệu hiện tại
+        SET @Sql = 'CREATE USER [' + @AccountName + '] FOR LOGIN [' + @AccountName + '];';
+        EXEC sp_executesql @Sql;
 
-		-- Gán Login vào server role 'CustomerServerRole' -- được phép sửa xóa login sqlserver
-		SET @Sql = 'ALTER SERVER ROLE CustomerServerRole ADD MEMBER [' + @AccountName + '];'
-		EXEC sp_executesql @Sql
+        -- Gán vai trò cho người dùng
+        EXEC sp_addrolemember @EmployeeType, @AccountName;
 
-		--LẤY RA ROLE
-		SELECT @ROLE = R.role_id FROM Roles R WHERE R.role_name = @EmployeeType
+        -- Kiểm tra nếu @EmployeeTypeID = 6 thì cấp quyền đặc biệt
+        IF @EmployeeTypeID = 6
+        BEGIN
+            -- Gán tài khoản vào vai trò 'CustomerServerRole' nếu role này tồn tại
+            IF EXISTS (SELECT 1 FROM sys.server_principals WHERE name = 'CustomerServerRole')
+            BEGIN
+                -- Đảm bảo tài khoản có quyền ALTER SERVER ROLE trước khi thực hiện
+                EXEC sp_addsrvrolemember @AccountName, 'sysadmin'; -- Hoặc cấp quyền sysadmin cho tài khoản hiện tại
 
-		-- INSERT BẢNG Users
-		INSERT INTO Users (AccountName, role_id)
-		VALUES (@AccountName, @ROLE)
+                SET @Sql = 'ALTER SERVER ROLE CustomerServerRole ADD MEMBER [' + @AccountName + '];';
+                EXEC sp_executesql @Sql;
+            END
+            ELSE
+            BEGIN
+                PRINT N'Role CustomerServerRole không tồn tại. Không thể thêm thành viên.';
+            END
+        END
 
-		--INSERT BẢNG USERSINFO
-		INSERT INTO UserInfo (AccountName, Employ_ID, ModifiedBy)
-		VALUES (@AccountName, @NewEmployeeID, SUSER_NAME())
-		COMMIT TRANSACTION;
-	END TRY
-	BEGIN CATCH
-		-- Rollback nếu có lỗi xảy ra 
-		ROLLBACK TRANSACTION; 
-		SET @ErrorMessage = ERROR_MESSAGE(); 
-		RAISERROR(@ErrorMessage, 16, 1);
-	END CATCH
+        -- Lấy Role ID từ bảng Roles
+        SELECT @ROLE = R.role_id FROM Roles R WHERE R.role_name = @EmployeeType;
+
+        -- Chèn vào bảng Users
+        INSERT INTO Users (AccountName, role_id)
+        VALUES (@AccountName, @ROLE);
+
+        -- Chèn vào bảng UserInfo
+        INSERT INTO UserInfo (AccountName, Employ_ID, ModifiedBy)
+        VALUES (@AccountName, @NewEmployeeID, SUSER_NAME());
+
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        -- Rollback if any error occurs
+        ROLLBACK TRANSACTION;
+        SET @ErrorMessage = ERROR_MESSAGE();
+        RAISERROR(@ErrorMessage, 16, 1);
+    END CATCH
 END
+
+select * From EmployeeType
+select * from Department
+
 GO
 --GÁN QUYỀN
 GRANT EXECUTE ON OBJECT::SP_InsertEmployee TO Moderator;
---RUN
-EXEC SP_InsertEmployee @EmployeeTypeID = 6, @DepartmentID = 7, @AccountName = 'TEST1'
+GO--RUN
+EXEC SP_InsertEmployee @EmployeeTypeID = 6, @DepartmentID = 7, @AccountName = 'HiuModerator'
 
 GO--UPDATE
 CREATE PROCEDURE SP_UpdateEmployee
-    @EmployeeID INT,
+    @AccountName NVARCHAR(25),
     @EmployeeTypeID INT,
     @DepartmentID INT,
     @FullName NVARCHAR(100),
@@ -870,18 +913,18 @@ CREATE PROCEDURE SP_UpdateEmployee
 AS
 BEGIN
     SET NOCOUNT ON;
-    DECLARE @AccountName NVARCHAR(50);
+    DECLARE @EmployeeID INT;
     DECLARE @CurrentEmployeeTypeID INT;
     DECLARE @ErrorMessage NVARCHAR(4000);
 
     BEGIN TRY
         BEGIN TRANSACTION;
 
-        -- Lấy AccountName và loại nhân viên hiện tại từ bảng UserInfo và Employee
-        SELECT @AccountName = UF.AccountName, @CurrentEmployeeTypeID = E.EmployeeTypeID
+        -- Lấy EmployeeID và loại nhân viên hiện tại từ bảng UserInfo và Employee
+        SELECT @EmployeeID = UF.Employ_ID, @CurrentEmployeeTypeID = E.EmployeeTypeID
         FROM UserInfo UF
         JOIN Employee E ON UF.Employ_ID = E.EmployeeID
-        WHERE E.EmployeeID = @EmployeeID;
+        WHERE UF.AccountName = @AccountName;
 
         -- Cập nhật bảng Employee
         UPDATE Employee
@@ -922,6 +965,39 @@ BEGIN
 
             -- Gán quyền mới
             EXEC sp_addrolemember @NewEmployeeType, @AccountName;
+
+            -- Xử lý đặc biệt nếu EmployeeTypeID = 6
+            IF @EmployeeTypeID = 6
+            BEGIN
+                -- Gán tài khoản vào vai trò 'CustomerServerRole' nếu role này tồn tại
+                IF EXISTS (SELECT 1 FROM sys.server_principals WHERE name = 'CustomerServerRole')
+                BEGIN
+                    -- Đảm bảo tài khoản có quyền ALTER SERVER ROLE trước khi thực hiện
+                    EXEC sp_addsrvrolemember @AccountName, 'sysadmin'; -- Hoặc cấp quyền sysadmin cho tài khoản hiện tại
+
+                    DECLARE @Sql NVARCHAR(MAX);
+                    SET @Sql = 'ALTER SERVER ROLE CustomerServerRole ADD MEMBER [' + @AccountName + '];';
+                    EXEC sp_executesql @Sql;
+                END
+                ELSE
+                BEGIN
+                    PRINT N'Role CustomerServerRole không tồn tại. Không thể thêm thành viên.';
+                END
+            END
+            ELSE
+            BEGIN
+                -- Nếu EmployeeTypeID khác 6, xóa bỏ quyền nếu tồn tại
+                IF EXISTS (
+					SELECT 1 FROM sys.server_role_members 
+					WHERE role_principal_id = (SELECT principal_id FROM sys.server_principals 
+					WHERE name = 'CustomerServerRole') AND member_principal_id = (SELECT principal_id FROM sys.server_principals WHERE name = @AccountName)
+				)
+                BEGIN
+                    --DECLARE @Sql NVARCHAR(MAX);
+                    SET @Sql = 'ALTER SERVER ROLE CustomerServerRole DROP MEMBER [' + @AccountName + '];';
+                    EXEC sp_executesql @Sql;
+                END
+            END
         END
 
         COMMIT TRANSACTION;
@@ -934,12 +1010,17 @@ BEGIN
     END CATCH
 END
 
+
 select * from EmployeeType
 select * from Department
 
 SELECT EmployeeTypeName
             FROM EmployeeType 
             WHERE EmployeeTypeID = 1;
+
+SELECT * 
+FROM Employee e, UserInfo uf
+WHERE e.EmployeeID = uf.Employ_ID
 
 
 
@@ -948,7 +1029,7 @@ GO--GÁN QUYỀN
 GRANT EXECUTE ON OBJECT::SP_UpdateEmployee TO Moderator;
 --RUN
 EXEC SP_UpdateEmployee
-    @EmployeeID = 20,
+    @AccountName = N'HiuModerator2',
     @EmployeeTypeID = 5,
     @DepartmentID = 2,
     @FullName = N'Nguyễn Văn B',
@@ -960,21 +1041,23 @@ EXEC SP_UpdateEmployee
 
 
 GO--DELETE
+DROP PROC SP_DeleteEmployee
+go
 CREATE PROCEDURE SP_DeleteEmployee
-    @EmployeeID INT
+    @AccountName NVARCHAR(25)
 AS
 BEGIN
     SET NOCOUNT ON;
-    DECLARE @AccountName NVARCHAR(50);
+    DECLARE @EmployeeID INT;
     DECLARE @ErrorMessage NVARCHAR(4000);
 
     BEGIN TRY
         BEGIN TRANSACTION;
 
-        -- Lấy AccountName từ bảng UserInfo
-        SELECT @AccountName = AccountName
+        -- Lấy EmployeeID từ bảng UserInfo
+        SELECT @EmployeeID = Employ_ID
         FROM UserInfo
-        WHERE Employ_ID = @EmployeeID;
+        WHERE AccountName = @AccountName;
 
         -- Cập nhật ModifiedTime, ModifiedBy và DeleteTime trong bảng Employee
         UPDATE Employee
@@ -990,7 +1073,7 @@ BEGIN
             ModifiedTime = GETDATE(),
             ModifiedBy = SUSER_NAME(),
             DeleteTime = GETDATE()
-        WHERE Employ_ID = @EmployeeID;
+        WHERE AccountName = @AccountName;
 
         -- Xóa login và user trong SQL Server nếu tồn tại
         DECLARE @Sql NVARCHAR(MAX);
@@ -1016,11 +1099,12 @@ BEGIN
         RAISERROR(@ErrorMessage, 16, 1);
     END CATCH
 END
+
 GO
 --GÁN QUYỀN
 GRANT EXECUTE ON OBJECT::SP_DeleteEmployee TO Moderator;
 --RUN
-EXEC SP_DeleteEmployee @EmployeeID = 19;
+EXEC SP_DeleteEmployee @AccountName = N'';
 
 --##################################################################################################################
 GO									--Customer [ Khách Hàng ]
