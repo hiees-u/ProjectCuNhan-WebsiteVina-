@@ -5,13 +5,13 @@
 	+ Đặt hàng, hủy hàng
  - Quản lý danh mục:
 	- Loại hàng, => DONE DB, BE [CRUD] DONE API
-	- Loại hàng Phu, => DONE DB, BE [CRUD]
-	- Mặt hàng, => DONE DB, BE [CRUD]
-	- Khách hàng, => DONE DB, BE [RUD]
-	- Nhà Sản xuất, => DONE DB, BE [CRUD]
-	- Loai khách hàng,  => DONE DB, BE [CRUD]
-	- Nhân viên,  => DONE DB
-	- phòng ban => DONE DB, BE [CRUD]
+	- Loại hàng Phu, => DONE DB, BE [CRUD] DONE API
+	- Mặt hàng, => DONE DB, BE [CRUD] DONE API
+	- Khách hàng, => DONE DB, BE [RUD] DONE API
+	- Nhà Sản xuất, => DONE DB, BE [CRUD] DONE API
+	- Loai khách hàng,  => DONE DB, BE [CRUD] DONE API
+	- Nhân viên,  => DONE DB, BE[R]
+	- phòng ban => DONE DB, BE [CRUD] DONE API
  - Thiết kế, cài đặt cơ sở dữ liệu.
 
 Vinh:
