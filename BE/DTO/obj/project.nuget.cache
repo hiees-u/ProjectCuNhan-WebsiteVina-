@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "N+98Kv2JKrg=",
+  "dgSpecHash": "lpOgXGy0T1c=",
   "success": true,
-  "projectFilePath": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-v1\\BE\\DTO\\DTO.csproj",
+  "projectFilePath": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\DTO\\DTO.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ADMIN\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\ADMIN\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",

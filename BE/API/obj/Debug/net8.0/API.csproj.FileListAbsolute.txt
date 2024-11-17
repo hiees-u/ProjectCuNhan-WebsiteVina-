@@ -1006,3 +1006,4 @@ E:\HK I nam 4\ProjectCuNhan-WebsiteVina-\BE\API\obj\Debug\net8.0\refint\API.dll
 E:\HK I nam 4\ProjectCuNhan-WebsiteVina-\BE\API\obj\Debug\net8.0\API.pdb
 E:\HK I nam 4\ProjectCuNhan-WebsiteVina-\BE\API\obj\Debug\net8.0\API.genruntimeconfig.cache
 E:\HK I nam 4\ProjectCuNhan-WebsiteVina-\BE\API\obj\Debug\net8.0\ref\API.dll
+C:\Users\ADMIN\Desktop\ProjectCuNhan-WebsiteVina-\BE\API\obj\Debug\net8.0\API.MvcApplicationPartsAssemblyInfo.cs

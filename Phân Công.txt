@@ -4,7 +4,8 @@
 	+ Tra cứu sản phẩm, Loại sản phẩm, 
 	+ Đặt hàng, hủy hàng
  - Quản lý danh mục:
-	- Loại hàng, => DONE DB, BE [CRUD]
+	- Loại hàng, => DONE DB, BE [CRUD] DONE API
+	- Loại hàng Phu, => DONE DB, BE [CRUD]
 	- Mặt hàng, => DONE DB, BE [CRUD]
 	- Khách hàng, => DONE DB
 	- Nhà Sản xuất, => DONE DB, BE [CRUD]
