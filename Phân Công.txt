@@ -10,7 +10,7 @@
 	- Khách hàng, => DONE DB, BE [RUD] DONE API
 	- Nhà Sản xuất, => DONE DB, BE [CRUD] DONE API
 	- Loai khách hàng,  => DONE DB, BE [CRUD] DONE API
-	- Nhân viên,  => DONE DB, BE[R]
+	- Nhân viên,  => DONE DB, BE[CRUD] DONE API
 	- phòng ban => DONE DB, BE [CRUD] DONE API
  - Thiết kế, cài đặt cơ sở dữ liệu.
 

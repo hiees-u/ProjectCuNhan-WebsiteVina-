@@ -1,4 +1,5 @@
 ﻿using BLL.Interface;
+using DTO.Employee;
 using DTO.Responses;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -22,6 +23,32 @@ namespace API.Controllers
         {
             BaseResponseModel result = employee.Get(departmentID, employeeTypeID);
 
+            return result.IsSuccess ? Ok(result) : BadRequest(result);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Moderator")]
+        public IActionResult Post(EmployeeRequestPostModule req)
+        {
+            BaseResponseModel result = employee.Post(req);
+
+            return result.IsSuccess ? Ok(result) : BadRequest(result);
+        }
+
+        [HttpDelete]
+        [Authorize(Roles = "Moderator")]
+        public IActionResult Delete(string accountName)
+        {
+            BaseResponseModel result = employee.Delete(accountName);
+
+            return result.IsSuccess ? Ok(result) : BadRequest(result);
+        }
+
+        [HttpPut]
+        [Authorize(Roles = "Moderator")]
+        public IActionResult Put(EmployeeRequestPutModule req)
+        {
+            BaseResponseModel result = employee.Put(req);
             return result.IsSuccess ? Ok(result) : BadRequest(result);
         }
     }

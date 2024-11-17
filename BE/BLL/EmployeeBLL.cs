@@ -70,5 +70,122 @@ namespace BLL
                 };
             }
         }
+
+        public BaseResponseModel Post(EmployeeRequestPostModule req)
+        {
+            if(req.isValid())
+            {
+                using (var conn = new SqlConnection(ConnectionStringHelper.Get()))
+                {
+                    conn.Open();
+                    using (var cmd = new SqlCommand("SP_InsertEmployee", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add(new SqlParameter("@EmployeeTypeID", req.employeeTypeId));
+                        cmd.Parameters.Add(new SqlParameter("@DepartmentID", req.departmentId));
+                        cmd.Parameters.Add(new SqlParameter("@AccountName", req.accountName));
+
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+                return new BaseResponseModel()
+                {
+                    IsSuccess = true,
+                    Message = "Thêm Nhân Viên Thành Công..!"
+                };
+            }
+            return new BaseResponseModel()
+            {
+                IsSuccess = false,
+                Message = "Kiểm tra lại thông tin..!"
+            };
+        }
+
+        public BaseResponseModel Delete(string accountName)
+        {
+            if(!string.IsNullOrEmpty(accountName))
+            {
+                try
+                {
+                    using (var conn = new SqlConnection(ConnectionStringHelper.Get()))
+                    {
+                        conn.Open();
+                        using (var cmd = new SqlCommand("SP_DeleteEmployee", conn))
+                        {
+                            cmd.CommandType= CommandType.StoredProcedure;
+                            cmd.Parameters.Add(new SqlParameter("@AccountName", accountName));
+                            cmd.ExecuteNonQuery ();
+                        }
+                    }
+                    return new BaseResponseModel()
+                    {
+                        IsSuccess = true,
+                        Message = "Xóa Thành Công..!"
+                    };
+                }
+                catch (Exception ex)
+                {
+                    return new BaseResponseModel()
+                    {
+                        IsSuccess = false,
+                        Message = $"Lỗi trong quá trình: {ex.Message}",
+                        Data = null
+                    };
+                }
+            }
+            return new BaseResponseModel()
+            {
+                IsSuccess = false,
+                Message = "Vui lòng kiểm tra lại thông tin..!"
+            };
+        }
+
+        public BaseResponseModel Put(EmployeeRequestPutModule req)
+        {
+            if (req.isValid())
+            {
+                try
+                {
+                    using (var conn = new SqlConnection(ConnectionStringHelper.Get()))
+                    {
+                        conn.Open();
+                        using (var cmd = new SqlCommand("SP_UpdateEmployee", conn))
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
+                            cmd.Parameters.Add(new SqlParameter("@AccountName", req.accountName));
+                            cmd.Parameters.Add(new SqlParameter("@EmployeeTypeID", req.employeeTypeId));
+                            cmd.Parameters.Add(new SqlParameter("@DepartmentID", req.departmentId));
+                            cmd.Parameters.Add(new SqlParameter("@FullName", req.fullName));
+                            cmd.Parameters.Add(new SqlParameter("@Email", req.email));
+                            cmd.Parameters.Add(new SqlParameter("@AddressID", req.addressId));
+                            cmd.Parameters.Add(new SqlParameter("@Phone", req.phone));
+                            cmd.Parameters.Add(new SqlParameter("@Gender", req.gender));
+
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                    return new BaseResponseModel()
+                    {
+                        IsSuccess = true,
+                        Message = "cập nhật thành công..!"
+                    };
+                }
+                catch (Exception ex)
+                {
+                    return new BaseResponseModel()
+                    {
+                        IsSuccess = false,
+                        Message = $"Lỗi trong quá trình: {ex.Message}",
+                        Data = null
+                    };
+                }
+            }
+            return new BaseResponseModel()
+            {
+                IsSuccess = false,
+                Message = "Kiểm tra lại thông tin..!"
+            };
+        }
     }
 }
