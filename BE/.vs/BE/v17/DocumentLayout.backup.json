@@ -3,8 +3,56 @@
   "WorkspaceRootPath": "E:\\HK I nam 4\\ProjectCuNhan-WebsiteVina-\\BE\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{1D0D98A9-8C32-4F25-AA4F-2F66D6654FA5}|API\\API.csproj|e:\\hk i nam 4\\projectcunhan-websitevina-\\be\\api\\controllers\\cellcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D0D98A9-8C32-4F25-AA4F-2F66D6654FA5}|API\\API.csproj|solutionrelative:api\\controllers\\cellcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE969023-0A53-4B48-B5F6-48BF28880A70}|BLL\\BLL.csproj|e:\\hk i nam 4\\projectcunhan-websitevina-\\be\\bll\\cellsbll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DE969023-0A53-4B48-B5F6-48BF28880A70}|BLL\\BLL.csproj|solutionrelative:bll\\cellsbll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3CABEDD8-6AA0-489D-85F4-0B26DB10AFCB}|DTO\\DTO.csproj|e:\\hk i nam 4\\projectcunhan-websitevina-\\be\\dto\\cells\\productofwarehouseresponsemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3CABEDD8-6AA0-489D-85F4-0B26DB10AFCB}|DTO\\DTO.csproj|solutionrelative:dto\\cells\\productofwarehouseresponsemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3CABEDD8-6AA0-489D-85F4-0B26DB10AFCB}|DTO\\DTO.csproj|e:\\hk i nam 4\\projectcunhan-websitevina-\\be\\dto\\cells\\cellsproductbyshelveresponsemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3CABEDD8-6AA0-489D-85F4-0B26DB10AFCB}|DTO\\DTO.csproj|solutionrelative:dto\\cells\\cellsproductbyshelveresponsemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{1D0D98A9-8C32-4F25-AA4F-2F66D6654FA5}|API\\API.csproj|e:\\hk i nam 4\\projectcunhan-websitevina-\\be\\api\\controllers\\shelvecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1D0D98A9-8C32-4F25-AA4F-2F66D6654FA5}|API\\API.csproj|solutionrelative:api\\controllers\\shelvecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3CABEDD8-6AA0-489D-85F4-0B26DB10AFCB}|DTO\\DTO.csproj|e:\\hk i nam 4\\projectcunhan-websitevina-\\be\\dto\\shevle\\shelverequestmodule.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3CABEDD8-6AA0-489D-85F4-0B26DB10AFCB}|DTO\\DTO.csproj|solutionrelative:dto\\shevle\\shelverequestmodule.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3CABEDD8-6AA0-489D-85F4-0B26DB10AFCB}|DTO\\DTO.csproj|e:\\hk i nam 4\\projectcunhan-websitevina-\\be\\dto\\shevle\\shelveresponsemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3CABEDD8-6AA0-489D-85F4-0B26DB10AFCB}|DTO\\DTO.csproj|solutionrelative:dto\\shevle\\shelveresponsemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3CABEDD8-6AA0-489D-85F4-0B26DB10AFCB}|DTO\\DTO.csproj|e:\\hk i nam 4\\projectcunhan-websitevina-\\be\\dto\\warehouse\\warehouseresponsemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3CABEDD8-6AA0-489D-85F4-0B26DB10AFCB}|DTO\\DTO.csproj|solutionrelative:dto\\warehouse\\warehouseresponsemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE969023-0A53-4B48-B5F6-48BF28880A70}|BLL\\BLL.csproj|e:\\hk i nam 4\\projectcunhan-websitevina-\\be\\bll\\interface\\icell.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DE969023-0A53-4B48-B5F6-48BF28880A70}|BLL\\BLL.csproj|solutionrelative:bll\\interface\\icell.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE969023-0A53-4B48-B5F6-48BF28880A70}|BLL\\BLL.csproj|e:\\hk i nam 4\\projectcunhan-websitevina-\\be\\bll\\shelvebll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DE969023-0A53-4B48-B5F6-48BF28880A70}|BLL\\BLL.csproj|solutionrelative:bll\\shelvebll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3CABEDD8-6AA0-489D-85F4-0B26DB10AFCB}|DTO\\DTO.csproj|e:\\hk i nam 4\\projectcunhan-websitevina-\\be\\dto\\cells\\cellrequestmodule.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3CABEDD8-6AA0-489D-85F4-0B26DB10AFCB}|DTO\\DTO.csproj|solutionrelative:dto\\cells\\cellrequestmodule.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE969023-0A53-4B48-B5F6-48BF28880A70}|BLL\\BLL.csproj|e:\\hk i nam 4\\projectcunhan-websitevina-\\be\\bll\\interface\\ishelve.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DE969023-0A53-4B48-B5F6-48BF28880A70}|BLL\\BLL.csproj|solutionrelative:bll\\interface\\ishelve.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE969023-0A53-4B48-B5F6-48BF28880A70}|BLL\\BLL.csproj|e:\\hk i nam 4\\projectcunhan-websitevina-\\be\\bll\\connectionstringhelper\\connectionstringhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DE969023-0A53-4B48-B5F6-48BF28880A70}|BLL\\BLL.csproj|solutionrelative:bll\\connectionstringhelper\\connectionstringhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,19 +62,177 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 4,
               "Title": "ShelveController.cs",
               "DocumentMoniker": "E:\\HK I nam 4\\ProjectCuNhan-WebsiteVina-\\BE\\API\\Controllers\\ShelveController.cs",
               "RelativeDocumentMoniker": "API\\Controllers\\ShelveController.cs",
               "ToolTip": "E:\\HK I nam 4\\ProjectCuNhan-WebsiteVina-\\BE\\API\\Controllers\\ShelveController.cs",
               "RelativeToolTip": "API\\Controllers\\ShelveController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAfAAAAAAAAAA==",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAIwBoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-15T16:52:59.58Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "CellsBLL.cs",
+              "DocumentMoniker": "E:\\HK I nam 4\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\CellsBLL.cs",
+              "RelativeDocumentMoniker": "BLL\\CellsBLL.cs",
+              "ToolTip": "E:\\HK I nam 4\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\CellsBLL.cs",
+              "RelativeToolTip": "BLL\\CellsBLL.cs",
+              "ViewState": "AgIAAGwAAAAAAAAAAAAwwH0AAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-17T10:25:44.322Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "CellsProductByShelveResponseModel.cs",
+              "DocumentMoniker": "E:\\HK I nam 4\\ProjectCuNhan-WebsiteVina-\\BE\\DTO\\Cells\\CellsProductByShelveResponseModel.cs",
+              "RelativeDocumentMoniker": "DTO\\Cells\\CellsProductByShelveResponseModel.cs",
+              "ToolTip": "E:\\HK I nam 4\\ProjectCuNhan-WebsiteVina-\\BE\\DTO\\Cells\\CellsProductByShelveResponseModel.cs",
+              "RelativeToolTip": "DTO\\Cells\\CellsProductByShelveResponseModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-17T16:56:56.222Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ProductOfWarehouseResponseModel.cs",
+              "DocumentMoniker": "E:\\HK I nam 4\\ProjectCuNhan-WebsiteVina-\\BE\\DTO\\Cells\\ProductOfWarehouseResponseModel.cs",
+              "RelativeDocumentMoniker": "DTO\\Cells\\ProductOfWarehouseResponseModel.cs",
+              "ToolTip": "E:\\HK I nam 4\\ProjectCuNhan-WebsiteVina-\\BE\\DTO\\Cells\\ProductOfWarehouseResponseModel.cs",
+              "RelativeToolTip": "DTO\\Cells\\ProductOfWarehouseResponseModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAsAAAAyAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-17T16:49:33.914Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ShelveRequestModule.cs",
+              "DocumentMoniker": "E:\\HK I nam 4\\ProjectCuNhan-WebsiteVina-\\BE\\DTO\\Shevle\\ShelveRequestModule.cs",
+              "RelativeDocumentMoniker": "DTO\\Shevle\\ShelveRequestModule.cs",
+              "ToolTip": "E:\\HK I nam 4\\ProjectCuNhan-WebsiteVina-\\BE\\DTO\\Shevle\\ShelveRequestModule.cs",
+              "RelativeToolTip": "DTO\\Shevle\\ShelveRequestModule.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAA4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-17T16:50:48.033Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "CellController.cs",
+              "DocumentMoniker": "E:\\HK I nam 4\\ProjectCuNhan-WebsiteVina-\\BE\\API\\Controllers\\CellController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\CellController.cs",
+              "ToolTip": "E:\\HK I nam 4\\ProjectCuNhan-WebsiteVina-\\BE\\API\\Controllers\\CellController.cs",
+              "RelativeToolTip": "API\\Controllers\\CellController.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAUwBcAAABWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-17T10:30:21.934Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ShelveResponseModel.cs",
+              "DocumentMoniker": "E:\\HK I nam 4\\ProjectCuNhan-WebsiteVina-\\BE\\DTO\\Shevle\\ShelveResponseModel.cs",
+              "RelativeDocumentMoniker": "DTO\\Shevle\\ShelveResponseModel.cs",
+              "ToolTip": "E:\\HK I nam 4\\ProjectCuNhan-WebsiteVina-\\BE\\DTO\\Shevle\\ShelveResponseModel.cs",
+              "RelativeToolTip": "DTO\\Shevle\\ShelveResponseModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-17T16:50:32.663Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "WareHouseResponseModel.cs",
+              "DocumentMoniker": "E:\\HK I nam 4\\ProjectCuNhan-WebsiteVina-\\BE\\DTO\\WareHouse\\WareHouseResponseModel.cs",
+              "RelativeDocumentMoniker": "DTO\\WareHouse\\WareHouseResponseModel.cs",
+              "ToolTip": "E:\\HK I nam 4\\ProjectCuNhan-WebsiteVina-\\BE\\DTO\\WareHouse\\WareHouseResponseModel.cs",
+              "RelativeToolTip": "DTO\\WareHouse\\WareHouseResponseModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-17T16:49:46.276Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "CellRequestModule.cs",
+              "DocumentMoniker": "E:\\HK I nam 4\\ProjectCuNhan-WebsiteVina-\\BE\\DTO\\Cells\\CellRequestModule.cs",
+              "RelativeDocumentMoniker": "DTO\\Cells\\CellRequestModule.cs",
+              "ToolTip": "E:\\HK I nam 4\\ProjectCuNhan-WebsiteVina-\\BE\\DTO\\Cells\\CellRequestModule.cs",
+              "RelativeToolTip": "DTO\\Cells\\CellRequestModule.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-17T14:39:33.293Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "IShelve.cs",
+              "DocumentMoniker": "E:\\HK I nam 4\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\Interface\\IShelve.cs",
+              "RelativeDocumentMoniker": "BLL\\Interface\\IShelve.cs",
+              "ToolTip": "E:\\HK I nam 4\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\Interface\\IShelve.cs",
+              "RelativeToolTip": "BLL\\Interface\\IShelve.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAcAAAA6AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-17T10:23:01.698Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "ICell.cs",
+              "DocumentMoniker": "E:\\HK I nam 4\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\Interface\\ICell.cs",
+              "RelativeDocumentMoniker": "BLL\\Interface\\ICell.cs",
+              "ToolTip": "E:\\HK I nam 4\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\Interface\\ICell.cs",
+              "RelativeToolTip": "BLL\\Interface\\ICell.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAkAAABLAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-17T09:47:37.073Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "ShelveBLL.cs",
+              "DocumentMoniker": "E:\\HK I nam 4\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\ShelveBLL.cs",
+              "RelativeDocumentMoniker": "BLL\\ShelveBLL.cs",
+              "ToolTip": "E:\\HK I nam 4\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\ShelveBLL.cs",
+              "RelativeToolTip": "BLL\\ShelveBLL.cs",
+              "ViewState": "AgIAAEkAAAAAAAAAAAAYwG4AAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-17T10:26:32.855Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "ConnectionStringHelper.cs",
+              "DocumentMoniker": "E:\\HK I nam 4\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\ConnectionStringHelper\\ConnectionStringHelper.cs",
+              "RelativeDocumentMoniker": "BLL\\ConnectionStringHelper\\ConnectionStringHelper.cs",
+              "ToolTip": "E:\\HK I nam 4\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\ConnectionStringHelper\\ConnectionStringHelper.cs",
+              "RelativeToolTip": "BLL\\ConnectionStringHelper\\ConnectionStringHelper.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-17T09:45:00.691Z",
               "EditorCaption": ""
             }
           ]
