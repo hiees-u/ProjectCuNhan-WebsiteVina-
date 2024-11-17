@@ -1,0 +1,22 @@
+# Visual Studio specific files
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build results
+bin/
+obj/
+
+# Backup & cache files
+*.cache
+*.pdb
+*.dll
+*.dtbcache.v2
+*.futdcache.v2
+*.metadata.v9.bin
+*.projects.v9.bin
+
+# Logs
+*.log
