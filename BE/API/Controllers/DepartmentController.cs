@@ -1,6 +1,7 @@
 ﻿using BLL.Interface;
 using DTO.Department;
 using DTO.Responses;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -16,7 +17,8 @@ namespace API.Controllers
             this.department = department;
         }
 
-        [HttpPost] 
+        [HttpPost]
+        [Authorize(Roles = "Moderator")]
         public IActionResult Post([FromBody] string departmentName)
         {
             BaseResponseModel result = department.Post(departmentName);
@@ -25,6 +27,7 @@ namespace API.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Moderator")]
         public IActionResult Get()
         {
             BaseResponseModel result = department.Get();
@@ -35,6 +38,7 @@ namespace API.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "Moderator")]
         public IActionResult Put([FromBody] DepartmentRequestModule req)
         {
             BaseResponseModel result = department.Put(req);
@@ -45,6 +49,7 @@ namespace API.Controllers
         }
 
         [HttpDelete]
+        [Authorize(Roles = "Moderator")]
         public IActionResult Delete(int depID)
         {
             BaseResponseModel result = department.Delete(depID);

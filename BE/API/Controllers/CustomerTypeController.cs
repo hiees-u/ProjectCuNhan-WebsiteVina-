@@ -1,6 +1,7 @@
 ﻿using BLL.Interface;
 using DTO.CustomerType;
 using DTO.Responses;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -17,6 +18,7 @@ namespace API.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Moderator")]
         public IActionResult Get(int? customerID)
         {
             BaseResponseModel result = customerType.Get(customerID);
@@ -25,6 +27,7 @@ namespace API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Moderator")]
         public IActionResult Post([FromBody] CustomerTypeRequestModule req)
         {
             BaseResponseModel result = customerType.Post(req);
@@ -33,6 +36,7 @@ namespace API.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "Moderator")]
         public IActionResult Put([FromBody]CustomerTypeResponseModule req)
         {
             BaseResponseModel result = customerType.Put(req);
@@ -40,6 +44,7 @@ namespace API.Controllers
         }
 
         [HttpDelete]
+        [Authorize(Roles = "Moderator")]
         public IActionResult Delete(int? customerID)
         {
             BaseResponseModel result = customerType.Delete(customerID);

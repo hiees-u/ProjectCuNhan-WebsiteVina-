@@ -1,6 +1,7 @@
 ﻿using BLL.Interface;
 using DTO.Responses;
 using DTO.Supplier;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -29,6 +30,7 @@ namespace API.Controllers
         }
 
         [HttpGet("Get All")]
+        [Authorize(Roles = "Moderator")]
         public IActionResult GetAll(int? productId = null)
         {
             BaseResponseModel result = supplier.GetPagition(productId);
@@ -37,6 +39,7 @@ namespace API.Controllers
         }
 
         [HttpPut()]
+        [Authorize(Roles = "Moderator")]
         public IActionResult Put([FromBody] SupplierResponseModule req)
         {
             BaseResponseModel result = supplier.Put(req);
@@ -45,6 +48,7 @@ namespace API.Controllers
         }
 
         [HttpPost()]
+        [Authorize(Roles = "Moderator")]
         public IActionResult Post([FromBody] SupplierRequestModule req)
         {
             BaseResponseModel result = supplier.Post(req);
@@ -52,6 +56,7 @@ namespace API.Controllers
         }
 
         [HttpDelete()]
+        [Authorize(Roles = "Moderator")]
         public IActionResult Delete(int supplierId)
         {
             BaseResponseModel result = supplier.Delete(supplierId);

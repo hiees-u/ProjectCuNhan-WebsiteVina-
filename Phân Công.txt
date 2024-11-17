@@ -5,12 +5,12 @@
 	+ Đặt hàng, hủy hàng
  - Quản lý danh mục:
 	- Loại hàng, => DONE DB, BE [CRUD] DONE API
-	- Loại hàng Phu, => DONE DB, BE [CRUD]
+	- Loại hàng Phu, => DONE DB, BE [CRUD] DONE API CHUA PUSH
 	- Mặt hàng, => DONE DB, BE [CRUD]
-	- Khách hàng, => DONE DB
-	- Nhà Sản xuất, => DONE DB, BE [CRUD]
+	- Khách hàng, => DONE DB X
+	- Nhà Sản xuất, => DONE DB, BE [CRUD] DONE API CHUA PUSH
 	- Loai khách hàng,  => DONE DB, BE [CRUD]
-	- Nhân viên,  => DONE DB
+	- Nhân viên,  => DONE DB X
 	- phòng ban => DONE DB, BE [CRUD]
  - Thiết kế, cài đặt cơ sở dữ liệu.
 
