@@ -67,12 +67,27 @@
               "RelativeToolTip": "API\\Controllers\\EmployeeController.cs",
               "ViewState": "AgIAAAMAAAAAAAAAAAAAABoAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-17T08:23:27.815Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-17T08:23:27.815Z"
             },
             {
               "$type": "Document",
+<<<<<<< Updated upstream
               "DocumentIndex": 1,
+=======
+              "DocumentIndex": 5,
+              "Title": "CustomerBLL.cs",
+              "DocumentMoniker": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\CustomerBLL.cs",
+              "RelativeDocumentMoniker": "BLL\\CustomerBLL.cs",
+              "ToolTip": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\CustomerBLL.cs",
+              "RelativeToolTip": "BLL\\CustomerBLL.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAEMAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-17T08:12:15.926Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+>>>>>>> Stashed changes
               "Title": "EmployeeBLL.cs",
               "DocumentMoniker": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\EmployeeBLL.cs",
               "RelativeDocumentMoniker": "BLL\\EmployeeBLL.cs",
@@ -80,8 +95,7 @@
               "RelativeToolTip": "BLL\\EmployeeBLL.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAI8AAABCAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-17T08:09:52.885Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-17T08:09:52.885Z"
             },
             {
               "$type": "Document",
@@ -106,8 +120,7 @@
               "RelativeToolTip": "BLL\\Interface\\IEmployee.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAuwAoAAABDAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-17T08:09:30.47Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-17T08:09:30.47Z"
             },
             {
               "$type": "Document",
