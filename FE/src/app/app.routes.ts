@@ -2,8 +2,10 @@ import { Routes } from '@angular/router';
 
 import { LoginComponent } from './auth/login/login.component';
 import { RegistreComponent } from './auth/registre/registre.component';
-import { EmployeeDashboardComponent } from './employee/employee-dashboard/employee-dashboard.component';
 import CustomerRoutingModule from './customer/customer-routing.module';
+import { ModeratorComponent } from './moderator/moderator.component';
+import { OrderApproverComponent } from './order-approver/order-approver.component';
+import { WarehouseEmployeeComponent } from './warehouse-employee/warehouse-employee.component';
 
 export const routes: Routes = [
   ...CustomerRoutingModule,
@@ -17,15 +19,22 @@ export const routes: Routes = [
   },
   {
     path: 'customer',
-    // component: CustomerDashboardComponent,
     loadChildren: () =>
       import('./customer/customer-routing.module').then(
         (m) => m.default
       )
   },
   {
-    path: 'employee',
-    component: EmployeeDashboardComponent,
+    path: 'moderator',
+    component: ModeratorComponent,
+  },
+  {
+    path: 'order-approver',
+    component: OrderApproverComponent,
+  },
+  {
+    path: 'warehouse-employee',
+    component: WarehouseEmployeeComponent,
   },
   {
     path: '',

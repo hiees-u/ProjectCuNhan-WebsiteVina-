@@ -35,10 +35,16 @@ export class LoginComponent {
           // login thành công
           if ((await this.authService.getRole()).data == 0) {
             this.router.navigate(['/customer']);
-          }
+          } else
+          if ((await this.authService.getRole()).data == 2) {
+            this.router.navigate(['/moderator']);
+          } else
+          if ((await this.authService.getRole()).data == 3) {
+            this.router.navigate(['/order-approver']);
+          } else
           if ((await this.authService.getRole()).data == 4) {
-            this.router.navigate(['/employee']);
-          }
+            this.router.navigate(['/warehouse-employee']);
+          } 
           else {
             console.log('lỗi role=>', await this.authService.getRole());
             
