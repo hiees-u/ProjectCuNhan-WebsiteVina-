@@ -1,8 +1,10 @@
 {
   "version": 2,
   "dgSpecHash": "NF7uiRi079Q=",
+  "dgSpecHash": "bPCM6Ph3dyc=",
   "success": true,
   "projectFilePath": "E:\\HK I nam 4\\ProjectCuNhan-WebsiteVina-\\BE\\DLL\\DLL.csproj",
+  "projectFilePath": "D:\\STUDY\\ProjectCuNhan-WebsiteVina-\\BE\\DLL\\DLL.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\maith\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\maith\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",
