@@ -7,7 +7,7 @@
 	- Loại hàng, => DONE DB, BE [CRUD] DONE API
 	- Loại hàng Phu, => DONE DB, BE [CRUD]
 	- Mặt hàng, => DONE DB, BE [CRUD]
-	- Khách hàng, => DONE DB
+	- Khách hàng, => DONE DB, BE [RUD]
 	- Nhà Sản xuất, => DONE DB, BE [CRUD]
 	- Loai khách hàng,  => DONE DB, BE [CRUD]
 	- Nhân viên,  => DONE DB

@@ -1026,6 +1026,7 @@ EXEC SP_DeleteEmployee @EmployeeID = 19;
 GO									--Customer [ Khách Hàng ]
 --SELECT
 --> theo loại khách hàng
+
 CREATE PROCEDURE SP_GetCustomer
     @TypeCustomerID INT = NULL
 AS
@@ -1038,6 +1039,7 @@ BEGIN
         UF.email, 
         UF.phone, 
         UF.gender, 
+		CT.type_customer_id,
         CT.type_customer_name, 
         A.AddressID,
         A.Note + ' / ' + A.HouseNumber + ' , ' + CO.CommuneName + ' , ' + DI.DistrictName + ' , ' + PR.ProvinceName AS [ĐỊA CHỈ]
@@ -1057,7 +1059,7 @@ GO
 --GÁN QUYỀN
 GRANT EXECUTE ON OBJECT::SP_GetCustomer TO Moderator;
 --RUN
-EXEC SP_GetCustomer @TypeCustomerID = 2;
+EXEC SP_GetCustomer @TypeCustomerID = 1;
 
 GO--UPDATE
 CREATE PROCEDURE SP_UpdateCustomer
@@ -1091,7 +1093,7 @@ END
 GO--GÁN QUYỀN
 GRANT EXECUTE ON OBJECT::SP_UpdateCustomer TO Moderator;
 GO--RUN
-EXEC SP_UpdateCustomer @AccountName = N'john_doe', @NewTypeCustomerID = 2
+EXEC SP_UpdateCustomer @AccountName = N'HIU', @NewTypeCustomerID = 4
 
 GO--DELETE
 CREATE PROCEDURE SP_DeleteCustomer
