@@ -37,8 +37,6 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "E:\\HK I nam 4\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\BLL.csproj": {
-                "projectPath": "E:\\HK I nam 4\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\BLL.csproj"
               "D:\\STUDY\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\BLL.csproj": {
                 "projectPath": "D:\\STUDY\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\BLL.csproj"
               },
