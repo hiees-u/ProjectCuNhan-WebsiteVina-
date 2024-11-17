@@ -26,22 +26,29 @@ export class LoginComponent {
 
   async onLogin() {
     if (this.loginData.accountName && this.loginData.password) {
-    localStorage.removeItem('token');
+      localStorage.removeItem('token');
       try {
         const res = await this.authService.login(this.loginData);
         if (res.isSuccess) {
           // lưu vào localstorage
           localStorage.setItem('token', res.data as string);
           // login thành công
-          if ((await this.authService.getRole()).data == 0) {
+          const role = (await this.authService.getRole()).data;
+          console.log('role => ', role);
+          
+          if (role == 0) {
             this.router.navigate(['/customer']);
-          }
-          if ((await this.authService.getRole()).data == 4) {
-            this.router.navigate(['/employee']);
-          }
-          else {
+          } else 
+          if (role == 2) {
+            this.router.navigate(['/moderator']);
+          } else 
+          if (role == 3) {
+            this.router.navigate(['/order-approver']);
+          } else 
+          if (role == 4) {
+            this.router.navigate(['/warehouse']);
+          } else {
             console.log('lỗi role=>', await this.authService.getRole());
-            
           }
         } else {
           console.log(res.isSuccess + ' / ' + res.message);

@@ -2,8 +2,11 @@ import { Routes } from '@angular/router';
 
 import { LoginComponent } from './auth/login/login.component';
 import { RegistreComponent } from './auth/registre/registre.component';
-import { EmployeeDashboardComponent } from './employee/employee-dashboard/employee-dashboard.component';
 import CustomerRoutingModule from './customer/customer-routing.module';
+
+import { ModeratorComponent } from './moderator/moderator.component';
+import { WarehouseComponent } from './warehouse/warehouse.component';
+import { OrderApproverComponent } from './order-approver/order-approver.component';
 
 export const routes: Routes = [
   ...CustomerRoutingModule,
@@ -24,8 +27,16 @@ export const routes: Routes = [
       )
   },
   {
-    path: 'employee',
-    component: EmployeeDashboardComponent,
+    path: 'moderator',
+    component: ModeratorComponent,
+  },
+  {
+    path: 'warehouse',
+    component: WarehouseComponent,
+  },
+  {
+    path: 'order-approver',
+    component: OrderApproverComponent,
   },
   {
     path: '',

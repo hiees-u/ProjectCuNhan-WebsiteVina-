@@ -11,7 +11,7 @@ namespace BLL
 {
     public class UserBLL : IUser
     {
-        private readonly string[] Roles = new[] { "Customer", "Development", "Moderator", "Order Approver", "Warehouse Employee" };
+        private readonly string[] Roles = new[] { "Customer", "Development", "Moderator", "OrderApprover", "WarehouseEmployee" };
         
         private readonly IAuthService _authService;
 
