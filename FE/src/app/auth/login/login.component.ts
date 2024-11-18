@@ -26,14 +26,17 @@ export class LoginComponent {
 
   async onLogin() {
     if (this.loginData.accountName && this.loginData.password) {
-    localStorage.removeItem('token');
+      localStorage.removeItem('token');
       try {
         const res = await this.authService.login(this.loginData);
         if (res.isSuccess) {
           // lưu vào localstorage
           localStorage.setItem('token', res.data as string);
           // login thành công
-          if ((await this.authService.getRole()).data == 0) {
+          const role = (await this.authService.getRole()).data;
+          console.log('role => ', role);
+          
+          if (role == 0) {
             this.router.navigate(['/customer']);
           } else
           if ((await this.authService.getRole()).data == 2) {
@@ -47,7 +50,6 @@ export class LoginComponent {
           } 
           else {
             console.log('lỗi role=>', await this.authService.getRole());
-            
           }
         } else {
           console.log(res.isSuccess + ' / ' + res.message);

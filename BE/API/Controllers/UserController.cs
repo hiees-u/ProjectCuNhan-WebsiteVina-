@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using DTO.Responses;
 using BLL.Interface;
 using Microsoft.AspNetCore.Authorization;
-using BLL;
 using DTO.Register;
 
 namespace API.Controllers

@@ -1,0 +1,14 @@
+# Ignore build files
+/bin/
+/obj/
+
+# Ignore IDE files
+/.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Ignore logs and temp files
+*.log
+*.tmp

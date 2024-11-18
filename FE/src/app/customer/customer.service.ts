@@ -313,7 +313,7 @@ export class CustomerService {
   }
 
   async getCateByProductID(productId: number): Promise<BaseResponseModel> {
-    const url = `${this.apiUrl}Category?productID=${productId}`;
+    const url = `${this.apiUrl}Category/Get By Id Product?productID=${productId}`;
     // const token = localStorage.getItem('token');
 
     try {
