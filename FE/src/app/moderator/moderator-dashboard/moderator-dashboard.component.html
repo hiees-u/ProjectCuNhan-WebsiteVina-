@@ -1,6 +1,79 @@
 <div class="container">
-    <div>
-        DashBoard
+  <div class="l-content">
+    <div class="l-content-header no-select">
+      <p>MHieu</p>
+      <span>Chào mừng bạn trở lại</span>
     </div>
-    <router-outlet></router-outlet>
+
+    <div class="br"></div>
+
+    <ul class="dashboard-moderator">
+      <li
+        class="dashboard-item no-select active"
+        [ngClass]="{ active: dashboardItem === 1 }"
+        (click)="navigateToProduct()"
+      >
+        <i class="fa-solid fa-box-open"></i>
+        <span>Quản lý sản phẩm</span>
+      </li>
+      <li
+        class="dashboard-item no-select"
+        [ngClass]="{ active: dashboardItem === 2 }"
+        (click)="navigateToCate()"
+      >
+        <i class="fa-solid fa-tag"></i>
+        <span>Quản lý loại sản phẩm</span>
+      </li>
+      <li
+        class="dashboard-item no-select"
+        [ngClass]="{ active: dashboardItem === 3 }"
+        (click)="navigateToSubCate()"
+      >
+        <i class="fa-solid fa-tags"></i>
+        <span>Quản lý loại sản phẩm phụ</span>
+      </li>
+      <li
+        class="dashboard-item no-select"
+        [ngClass]="{ active: dashboardItem === 4 }"
+        (click)="navigateToCustomer()"
+      >
+        <i class="fa-solid fa-user"></i>
+        <span>Quản lý khách hàng</span>
+      </li>
+      <li
+        class="dashboard-item no-select"
+        [ngClass]="{ active: dashboardItem === 5 }"
+        (click)="navigateToEmployee()"
+      >
+        <i class="fa-solid fa-user-tie"></i>
+        <span>Quản lý nhân viên</span>
+      </li>
+      <li
+        class="dashboard-item no-select"
+        [ngClass]="{ active: dashboardItem === 6 }"
+        (click)="navigateToDepartment()"
+      >
+        <i class="fa-regular fa-building"></i>
+        <span>Quản lý phòng ban</span>
+      </li>
+      <li
+        class="dashboard-item no-select"
+        [ngClass]="{ active: dashboardItem === 7 }"
+        (click)="navigateToSupplier()"
+      >
+        <i class="fa-solid fa-industry"></i>
+        <span>Quản lý nhà cung cấp</span>
+      </li>
+    </ul>
+  </div>
+  <div class="r-content">
+    <div class="r-content-header">
+      <div class="btn-content" (click)="logOutHandler()">
+        <i class="fa-solid fa-right-from-bracket"></i>
+      </div>
+    </div>
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
 </div>

@@ -66,9 +66,9 @@
               "Title": "CategoryController.cs",
               "DocumentMoniker": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\API\\Controllers\\CategoryController.cs",
               "RelativeDocumentMoniker": "API\\Controllers\\CategoryController.cs",
-              "ToolTip": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\API\\Controllers\\CategoryController.cs*",
-              "RelativeToolTip": "API\\Controllers\\CategoryController.cs*",
-              "ViewState": "AgIAACAAAAAAAAAAAAAgwC4AAAA0AAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\API\\Controllers\\CategoryController.cs",
+              "RelativeToolTip": "API\\Controllers\\CategoryController.cs",
+              "ViewState": "AgIAACAAAAAAAAAAAAAgwC8AAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-18T18:09:20.997Z",
               "EditorCaption": ""
@@ -83,8 +83,7 @@
               "RelativeToolTip": "BLL\\ConnectionStringHelper\\ConnectionStringHelper.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAACeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-18T16:09:49.646Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-18T16:09:49.646Z"
             },
             {
               "$type": "Document",
@@ -96,8 +95,7 @@
               "RelativeToolTip": "BLL\\UserBLL.cs",
               "ViewState": "AgIAABEAAAAAAAAAAAAAwBkAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-17T19:37:21.372Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-17T19:37:21.372Z"
             },
             {
               "$type": "Document",
@@ -109,8 +107,7 @@
               "RelativeToolTip": "API\\Controllers\\UserController.cs",
               "ViewState": "AgIAADUAAAAAAAAAAAAgwFsAAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-17T19:37:05.479Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-17T19:37:05.479Z"
             },
             {
               "$type": "Document",

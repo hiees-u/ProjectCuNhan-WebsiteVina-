@@ -7,6 +7,12 @@ import { OrderApproverComponent } from './order-approver/order-approver.componen
 import { WarehouseEmployeeComponent } from './warehouse-employee/warehouse-employee.component';
 import { ModeratorDashboardComponent } from './moderator/moderator-dashboard/moderator-dashboard.component';
 import { ProductModeratorComponent } from './moderator/product-moderator/product-moderator.component';
+import { CateModeratorComponent } from './moderator/cate-moderator/cate-moderator.component';
+import { SubCateModeratorComponent } from './moderator/sub-cate-moderator/sub-cate-moderator.component';
+import { CustomerModeratorComponent } from './moderator/customer-moderator/customer-moderator.component';
+import { DepartmentModeratorComponent } from './moderator/department-moderator/department-moderator.component';
+import { EmployeeModeratorComponent } from './moderator/employee-moderator/employee-moderator.component';
+import { SupplierModeratorComponent } from './moderator/supplier-moderator/supplier-moderator.component';
 
 export const routes: Routes = [
   ...CustomerRoutingModule,
@@ -28,6 +34,12 @@ export const routes: Routes = [
     component: ModeratorDashboardComponent,
     children: [
       { path: 'product-moderator', component: ProductModeratorComponent },
+      { path: 'cate-moderator', component: CateModeratorComponent },
+      { path: 'sub-cate-moderator', component: SubCateModeratorComponent },
+      { path: 'customer-moderator', component: CustomerModeratorComponent },
+      { path: 'department-moderator', component: DepartmentModeratorComponent },
+      { path: 'employee-moderator', component: EmployeeModeratorComponent },
+      { path: 'supplier-moderator', component: SupplierModeratorComponent },
       { path: '', redirectTo: 'product-moderator', pathMatch: 'full' },
     ],
   },

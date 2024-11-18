@@ -1,0 +1,122 @@
+.container-product-moderator {
+  width: calc(100% - 30px);
+  height: calc(100% - 30px);
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 1.2%;
+}
+
+.header {
+  background: #f8990017;
+  width: calc(100% - 15px);
+  height: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 15px 0 0;
+  font-family: var(--main-style);
+  overflow: hidden;
+  white-space: nowrap;
+  /* width: 100%; */
+  color: #5f5f5f;
+  animation: width-1-100 3.5s ease-in-out;
+}
+
+.header-action {
+  width: calc(100% - 30px);
+  margin: 10px 0;
+  height: calc(50px - 10px);
+  padding: 5px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 1px 0 0 #e0dfdf;
+}
+
+.header > span {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header > span > span {
+  height: 40px;
+  width: 10px;
+  background-color: var(--secon-color);
+  margin-right: 15px;
+  display: block;
+}
+
+.btn {
+  width: fit-content;
+  font-size: 0.7em;
+  padding: 8px 15px;
+  margin: 0;
+}
+
+.btn i {
+  margin-right: 5px;
+}
+
+.btn-add-product {
+  background-color: #3920f1;
+  color: #fff;
+}
+
+.btn-search {
+    overflow: hidden;
+    width: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid #ddd;
+    height: 28px;
+}
+
+.btn-search input {
+    border: none;
+    outline: none;
+    height: 100%;
+    width: 80%;
+    color: var(--secon-text-color);
+    padding: 0 10px;
+}
+
+.btn-search button {
+    border: none;
+    outline: none;
+    height: 100%;
+    width: 20%;
+    color: #fff;
+    background-color: var(--secon-color);
+    cursor: pointer;
+}
+
+@keyframes width-1-100 {
+    0% {
+        width: 0%;
+    } 100% {
+        width: calc(100% - 15px);
+    }
+}
+/* ################################################################################ */
+
+.content {
+    margin-top: 20px;
+    width: 100%;
+}
+
+.content table {
+    width: 100%;
+}
+
+.content table tr {
+    width: 100%;
+}
+
+.content table tr th {
+    font-weight: 400;
+    font-family: var(--main-style);
+    color: var(--main-text-color);
+    font-size: .8em;
+}
