@@ -44,7 +44,7 @@ namespace API.Controllers
         }
 
         [HttpGet("Get By Id Product")]
-        public IActionResult GetCateNameByProductID([FromQuery] int productID) 
+        public IActionResult GetCateNameByProductID(int productID) 
         {
             BaseResponseModel result = category.GetCateNameByProductID(productID);
 
