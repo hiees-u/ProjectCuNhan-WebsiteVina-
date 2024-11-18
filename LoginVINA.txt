@@ -1,4 +1,8 @@
 hieu3 - 123
 HiuModerator - 123
 HiuWarehouseEmployee -123
+<<<<<<< HEAD
 HiuOrderApprover - 123
+=======
+HiuOrderApprover - 123
+>>>>>>> 6d062dfc0f5a3c38a50e53d3f8e0cdcf59c5850f

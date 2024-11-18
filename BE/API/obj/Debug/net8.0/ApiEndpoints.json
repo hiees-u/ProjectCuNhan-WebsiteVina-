@@ -231,6 +231,86 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "API.Controllers.CellController",
+    "Method": "Delete",
+    "RelativePath": "api/Cell/DeleteCell/{cellID}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "cellID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.CellController",
+    "Method": "GetCellByShelve",
+    "RelativePath": "api/Cell/GetCellByShelve/{shelveID}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "shelveID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.CellController",
+    "Method": "GetProductsByWarehouseID",
+    "RelativePath": "api/Cell/GetProductsByWarehouseID/{warehouseID}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "warehouseID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.CellController",
+    "Method": "Post",
+    "RelativePath": "api/Cell/PostCell",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "DTO.Cells.CellPostRequestModule",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.CellController",
+    "Method": "Put",
+    "RelativePath": "api/Cell/PutCell",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "DTO.Cells.CellRequestModule",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "API.Controllers.CommuneController",
     "Method": "Get",
     "RelativePath": "api/Commune",

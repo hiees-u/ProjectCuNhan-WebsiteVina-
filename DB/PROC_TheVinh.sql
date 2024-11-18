@@ -20,6 +20,8 @@ Grant Select, Update, Insert On dbo.WarehouseReceiptDetail to WarehouseEmployee
 
 Grant Select, Update, Insert, Delete On dbo.Shelve to WarehouseEmployee
 Grant Select, Update, Insert, Delete On dbo.Cells to WarehouseEmployee
+
+Grant Select On dbo.Product to WarehouseEmployee --bổ sung 18/11/2024
 --############################################# GET ALL WAREHOUSE #####################################################################################
 go
 CREATE PROCEDURE GetAllWarehouses
@@ -242,7 +244,7 @@ SELECT @ResultMessage AS Result;
 
 
 --===========================================================================================
---================================== Quản Lý Kệ ============================================
+--================================== Quản Lý Kệ =============================================
 --===========================================================================================
 
 --################################################ GET SHELEVE OF WAREHOUSE#####################################################################################
@@ -482,7 +484,305 @@ DECLARE @ResultMessage NVARCHAR(100);
 EXEC DeleteShelve 
     @ShelvesID = 1,
     @Message = @ResultMessage OUTPUT;
-
 -- In ra thông báo
 PRINT @ResultMessage;
 
+--===========================================================================================
+--================================== Quản Lý Ô ==============================================
+--===========================================================================================
+
+--########################################## Get Product By ShelveID #####################################################################################
+
+GO
+CREATE PROCEDURE GetProductByShelveID
+    @ShelvesID INT,
+    @Message NVARCHAR(100) OUTPUT
+AS
+BEGIN
+    -- Kiểm tra xem kệ có tồn tại hay không
+    IF NOT EXISTS (SELECT 1 FROM Shelve WHERE ShelvesID = @ShelvesID)
+    BEGIN
+        SET @Message = N'Không tìm thấy Kệ với Mã Kệ đã cho!';
+        RETURN;
+    END
+
+    -- Lấy thông tin sản phẩm của các ô theo kệ
+    SELECT 
+        c.CellID,
+        c.CellName,
+        c.Quantity,
+        p.product_id,
+        p.product_name,
+        p.image,
+        p.totalQuantity,
+        p.ExpriryDate,
+        c.ModifiedBy,
+        c.CreateTime,
+        c.ModifiedTime,
+        c.DeleteTime
+    FROM Cells c
+    INNER JOIN Product p ON c.product_id = p.product_id
+    WHERE 
+        c.ShelvesID = 11 
+        AND c.DeleteTime IS NULL 
+        AND p.DeleteTime IS NULL;
+
+    SET @Message = N'Đã lấy thông tin sản phẩm theo kệ thành công!';
+END;
+GO
+
+DECLARE @Message NVARCHAR(100);
+EXEC GetProductByShelveID @ShelvesID = 11, @Message = @Message OUTPUT;
+PRINT @Message;
+
+GRANT EXEC ON OBJECT::dbo.GetProductByShelveID TO  WarehouseEmployee;
+
+go
+--===================================================Lấy sản phẩm theo kho======================================
+CREATE PROCEDURE GetProductsByWarehouseID
+    @WarehouseID INT,
+    @Message NVARCHAR(100) OUTPUT
+AS
+BEGIN
+    -- Kiểm tra xem Warehouse có tồn tại hay không
+    IF NOT EXISTS (SELECT 1 FROM Warehouse WHERE WarehouseID = @WarehouseID)
+    BEGIN
+        SET @Message = N'Không tìm thấy Kho với Mã Kho đã cho!';
+        RETURN;
+    END
+
+    -- Truy vấn thông tin kệ, ô và sản phẩm
+    SELECT 
+        w.WarehouseName,
+        s.ShelvesName,
+        c.CellName,
+        p.product_name,
+        p.image,
+        c.Quantity,
+        p.totalQuantity,
+        p.ExpriryDate,
+        c.ModifiedBy AS CellModifiedBy,
+        c.CreateTime AS CellCreateTime,
+        c.ModifiedTime AS CellModifiedTime,
+        c.DeleteTime AS CellDeleteTime
+    FROM Warehouse w
+    INNER JOIN Shelve s ON w.WarehouseID = s.WarehouseID
+    INNER JOIN Cells c ON s.ShelvesID = c.ShelvesID
+    INNER JOIN Product p ON c.product_id = p.product_id
+    WHERE 
+        w.WarehouseID = @WarehouseID 
+        AND s.DeleteTime IS NULL 
+        AND c.DeleteTime IS NULL 
+        AND p.DeleteTime IS NULL
+    ORDER BY s.ShelvesName, c.CellName;
+
+    SET @Message = N'Đã lấy thông tin sản phẩm theo Kho thành công!';
+END;
+GO
+
+
+GRANT EXEC ON OBJECT::dbo.GetProductsByWarehouseID TO  WarehouseEmployee;
+
+DECLARE @Message NVARCHAR(100);
+EXEC GetProductsByWarehouseID @WarehouseID = 2, @Message = @Message OUTPUT;
+PRINT @Message;
+
+--=======================================================================================
+
+--########################################## INSERT CELL #####################################################################################
+GO
+CREATE PROCEDURE AddCell
+    @CellName NVARCHAR(30),
+    @ShelvesID INT,
+    @Quantity INT,
+    @product_id INT,
+    @ModifiedBy VARCHAR(25),
+    @Message NVARCHAR(100) OUTPUT -- Tham số OUTPUT để trả về thông báo
+AS
+BEGIN
+    -- Kiểm tra nếu tên ô đã tồn tại trong cùng ShelvesID
+    IF EXISTS (SELECT 1 FROM Cells WHERE CellName = @CellName AND ShelvesID = @ShelvesID)
+    BEGIN
+        SET @Message = N'Tên ô đã tồn tại trong kệ, vui lòng chọn tên khác.'; -- Gán thông báo vào biến OUTPUT
+        RETURN;
+    END
+
+    -- Bắt đầu giao dịch
+    BEGIN TRANSACTION;
+
+    BEGIN TRY
+        -- Thêm ô vào bảng Cells
+        INSERT INTO Cells (CellName, ShelvesID, Quantity, product_id, ModifiedBy, CreateTime)
+        VALUES (@CellName, @ShelvesID, @Quantity, @product_id, @ModifiedBy, GETDATE());
+
+        -- Commit giao dịch nếu không có lỗi
+        COMMIT TRANSACTION;
+
+        SET @Message = N'Ô mới đã được thêm thành công!'; -- Gán thông báo vào biến OUTPUT
+    END TRY
+    BEGIN CATCH
+        -- Rollback giao dịch nếu có lỗi xảy ra
+        ROLLBACK TRANSACTION;
+        SET @Message = N'Đã xảy ra lỗi trong quá trình thêm ô!'; -- Gán thông báo lỗi vào biến OUTPUT
+    END CATCH
+END;
+GO
+
+GRANT EXEC ON OBJECT::dbo.AddCell TO  WarehouseEmployee;
+
+DECLARE @Message NVARCHAR(100);
+EXEC AddCell 
+    @CellName = N'test cell 1', 
+    @ShelvesID = 11, 
+    @Quantity = 20, 
+    @product_id = 4,
+    @ModifiedBy = 'Vinh', 
+    @Message = @Message OUTPUT;
+PRINT @Message;
+
+--============================Xóa ràng buộc CellName====================
+alter table Cells
+drop constraint uni_CellName
+--======================================================================
+
+--########################################## INSERT CELL #####################################################################################
+
+GO
+CREATE PROCEDURE UpdateCell
+    @CellID INT,
+    @CellName NVARCHAR(30),
+    @ShelvesID INT,
+    @Quantity INT,
+    @product_id INT,
+    @ModifiedBy VARCHAR(25),
+    @OutputMessage NVARCHAR(100) OUTPUT
+AS
+BEGIN
+    BEGIN TRANSACTION;
+    BEGIN TRY
+        IF NOT EXISTS (SELECT 1 FROM Cells WHERE CellID = @CellID)
+        BEGIN
+            SET @OutputMessage = N'CellID không tồn tại';
+            ROLLBACK TRANSACTION;
+            RETURN;
+        END
+        IF EXISTS (SELECT 1 FROM Cells 
+                   WHERE CellName = @CellName 
+                     AND ShelvesID = @ShelvesID 
+                     AND CellID != @CellID)
+        BEGIN
+            SET @OutputMessage = N'Tên ô đã tồn tại trong kệ, vui lòng chọn tên khác';
+            ROLLBACK TRANSACTION;
+            RETURN;
+        END
+        UPDATE Cells
+        SET 
+            CellName = @CellName,
+            ShelvesID = @ShelvesID,
+            Quantity = @Quantity,
+            product_id = @product_id,
+            ModifiedBy = @ModifiedBy,
+            ModifiedTime = GETDATE()
+        WHERE CellID = @CellID;
+        COMMIT TRANSACTION;
+        SET @OutputMessage = N'Cập nhật ô thành công!';
+    END TRY
+    BEGIN CATCH
+        ROLLBACK TRANSACTION;
+        SET @OutputMessage = N'Đã xảy ra lỗi trong quá trình cập nhật ô: ' + ERROR_MESSAGE();
+    END CATCH
+END;
+GO
+
+GRANT EXEC ON OBJECT::dbo.UpdateCell TO  WarehouseEmployee;
+
+DECLARE @OutputMessage NVARCHAR(100);
+EXEC UpdateCell 
+    @CellID = 14,
+    @CellName = N'Sửa ô',
+    @ShelvesID = 3,
+    @Quantity = 60,
+    @product_id = 4,
+    @ModifiedBy = 'Vinh Sua',
+    @OutputMessage = @OutputMessage OUTPUT;
+PRINT @OutputMessage;
+
+--########################################## DELETE CELL #####################################################################################
+GO
+CREATE PROCEDURE DeleteCell
+    @CellID INT,
+    @Message NVARCHAR(100) OUTPUT
+AS
+BEGIN
+    DECLARE @count_id INT;
+    SELECT @count_id = COUNT(*) 
+    FROM Cells 
+    WHERE CellID = @CellID;
+
+    IF @count_id = 0 
+    BEGIN
+        SET @Message = N'CellID không tồn tại';
+        RETURN;
+    END
+    UPDATE Cells 
+    SET DeleteTime = GETDATE()
+    WHERE CellID = @CellID;
+
+    IF @@ROWCOUNT > 0
+    BEGIN
+        SET @Message = N'Xóa ô thành công';
+    END
+    ELSE
+    BEGIN
+        SET @Message = N'Có lỗi xảy ra khi xóa ô';
+    END
+END;
+GO
+
+GRANT EXEC ON OBJECT::dbo.DeleteCell TO  WarehouseEmployee;
+
+DECLARE @Message NVARCHAR(100);
+EXEC DeleteCell 
+    @CellID = 10,
+    @Message = @Message OUTPUT;
+PRINT @Message;
+go
+--===============
+--====trigger====
+--===============
+--Trigger cho thao tác nhập kho (khi có thay đổi trong WarehouseReceiptDetail). thêm tổng số lượng sản phẩm khi nhập kho
+CREATE TRIGGER trg_UpdateTotalQuantity_OnInsertWarehouseReceipt
+ON WarehouseReceiptDetail
+AFTER INSERT, UPDATE, DELETE
+AS
+BEGIN
+    -- Khi thêm hoặc cập nhật phiếu nhập kho
+    IF EXISTS (SELECT * FROM inserted)
+    BEGIN
+        -- Cập nhật tổng số lượng sản phẩm dựa trên bảng WarehouseReceiptDetail
+        UPDATE Product
+        SET totalQuantity = totalQuantity + ISNULL(i.quantity, 0) - ISNULL(d.quantity, 0)
+        FROM Product p
+        LEFT JOIN inserted i ON p.product_id = i.product_id
+        LEFT JOIN deleted d ON p.product_id = d.product_id;
+    END
+END;
+GO
+--Trigger cho thao tác xuất kho (khi có thay đổi trong DeliveryNoteDetail). Tự động cập nhật số lướng
+CREATE TRIGGER trg_UpdateTotalQuantity_OnInsertDeliveryNote
+ON DeliveryNoteDetail
+AFTER INSERT, UPDATE, DELETE
+AS
+BEGIN
+    -- Khi thêm hoặc cập nhật phiếu xuất kho
+    IF EXISTS (SELECT * FROM inserted)
+    BEGIN
+        -- Cập nhật tổng số lượng sản phẩm dựa trên bảng DeliveryNoteDetail
+        UPDATE Product
+        SET totalQuantity = totalQuantity + ISNULL(i.quantity, 0) - ISNULL(d.quantity, 0)
+        FROM Product p
+        LEFT JOIN inserted i ON p.product_id = i.product_id
+        LEFT JOIN deleted d ON p.product_id = d.product_id;
+    END
+END;
+GO
