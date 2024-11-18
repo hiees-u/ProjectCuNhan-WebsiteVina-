@@ -1,0 +1,4 @@
+18/11/2024
+Cập nhật word PROCTheVinh
+Thêm các trigger, PROC Cell trong DB/PROC_TheVinh.sql
+Thêm quyền selct product cho nhân viên kho
