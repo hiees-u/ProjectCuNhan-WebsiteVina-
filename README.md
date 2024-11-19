@@ -18,6 +18,7 @@ Thành Viên Nhóm:
 	+ Nhân viên,
 	+ phòng ban
  - Thiết kế, cài đặt cơ sở dữ liệu.
+   
 .......... - Mai Thế Vinh
  - Nhân viên: 
       + Xử lý đơn hàng, xuất hóa đơn
@@ -27,6 +28,7 @@ Thành Viên Nhóm:
  - Quản lý kho: cảnh báo sản phẩm sắp hết hạn sử dụng, quản lý vị trí lưu trữ sản phẩm trên ngăn kệ
  - Khảo sát, phân tích, thiết kế hệ thống.
 .......... - Nguyễn Hồ Phúc Thịnh
+
  - Quản trị người dùng
  - thanh toán (online)
  - Giao hàng (Tìm hiểu API giao hàng..)
