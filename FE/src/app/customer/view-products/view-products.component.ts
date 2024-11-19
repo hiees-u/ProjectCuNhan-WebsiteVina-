@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
 import { CustomCurrencyPipe } from '../../shared/module/customCurrency';
 
 import { ProductItemComponent } from '../../shared/item/product-item/product-item.component';
-import { FilterPriceComponent } from '../../shared/item/filter-price/filter-price.component';
+// import { FilterPriceComponent } from '../../shared/item/filter-price/filter-price.component';
 import { CustomerService } from '../customer.service';
 import { Product } from '../../shared/module/product/product.module';
 import {

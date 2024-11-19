@@ -1,0 +1,115 @@
+<div class="container">
+  <button (click)="sendIsClose()" class="close">
+    <i class="fa-solid fa-xmark"></i>
+  </button>
+  <div class="header">
+    <span class="header-text">
+      <span></span>
+      Thêm Sản Phẩm</span
+    >
+  </div>
+  <div class="header-action">
+    <div class="btn-add-product btn">
+      <i class="fa-solid fa-plus"></i>
+      Thêm loại sản phẩm
+    </div>
+    <div class="btn-add-product btn">
+      <i class="fa-solid fa-plus"></i>
+      Thêm loại sản phẩm phụ
+    </div>
+    <div class="btn-add-product btn">
+      <i class="fa-solid fa-plus"></i>
+      Thêm nhà cung cấp
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="inp-form">
+      <label for="name-product">Tên sản phẩm: </label>
+      <input
+        type="text"
+        [(ngModel)]="product.productName"
+        (ngModelChange)="onProductChange()"
+        id="name-product"
+        placeholder="Tên sản phẩm..."
+      />
+    </div>
+    <div class="inp-form">
+      <label for="img-product">Ảnh: </label>
+      <input
+        type="text"
+        [(ngModel)]="product.image"
+        (ngModelChange)="onProductChange()"
+        id="img-product"
+        placeholder="Ảnh sản phẩm..."
+      />
+    </div>
+    <div class="inp-form">
+      <label for="loai-product">Loại sản phẩm: </label>
+      <select
+        id="loai-product"
+        [(ngModel)]="product.categoryId"
+        name="cate"
+        required
+      >
+        <option *ngFor="let item of categorys" [value]="item.categoryId">
+          {{ item.categoryName }}
+        </option>
+      </select>
+    </div>
+    <div class="inp-form">
+      <label for="sub-ca-product">Loại sản phẩm phụ: </label>
+      <select
+        id="sub-ca-product"
+        [(ngModel)]="product.subCategoryId"
+        name="cate"
+        required
+      >
+        <option *ngFor="let item of subCategorys" [value]="item.subCategoryId">
+          {{ item.subCategoryName }}
+        </option>
+      </select>
+    </div>
+    <div class="inp-form">
+      <label for="supplier">Nhà cung cấp: </label>
+      <select id="supplier" [(ngModel)]="product.supplier" name="cate" required>
+        <option *ngFor="let item of supplier" [value]="item.supplierId">
+          {{ item.supplierName }}
+        </option>
+      </select>
+    </div>
+    <div class="inp-form">
+      <label for="date-expi">Ngày hết hạn: </label>
+      <input
+        type="datetime-local"
+        [(ngModel)]="product.expiryDate"
+        (ngModelChange)="onProductChange()"
+        id="date-expi"
+        placeholder="Ngày hết hạn..."
+      />
+    </div>
+    <div class="inp-form">
+      <label for="des">Mô tả: </label>
+      <textarea
+        type="text"
+        [(ngModel)]="product.description"
+        (ngModelChange)="onProductChange()"
+        id="des"
+        placeholder="Mô tả..."
+      ></textarea>
+    </div>
+    <div class="inp-form">
+      <label for="price">Giá: </label>
+      <input
+        type="text"
+        [(ngModel)]="product.price"
+        (ngModelChange)="onProductChange()"
+        id="price"
+        placeholder="Giá..."
+      />
+    </div>
+  </div>
+
+  <button (click)="onDelete()" class="del-btn">Xóa</button>
+  <button (click)="onUpdate()" *ngIf="isAdd" class="insert">Thêm</button>
+</div>

@@ -150,9 +150,15 @@ namespace BLL
                     }
                 }
 
-                //Phân trang
-                int totalPages = (int)Math.Ceiling((double)lst.Count / pageSize);
-                lst = lst.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+                int totalPages = 0;
+
+                if (pageSize != 0)
+                {
+                    //Phân trang
+                    totalPages = (int)Math.Ceiling((double)lst.Count / pageSize);
+                    lst = lst.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+                }
+                
                 return new BaseResponseModel()
                 {
                     IsSuccess = true,

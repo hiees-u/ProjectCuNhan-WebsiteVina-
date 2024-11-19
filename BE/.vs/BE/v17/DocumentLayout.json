@@ -3,6 +3,18 @@
   "WorkspaceRootPath": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{DE969023-0A53-4B48-B5F6-48BF28880A70}|BLL\\BLL.csproj|c:\\users\\admin\\desktop\\projectcunhan-websitevina-\\be\\bll\\productbll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DE969023-0A53-4B48-B5F6-48BF28880A70}|BLL\\BLL.csproj|solutionrelative:bll\\productbll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE969023-0A53-4B48-B5F6-48BF28880A70}|BLL\\BLL.csproj|c:\\users\\admin\\desktop\\projectcunhan-websitevina-\\be\\bll\\categorybll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DE969023-0A53-4B48-B5F6-48BF28880A70}|BLL\\BLL.csproj|solutionrelative:bll\\categorybll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE969023-0A53-4B48-B5F6-48BF28880A70}|BLL\\BLL.csproj|c:\\users\\admin\\desktop\\projectcunhan-websitevina-\\be\\bll\\cartbll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DE969023-0A53-4B48-B5F6-48BF28880A70}|BLL\\BLL.csproj|solutionrelative:bll\\cartbll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{1D0D98A9-8C32-4F25-AA4F-2F66D6654FA5}|API\\API.csproj|c:\\users\\admin\\desktop\\projectcunhan-websitevina-\\be\\api\\controllers\\categorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1D0D98A9-8C32-4F25-AA4F-2F66D6654FA5}|API\\API.csproj|solutionrelative:api\\controllers\\categorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -63,6 +75,45 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "ProductBLL.cs",
+              "DocumentMoniker": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\ProductBLL.cs",
+              "RelativeDocumentMoniker": "BLL\\ProductBLL.cs",
+              "ToolTip": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\ProductBLL.cs",
+              "RelativeToolTip": "BLL\\ProductBLL.cs",
+              "ViewState": "AgIAAIIAAAAAAAAAAAAQwIYAAAA5AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-19T21:27:11.655Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "CategoryBLL.cs",
+              "DocumentMoniker": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\CategoryBLL.cs",
+              "RelativeDocumentMoniker": "BLL\\CategoryBLL.cs",
+              "ToolTip": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\CategoryBLL.cs",
+              "RelativeToolTip": "BLL\\CategoryBLL.cs",
+              "ViewState": "AgIAAIYAAAAAAAAAAAAgwJgAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-19T20:15:19.764Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "CartBLL.cs",
+              "DocumentMoniker": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\CartBLL.cs",
+              "RelativeDocumentMoniker": "BLL\\CartBLL.cs",
+              "ToolTip": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\CartBLL.cs",
+              "RelativeToolTip": "BLL\\CartBLL.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-19T20:15:19.284Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "CategoryController.cs",
               "DocumentMoniker": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\API\\Controllers\\CategoryController.cs",
               "RelativeDocumentMoniker": "API\\Controllers\\CategoryController.cs",
@@ -75,7 +126,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "ConnectionStringHelper.cs",
               "DocumentMoniker": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\ConnectionStringHelper\\ConnectionStringHelper.cs",
               "RelativeDocumentMoniker": "BLL\\ConnectionStringHelper\\ConnectionStringHelper.cs",
@@ -87,7 +138,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "UserBLL.cs",
               "DocumentMoniker": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\UserBLL.cs",
               "RelativeDocumentMoniker": "BLL\\UserBLL.cs",
@@ -100,7 +151,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 6,
               "Title": "UserController.cs",
               "DocumentMoniker": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\API\\Controllers\\UserController.cs",
               "RelativeDocumentMoniker": "API\\Controllers\\UserController.cs",
@@ -113,7 +164,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 11,
               "Title": "EmployeeRequestPutModule.cs",
               "DocumentMoniker": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\DTO\\Employee\\EmployeeRequestPutModule.cs",
               "RelativeDocumentMoniker": "DTO\\Employee\\EmployeeRequestPutModule.cs",
@@ -125,7 +176,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 7,
               "Title": "EmployeeController.cs",
               "DocumentMoniker": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\API\\Controllers\\EmployeeController.cs",
               "RelativeDocumentMoniker": "API\\Controllers\\EmployeeController.cs",
@@ -137,7 +188,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 8,
               "Title": "EmployeeBLL.cs",
               "DocumentMoniker": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\EmployeeBLL.cs",
               "RelativeDocumentMoniker": "BLL\\EmployeeBLL.cs",
@@ -149,7 +200,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 10,
               "Title": "CustomerBLL.cs",
               "DocumentMoniker": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\CustomerBLL.cs",
               "RelativeDocumentMoniker": "BLL\\CustomerBLL.cs",
@@ -161,7 +212,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 9,
               "Title": "IEmployee.cs",
               "DocumentMoniker": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\Interface\\IEmployee.cs",
               "RelativeDocumentMoniker": "BLL\\Interface\\IEmployee.cs",
@@ -173,7 +224,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 12,
               "Title": "EmployeeResponseModule.cs",
               "DocumentMoniker": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\DTO\\Employee\\EmployeeResponseModule.cs",
               "RelativeDocumentMoniker": "DTO\\Employee\\EmployeeResponseModule.cs",
@@ -185,7 +236,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 13,
               "Title": "CustomerController.cs",
               "DocumentMoniker": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\API\\Controllers\\CustomerController.cs",
               "RelativeDocumentMoniker": "API\\Controllers\\CustomerController.cs",
