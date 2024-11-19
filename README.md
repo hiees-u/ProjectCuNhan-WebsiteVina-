@@ -27,8 +27,8 @@ Thành Viên Nhóm:
  - Chức năng chatbox giao tiếp với khách hàng.
  - Quản lý kho: cảnh báo sản phẩm sắp hết hạn sử dụng, quản lý vị trí lưu trữ sản phẩm trên ngăn kệ
  - Khảo sát, phân tích, thiết kế hệ thống.
-.......... - Nguyễn Hồ Phúc Thịnh
-
+..........
+   - Nguyễn Hồ Phúc Thịnh
  - Quản trị người dùng
  - thanh toán (online)
  - Giao hàng (Tìm hiểu API giao hàng..)
