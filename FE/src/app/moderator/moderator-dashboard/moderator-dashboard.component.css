@@ -107,6 +107,6 @@
 }
 
 .content {
-  padding: 35px 35px;
-  height: calc(100vh - 100px);
+  padding: 25px;
+  height: calc(100vh - 75px);
 }

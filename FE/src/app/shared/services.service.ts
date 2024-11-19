@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { BaseResponseModel } from './module/base-response/base-response.module';
 
 @Injectable({
   providedIn: 'root',
@@ -9,6 +10,59 @@ export class ServicesService {
   constructor() {
     if (typeof window !== 'undefined') {
       this.token = localStorage.getItem('token') || '';
+    }
+  }
+
+  async GetAllSupplier(): Promise<BaseResponseModel> {
+    const url = 'https://localhost:7060/api/Supplier/Get All';
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+      const data = await response.json();      
+      return data as BaseResponseModel;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async GetAllSubCate(): Promise<BaseResponseModel> {
+    const url =
+      'https://localhost:7060/api/SubCategory/Get Pagition?pageNumber=1&pageSize=100';
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+      const data = await response.json();
+      return data as BaseResponseModel;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async GetAllCate(): Promise<BaseResponseModel> {
+    const url =
+      'https://localhost:7060/api/Category/Get Pagition?pageNumber=1&pageSize=0';
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+      const data = await response.json();
+      return data as BaseResponseModel;
+    } catch (error) {
+      throw error;
     }
   }
 
@@ -46,7 +100,7 @@ export class ServicesService {
           Authorization: `Bearer ${this.token}`, // Nếu API yêu cầu xác thực, thêm header này
         },
       });
-      if (!response.ok) {       
+      if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       return await response.json();

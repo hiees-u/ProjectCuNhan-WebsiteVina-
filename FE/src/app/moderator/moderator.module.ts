@@ -21,6 +21,31 @@ export interface ProductModerator {
   deleteTime: string | null;
 }
 
+// products/product.model.ts
+export interface InsertProduct {
+  productName: string;
+  image: string;
+  categoryId: number;
+  supplier: number;
+  subCategoryId: number;
+  expiryDate: string;
+  description: string;
+  price: number;
+}
+
+export function ContructorInsertProduct():InsertProduct {
+  return {
+    productName: '',
+    image: '',
+    categoryId: 0,
+    supplier: 0,
+    subCategoryId: 0,
+    expiryDate: new Date().toISOString(),
+    description: '',
+    price: 0,
+  }
+}
+
 
 @NgModule({
   declarations: [],
