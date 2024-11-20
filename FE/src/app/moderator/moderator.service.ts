@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BaseResponseModel } from '../shared/module/base-response/base-response.module';
+import { InsertProduct } from './moderator.module';
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +18,51 @@ export class ModeratorService {
   ngOnInit(): void {
     if (typeof window !== 'undefined') {
       this.token = localStorage.getItem('token') || '';
+    }
+  }
+
+  //post Product
+  async postProduct(product: InsertProduct): Promise<BaseResponseModel> {
+    const url = 'https://localhost:7060/api/Product'
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.token}`,
+        },
+        body: JSON.stringify(product)
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data: BaseResponseModel = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Error:', error);
+      throw error;
+    }
+  }
+
+  //file ảnh
+  async UploadFile(file: File): Promise<BaseResponseModel> {
+    const url = 'https://localhost:7060/api/File/upload';
+    const formData = new FormData();
+    formData.append('file', file);
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${this.token}` },
+        body: formData,
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      return data as BaseResponseModel;
+    } catch (error) {
+      console.error('File upload failed:', error);
+      throw error;
     }
   }
 

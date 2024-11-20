@@ -78,7 +78,10 @@
         (click)="handlePageClick(page)"
         >{{ page }}</span
       >
-      <span class="pagination-item" (click)="handlePageClick(pages[pages.length-1])">
+      <span
+        class="pagination-item"
+        (click)="handlePageClick(pages[pages.length - 1])"
+      >
         <i class="fa-solid fa-angle-right"></i>
       </span>
     </div>
@@ -92,7 +95,15 @@
     </button>
 
     <div class="product-detail-left">
-      <img [src]="'/assets/Products/' + receivedData?.image" />
+      <!-- <img [src]="'/assets/Products/' + receivedData?.image" /> -->
+      <img
+        [src]="
+          receivedData?.image
+            ? '/assets/Products/' + receivedData?.image
+            : '/assets/Products/anh1.jpg'
+        "
+        alt="Product Image"
+      />
     </div>
 
     <div class="product-detail-right">

@@ -23,7 +23,7 @@ export class ServicesService {
           Authorization: `Bearer ${this.token}`,
         },
       });
-      const data = await response.json();      
+      const data = await response.json();
       return data as BaseResponseModel;
     } catch (error) {
       throw error;

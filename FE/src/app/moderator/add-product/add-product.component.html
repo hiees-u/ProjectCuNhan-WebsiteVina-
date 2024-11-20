@@ -36,10 +36,10 @@
     </div>
     <div class="inp-form">
       <label for="img-product">Ảnh: </label>
+      <!-- [(ngModel)]="product.image" -->
       <input
-        type="text"
-        [(ngModel)]="product.image"
-        (ngModelChange)="onProductChange()"
+        type="file"
+        (change)="onProductImageChange($event)"
         id="img-product"
         placeholder="Ảnh sản phẩm..."
       />

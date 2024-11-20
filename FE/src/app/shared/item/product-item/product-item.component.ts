@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CustomCurrencyPipe } from '../../module/customCurrency';
 import { Product } from '../../module/product/product.module';
-import { NgOptimizedImage } from '@angular/common'
+// import { NgOptimizedImage } from '@angular/common'
 
 @Component({
   selector: 'app-product-item',
@@ -10,7 +10,7 @@ import { NgOptimizedImage } from '@angular/common'
   imports: [
     CommonModule,
     CustomCurrencyPipe,
-    NgOptimizedImage
+    // NgOptimizedImage
   ],
   templateUrl: './product-item.component.html',
   styleUrl: './product-item.component.css'
