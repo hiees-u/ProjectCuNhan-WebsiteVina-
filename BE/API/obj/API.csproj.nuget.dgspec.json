@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\API\\API.csproj": {}
+    "D:\\HOC\\Do An\\Do_an_20_11\\ProjectCuNhan-WebsiteVina-\\BE\\API\\API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\API\\API.csproj": {
+    "D:\\HOC\\Do An\\Do_an_20_11\\ProjectCuNhan-WebsiteVina-\\BE\\API\\API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\API\\API.csproj",
+        "projectUniqueName": "D:\\HOC\\Do An\\Do_an_20_11\\ProjectCuNhan-WebsiteVina-\\BE\\API\\API.csproj",
         "projectName": "API",
-        "projectPath": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\API\\API.csproj",
-        "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\API\\obj\\",
+        "projectPath": "D:\\HOC\\Do An\\Do_an_20_11\\ProjectCuNhan-WebsiteVina-\\BE\\API\\API.csproj",
+        "packagesPath": "C:\\Users\\MSI\\.nuget\\packages\\",
+        "outputPath": "D:\\HOC\\Do An\\Do_an_20_11\\ProjectCuNhan-WebsiteVina-\\BE\\API\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "D:\\Download\\VisualStudio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\MSI\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -29,14 +33,14 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\BLL.csproj": {
-                "projectPath": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\BLL.csproj"
+              "D:\\HOC\\Do An\\Do_an_20_11\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\BLL.csproj": {
+                "projectPath": "D:\\HOC\\Do An\\Do_an_20_11\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\BLL.csproj"
               },
-              "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\DLL\\DLL.csproj": {
-                "projectPath": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\DLL\\DLL.csproj"
+              "D:\\HOC\\Do An\\Do_an_20_11\\ProjectCuNhan-WebsiteVina-\\BE\\DLL\\DLL.csproj": {
+                "projectPath": "D:\\HOC\\Do An\\Do_an_20_11\\ProjectCuNhan-WebsiteVina-\\BE\\DLL\\DLL.csproj"
               },
-              "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\DTO\\DTO.csproj": {
-                "projectPath": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\DTO\\DTO.csproj"
+              "D:\\HOC\\Do An\\Do_an_20_11\\ProjectCuNhan-WebsiteVina-\\BE\\DTO\\DTO.csproj": {
+                "projectPath": "D:\\HOC\\Do An\\Do_an_20_11\\ProjectCuNhan-WebsiteVina-\\BE\\DTO\\DTO.csproj"
               }
             }
           }
@@ -110,21 +114,25 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\BLL.csproj": {
+    "D:\\HOC\\Do An\\Do_an_20_11\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\BLL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\BLL.csproj",
+        "projectUniqueName": "D:\\HOC\\Do An\\Do_an_20_11\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\BLL.csproj",
         "projectName": "BLL",
-        "projectPath": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\BLL.csproj",
-        "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\obj\\",
+        "projectPath": "D:\\HOC\\Do An\\Do_an_20_11\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\BLL.csproj",
+        "packagesPath": "C:\\Users\\MSI\\.nuget\\packages\\",
+        "outputPath": "D:\\HOC\\Do An\\Do_an_20_11\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "D:\\Download\\VisualStudio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\MSI\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -139,11 +147,11 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\DLL\\DLL.csproj": {
-                "projectPath": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\DLL\\DLL.csproj"
+              "D:\\HOC\\Do An\\Do_an_20_11\\ProjectCuNhan-WebsiteVina-\\BE\\DLL\\DLL.csproj": {
+                "projectPath": "D:\\HOC\\Do An\\Do_an_20_11\\ProjectCuNhan-WebsiteVina-\\BE\\DLL\\DLL.csproj"
               },
-              "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\DTO\\DTO.csproj": {
-                "projectPath": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\DTO\\DTO.csproj"
+              "D:\\HOC\\Do An\\Do_an_20_11\\ProjectCuNhan-WebsiteVina-\\BE\\DTO\\DTO.csproj": {
+                "projectPath": "D:\\HOC\\Do An\\Do_an_20_11\\ProjectCuNhan-WebsiteVina-\\BE\\DTO\\DTO.csproj"
               }
             }
           }
@@ -192,21 +200,25 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\DLL\\DLL.csproj": {
+    "D:\\HOC\\Do An\\Do_an_20_11\\ProjectCuNhan-WebsiteVina-\\BE\\DLL\\DLL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\DLL\\DLL.csproj",
+        "projectUniqueName": "D:\\HOC\\Do An\\Do_an_20_11\\ProjectCuNhan-WebsiteVina-\\BE\\DLL\\DLL.csproj",
         "projectName": "DLL",
-        "projectPath": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\DLL\\DLL.csproj",
-        "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\DLL\\obj\\",
+        "projectPath": "D:\\HOC\\Do An\\Do_an_20_11\\ProjectCuNhan-WebsiteVina-\\BE\\DLL\\DLL.csproj",
+        "packagesPath": "C:\\Users\\MSI\\.nuget\\packages\\",
+        "outputPath": "D:\\HOC\\Do An\\Do_an_20_11\\ProjectCuNhan-WebsiteVina-\\BE\\DLL\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "D:\\Download\\VisualStudio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\MSI\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -263,21 +275,25 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\DTO\\DTO.csproj": {
+    "D:\\HOC\\Do An\\Do_an_20_11\\ProjectCuNhan-WebsiteVina-\\BE\\DTO\\DTO.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\DTO\\DTO.csproj",
+        "projectUniqueName": "D:\\HOC\\Do An\\Do_an_20_11\\ProjectCuNhan-WebsiteVina-\\BE\\DTO\\DTO.csproj",
         "projectName": "DTO",
-        "projectPath": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\DTO\\DTO.csproj",
-        "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\DTO\\obj\\",
+        "projectPath": "D:\\HOC\\Do An\\Do_an_20_11\\ProjectCuNhan-WebsiteVina-\\BE\\DTO\\DTO.csproj",
+        "packagesPath": "C:\\Users\\MSI\\.nuget\\packages\\",
+        "outputPath": "D:\\HOC\\Do An\\Do_an_20_11\\ProjectCuNhan-WebsiteVina-\\BE\\DTO\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "D:\\Download\\VisualStudio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\MSI\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -292,8 +308,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\DLL\\DLL.csproj": {
-                "projectPath": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\DLL\\DLL.csproj"
+              "D:\\HOC\\Do An\\Do_an_20_11\\ProjectCuNhan-WebsiteVina-\\BE\\DLL\\DLL.csproj": {
+                "projectPath": "D:\\HOC\\Do An\\Do_an_20_11\\ProjectCuNhan-WebsiteVina-\\BE\\DLL\\DLL.csproj"
               }
             }
           }
@@ -328,7 +344,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

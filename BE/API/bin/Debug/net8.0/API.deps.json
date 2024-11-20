@@ -1051,10 +1051,7 @@
           "System.Data.SqlClient": "4.8.6"
         },
         "runtime": {
-          "BLL.dll": {
-            "assemblyVersion": "1.0.0",
-            "fileVersion": "1.0.0.0"
-          }
+          "BLL.dll": {}
         }
       },
       "DLL/1.0.0": {
@@ -1063,10 +1060,7 @@
           "Microsoft.EntityFrameworkCore.SqlServer": "8.0.0"
         },
         "runtime": {
-          "DLL.dll": {
-            "assemblyVersion": "1.0.0",
-            "fileVersion": "1.0.0.0"
-          }
+          "DLL.dll": {}
         }
       },
       "DTO/1.0.0": {
@@ -1074,10 +1068,7 @@
           "DLL": "1.0.0"
         },
         "runtime": {
-          "DTO.dll": {
-            "assemblyVersion": "1.0.0",
-            "fileVersion": "1.0.0.0"
-          }
+          "DTO.dll": {}
         }
       }
     }
