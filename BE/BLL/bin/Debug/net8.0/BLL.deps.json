@@ -740,7 +740,10 @@
           "Microsoft.EntityFrameworkCore.SqlServer": "8.0.0"
         },
         "runtime": {
-          "DLL.dll": {}
+          "DLL.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       },
       "DTO/1.0.0": {
@@ -748,7 +751,10 @@
           "DLL": "1.0.0"
         },
         "runtime": {
-          "DTO.dll": {}
+          "DTO.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       }
     }

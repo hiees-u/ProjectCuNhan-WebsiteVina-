@@ -24,7 +24,7 @@ export interface ProductModerator {
 // products/product.model.ts
 export interface InsertProduct {
   productName: string;
-  image: string;
+  image: File;
   categoryId: number;
   supplier: number;
   subCategoryId: number;
@@ -36,7 +36,7 @@ export interface InsertProduct {
 export function ContructorInsertProduct():InsertProduct {
   return {
     productName: '',
-    image: '',
+    image: new File([], ''),
     categoryId: 0,
     supplier: 0,
     subCategoryId: 0,

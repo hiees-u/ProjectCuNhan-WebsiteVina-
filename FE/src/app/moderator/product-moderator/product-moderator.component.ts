@@ -85,5 +85,6 @@ export class ProductModeratorComponent {
   handleClose(is: boolean) {
     this.isShowAddProduct = !is;
     this.flag = true; 
+    this.getProduct();
   }
 }

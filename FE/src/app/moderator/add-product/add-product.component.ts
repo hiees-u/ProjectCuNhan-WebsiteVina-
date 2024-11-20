@@ -6,6 +6,7 @@ import { Category } from '../../shared/module/category/category.module';
 import { ServicesService } from '../../shared/services.service';
 import { SubCategory } from '../../shared/module/sub-category/sub-category.module';
 import { Supplier } from '../../shared/module/supplier/supplier.module';
+import { ModeratorService } from '../moderator.service';
 
 @Component({
   selector: 'app-add-product',
@@ -17,12 +18,13 @@ import { Supplier } from '../../shared/module/supplier/supplier.module';
 export class AddProductComponent {
   @Output() isClose: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  constructor(private service: ServicesService) {}
+  constructor(private service: ServicesService, private moderatorService: ModeratorService ) {}
 
   ngOnInit(): void {
     this.getCategorys();
     this.getCatgorys();
     this.getSupplier();
+    this.onProductChange();
   }
 
   product: InsertProduct = ContructorInsertProduct();
@@ -31,6 +33,8 @@ export class AddProductComponent {
   categorys: Category[] = [];
   subCategorys: SubCategory[] = [];
   supplier: Supplier[] = [];
+
+  selectedFile: File | null = null;
 
   async getCategorys() {
     const data = await this.service.GetAllCate();
@@ -63,6 +67,13 @@ export class AddProductComponent {
     );
   }
 
+  onProductImageChange(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if(input && input.files && input.files[0]) {
+      this.selectedFile = input.files[0];   
+    }
+  }
+
   onProductChange(): void {
     this.checkProductProperties();
     if (typeof this.product.expiryDate === 'string') {
@@ -91,7 +102,34 @@ export class AddProductComponent {
     this.product.supplier = this.supplier[0].supplierId;
   }
 
-  onUpdate() {
+  async onUpdate() {
+    await this.uploadFile();
+    if(this.isAdd) {
+      const response = await this.moderatorService.postProduct(this.product);
+
+      //check response
+      if(response.isSuccess) {
+        console.log('Thêm sản phẩm thành công...');
+        this.sendIsClose();
+      } else {
+        console.log('Quá trình thêm sản phẩm bị gián đoạn!..');        
+      }
+    } else {
+      console.log('vui lòng kiểm tra lại thông tin...');
+    }
     console.log(this.product);
+  }
+
+  async uploadFile() {
+    if(this.selectedFile) {
+      try {        
+        const response = await this.moderatorService.UploadFile(this.selectedFile);
+        this.product.image = response.data; //gán tên ảnh vào product để request api
+        console.log('file uploaded successfully!', response.isSuccess);
+        //gọi api post product với this.product
+      } catch (error) {
+        console.log('File upload failed!!');
+      }
+    } 
   }
 }
