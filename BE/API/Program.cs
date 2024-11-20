@@ -29,6 +29,7 @@ builder.Services.AddScoped<IShelve, ShelveBLL>();
 builder.Services.AddScoped<ICustomerType, CustomerTypeBLL>();
 builder.Services.AddScoped<IDepartment, DepartmentBLL>();
 builder.Services.AddScoped<IEmployee, EmployeeBLL>();
+builder.Services.AddScoped<IReport, ReportBLL>();
 
 
 builder.Services.AddControllers();
