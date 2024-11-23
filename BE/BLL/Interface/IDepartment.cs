@@ -5,7 +5,7 @@ namespace BLL.Interface
 {
     public interface IDepartment
     {
-        public BaseResponseModel Get();
+        public BaseResponseModel Get(int pageNumber, int pageSize);
         public BaseResponseModel Post(string departmentName);
         public BaseResponseModel Put(DepartmentRequestModule req);
         public BaseResponseModel Delete(int? deparId);

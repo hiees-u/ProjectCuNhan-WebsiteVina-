@@ -21,6 +21,13 @@ export interface ProductModerator {
   deleteTime: string | null;
 }
 
+//Department
+export interface DepartmentRequestModerator {
+  departmentId: number;
+  departmentName: string;
+  sumEmployee: number;
+}
+
 // products/product.model.ts
 export interface InsertProduct {
   productName: string;
@@ -33,7 +40,7 @@ export interface InsertProduct {
   price: number;
 }
 
-export function ContructorInsertProduct():InsertProduct {
+export function ContructorInsertProduct(): InsertProduct {
   return {
     productName: '',
     image: new File([], ''),
@@ -43,9 +50,8 @@ export function ContructorInsertProduct():InsertProduct {
     expiryDate: new Date().toISOString(),
     description: '',
     price: 0,
-  }
+  };
 }
-
 
 @NgModule({
   declarations: [],

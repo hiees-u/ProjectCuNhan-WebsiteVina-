@@ -27,9 +27,9 @@ export class ProductModeratorComponent {
   pageCurrent: number = 1;
   searchText: string = '';
   isShowAddProduct: boolean = false;
+  flag: boolean = false;
 
   products: ProductModerator[] = [];
-  flag: boolean = false;
 
   ngOnInit(): void {
     this.flag = false;
@@ -43,23 +43,18 @@ export class ProductModeratorComponent {
 
   onChangeSearch(event: Event) {
     this.searchText = (event.target as HTMLInputElement).value;
-    console.log(this.searchText);
   }
 
   onSearch() {
-    console.log(this.searchText);
     this.getProduct();
   }
    
   getProduct(): void {
-    this.service.getProducts(null,null,null, null, this.searchText, this.pageCurrent, 6, 0, 0)
+    this.service.getProducts(null,null,null, null, this.searchText, this.pageCurrent, 7, 0, 0)
       .then(data => {
         this.products = data.data.products;
         this.totalPage = data.data.totalPages;
         this.pages = Array(this.totalPage).fill(0).map((x,i) => i + 1);
-        console.log(data.data);
-        console.log(this.totalPage);        
-        console.log(this.pages);        
       }).catch(error => {
         console.error('Error fetching product', error);
       })
@@ -74,7 +69,6 @@ export class ProductModeratorComponent {
       if(this.pageCurrent !== 1)
         this.pageCurrent -= 1;
     }
-    console.log(this.pageCurrent);
     this.getProduct();
   }
 

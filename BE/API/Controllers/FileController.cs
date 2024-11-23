@@ -13,8 +13,8 @@ namespace API.Controllers
         public FileController()
         {
             // Đường dẫn thư mục lưu file vào thư mục Products của FE
-            _targetFolder = Path.Combine("C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\FE\\src\\assets\\Products");
-                                        //C:\Users\ADMIN\Desktop\ProjectCuNhan-WebsiteVina-\FE\src\assets\Products
+            _targetFolder = Path.Combine("C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\FE\\public\\Products");
+            //C:\Users\ADMIN\Desktop\ProjectCuNhan-WebsiteVina-\FE\public\Products
 
             // Tạo thư mục nếu chưa tồn tại
             if (!Directory.Exists(_targetFolder))

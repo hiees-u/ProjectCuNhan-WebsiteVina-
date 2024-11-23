@@ -13,6 +13,12 @@ import { Router, RouterOutlet } from '@angular/router';
 export class ModeratorDashboardComponent {
   dashboardItem: number = 1;
 
+  ngOnInit(): void {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+    this.navigateToProduct();
+  }
+
   constructor(private router: Router) { }
 
   changeDashboardItem(item: number) {

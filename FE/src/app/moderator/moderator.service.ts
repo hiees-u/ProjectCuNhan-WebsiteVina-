@@ -21,6 +21,31 @@ export class ModeratorService {
     }
   }
 
+  //get all Department
+  async getDeparment(pageNumber: number, pageSize: number ) : Promise<BaseResponseModel> {
+    const url = `https://localhost:7060/api/Department?pageNumber=${pageNumber}&pageSize=${pageSize}`;
+               //https://localhost:7060/api/Department?pageNumber=1&pageSize=9
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.token}`,
+        }
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data: BaseResponseModel = await response.json();
+      console.log(data);
+      
+      return data;
+    } catch (error) {
+      console.error('Error:', error);
+      throw error;
+    }
+  }
+
   //post Product
   async postProduct(product: InsertProduct): Promise<BaseResponseModel> {
     const url = 'https://localhost:7060/api/Product'

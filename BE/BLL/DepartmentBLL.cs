@@ -1,5 +1,6 @@
 ﻿using BLL.Interface;
 using BLL.LoginBLL;
+using DLL.Models;
 using DTO.Department;
 using DTO.Responses;
 using System.Data;
@@ -9,7 +10,7 @@ namespace BLL
 {
     public class DepartmentBLL : IDepartment
     {
-        public BaseResponseModel Get()
+        public BaseResponseModel Get(int pageNumber, int pageSize)
         {
             try
             {
@@ -29,6 +30,7 @@ namespace BLL
                                 {
                                     DepartmentId = reader.GetInt32(0),
                                     DepartmentName = reader.GetString(1),
+                                    sumEmployee = reader.GetInt32(2),
                                 };
 
                                 result.Add(dep);
@@ -36,8 +38,25 @@ namespace BLL
                         }
                     }
                 }
+
+                int totalPages = 0;
+
+                if (pageNumber > 0)
+                {
+                    totalPages = (int)Math.Ceiling((double)result.Count / pageSize);
+
+                    //Phân trang
+                    result = result.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+                }
                 return result.Count > 0 ?
-                    new BaseResponseModel() { IsSuccess = true, Message = "Lấy danh sách phòng thành công..!", Data = result } :
+                    new BaseResponseModel() {
+                        IsSuccess = true, 
+                        Message = "Lấy danh sách phòng thành công..!", 
+                        Data = new {
+                            data = result,
+                            totalPages,
+                        } 
+                    } :
                     new BaseResponseModel() { IsSuccess = true, Message = "Không tìm thấy phòng ban nào..!" };
             }
             catch (Exception ex)
