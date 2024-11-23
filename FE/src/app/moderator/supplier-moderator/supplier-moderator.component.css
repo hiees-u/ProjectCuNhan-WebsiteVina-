@@ -1,4 +1,4 @@
-.container-product-moderator {
+.container {
   width: calc(100% - 30px);
   height: calc(100% - 30px);
   background-color: #fff;
@@ -133,7 +133,7 @@
 
 /* ////////// */
 .content-mini {
-  width: 170px;
+  width: 166px;
   display: flex;
   justify-content: space-around;
   align-items: center;

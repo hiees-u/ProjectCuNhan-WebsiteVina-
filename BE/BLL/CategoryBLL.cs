@@ -121,14 +121,10 @@ namespace BLL
                     using (var command = new SqlCommand("SP_SelectCategory", connection))
                     {
                         command.CommandType = CommandType.StoredProcedure;
-
-                        command.Parameters.Add(new SqlParameter("@category_id", SqlDbType.Int) {
-                            Value = cateId.HasValue ? (object)cateId.Value : DBNull.Value 
-                        });
-
+                        
                         if(cateId.HasValue)
                         {
-                            command.Parameters.Add(new SqlParameter("category_id", SqlDbType.Int) { Value = cateId });
+                            command.Parameters.Add(new SqlParameter("@category_id", SqlDbType.Int) { Value = cateId });
                         }
 
                         if (!string.IsNullOrEmpty(cateName))

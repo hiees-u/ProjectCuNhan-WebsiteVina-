@@ -21,24 +21,119 @@ export class ModeratorService {
     }
   }
 
-  //get all Department
-  async getDeparment(pageNumber: number, pageSize: number ) : Promise<BaseResponseModel> {
-    const url = `https://localhost:7060/api/Department?pageNumber=${pageNumber}&pageSize=${pageSize}`;
-               //https://localhost:7060/api/Department?pageNumber=1&pageSize=9
+  //get supplier
+  async getSupplier(
+    supplierName?: string,
+    pageNumber: number = 1,
+    pageSize: number = 42
+  ): Promise<BaseResponseModel> {
+    let url = `${this.apiUrl}Supplier/Get All?pageNumber=${pageNumber}&pageSize=${pageSize}`;
+    if (supplierName) {
+      url += `&cateName=${encodeURIComponent(supplierName)}`;
+    }
+
     try {
       const response = await fetch(url, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${this.token}`,
-        }
+        },
       });
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const data: BaseResponseModel = await response.json();
       console.log(data);
-      
+      return data;
+    } catch (error) {
+      console.error('Error:', error);
+      throw error;
+    }
+  }
+
+  //get sub category
+  async getSubCate(
+    subCateName?: string,
+    pageNumber: number = 1,
+    pageSize: number = 42
+  ): Promise<BaseResponseModel> {
+    let url = `${this.apiUrl}SubCategory/Get Pagition?pageNumber=${pageNumber}&pageSize=${pageSize}`;
+
+    if (subCateName) {
+      url += `&subCateName=${encodeURIComponent(subCateName)}`;
+    }
+
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data: BaseResponseModel = await response.json();
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.error('Error:', error);
+      throw error;
+    }
+  }
+
+  //get category
+  async getCate(
+    cateName?: string,
+    pageNumber: number = 1,
+    pageSize: number = 42
+  ): Promise<BaseResponseModel> {
+    let url = `${this.apiUrl}Category/Get Pagition?pageNumber=${pageNumber}&pageSize=${pageSize}`;
+    if (cateName) {
+      url += `&cateName=${cateName}`;
+    }
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data: BaseResponseModel = await response.json();
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.error('Error:', error);
+      throw error;
+    }
+  }
+
+  //get all Department
+  async getDeparment(
+    pageNumber: number,
+    pageSize: number
+  ): Promise<BaseResponseModel> {
+    const url = `https://localhost:7060/api/Department?pageNumber=${pageNumber}&pageSize=${pageSize}`;
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data: BaseResponseModel = await response.json();
+      console.log(data);
+
       return data;
     } catch (error) {
       console.error('Error:', error);
@@ -48,7 +143,7 @@ export class ModeratorService {
 
   //post Product
   async postProduct(product: InsertProduct): Promise<BaseResponseModel> {
-    const url = 'https://localhost:7060/api/Product'
+    const url = 'https://localhost:7060/api/Product';
     try {
       const response = await fetch(url, {
         method: 'POST',
@@ -56,7 +151,7 @@ export class ModeratorService {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${this.token}`,
         },
-        body: JSON.stringify(product)
+        body: JSON.stringify(product),
       });
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);

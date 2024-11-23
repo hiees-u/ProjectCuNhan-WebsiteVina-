@@ -21,13 +21,14 @@
 
   <div class="content">
     <div class="content-body">
-      <!-- <div class="content-mini" *ngFor="let item of deparments">
-        <i class="fa-solid fa-users-viewfinder"></i>
+      <div class="content-mini" *ngFor="let item of Suppliers">
+        <!-- <i class="fa-solid fa-users-viewfinder"></i> -->
+        <i class="fa-solid fa-industry"></i>
         <div>
-          <span>{{ item.departmentName }}</span>
-          <span>Nhân viên: {{item.sumEmployee}}</span>
+          <span>{{ item.supplierName }}</span>
+          <!-- <span>Nhân viên: {{item.sumEmployee}}</span> -->
         </div>
-      </div> -->
+      </div>
     </div>
     <div class="content-footer">
       <span>Trang {{ pageCurrent }} / {{ totalPage }}</span>

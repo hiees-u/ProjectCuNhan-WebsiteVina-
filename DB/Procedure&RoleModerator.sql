@@ -74,13 +74,14 @@ BEGIN
 		ORDER BY ModifiedTime DESC;
     END
 END;
+
 --GÁN QUYỀN
 GRANT EXECUTE ON OBJECT::SP_SelectCategory TO Moderator;
 --RUN EXAMPLE
 EXEC SP_SelectCategory;
-EXEC SP_SelectCategory @category_id = 1;
+EXEC SP_SelectCategory @category_id = NULL;
 EXEC SP_SelectCategory @category_name = N'A';
-EXEC SP_SelectCategory @category_id = 1, @category_name = N'A';
+EXEC SP_SelectCategory @category_id = NULL, @category_name = N'A';
 GO
 --DELETE
 CREATE PROCEDURE SP_DeleteCategory
@@ -427,10 +428,10 @@ GO									--SUPPLIER [ Nhà Sản xuất ]
 
 
 CREATE PROCEDURE SP_GetSupplier
-    @ProductID INT = NULL
+    @SuppelierName Nvarchar(30) = NULL
 AS
 BEGIN
-    IF @ProductID IS NULL
+    IF @SuppelierName IS NULL
     BEGIN
         SELECT S.*
         FROM Supplier S
@@ -440,15 +441,16 @@ BEGIN
     BEGIN
         SELECT S.*
         FROM Supplier S
-        JOIN Product P ON S.SupplierID = P.Supplier
-        WHERE P.product_id = @ProductID AND S.DeleteTime IS NULL;
+        WHERE S.SupplierName LIKE N'%' + @SuppelierName + N'%'
+		AND S.DeleteTime IS NULL;
     END
 END
 --GÁN QUYỀN
 GRANT EXECUTE ON OBJECT::SP_GetSupplier TO Moderator;
 GO
 --RUN
-EXEC SP_GetSupplier 10
+EXEC SP_GetSupplier
+EXEC SP_GetSupplier N'Bu'
 
 GO
 --UPDATE
@@ -647,9 +649,12 @@ GO									--Department [ Phòng Ban ]
 CREATE PROCEDURE SP_GetDepartment
 AS
 BEGIN
-    SELECT DepartmentID, DepartmentName
-    FROM Department
-    WHERE DeleteTime IS NULL
+    SELECT d.DepartmentID, d.DepartmentName, COUNT(uf.AccountName) as N'Số lượng nhân viên'
+	FROM Department d
+	JOIN Employee e ON e.DepartmentID = d.DepartmentID
+	LEFT JOIN UserInfo uf ON uf.Employ_ID = e.EmployeeID
+	WHERE d.DeleteTime IS NULL and e.DeleteTime IS NULL AND uf.AccountName IS NOT NULL
+	GROUP BY d.DepartmentID, d.DepartmentName;
 END
 --GÁN QUYỀN
 GRANT EXECUTE ON OBJECT::SP_GetDepartment TO Moderator;

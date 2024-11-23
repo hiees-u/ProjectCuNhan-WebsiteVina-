@@ -49,8 +49,10 @@ export class AddProductComponent {
   }
 
   async getSupplier() {
+    console.log('LỖI Ở ĐÂY');
+    
     const data = await this.service.GetAllSupplier();
-    this.supplier = data.data;
+    this.supplier = data.data.data;
     this.product.supplier = this.supplier[0].supplierId;
   }
 
@@ -90,6 +92,8 @@ export class AddProductComponent {
 
   sendIsClose() {
     this.onDelete();
+    console.log('tới đây', new Date());
+    
     this.isClose.emit(true);
   }
 

@@ -31,9 +31,9 @@ namespace API.Controllers
 
         [HttpGet("Get All")]
         [Authorize(Roles = "Moderator")]
-        public IActionResult GetAll(int? productId = null)
+        public IActionResult GetAll(string? cateName = null, int pageNumber = 1, int pageSize = 8)
         {
-            BaseResponseModel result = supplier.GetPagition(productId);
+            BaseResponseModel result = supplier.GetPagition(cateName);
 
             return result.IsSuccess ? Ok(result) : BadRequest(result);
         }

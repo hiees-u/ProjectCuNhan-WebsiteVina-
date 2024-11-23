@@ -65,7 +65,7 @@ namespace BLL
             }
         }
    
-        public BaseResponseModel GetPagition(int? productID)
+        public BaseResponseModel GetPagition(string? suppliersName = null, int pageNumber = 1, int pageSize = 8)
         {
             List<SupplierResponseModule> lst = new List<SupplierResponseModule>();
             try
@@ -77,9 +77,9 @@ namespace BLL
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
 
-                        if (productID.HasValue)
+                        if (!string.IsNullOrWhiteSpace(suppliersName))
                         {
-                            cmd.Parameters.AddWithValue("@ProductID", productID);
+                            cmd.Parameters.AddWithValue("@SuppelierName", suppliersName);
                         }
 
                         using (SqlDataReader reader = cmd.ExecuteReader())
@@ -89,7 +89,7 @@ namespace BLL
                                 SupplierResponseModule result = new SupplierResponseModule()
                                 {
                                     SupplierId = (int)reader["SupplierID"],
-                                    SupplierName = reader["SupplierName"].ToString(),
+                                    SupplierName = reader["SupplierName"].ToString() ?? string.Empty,
                                     AddressId = (int)reader["AddressID"]
                                 };
                                 lst.Add(result);
@@ -97,20 +97,25 @@ namespace BLL
                         }
                     }
                 }
-                if (lst.Count > 0)
+
+                int totalPages = 0;
+
+                if (pageSize != 0)
                 {
-                    return new BaseResponseModel()
-                    {
-                        IsSuccess = true,
-                        Message = "Lấy Danh Sách Nhãn Hàng Thành Công!!",
-                        Data = lst
-                    };
+                    //Phân trang
+                    totalPages = (int)Math.Ceiling((double)lst.Count / pageSize);
+                    lst = lst.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
                 }
+
                 return new BaseResponseModel()
                 {
                     IsSuccess = true,
-                    Message = "Không tìm tháy nhãn hàng nào...",
-                    Data = lst
+                    Message = lst.Count > 0 ? "Lấy Danh Sách Nhãn Hàng Thành Công!!" : "Không tìm tháy nhãn hàng nào...",
+                    Data = new
+                    {
+                        data = lst,
+                        totalPages = totalPages,
+                    }
                 };
 
             }
