@@ -3,7 +3,7 @@ import { SubCategory } from '../../shared/module/sub-category/sub-category.modul
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ModeratorService } from '../moderator.service';
-import { DepartmentRequestModerator } from '../moderator.module';
+import { DepartmentRequestModerator, SupplierRequestModerator } from '../moderator.module';
 
 @Component({
   selector: 'app-supplier-moderator',
@@ -23,34 +23,33 @@ export class SupplierModeratorComponent {
   pageCurrent: number = 1;
   searchText: string = '';  
 
-  subCategorys: SubCategory[] = [];
+  Suppliers: SupplierRequestModerator[] = [];
 
   //--
-  deparments: DepartmentRequestModerator[] = [];
 
   constructor(private moderatorService: ModeratorService) {}
 
   ngOnInit(): void {
-    // this.getDepartments();
+    this.getSupplier();
   }
 
   onShowAddCate() {
     this.isShowAddCate = true;
   }
 
-  // getDepartments() {
-  //   this.moderatorService.getDeparment(1,42)
-  //     .then(data => {
-  //       this.deparments = data.data.data;
-  //       this.totalPage = data.data.totalPages;
-  //       this.pages = Array(this.totalPage).fill(0).map((x,i) => i + 1);
-  //       console.log(this.deparments);
-  //       console.log(this.pages);
-  //       console.log(this.totalPage);     
-  //     }).catch(error => {
-  //       console.error('Error fetching product', error);
-  //     })
-  // }
+  getSupplier() {
+    this.moderatorService.getSupplier(this.searchText)
+      .then(data => {
+        this.Suppliers = data.data.data;
+        this.totalPage = data.data.totalPages;
+        this.pages = Array(this.totalPage).fill(0).map((x,i) => i + 1);
+        console.log(this.Suppliers);
+        console.log(this.pages);
+        console.log(this.totalPage);     
+      }).catch(error => {
+        console.error('Error fetching product', error);
+      })
+  }
 
   handlePageClick(page: number) {
     if(page === 1)
@@ -61,10 +60,11 @@ export class SupplierModeratorComponent {
       if(this.pageCurrent !== 1)
         this.pageCurrent -= 1;
     }
-    // this.getDepartments();
+    this.getSupplier();
   }
 
   onSearch() {
     console.log(this.searchText);
+    this.getSupplier();
   }
 }

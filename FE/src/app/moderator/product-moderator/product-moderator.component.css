@@ -157,7 +157,7 @@
 }
 
 .td-centered>img {
-  height: 75px;
+  height: 70px;
 }
 
 .text-center {
@@ -249,6 +249,7 @@ td span {
   outline: none;
   margin: 0 2px;
   cursor: pointer;
+  transition: all .5s ease-in-out;
 }
 
 .btn-page {

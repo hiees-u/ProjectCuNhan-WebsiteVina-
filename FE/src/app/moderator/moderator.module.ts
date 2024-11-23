@@ -21,6 +21,13 @@ export interface ProductModerator {
   deleteTime: string | null;
 }
 
+//Supplier
+export interface SupplierRequestModerator {
+  supplierId: number;
+  supplierName: string;
+  addressId: number;
+}
+
 //Department
 export interface DepartmentRequestModerator {
   departmentId: number;
@@ -38,6 +45,17 @@ export interface InsertProduct {
   expiryDate: string;
   description: string;
   price: number;
+}
+
+//category
+export interface CategoryRequesModerator {
+  categoryId: number;
+  categoryName: string;
+}
+
+export interface SubCategoryRequesModerator {
+  subCategoryId: number;
+  subCategoryName: string;
 }
 
 export function ContructorInsertProduct(): InsertProduct {

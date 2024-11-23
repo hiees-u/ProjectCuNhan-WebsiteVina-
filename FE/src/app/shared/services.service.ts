@@ -14,7 +14,7 @@ export class ServicesService {
   }
 
   async GetAllSupplier(): Promise<BaseResponseModel> {
-    const url = 'https://localhost:7060/api/Supplier/Get All';
+    const url = 'https://localhost:7060/api/Supplier/Get All?pageNumber=1&pageSize=100';
     try {
       const response = await fetch(url, {
         method: 'GET',

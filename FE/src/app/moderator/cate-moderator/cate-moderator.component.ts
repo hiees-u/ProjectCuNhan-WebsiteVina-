@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Category } from '../../shared/module/category/category.module';
-import { SubCategory } from '../../shared/module/sub-category/sub-category.module';
 import { ModeratorService } from '../moderator.service';
-import { DepartmentRequestModerator } from '../moderator.module';
+import { CategoryRequesModerator, DepartmentRequestModerator } from '../moderator.module';
 
 @Component({
   selector: 'app-cate-moderator',
@@ -23,36 +21,32 @@ export class CateModeratorComponent {
   totalPage: number = 1;
   pages: number[] = [];
   pageCurrent: number = 1;
-  searchText: string = '';  
+  searchText: string = '';
 
-  subCategorys: SubCategory[] = [];
-
-  //--
-  deparments: DepartmentRequestModerator[] = [];
+  categorys: CategoryRequesModerator[] = [];
 
   constructor(private moderatorService: ModeratorService) {}
 
   ngOnInit(): void {
-    // this.getDepartments();
+    this.getCategorys();
+  }
+
+  async getCategorys() {
+    try {
+      const response = await this.moderatorService.getCate(this.searchText);
+
+      if(response.isSuccess) {
+        this.categorys = response.data.data;
+        this.totalPage = response.data.totalPages;
+      }
+    } catch (error) {
+      console.error('Error fetching categories:', error);
+    }
   }
 
   onShowAddCate() {
     this.isShowAddCate = true;
   }
-
-  // getDepartments() {
-  //   this.moderatorService.getDeparment(1,42)
-  //     .then(data => {
-  //       this.deparments = data.data.data;
-  //       this.totalPage = data.data.totalPages;
-  //       this.pages = Array(this.totalPage).fill(0).map((x,i) => i + 1);
-  //       console.log(this.deparments);
-  //       console.log(this.pages);
-  //       console.log(this.totalPage);     
-  //     }).catch(error => {
-  //       console.error('Error fetching product', error);
-  //     })
-  // }
 
   handlePageClick(page: number) {
     if(page === 1)
@@ -63,10 +57,10 @@ export class CateModeratorComponent {
       if(this.pageCurrent !== 1)
         this.pageCurrent -= 1;
     }
-    // this.getDepartments();
+    this.getCategorys();
   }
 
   onSearch() {
-    console.log(this.searchText);
+    this.getCategorys();
   }
 }

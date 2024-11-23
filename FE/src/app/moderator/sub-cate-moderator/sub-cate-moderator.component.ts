@@ -27,31 +27,32 @@ export class SubCateModeratorComponent {
   subCategorys: SubCategory[] = [];
 
   //--
-  deparments: DepartmentRequestModerator[] = [];
 
   constructor(private moderatorService: ModeratorService) {}
 
   ngOnInit(): void {
-    // this.getDepartments();
+    this.getSubCate();
   }
 
   onShowAddCate() {
     this.isShowAddCate = true;
   }
 
-  // getDepartments() {
-  //   this.moderatorService.getDeparment(1,42)
-  //     .then(data => {
-  //       this.deparments = data.data.data;
-  //       this.totalPage = data.data.totalPages;
-  //       this.pages = Array(this.totalPage).fill(0).map((x,i) => i + 1);
-  //       console.log(this.deparments);
-  //       console.log(this.pages);
-  //       console.log(this.totalPage);     
-  //     }).catch(error => {
-  //       console.error('Error fetching product', error);
-  //     })
-  // }
+  async getSubCate() {
+    try {
+      const response = await this.moderatorService.getSubCate(this.searchText);
+
+      if(response.isSuccess) {
+        this.subCategorys = response.data.data;
+        this.totalPage = response.data.totalPages;
+
+        console.log(this.subCategorys);
+        console.log(this.totalPage);
+      }
+    } catch (error) {
+      console.error('Error fetching subcategory: ', error);
+    }
+  }
 
   handlePageClick(page: number) {
     if(page === 1)
@@ -62,10 +63,11 @@ export class SubCateModeratorComponent {
       if(this.pageCurrent !== 1)
         this.pageCurrent -= 1;
     }
-    // this.getDepartments();
+    this.getSubCate();
   }
 
   onSearch() {
     console.log(this.searchText);
+    this.getSubCate();
   }
 }
