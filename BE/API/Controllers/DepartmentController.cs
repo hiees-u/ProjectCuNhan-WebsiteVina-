@@ -28,9 +28,9 @@ namespace API.Controllers
 
         [HttpGet]
         [Authorize(Roles = "Moderator")]
-        public IActionResult Get()
+        public IActionResult Get(int pageNumber, int pageSize)
         {
-            BaseResponseModel result = department.Get();
+            BaseResponseModel result = department.Get(pageNumber, pageSize);
 
             return result.IsSuccess ? 
                 Ok(result) :
