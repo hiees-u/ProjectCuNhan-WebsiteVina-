@@ -7,11 +7,12 @@ import { ServicesService } from '../../shared/services.service';
 import { SubCategory } from '../../shared/module/sub-category/sub-category.module';
 import { Supplier } from '../../shared/module/supplier/supplier.module';
 import { ModeratorService } from '../moderator.service';
+import { AddCateComponent } from "../add-cate/add-cate.component";
 
 @Component({
   selector: 'app-add-product',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, AddCateComponent],
   templateUrl: './add-product.component.html',
   styleUrl: './add-product.component.css',
 })
@@ -35,6 +36,22 @@ export class AddProductComponent {
   supplier: Supplier[] = [];
 
   selectedFile: File | null = null;
+
+  isShow: boolean = false;
+  flag:boolean = true;
+
+  isShowContenSecond() {
+    this.isShow = !this.isShow;
+  }
+
+  handleClose(is: boolean) {
+    this.isShow = !is;
+    this.flag = true;
+    this.getCategorys();
+    this.getCatgorys();
+    this.getSupplier();
+    this.onProductChange();
+  }
 
   async getCategorys() {
     const data = await this.service.GetAllCate();

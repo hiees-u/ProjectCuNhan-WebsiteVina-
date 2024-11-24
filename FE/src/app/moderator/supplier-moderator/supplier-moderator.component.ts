@@ -4,19 +4,22 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ModeratorService } from '../moderator.service';
 import { DepartmentRequestModerator, SupplierRequestModerator } from '../moderator.module';
+import { AddCateComponent } from "../add-cate/add-cate.component";
 
 @Component({
   selector: 'app-supplier-moderator',
   standalone: true,
   imports: [
     CommonModule,
-    FormsModule
-  ],
+    FormsModule,
+    AddCateComponent
+],
   templateUrl: './supplier-moderator.component.html',
   styleUrl: './supplier-moderator.component.css'
 })
 export class SupplierModeratorComponent {
-  isShowAddCate: boolean = false;
+  isShowAddSupplier: boolean | undefined;
+  flag: boolean = false;
 
   totalPage: number = 1;
   pages: number[] = [];
@@ -34,7 +37,8 @@ export class SupplierModeratorComponent {
   }
 
   onShowAddCate() {
-    this.isShowAddCate = true;
+    this.flag = true;
+    this.isShowAddSupplier = true;
   }
 
   getSupplier() {
@@ -66,5 +70,12 @@ export class SupplierModeratorComponent {
   onSearch() {
     console.log(this.searchText);
     this.getSupplier();
+  }
+
+  handleClose(is: boolean) {
+    console.log('THOÁT THÊM');
+    // this.getCategorys();
+    this.isShowAddSupplier = !is;
+    this.flag = true;
   }
 }

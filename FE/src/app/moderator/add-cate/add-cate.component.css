@@ -1,6 +1,6 @@
 .container {
-  width: calc(100% - 20px);
-  height: calc(100% - 20px);
+  width: 830px;
+  height: 300px;
   padding: 10px;
   /* background: var(--secon-color); */
   background-color: #fff;
@@ -55,7 +55,7 @@
   transition: all 0.5s ease-in-out;
   bottom: -5%;
   border: 5px solid #fff;
-  right: 12%;
+  right: 20%;
 }
 
 .close :hover {
@@ -80,8 +80,8 @@
 
 .header-action {
   width: calc(100% - 30px);
-  margin: 0 0 25px 0;
-  height: calc(70px - 10px);
+  margin: 0 0 10px 0;
+  height: calc(50px - 10px);
   padding: 5px 15px;
   display: flex;
   justify-content: flex-start;
@@ -105,7 +105,7 @@
 
 .btn {
   width: fit-content;
-  font-size: 0.8em;
+  font-size: 0.7em;
   padding: 8px 15px;
   margin: 0 10px 0 0;
 }
@@ -140,10 +140,10 @@
 }
 
 .inp-form {
-  font-size: 0.7em;
+  font-size: 1em;
   color: var(--secon-text-color);
   font-family: var(--main-style);
-  width: 360px;
+  width: 420px;
   height: 25px;
   display: flex;
   align-items: center;
@@ -153,70 +153,16 @@
 .inp-form input,
 .inp-form select {
   outline: none;
-  width: 245px;
+  width: 215px;
   border: none;
-  font-size: 1em;
+  font-size: 0.9em;
   font-family: inherit;
   border-bottom: 1px solid var(--main-color);
   padding: 5px 0 5px 5px;
 }
 
-textarea {
-  margin-top: 10px;
-  width: calc(245px - 10px);
-  padding: 5px;
-}
-
 .inp-form textarea {
-  width: 245px;
-  height: 80px;
+  width: 215px;
+  height: 50px;
   outline: none;
-  font-size: 1.2em;
-}
-
-.content-second {
-  width: 100%;
-  background: rgba(190, 193, 193, 0.532);
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 100%;
-  display: flex;
-  justify-content: center;
-  transition: all ease 0.5s;
-  align-items: center;
-}
-
-.show {
-  left: 100%;
-  animation: r-to-l 1.5s ease-in-out forwards;
-  /* left: 0 !important; */
-}
-
-@keyframes r-to-l {
-  0% {
-    left: 100%;
-    opacity: 0;
-  }
-  100% {
-    left: 0;
-    opacity: 1;
-  }
-}
-
-.hiden {
-  left: 0%;
-  animation: l-to-r 1.5s ease-in-out forwards;
-  /* left: 120% !important; */
-}
-
-@keyframes l-to-r {
-  0% {
-    left: 0;
-    opacity: 1;
-  }
-  100% {
-    left: 100%;
-    opacity: 0;
-  }
 }

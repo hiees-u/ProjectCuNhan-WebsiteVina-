@@ -29,7 +29,7 @@
 .header-action {
   width: calc(100% - 30px);
   margin: 0 0 10px 0;
-  height: calc(50px - 10px);
+  height: calc(65px - 10px);
   padding: 5px 15px;
   display: flex;
   justify-content: space-between;
@@ -53,8 +53,8 @@
 
 .btn {
   width: fit-content;
-  font-size: 0.7em;
-  padding: 8px 15px;
+  font-size: 0.9em;
+  padding: 10px 15px;
   margin: 0;
 }
 

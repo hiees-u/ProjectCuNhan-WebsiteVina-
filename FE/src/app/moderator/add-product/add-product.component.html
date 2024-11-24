@@ -9,7 +9,7 @@
     >
   </div>
   <div class="header-action">
-    <div class="btn-add-product btn">
+    <div class="btn-add-product btn" (click)="isShowContenSecond()">
       <i class="fa-solid fa-plus"></i>
       Thêm loại sản phẩm
     </div>
@@ -112,4 +112,8 @@
 
   <button (click)="onDelete()" class="del-btn">Xóa</button>
   <button (click)="onUpdate()" *ngIf="isAdd" class="insert">Thêm</button>
+</div>
+
+<div class="content-second" [ngClass]="{ hiden: !isShow && flag, show: isShow }">
+  <app-add-cate (isClose)="handleClose($event)"></app-add-cate>
 </div>

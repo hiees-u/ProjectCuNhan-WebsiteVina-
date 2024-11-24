@@ -4,20 +4,23 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ModeratorService } from '../moderator.service';
 import { DepartmentRequestModerator } from '../moderator.module';
+import { AddCateComponent } from "../add-cate/add-cate.component";
 
 @Component({
   selector: 'app-sub-cate-moderator',
   standalone: true,
   imports: [
     CommonModule,
-    FormsModule
-  ],
+    FormsModule,
+    AddCateComponent
+],
   templateUrl: './sub-cate-moderator.component.html',
   styleUrl: './sub-cate-moderator.component.css'
 })
 export class SubCateModeratorComponent {
  
-  isShowAddCate: boolean = false;
+  isShowAddSubCate: boolean | undefined;
+  flag: boolean = false;
 
   totalPage: number = 1;
   pages: number[] = [];
@@ -34,9 +37,16 @@ export class SubCateModeratorComponent {
     this.getSubCate();
   }
 
-  onShowAddCate() {
-    this.isShowAddCate = true;
+  handleClose(is: boolean) {
+    console.log('THOÁT THÊM');
+    // this.getCategorys();
+    this.isShowAddSubCate = !is;
+    this.flag = true;
   }
+
+  // onShowAddCate() {
+  //   this.isShowAddSubCate = true;
+  // }
 
   async getSubCate() {
     try {
@@ -64,6 +74,11 @@ export class SubCateModeratorComponent {
         this.pageCurrent -= 1;
     }
     this.getSubCate();
+  }
+
+  handleAddProduct() {
+    this.flag = true;
+    this.isShowAddSubCate = true;
   }
 
   onSearch() {

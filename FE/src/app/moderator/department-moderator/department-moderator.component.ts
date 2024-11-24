@@ -4,17 +4,18 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DepartmentRequestModerator } from '../moderator.module';
 import { ModeratorService } from '../moderator.service';
+import { AddCateComponent } from "../add-cate/add-cate.component";
 
 @Component({
   selector: 'app-department-moderator',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, AddCateComponent],
   templateUrl: './department-moderator.component.html',
   styleUrl: './department-moderator.component.css'
 })
 export class DepartmentModeratorComponent {
-  
-  isShowAddCate: boolean = false;
+  isShowAddDepartment: boolean | undefined;
+  flag: boolean = false;  
 
   totalPage: number = 1;
   pages: number[] = [];
@@ -33,7 +34,8 @@ export class DepartmentModeratorComponent {
   }
 
   onShowAddCate() {
-    this.isShowAddCate = true;
+    this.isShowAddDepartment = true;
+    this.flag = true;
   }
 
   getDepartments() {
@@ -64,5 +66,12 @@ export class DepartmentModeratorComponent {
 
   onSearch() {
     console.log(this.searchText);
+  }
+
+  handleClose(is: boolean) {
+    console.log('THOÁT THÊM');
+    // this.getCategorys();
+    this.isShowAddDepartment = !is;
+    this.flag = true;
   }
 }

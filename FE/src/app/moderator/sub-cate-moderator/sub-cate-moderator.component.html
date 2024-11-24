@@ -7,7 +7,7 @@
   </div>
 
   <div class="header-action">
-    <div class="btn-add-product btn" (click)="onShowAddCate()">
+    <div class="btn-add-product btn" (click)="handleAddProduct()">
       <i class="fa-solid fa-plus"></i>
       Thêm loại sản phẩm phụ
     </div>
@@ -49,5 +49,14 @@
         </button>
       </div>
     </div>
+  </div>
+</div>
+<div
+  class="add-cate"
+  *ngIf="flag"
+  [ngClass]="{ hiden: !isShowAddSubCate && flag, show: isShowAddSubCate }"
+>
+  <div class="content-add-cate">
+     <app-add-cate (isClose)="handleClose($event)"></app-add-cate>
   </div>
 </div>
