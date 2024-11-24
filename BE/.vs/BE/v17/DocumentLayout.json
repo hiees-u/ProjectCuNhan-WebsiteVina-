@@ -3,6 +3,14 @@
   "WorkspaceRootPath": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{1D0D98A9-8C32-4F25-AA4F-2F66D6654FA5}|API\\API.csproj|c:\\users\\admin\\desktop\\projectcunhan-websitevina-\\be\\api\\controllers\\filecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D0D98A9-8C32-4F25-AA4F-2F66D6654FA5}|API\\API.csproj|solutionrelative:api\\controllers\\filecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D0D98A9-8C32-4F25-AA4F-2F66D6654FA5}|API\\API.csproj|c:\\users\\admin\\desktop\\projectcunhan-websitevina-\\be\\api\\controllers\\subcategorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D0D98A9-8C32-4F25-AA4F-2F66D6654FA5}|API\\API.csproj|solutionrelative:api\\controllers\\subcategorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{DE969023-0A53-4B48-B5F6-48BF28880A70}|BLL\\BLL.csproj|c:\\users\\admin\\desktop\\projectcunhan-websitevina-\\be\\bll\\supplierbll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{DE969023-0A53-4B48-B5F6-48BF28880A70}|BLL\\BLL.csproj|solutionrelative:bll\\supplierbll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -38,7 +46,32 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
+              "Title": "SubCategoryController.cs",
+              "DocumentMoniker": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\API\\Controllers\\SubCategoryController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\SubCategoryController.cs",
+              "ToolTip": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\API\\Controllers\\SubCategoryController.cs",
+              "RelativeToolTip": "API\\Controllers\\SubCategoryController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-24T16:18:14.073Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "FileController.cs",
+              "DocumentMoniker": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\API\\Controllers\\FileController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\FileController.cs",
+              "ToolTip": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\API\\Controllers\\FileController.cs",
+              "RelativeToolTip": "API\\Controllers\\FileController.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAA4wBwAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-24T13:48:14.333Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "ISupplier.cs",
               "DocumentMoniker": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\Interface\\ISupplier.cs",
               "RelativeDocumentMoniker": "BLL\\Interface\\ISupplier.cs",
@@ -50,20 +83,19 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "SupplierBLL.cs",
               "DocumentMoniker": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\SupplierBLL.cs",
               "RelativeDocumentMoniker": "BLL\\SupplierBLL.cs",
               "ToolTip": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\SupplierBLL.cs",
               "RelativeToolTip": "BLL\\SupplierBLL.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAHQAAAAwAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-23T15:23:30.649Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-23T15:23:30.649Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "SupplierController.cs",
               "DocumentMoniker": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\API\\Controllers\\SupplierController.cs",
               "RelativeDocumentMoniker": "API\\Controllers\\SupplierController.cs",
@@ -75,7 +107,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "CategoryBLL.cs",
               "DocumentMoniker": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\CategoryBLL.cs",
               "RelativeDocumentMoniker": "BLL\\CategoryBLL.cs",
@@ -87,7 +119,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
               "Title": "CategoryController.cs",
               "DocumentMoniker": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\API\\Controllers\\CategoryController.cs",
               "RelativeDocumentMoniker": "API\\Controllers\\CategoryController.cs",

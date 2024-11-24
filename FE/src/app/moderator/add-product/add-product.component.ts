@@ -20,7 +20,7 @@ export class AddProductComponent {
 
   constructor(private service: ServicesService, private moderatorService: ModeratorService ) {}
 
-  ngOnInit(): void {
+  ngOnInit(): void {    
     this.getCategorys();
     this.getCatgorys();
     this.getSupplier();
@@ -49,8 +49,6 @@ export class AddProductComponent {
   }
 
   async getSupplier() {
-    console.log('LỖI Ở ĐÂY');
-    
     const data = await this.service.GetAllSupplier();
     this.supplier = data.data.data;
     this.product.supplier = this.supplier[0].supplierId;

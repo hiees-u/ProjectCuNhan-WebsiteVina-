@@ -21,6 +21,28 @@ export class ModeratorService {
     }
   }
 
+  //get Image by image name + png
+  async getImage(imgName: string): Promise<string | undefined> {
+    const url = `https://localhost:7060/api/File?fileName=${imgName}`;
+    try {
+      const response = await fetch(url);
+
+      console.log(url);
+      console.log(response);
+      
+      if (!response.ok) {
+        throw new Error("Lỗi");
+      }
+
+      const blob = await response.blob();
+      return URL.createObjectURL(blob);
+    } catch (error) {
+      console.error("Lỗi API get image: ", error);
+      return undefined;  // Đảm bảo trả về giá trị
+    }
+}
+
+
   //get supplier
   async getSupplier(
     supplierName?: string,
