@@ -33,12 +33,14 @@
             <th style="width: 10%">Trạng thái</th>
             <th style="width: 13%">Chức năng</th>
           </tr>
-          <tr *ngFor="let item of products">
+          <!-- 0 -->
+          <tr *ngFor="let item of products; let i = index">
             <td class="td-name">{{ item.productName }}</td>
             <td class="td-centered">
               <img
-                src="{{'/assets/Products/' + item?.image }}"
-                alt=""
+                [src]=" imageUrls[i] || '/assets/Products/' + item?.image "
+                [alt]="item.productName"
+                (error)="handleImageErrors(i, item!.image)"
               />
             </td>
             <td class="td-total-quantity text-center">

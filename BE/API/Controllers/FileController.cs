@@ -13,8 +13,8 @@ namespace API.Controllers
         public FileController()
         {
             // Đường dẫn thư mục lưu file vào thư mục Products của FE
-            _targetFolder = Path.Combine("C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\FE\\public\\Products");
-            //C:\Users\ADMIN\Desktop\ProjectCuNhan-WebsiteVina-\FE\public\Products
+            _targetFolder = Path.Combine("C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\FE\\src\\assets\\Products");
+            //_targetFolder = Path.Combine("C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\FE\\public\\Products");
 
             // Tạo thư mục nếu chưa tồn tại
             if (!Directory.Exists(_targetFolder))
@@ -45,11 +45,31 @@ namespace API.Controllers
                 await file.CopyToAsync(stream);
             }
 
-            return Ok(new BaseResponseModel { 
-                Message = "File uploaded successfully!", 
-                Data = file.FileName, 
-                IsSuccess = true 
+            return Ok(new BaseResponseModel {
+                Message = "File uploaded successfully!",
+                Data = file.FileName,
+                IsSuccess = true
             });
         }
+
+        [HttpGet]        
+        public IActionResult GetImage(string fileName)
+        {
+            if (string.IsNullOrWhiteSpace(fileName)) {
+                return BadRequest("??? TÊN FILE ĐÂU PRO!"); 
+            }
+
+            var filePate = Path.Combine(_targetFolder, fileName);
+
+            if (!System.IO.File.Exists(filePate))
+            {
+                return BadRequest("Không Tìm Thấy");
+            }
+
+            var image = System.IO.File.OpenRead(filePate);
+
+            return File(image, "image/png");
+        }
+        
     }
 }

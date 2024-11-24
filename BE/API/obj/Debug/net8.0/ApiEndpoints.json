@@ -640,6 +640,22 @@
   },
   {
     "ContainingType": "API.Controllers.FileController",
+    "Method": "GetImage",
+    "RelativePath": "api/File",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "fileName",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.FileController",
     "Method": "UploadFile",
     "RelativePath": "api/File/upload",
     "HttpMethod": "POST",

@@ -3,20 +3,23 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ModeratorService } from '../moderator.service';
 import { CategoryRequesModerator, DepartmentRequestModerator } from '../moderator.module';
+import { AddProductComponent } from "../add-product/add-product.component";
 
 @Component({
   selector: 'app-cate-moderator',
   standalone: true,
   imports: [
     CommonModule,
-    FormsModule
-  ],
+    FormsModule,
+    AddProductComponent
+],
   templateUrl: './cate-moderator.component.html',
   styleUrl: './cate-moderator.component.css'
 })
 export class CateModeratorComponent {
  
-  isShowAddCate: boolean = false;
+  isShowAddCate: boolean | undefined;
+  flag: boolean = false;
 
   totalPage: number = 1;
   pages: number[] = [];
@@ -29,6 +32,7 @@ export class CateModeratorComponent {
 
   ngOnInit(): void {
     this.getCategorys();
+    // this.isShowAddCate = false;
   }
 
   async getCategorys() {
@@ -42,10 +46,6 @@ export class CateModeratorComponent {
     } catch (error) {
       console.error('Error fetching categories:', error);
     }
-  }
-
-  onShowAddCate() {
-    this.isShowAddCate = true;
   }
 
   handlePageClick(page: number) {
@@ -62,5 +62,15 @@ export class CateModeratorComponent {
 
   onSearch() {
     this.getCategorys();
+  }
+
+  handleAddProduct() {
+    this.flag = true;
+    this.isShowAddCate = true;
+  }
+
+  handleClose(is: boolean) {
+    this.isShowAddCate = !is;
+    this.flag = true;
   }
 }
