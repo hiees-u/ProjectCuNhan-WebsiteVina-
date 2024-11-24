@@ -1,6 +1,10 @@
 # Ignore build files
 /bin/
 /obj/
+*.dll
+*.exe
+*.pdb
+*.cache
 
 # Ignore IDE files
 /.vs/
@@ -12,3 +16,21 @@
 # Ignore logs and temp files
 *.log
 *.tmp
+*.bak
+*.swp
+
+# Ignore system-specific files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Icon?
+
+# Ignore publish output
+/wwwroot/
+publish/
+dist/
+
+# Ignore NuGet packages
+*.nupkg
+packages/
+project.lock.json
