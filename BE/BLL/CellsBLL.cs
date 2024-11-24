@@ -201,7 +201,7 @@ namespace BLL
                         cmd.Parameters.AddWithValue("@ShelvesID", request.ShelvesId);
                         cmd.Parameters.AddWithValue("@Quantity", request.Quantity);
                         cmd.Parameters.AddWithValue("@product_id", request.ProductId);
-                        cmd.Parameters.AddWithValue("@ModifiedBy", request.ModifiedBy);
+                        
                         // Add parameter OUTPUT to receive notifications from the procedure
                         SqlParameter messageParam = new SqlParameter("@Message", SqlDbType.NVarChar, 100)
                         {
@@ -248,7 +248,7 @@ namespace BLL
                         cmd.Parameters.AddWithValue("@ShelvesID", request.ShelvesId);
                         cmd.Parameters.AddWithValue("@Quantity", request.Quantity);
                         cmd.Parameters.AddWithValue("@product_id", request.ProductId);
-                        cmd.Parameters.AddWithValue("@ModifiedBy", request.ModifiedBy);
+                        
 
                         // Add parameter OUTPUT
                         var outputMessage = new SqlParameter("@OutputMessage", SqlDbType.NVarChar, 100)

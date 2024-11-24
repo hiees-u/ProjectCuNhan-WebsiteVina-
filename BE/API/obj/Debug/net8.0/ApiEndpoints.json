@@ -1356,5 +1356,21 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.WarehouseReceiptController",
+    "Method": "InsertWarehouseReceipt",
+    "RelativePath": "api/WarehouseReceipt/InsertWarehouseReceipt",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "DTO.WarehouseReceipt.WarehouseReceiptRequestModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   }
 ]

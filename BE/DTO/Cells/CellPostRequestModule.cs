@@ -12,6 +12,5 @@ namespace DTO.Cells
         public int ShelvesId { get; set; }
         public int? Quantity { get; set; }
         public int? ProductId { get; set; }
-        public string? ModifiedBy { get; set; }
     }
 }
