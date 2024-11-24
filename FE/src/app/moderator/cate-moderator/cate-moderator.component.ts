@@ -2,22 +2,17 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ModeratorService } from '../moderator.service';
-import { CategoryRequesModerator, DepartmentRequestModerator } from '../moderator.module';
-import { AddProductComponent } from "../add-product/add-product.component";
+import { CategoryRequesModerator } from '../moderator.module';
+import { AddCateComponent } from '../add-cate/add-cate.component';
 
 @Component({
   selector: 'app-cate-moderator',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    AddProductComponent
-],
+  imports: [CommonModule, FormsModule, AddCateComponent],
   templateUrl: './cate-moderator.component.html',
-  styleUrl: './cate-moderator.component.css'
+  styleUrl: './cate-moderator.component.css',
 })
 export class CateModeratorComponent {
- 
   isShowAddCate: boolean | undefined;
   flag: boolean = false;
 
@@ -39,7 +34,7 @@ export class CateModeratorComponent {
     try {
       const response = await this.moderatorService.getCate(this.searchText);
 
-      if(response.isSuccess) {
+      if (response.isSuccess) {
         this.categorys = response.data.data;
         this.totalPage = response.data.totalPages;
       }
@@ -49,13 +44,10 @@ export class CateModeratorComponent {
   }
 
   handlePageClick(page: number) {
-    if(page === 1)
-    {
-      if(this.pageCurrent !== this.totalPage)
-        this.pageCurrent += 1;
+    if (page === 1) {
+      if (this.pageCurrent !== this.totalPage) this.pageCurrent += 1;
     } else {
-      if(this.pageCurrent !== 1)
-        this.pageCurrent -= 1;
+      if (this.pageCurrent !== 1) this.pageCurrent -= 1;
     }
     this.getCategorys();
   }
@@ -70,6 +62,8 @@ export class CateModeratorComponent {
   }
 
   handleClose(is: boolean) {
+    console.log('THOÁT THÊM');
+    this.getCategorys();
     this.isShowAddCate = !is;
     this.flag = true;
   }

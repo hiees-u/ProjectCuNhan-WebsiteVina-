@@ -14,6 +14,7 @@
   background: #f8990017;
   width: calc(100% - 15px);
   height: 40px;
+  margin-bottom: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -29,7 +30,7 @@
 .header-action {
   width: calc(100% - 30px);
   margin: 0 0 10px 0;
-  height: calc(50px - 10px);
+  height: calc(65px - 10px);
   padding: 5px 15px;
   display: flex;
   justify-content: space-between;
@@ -53,8 +54,8 @@
 
 .btn {
   width: fit-content;
-  font-size: 0.7em;
-  padding: 8px 15px;
+  font-size: .9em;
+  padding: 10px 15px;
   margin: 0;
 }
 
@@ -278,6 +279,6 @@
 .content-add-cate {
   width: 50%;
   min-width: 550px;
-  height: 50%;
-  min-height: 350px;
+  height: 35%;
+  min-height: 300px;
 }

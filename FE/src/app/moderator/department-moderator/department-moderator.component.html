@@ -11,12 +11,12 @@
       <i class="fa-solid fa-plus"></i>
       Thêm sản phòng ban
     </div>
-    <div class="btn-search">
+    <!-- <div class="btn-search">
       <input type="text" [(ngModel)]="searchText" name="search" id="search" />
       <button class="search" (click)="onSearch()">
         <i class="fa-solid fa-magnifying-glass"></i>
       </button>
-    </div>
+    </div> -->
   </div>
 
   <div class="content">
@@ -49,5 +49,14 @@
         </button>
       </div>
     </div>
+  </div>
+</div>
+<div
+  class="add-cate"
+  *ngIf="flag"
+  [ngClass]="{ hiden: !isShowAddDepartment && flag, show: isShowAddDepartment }"
+>
+  <div class="content-add-cate">
+     <app-add-cate (isClose)="handleClose($event)"></app-add-cate>
   </div>
 </div>
