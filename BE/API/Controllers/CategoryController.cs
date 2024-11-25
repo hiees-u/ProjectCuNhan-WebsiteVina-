@@ -28,7 +28,7 @@ namespace API.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Moderator")]
-        public ActionResult Post(string cateName)
+        public ActionResult Post([FromBody]string cateName)
         {
             BaseResponseModel result = category.Post(cateName);
             return result.IsSuccess ? Ok(result) : BadRequest(result);

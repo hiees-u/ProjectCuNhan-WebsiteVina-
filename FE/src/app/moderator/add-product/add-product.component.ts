@@ -25,7 +25,7 @@ export class AddProductComponent {
 
   ngOnInit(): void {    
     this.getCategorys();
-    this.getCatgorys();
+    this.getSubCatgorys();
     this.getSupplier();
     this.onProductChange();
   }
@@ -55,7 +55,7 @@ export class AddProductComponent {
     this.isShow = !is;
     this.flag = true;
     this.getCategorys();
-    this.getCatgorys();
+    this.getSubCatgorys();
     this.getSupplier();
     this.onProductChange();
   }
@@ -66,7 +66,7 @@ export class AddProductComponent {
     this.product.categoryId = this.categorys[0].categoryId;
   }
 
-  async getCatgorys() {
+  async getSubCatgorys() {
     const data = await this.service.GetAllSubCate();
     this.subCategorys = data.data.data;
     this.product.subCategoryId = this.subCategorys[0].subCategoryId;

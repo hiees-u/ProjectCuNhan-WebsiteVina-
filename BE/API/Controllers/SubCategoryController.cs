@@ -28,7 +28,7 @@ namespace API.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Moderator")]
-        public IActionResult Post(string subCateName) 
+        public IActionResult Post([FromBody] string subCateName) 
         {
             BaseResponseModel result = subSategory.Post(subCateName);
             return result.IsSuccess ? Ok(result) : BadRequest(result);

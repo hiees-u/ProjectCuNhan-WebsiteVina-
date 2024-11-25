@@ -141,12 +141,13 @@ GRANT EXECUTE ON OBJECT::SP_UpdateSubCategory TO Moderator;
 EXEC SP_UpdateSubCategory @subCategory_id = 5, @subCategory_name = N'MINH HIẾU TEST1'
 GO
 --INSERT
+DROP PROC SP_InsertSubCategory
 CREATE PROCEDURE SP_InsertSubCategory
 	@subCategory_name nvarchar(30)
 AS
 BEGIN
-	INSERT INTO SubCategory(SubCategoryName, ModifiedBy)
-	VALUES (@subCategory_name, SUSER_NAME());
+	INSERT INTO SubCategory(SubCategoryName, ModifiedBy, ModifiedTime)
+	VALUES (@subCategory_name, SUSER_NAME(), GETDATE());
 END;
 --GÁN QUYỀN
 GRANT EXECUTE ON OBJECT::SP_InsertSubCategory TO Moderator;

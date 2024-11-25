@@ -55,7 +55,7 @@
   transition: all 0.5s ease-in-out;
   bottom: -5%;
   border: 5px solid #fff;
-  right: 20%;
+  right: 11%;
 }
 
 .close :hover {
@@ -165,4 +165,10 @@
   width: 215px;
   height: 50px;
   outline: none;
+}
+
+.notification {
+  top: 35px;
+  right: 0;
+  position: fixed;
 }

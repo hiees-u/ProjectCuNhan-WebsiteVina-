@@ -29,4 +29,10 @@
   <button (click)="onUpdate()" *ngIf="isAdd" class="no-select insert">
     Thêm
   </button>
+  <div class="notification">
+    <app-notification
+      [data]="dataNotification"
+      [trigger]="trigger"
+    ></app-notification>
+  </div>
 </div>
