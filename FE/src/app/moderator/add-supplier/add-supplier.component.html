@@ -1,0 +1,31 @@
+<div class="container">
+    <button (click)="sendIsClose()" class="close">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+    <div class="header">
+      <span class="header-text no-select">
+        <span></span>
+        Thêm Nhà Cung Cấp</span
+      >
+    </div>
+    <div class="header-action"></div>
+  
+    <div class="content">
+      <div class="inp-form">
+        <label class="no-select" for="name-product">Tên nhà cung cấp: </label>
+        <input
+          type="text"
+          [(ngModel)]="category.categoryName"
+          (ngModelChange)="checkCategoryProperties()"
+          id="name-product"
+          placeholder="Tên nhà cung cấp..."
+        />
+      </div>
+    </div>
+  
+    <button (click)="onDelete()" class="no-select del-btn">Xóa</button>
+    <button (click)="onUpdate()" *ngIf="isAdd" class="no-select insert">
+      Thêm
+    </button>
+  </div>
+  

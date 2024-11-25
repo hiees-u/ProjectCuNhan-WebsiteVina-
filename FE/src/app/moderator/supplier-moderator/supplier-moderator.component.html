@@ -57,6 +57,7 @@
   [ngClass]="{ hiden: !isShowAddSupplier && flag, show: isShowAddSupplier }"
 >
   <div class="content-add-cate">
-     <app-add-cate (isClose)="handleClose($event)"></app-add-cate>
+     <!-- <app-add-cate (isClose)="handleClose($event)"></app-add-cate> -->
+      <app-add-supplier (isClose)="handleClose($event)"></app-add-supplier>
   </div>
 </div>

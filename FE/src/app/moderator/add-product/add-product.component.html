@@ -9,15 +9,15 @@
     >
   </div>
   <div class="header-action">
-    <div class="btn-add-product btn" (click)="isShowContenSecond()">
+    <div class="btn-add-product btn" (click)="isShowContenSecond(1)">
       <i class="fa-solid fa-plus"></i>
       Thêm loại sản phẩm
     </div>
-    <div class="btn-add-product btn">
+    <div class="btn-add-product btn" (click)="isShowContenSecond(2)">
       <i class="fa-solid fa-plus"></i>
       Thêm loại sản phẩm phụ
     </div>
-    <div class="btn-add-product btn">
+    <div class="btn-add-product btn" (click)="isShowContenSecond(3)">
       <i class="fa-solid fa-plus"></i>
       Thêm nhà cung cấp
     </div>
@@ -114,6 +114,22 @@
   <button (click)="onUpdate()" *ngIf="isAdd" class="insert">Thêm</button>
 </div>
 
-<div class="content-second" [ngClass]="{ hiden: !isShow && flag, show: isShow }">
-  <app-add-cate (isClose)="handleClose($event)"></app-add-cate>
+<div
+  class="content-second"
+  [ngClass]="{ hiden: !isShow && flag, show: isShow }"
+  [ngSwitch]="isShowBy"
+>
+  <app-add-cate
+    *ngSwitchCase="1"
+    (isClose)="handleClose($event)"
+  ></app-add-cate>
+  <app-add-sub-cate
+    *ngSwitchCase="2"
+    (isClose)="handleClose($event)"
+  ></app-add-sub-cate>
+  <app-add-supplier
+    *ngSwitchCase="3"
+    (isClose)="handleClose($event)"
+  ></app-add-supplier>
+  <div *ngSwitchDefault>Không có component nào phù hợp.</div>
 </div>

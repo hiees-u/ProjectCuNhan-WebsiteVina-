@@ -57,6 +57,7 @@
   [ngClass]="{ hiden: !isShowAddSubCate && flag, show: isShowAddSubCate }"
 >
   <div class="content-add-cate">
-     <app-add-cate (isClose)="handleClose($event)"></app-add-cate>
+     <!-- <app-add-cate (isClose)="handleClose($event)"></app-add-cate> -->
+      <app-add-sub-cate (isClose)="handleClose($event)"></app-add-sub-cate>
   </div>
 </div>

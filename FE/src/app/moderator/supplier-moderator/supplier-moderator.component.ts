@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
-import { SubCategory } from '../../shared/module/sub-category/sub-category.module';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ModeratorService } from '../moderator.service';
-import { DepartmentRequestModerator, SupplierRequestModerator } from '../moderator.module';
-import { AddCateComponent } from "../add-cate/add-cate.component";
+import { SupplierRequestModerator } from '../moderator.module';
+import { AddSupplierComponent } from "../add-supplier/add-supplier.component";
 
 @Component({
   selector: 'app-supplier-moderator',
@@ -12,7 +11,7 @@ import { AddCateComponent } from "../add-cate/add-cate.component";
   imports: [
     CommonModule,
     FormsModule,
-    AddCateComponent
+    AddSupplierComponent
 ],
   templateUrl: './supplier-moderator.component.html',
   styleUrl: './supplier-moderator.component.css'
