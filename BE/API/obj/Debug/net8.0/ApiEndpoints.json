@@ -1393,5 +1393,69 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.WarehouseReceiptController",
+    "Method": "Delete",
+    "RelativePath": "api/WarehouseReceipt/DeleteWarehouseReceipt/{warehouseReceipID}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "warehouseReceipID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.WarehouseReceiptController",
+    "Method": "GetWarehouseReceiptInfo",
+    "RelativePath": "api/WarehouseReceipt/GetWarehouseReceiptInfo/{warehouseReceiptID}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "warehouseReceiptID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.WarehouseReceiptController",
+    "Method": "GetWarehouseReceiptsByWarehouse",
+    "RelativePath": "api/WarehouseReceipt/GetWarehouseReceiptsByWarehouse/{warehouseID}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "warehouseID",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.WarehouseReceiptController",
+    "Method": "InsertWarehouseReceipt",
+    "RelativePath": "api/WarehouseReceipt/InsertWarehouseReceipt",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "DTO.WarehouseReceipt.WarehouseReceiptRequestModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   }
 ]

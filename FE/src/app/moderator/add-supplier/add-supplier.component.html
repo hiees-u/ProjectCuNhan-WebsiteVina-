@@ -1,31 +1,65 @@
 <div class="container">
-    <button (click)="sendIsClose()" class="close">
-      <i class="fa-solid fa-xmark"></i>
-    </button>
-    <div class="header">
-      <span class="header-text no-select">
-        <span></span>
-        Thêm Nhà Cung Cấp</span
-      >
+  <button (click)="sendIsClose()" class="close">
+    <i class="fa-solid fa-xmark"></i>
+  </button>
+  <div class="header">
+    <span class="header-text no-select">
+      <span></span>
+      Thêm Nhà Cung Cấp</span
+    >
+  </div>
+  <div class="header-action"></div>
+
+  <div class="content">
+    <div class="inp-form">
+      <label class="no-select" for="name-product">Tên nhà cung cấp: </label>
+      <input
+        type="text"
+        [(ngModel)]="supplier.supplierName"
+        (ngModelChange)="checkCategoryProperties()"
+        id="name-product"
+        placeholder="Tên nhà cung cấp..."
+      />
     </div>
-    <div class="header-action"></div>
-  
-    <div class="content">
-      <div class="inp-form">
-        <label class="no-select" for="name-product">Tên nhà cung cấp: </label>
-        <input
-          type="text"
-          [(ngModel)]="category.categoryName"
-          (ngModelChange)="checkCategoryProperties()"
-          id="name-product"
-          placeholder="Tên nhà cung cấp..."
-        />
+
+    <div class="inp-form">
+      <label class="no-select" for="name-product">Địa chỉ: </label>
+      <div class="box-edit-address">
+        <app-address
+          [address]="addre"
+          (addressChange)="getAddressChangeChildComponent($event)"
+        ></app-address>
+        <app-commune
+          [selectedCommuneId]="communenInsert.communeId"
+          [selectedDistrictId]="districtSelect"
+          (communeOutput)="getCommutNameChangeChildComponent($event)"
+        ></app-commune>
+        <app-district
+          [selectedProvinceId]="provinceSelect"
+          (selectedDistrictIdChange)="
+            getDistrictIDChangeChildComponent($event)
+          "
+          [selectedDistrictId]="districtSelect"
+        ></app-district>
+        <app-province
+          [selectedProvinceId]="provinceSelect"
+          (selectedProvinceIdChange)="
+            getProvinceIDChangeChildComponent($event)
+          "
+        ></app-province>
       </div>
     </div>
-  
-    <button (click)="onDelete()" class="no-select del-btn">Xóa</button>
-    <button (click)="onUpdate()" *ngIf="isAdd" class="no-select insert">
-      Thêm
-    </button>
+
   </div>
-  
+
+  <button (click)="onDelete()" class="no-select del-btn">Xóa</button>
+  <button (click)="onUpdate()" *ngIf="isAdd" class="no-select insert">
+    Thêm
+  </button>
+  <div class="notification">
+    <app-notification
+      [data]="dataNotification"
+      [trigger]="trigger"
+    ></app-notification>
+  </div>
+</div>

@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
-import { BaseResponseModel, BaseResponseModule } from '../shared/module/base-response/base-response.module';
-import { InsertProduct } from './moderator.module';
+import {
+  BaseResponseModel,
+  BaseResponseModule,
+} from '../shared/module/base-response/base-response.module';
+import { InsertProduct, SupplierResponseModerator } from './moderator.module';
 
 @Injectable({
   providedIn: 'root',
@@ -21,6 +24,56 @@ export class ModeratorService {
     }
   }
 
+  //post supplier
+  async postSupplier(
+    supplier: SupplierResponseModerator
+  ): Promise<BaseResponseModel> {
+    try {
+      const url = 'https://localhost:7060/api/Supplier';
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.token}`,
+        },
+        body: JSON.stringify(supplier),
+      });
+      const data: BaseResponseModel = await response.json();
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.log('Lỗi: ', error);
+      return {
+        isSuccess: false,
+        message: 'Lỗi ròi mài ơi',
+      };
+    }
+  }
+
+  //post sub cate
+  async postDepartment(deparmentName: string): Promise<BaseResponseModel> {
+    try {
+      const url = 'https://localhost:7060/api/Department';
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.token}`,
+        },
+        body: JSON.stringify(deparmentName),
+      });
+      const data: BaseResponseModel = await response.json();
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.log('Lỗi: ', error);
+      return {
+        isSuccess: false,
+        message: 'Lỗi ròi mài ơi',
+      };
+    }
+  }
+
   //post sub cate
   async postSubCategory(subCateName: string): Promise<BaseResponseModel> {
     try {
@@ -31,16 +84,16 @@ export class ModeratorService {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${this.token}`,
         },
-        body: JSON.stringify(subCateName)
+        body: JSON.stringify(subCateName),
       });
-      const data: BaseResponseModel = await response.json(); 
+      const data: BaseResponseModel = await response.json();
       console.log(data);
       return data;
     } catch (error) {
       console.log('Lỗi: ', error);
       return {
         isSuccess: false,
-        message: 'Lỗi ròi mài ơi'
+        message: 'Lỗi ròi mài ơi',
       };
     }
   }
@@ -55,16 +108,16 @@ export class ModeratorService {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${this.token}`,
         },
-        body: JSON.stringify(cateName)
+        body: JSON.stringify(cateName),
       });
-      const data: BaseResponseModel = await response.json(); 
+      const data: BaseResponseModel = await response.json();
       console.log(data);
       return data;
     } catch (error) {
       console.log('Lỗi: ', error);
       return {
         isSuccess: false,
-        message: 'Lỗi ròi mài ơi'
+        message: 'Lỗi ròi mài ơi',
       };
     }
   }
@@ -77,18 +130,18 @@ export class ModeratorService {
 
       console.log(url);
       console.log(response);
-      
+
       if (!response.ok) {
-        throw new Error("Lỗi");
+        throw new Error('Lỗi');
       }
 
       const blob = await response.blob();
       return URL.createObjectURL(blob);
     } catch (error) {
-      console.error("Lỗi API get image: ", error);
-      return undefined;  // Đảm bảo trả về giá trị
+      console.error('Lỗi API get image: ', error);
+      return undefined; // Đảm bảo trả về giá trị
     }
-}
+  }
 
   //get supplier
   async getSupplier(

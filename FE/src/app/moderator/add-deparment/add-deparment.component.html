@@ -15,7 +15,7 @@
       <label class="no-select" for="name-product">Tên phòng ban: </label>
       <input
         type="text"
-        [(ngModel)]="category.categoryName"
+        [(ngModel)]="departmentName"
         (ngModelChange)="checkCategoryProperties()"
         id="name-product"
         placeholder="Tên phòng ban..."
@@ -27,4 +27,10 @@
   <button (click)="onUpdate()" *ngIf="isAdd" class="no-select insert">
     Thêm
   </button>
+  <div class="notification">
+    <app-notification
+      [data]="dataNotification"
+      [trigger]="trigger"
+    ></app-notification>
+  </div>
 </div>

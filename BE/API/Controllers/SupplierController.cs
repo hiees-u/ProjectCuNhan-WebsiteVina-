@@ -33,7 +33,7 @@ namespace API.Controllers
         [Authorize(Roles = "Moderator")]
         public IActionResult GetAll(string? cateName = null, int pageNumber = 1, int pageSize = 8)
         {
-            BaseResponseModel result = supplier.GetPagition(cateName);
+            BaseResponseModel result = supplier.GetPagition(pageNumber, pageSize, cateName);
 
             return result.IsSuccess ? Ok(result) : BadRequest(result);
         }

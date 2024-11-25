@@ -3,7 +3,7 @@ import { CustomerService } from '../customer.service';
 import { CartItem } from '../../shared/module/cart/cart.module';
 import { CommonModule } from '@angular/common';
 import { CustomCurrencyPipe } from '../../shared/module/customCurrency';
-import { BaseResponseModel, BaseResponseModule } from '../../shared/module/base-response/base-response.module';
+import { BaseResponseModel } from '../../shared/module/base-response/base-response.module';
 import {
   Address,
   AddressRequest,

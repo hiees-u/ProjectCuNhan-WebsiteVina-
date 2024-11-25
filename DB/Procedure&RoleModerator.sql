@@ -647,14 +647,15 @@ GO
 --##################################################################################################################
 GO									--Department [ Phòng Ban ]
 --SELECT
+DROP PROC SP_GetDepartment
 CREATE PROCEDURE SP_GetDepartment
 AS
 BEGIN
     SELECT d.DepartmentID, d.DepartmentName, COUNT(uf.AccountName) as N'Số lượng nhân viên'
 	FROM Department d
-	JOIN Employee e ON e.DepartmentID = d.DepartmentID
-	LEFT JOIN UserInfo uf ON uf.Employ_ID = e.EmployeeID
-	WHERE d.DeleteTime IS NULL and e.DeleteTime IS NULL AND uf.AccountName IS NOT NULL
+	LEFT JOIN Employee e ON e.DepartmentID = d.DepartmentID
+	LEFT JOIN UserInfo uf ON uf.Employ_ID = e.EmployeeID AND uf.AccountName IS NOT NULL
+	WHERE d.DeleteTime IS NULL and (e.DeleteTime IS NULL OR e.DeleteTime IS NULL)
 	GROUP BY d.DepartmentID, d.DepartmentName;
 END
 --GÁN QUYỀN
@@ -662,8 +663,10 @@ GRANT EXECUTE ON OBJECT::SP_GetDepartment TO Moderator;
 GO
 --RUN
 EXEC SP_GetDepartment
+
 GO
 --INSERT
+DROP PROC SP_InsertDepartment
 CREATE PROCEDURE SP_InsertDepartment
     @DepartmentName NVARCHAR(50)
 AS
@@ -677,8 +680,8 @@ BEGIN
     ELSE
     BEGIN
         -- Chèn phòng ban mới nếu tên chưa tồn tại
-        INSERT INTO Department (DepartmentName, ModifiedBy, CreateTime)
-        VALUES (@DepartmentName, SUSER_NAME(), GETDATE())
+        INSERT INTO Department (DepartmentName, ModifiedBy, CreateTime, ModifiedTime)
+        VALUES (@DepartmentName, SUSER_NAME(), GETDATE(), GETDATE())
     END
 END
 

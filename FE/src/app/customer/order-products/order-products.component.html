@@ -1,6 +1,9 @@
 <div class="notification">
-    <app-notification [data]="dataNotification" [trigger]="trigger"></app-notification>
-  </div>
+  <app-notification
+    [data]="dataNotification"
+    [trigger]="trigger"
+  ></app-notification>
+</div>
 <div class="container">
   <div class="order-info">
     <span class="oi-header">
@@ -9,9 +12,21 @@
     </span>
     <div class="oi-content">
       <div class="name">
-        <input type="text" name="name" id="name" [(ngModel)]="Order.nameRecipient" placeholder="người nhận hàng">
+        <input
+          type="text"
+          name="name"
+          id="name"
+          [(ngModel)]="Order.nameRecipient"
+          placeholder="người nhận hàng"
+        />
         <!-- <br /> -->
-        <input type="text" name="phone" id="phone" [(ngModel)]="Order.phone" placeholder="SĐT nhận hàng">
+        <input
+          type="text"
+          name="phone"
+          id="phone"
+          [(ngModel)]="Order.phone"
+          placeholder="SĐT nhận hàng"
+        />
       </div>
       <div class="address">
         <select
@@ -26,26 +41,30 @@
           </option>
         </select>
         <div class="insertAddress" *ngIf="isShowInsertAddress">
-            <div class="box-edit-address">
-                <app-address
-                  [address]="addre"
-                  (addressChange)="getAddressChangeChildComponent($event)"
-                ></app-address>
-                <app-commune
-                [selectedCommuneId]="communenInsert.communeId"
-                [selectedDistrictId]="districtSelect"
-                (communeOutput)="getCommutNameChangeChildComponent($event)"
-                ></app-commune>  
-                <app-district
-                  [selectedProvinceId]="provinceSelect"
-                  (selectedDistrictIdChange)="getDistrictIDChangeChildComponent($event)"
-                  [selectedDistrictId]="districtSelect"
-                ></app-district>
-                <app-province
-                  [selectedProvinceId]="provinceSelect"
-                  (selectedProvinceIdChange)="getProvinceIDChangeChildComponent($event)"
-                ></app-province> 
-              </div>
+          <div class="box-edit-address">
+            <app-address
+              [address]="addre"
+              (addressChange)="getAddressChangeChildComponent($event)"
+            ></app-address>
+            <app-commune
+              [selectedCommuneId]="communenInsert.communeId"
+              [selectedDistrictId]="districtSelect"
+              (communeOutput)="getCommutNameChangeChildComponent($event)"
+            ></app-commune>
+            <app-district
+              [selectedProvinceId]="provinceSelect"
+              (selectedDistrictIdChange)="
+                getDistrictIDChangeChildComponent($event)
+              "
+              [selectedDistrictId]="districtSelect"
+            ></app-district>
+            <app-province
+              [selectedProvinceId]="provinceSelect"
+              (selectedProvinceIdChange)="
+                getProvinceIDChangeChildComponent($event)
+              "
+            ></app-province>
+          </div>
         </div>
       </div>
       <div class="operation">
@@ -90,7 +109,9 @@
     <div class="content">
       <div class="content-item">
         <span>Tổng Thanh Toán:</span>
-        <span class="price">{{ResponseOrder.totalPayment| customCurrency}}</span>
+        <span class="price">{{
+          ResponseOrder.totalPayment | customCurrency
+        }}</span>
       </div>
     </div>
     <div class="footer no-select">
