@@ -65,7 +65,7 @@ namespace BLL
             }
         }
    
-        public BaseResponseModel GetPagition(string? suppliersName = null, int pageNumber = 1, int pageSize = 8)
+        public BaseResponseModel GetPagition(int pageNumber, int pageSize, string? suppliersName = null)
         {
             List<SupplierResponseModule> lst = new List<SupplierResponseModule>();
             try

@@ -28,6 +28,12 @@ export interface SupplierRequestModerator {
   addressId: number;
 }
 
+//Supplier response
+export interface SupplierResponseModerator {
+  supplierName: string;
+  addressId: number;
+}
+
 //Department
 export interface DepartmentRequestModerator {
   departmentId: number;
@@ -69,6 +75,14 @@ export function ContructorSubCategoryModule(): SubCategoryRequesModerator {
   return {
     subCategoryId: 0,
     subCategoryName: '',
+  };
+}
+
+export function ContructorSupplierRequestModerator(): SupplierRequestModerator {
+  return {
+    supplierId: 0,
+    supplierName: '',
+    addressId: 0,
   };
 }
 

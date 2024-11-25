@@ -1,11 +1,11 @@
 ﻿--===========================================================================================
 --================================== Quản Lý Kho ============================================
 --===========================================================================================
-CREATE LOGIN TheVinhWarehouseEmployee WITH PASSWORD = '123';
+--CREATE LOGIN TheVinhWarehouseEmployee WITH PASSWORD = '123';
 
 USE CAFFEE_VINA_DBv1;
 
-CREATE USER TheVinhWarehouseEmployee FOR LOGIN TheVinhWarehouseEmployee;
+--CREATE USER TheVinhWarehouseEmployee FOR LOGIN TheVinhWarehouseEmployee;
 
 --==============================
 USE CAFFEE_VINA_DBv1;

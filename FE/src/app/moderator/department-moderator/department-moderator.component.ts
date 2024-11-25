@@ -70,6 +70,7 @@ export class DepartmentModeratorComponent {
 
   handleClose(is: boolean) {
     console.log('THOÁT THÊM');
+    this.getDepartments();
     // this.getCategorys();
     this.isShowAddDepartment = !is;
     this.flag = true;

@@ -1,16 +1,40 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "E:\\HK I nam 4\\Do An Chuyen Nganh\\ProjectCuNhan-WebsiteVina-\\BE\\",
+  "WorkspaceRootPath": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\",
   "Documents": [
     {
-<<<<<<< HEAD
-      "AbsoluteMoniker": "D:0:0:{1D0D98A9-8C32-4F25-AA4F-2F66D6654FA5}|API\\API.csproj|e:\\hk i nam 4\\do an chuyen nganh\\projectcunhan-websitevina-\\be\\api\\controllers\\warehousecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1D0D98A9-8C32-4F25-AA4F-2F66D6654FA5}|API\\API.csproj|solutionrelative:api\\controllers\\warehousecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{DE969023-0A53-4B48-B5F6-48BF28880A70}|BLL\\BLL.csproj|c:\\users\\admin\\desktop\\projectcunhan-websitevina-\\be\\bll\\supplierbll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DE969023-0A53-4B48-B5F6-48BF28880A70}|BLL\\BLL.csproj|solutionrelative:bll\\supplierbll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DE969023-0A53-4B48-B5F6-48BF28880A70}|BLL\\BLL.csproj|e:\\hk i nam 4\\do an chuyen nganh\\projectcunhan-websitevina-\\be\\bll\\warehousebll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{DE969023-0A53-4B48-B5F6-48BF28880A70}|BLL\\BLL.csproj|solutionrelative:bll\\warehousebll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-=======
+      "AbsoluteMoniker": "D:0:0:{1D0D98A9-8C32-4F25-AA4F-2F66D6654FA5}|API\\API.csproj|c:\\users\\admin\\desktop\\projectcunhan-websitevina-\\be\\api\\controllers\\suppliercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D0D98A9-8C32-4F25-AA4F-2F66D6654FA5}|API\\API.csproj|solutionrelative:api\\controllers\\suppliercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE969023-0A53-4B48-B5F6-48BF28880A70}|BLL\\BLL.csproj|c:\\users\\admin\\desktop\\projectcunhan-websitevina-\\be\\bll\\interface\\isupplier.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DE969023-0A53-4B48-B5F6-48BF28880A70}|BLL\\BLL.csproj|solutionrelative:bll\\interface\\isupplier.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE969023-0A53-4B48-B5F6-48BF28880A70}|BLL\\BLL.csproj|c:\\users\\admin\\desktop\\projectcunhan-websitevina-\\be\\bll\\addressbll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DE969023-0A53-4B48-B5F6-48BF28880A70}|BLL\\BLL.csproj|solutionrelative:bll\\addressbll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE969023-0A53-4B48-B5F6-48BF28880A70}|BLL\\BLL.csproj|c:\\users\\admin\\desktop\\projectcunhan-websitevina-\\be\\bll\\orderbll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DE969023-0A53-4B48-B5F6-48BF28880A70}|BLL\\BLL.csproj|solutionrelative:bll\\orderbll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE969023-0A53-4B48-B5F6-48BF28880A70}|BLL\\BLL.csproj|c:\\users\\admin\\desktop\\projectcunhan-websitevina-\\be\\bll\\departmentbll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DE969023-0A53-4B48-B5F6-48BF28880A70}|BLL\\BLL.csproj|solutionrelative:bll\\departmentbll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE969023-0A53-4B48-B5F6-48BF28880A70}|BLL\\BLL.csproj|c:\\users\\admin\\desktop\\projectcunhan-websitevina-\\be\\bll\\connectionstringhelper\\connectionstringhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DE969023-0A53-4B48-B5F6-48BF28880A70}|BLL\\BLL.csproj|solutionrelative:bll\\connectionstringhelper\\connectionstringhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE969023-0A53-4B48-B5F6-48BF28880A70}|BLL\\BLL.csproj|c:\\users\\admin\\desktop\\projectcunhan-websitevina-\\be\\bll\\cellsbll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DE969023-0A53-4B48-B5F6-48BF28880A70}|BLL\\BLL.csproj|solutionrelative:bll\\cellsbll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{DE969023-0A53-4B48-B5F6-48BF28880A70}|BLL\\BLL.csproj|c:\\users\\admin\\desktop\\projectcunhan-websitevina-\\be\\bll\\subcategorybll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{DE969023-0A53-4B48-B5F6-48BF28880A70}|BLL\\BLL.csproj|solutionrelative:bll\\subcategorybll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -33,19 +57,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{1D0D98A9-8C32-4F25-AA4F-2F66D6654FA5}|API\\API.csproj|c:\\users\\admin\\desktop\\projectcunhan-websitevina-\\be\\api\\controllers\\filecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1D0D98A9-8C32-4F25-AA4F-2F66D6654FA5}|API\\API.csproj|solutionrelative:api\\controllers\\filecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DE969023-0A53-4B48-B5F6-48BF28880A70}|BLL\\BLL.csproj|c:\\users\\admin\\desktop\\projectcunhan-websitevina-\\be\\bll\\supplierbll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{DE969023-0A53-4B48-B5F6-48BF28880A70}|BLL\\BLL.csproj|solutionrelative:bll\\supplierbll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DE969023-0A53-4B48-B5F6-48BF28880A70}|BLL\\BLL.csproj|c:\\users\\admin\\desktop\\projectcunhan-websitevina-\\be\\bll\\interface\\isupplier.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{DE969023-0A53-4B48-B5F6-48BF28880A70}|BLL\\BLL.csproj|solutionrelative:bll\\interface\\isupplier.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1D0D98A9-8C32-4F25-AA4F-2F66D6654FA5}|API\\API.csproj|c:\\users\\admin\\desktop\\projectcunhan-websitevina-\\be\\api\\controllers\\suppliercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1D0D98A9-8C32-4F25-AA4F-2F66D6654FA5}|API\\API.csproj|solutionrelative:api\\controllers\\suppliercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
->>>>>>> 9e681ff1907fc96b4cca59ad25a297736e350b95
     }
   ],
   "DocumentGroupContainers": [
@@ -55,19 +66,6 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-<<<<<<< HEAD
-          "SelectedChildIndex": 0,
-          "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "WarehouseController.cs",
-              "DocumentMoniker": "E:\\HK I nam 4\\Do An Chuyen Nganh\\ProjectCuNhan-WebsiteVina-\\BE\\API\\Controllers\\WarehouseController.cs",
-              "RelativeDocumentMoniker": "API\\Controllers\\WarehouseController.cs",
-              "ToolTip": "E:\\HK I nam 4\\Do An Chuyen Nganh\\ProjectCuNhan-WebsiteVina-\\BE\\API\\Controllers\\WarehouseController.cs",
-              "RelativeToolTip": "API\\Controllers\\WarehouseController.cs",
-              "ViewState": "AgIAAAsAAAAAAAAAAAAAwAAAAAAAAAAAAAAAAA==",
-=======
           "SelectedChildIndex": 1,
           "Children": [
             {
@@ -77,19 +75,71 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "SubCategoryBLL.cs",
-              "DocumentMoniker": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\SubCategoryBLL.cs",
-              "RelativeDocumentMoniker": "BLL\\SubCategoryBLL.cs",
-              "ToolTip": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\SubCategoryBLL.cs",
-              "RelativeToolTip": "BLL\\SubCategoryBLL.cs",
-              "ViewState": "AgIAAP0AAAAAAAAAAAAcwB0BAABNAAAAAAAAAA==",
+              "Title": "SupplierBLL.cs",
+              "DocumentMoniker": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\SupplierBLL.cs",
+              "RelativeDocumentMoniker": "BLL\\SupplierBLL.cs",
+              "ToolTip": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\SupplierBLL.cs",
+              "RelativeToolTip": "BLL\\SupplierBLL.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAqwEQAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-25T15:54:33.752Z",
+              "WhenOpened": "2024-11-23T15:23:30.649Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
+              "Title": "AddressBLL.cs",
+              "DocumentMoniker": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\AddressBLL.cs",
+              "RelativeDocumentMoniker": "BLL\\AddressBLL.cs",
+              "ToolTip": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\AddressBLL.cs",
+              "RelativeToolTip": "BLL\\AddressBLL.cs",
+              "ViewState": "AgIAADMAAAAAAAAAAAAowBMAAABCAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-25T21:37:39.856Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "OrderBLL.cs",
+              "DocumentMoniker": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\OrderBLL.cs",
+              "RelativeDocumentMoniker": "BLL\\OrderBLL.cs",
+              "ToolTip": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\OrderBLL.cs",
+              "RelativeToolTip": "BLL\\OrderBLL.cs",
+              "ViewState": "AgIAAHoAAAAAAAAAAAAwwB8AAACJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-25T21:35:28.354Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "DepartmentBLL.cs",
+              "DocumentMoniker": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\DepartmentBLL.cs",
+              "RelativeDocumentMoniker": "BLL\\DepartmentBLL.cs",
+              "ToolTip": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\DepartmentBLL.cs",
+              "RelativeToolTip": "BLL\\DepartmentBLL.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAABMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-25T20:03:58.89Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ConnectionStringHelper.cs",
+              "DocumentMoniker": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\ConnectionStringHelper\\ConnectionStringHelper.cs",
+              "RelativeDocumentMoniker": "BLL\\ConnectionStringHelper\\ConnectionStringHelper.cs",
+              "ToolTip": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\ConnectionStringHelper\\ConnectionStringHelper.cs",
+              "RelativeToolTip": "BLL\\ConnectionStringHelper\\ConnectionStringHelper.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAACgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-25T19:41:02.237Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
               "Title": "CategoryBLL.cs",
               "DocumentMoniker": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\CategoryBLL.cs",
               "RelativeDocumentMoniker": "BLL\\CategoryBLL.cs",
@@ -97,25 +147,23 @@
               "RelativeToolTip": "BLL\\CategoryBLL.cs",
               "ViewState": "AgIAAAkAAAAAAAAAAAAAAHgAAABKAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-23T14:25:46.571Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-23T14:25:46.571Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "BLL",
+              "DocumentIndex": 10,
+              "Title": "BLL.csproj",
               "DocumentMoniker": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\BLL.csproj",
               "RelativeDocumentMoniker": "BLL\\BLL.csproj",
               "ToolTip": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\BLL.csproj",
               "RelativeToolTip": "BLL\\BLL.csproj",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2024-11-25T15:54:29.869Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-25T15:54:29.869Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 11,
               "Title": "SubCategoryController.cs",
               "DocumentMoniker": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\API\\Controllers\\SubCategoryController.cs",
               "RelativeDocumentMoniker": "API\\Controllers\\SubCategoryController.cs",
@@ -123,73 +171,75 @@
               "RelativeToolTip": "API\\Controllers\\SubCategoryController.cs",
               "ViewState": "AgIAAAYAAAAAAAAAAAAAABwAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-24T16:18:14.073Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-24T16:18:14.073Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 13,
               "Title": "FileController.cs",
               "DocumentMoniker": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\API\\Controllers\\FileController.cs",
               "RelativeDocumentMoniker": "API\\Controllers\\FileController.cs",
               "ToolTip": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\API\\Controllers\\FileController.cs",
               "RelativeToolTip": "API\\Controllers\\FileController.cs",
               "ViewState": "AgIAAAQAAAAAAAAAAAAwwBIAAAArAAAAAAAAAA==",
->>>>>>> 9e681ff1907fc96b4cca59ad25a297736e350b95
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-25T17:00:53.945Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-24T13:48:14.333Z"
             },
             {
               "$type": "Document",
-<<<<<<< HEAD
-              "DocumentIndex": 1,
-              "Title": "WareHouseBLL.cs",
-              "DocumentMoniker": "E:\\HK I nam 4\\Do An Chuyen Nganh\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\WareHouseBLL.cs",
-              "RelativeDocumentMoniker": "BLL\\WareHouseBLL.cs",
-              "ToolTip": "E:\\HK I nam 4\\Do An Chuyen Nganh\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\WareHouseBLL.cs",
-              "RelativeToolTip": "BLL\\WareHouseBLL.cs",
-              "ViewState": "AgIAAMYAAAAAAAAAAAAYwOYAAABVAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-25T17:00:31.697Z",
-=======
-              "DocumentIndex": 7,
+              "DocumentIndex": 2,
               "Title": "ISupplier.cs",
               "DocumentMoniker": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\Interface\\ISupplier.cs",
               "RelativeDocumentMoniker": "BLL\\Interface\\ISupplier.cs",
               "ToolTip": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\Interface\\ISupplier.cs",
               "RelativeToolTip": "BLL\\Interface\\ISupplier.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAgAAABvAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAABpAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-23T15:29:29.12Z"
+              "WhenOpened": "2024-11-23T15:29:29.12Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "SupplierBLL.cs",
-              "DocumentMoniker": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\SupplierBLL.cs",
-              "RelativeDocumentMoniker": "BLL\\SupplierBLL.cs",
-              "ToolTip": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\SupplierBLL.cs",
-              "RelativeToolTip": "BLL\\SupplierBLL.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-23T15:23:30.649Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 1,
               "Title": "SupplierController.cs",
               "DocumentMoniker": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\API\\Controllers\\SupplierController.cs",
               "RelativeDocumentMoniker": "API\\Controllers\\SupplierController.cs",
               "ToolTip": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\API\\Controllers\\SupplierController.cs",
               "RelativeToolTip": "API\\Controllers\\SupplierController.cs",
-              "ViewState": "AgIAAAgAAAAAAAAAAAAiwCMAAAA7AAAAAAAAAA==",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAYwCMAAABIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-23T15:20:21.129Z"
+              "WhenOpened": "2024-11-23T15:20:21.129Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 8,
+              "Title": "SubCategoryBLL.cs",
+              "DocumentMoniker": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\SubCategoryBLL.cs",
+              "RelativeDocumentMoniker": "BLL\\SubCategoryBLL.cs",
+              "ToolTip": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\SubCategoryBLL.cs",
+              "RelativeToolTip": "BLL\\SubCategoryBLL.cs",
+              "ViewState": "AgIAAP0AAAAAAAAAAAAcwCcBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-25T15:54:33.752Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "CellsBLL.cs",
+              "DocumentMoniker": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\CellsBLL.cs",
+              "RelativeDocumentMoniker": "BLL\\CellsBLL.cs",
+              "ToolTip": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\CellsBLL.cs",
+              "RelativeToolTip": "BLL\\CellsBLL.cs",
+              "ViewState": "AgIAAEUAAAAAAAAAAAAEwMsAAABZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-25T19:37:50.041Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
               "Title": "CategoryController.cs",
               "DocumentMoniker": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\API\\Controllers\\CategoryController.cs",
               "RelativeDocumentMoniker": "API\\Controllers\\CategoryController.cs",
@@ -197,9 +247,7 @@
               "RelativeToolTip": "API\\Controllers\\CategoryController.cs",
               "ViewState": "AgIAABAAAAAAAAAAAAAcwBwAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-23T14:25:31.659Z",
->>>>>>> 9e681ff1907fc96b4cca59ad25a297736e350b95
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-23T14:25:31.659Z"
             }
           ]
         }
