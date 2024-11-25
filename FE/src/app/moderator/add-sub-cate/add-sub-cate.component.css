@@ -1,169 +1,174 @@
 .container {
-    width: 830px;
-    height: 300px;
-    padding: 10px;
-    /* background: var(--secon-color); */
-    background-color: #fff;
-    position: relative;
-    font-family: var(--main-style);
-    border-radius: 10px;
+  width: 830px;
+  height: 300px;
+  padding: 10px;
+  /* background: var(--secon-color); */
+  background-color: #fff;
+  position: relative;
+  font-family: var(--main-style);
+  border-radius: 10px;
+}
+
+.close {
+  position: absolute;
+  top: 11px;
+  border-radius: 5px;
+  right: 12px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background-color: transparent;
+  color: var(--secon-text-color);
+  font-size: 1.5em;
+  padding: 5px 10px;
+  transition: all 0.5s ease-in-out;
+}
+
+.insert {
+  position: absolute;
+  border: none;
+  outline: none;
+  font-family: var(--main-style);
+  cursor: pointer;
+  background-color: #eab35a;
+  color: #fff;
+  font-size: 1em;
+  padding: 5px 10px;
+  transition: all 0.5s ease-in-out;
+  bottom: -5%;
+  right: 2%;
+  border: 5px solid #fff;
+  border-radius: 5px;
+}
+
+.del-btn {
+  position: absolute;
+  border: none;
+  outline: none;
+  font-family: var(--main-style);
+  cursor: pointer;
+  background-color: #545454;
+  color: #fff;
+  font-size: 1em;
+  border-radius: 5px;
+  padding: 5px 10px;
+  transition: all 0.5s ease-in-out;
+  bottom: -5%;
+  border: 5px solid #fff;
+  right: 11%;
+}
+
+.close :hover {
+  color: var(--main-color);
+}
+
+.header {
+  background: #f8990017;
+  width: calc(100% - 15px);
+  height: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 15px 0 0;
+  font-family: var(--main-style);
+  overflow: hidden;
+  white-space: nowrap;
+  /* width: 100%; */
+  color: #5f5f5f;
+  animation: width-1-100 3.5s ease-in-out;
+}
+
+.header-action {
+  width: calc(100% - 30px);
+  margin: 0 0 10px 0;
+  height: calc(50px - 10px);
+  padding: 5px 15px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  box-shadow: 0 1px 0 0 #e0dfdf;
+}
+
+.header > span {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header > span > span {
+  height: 40px;
+  width: 10px;
+  background-color: var(--secon-color);
+  margin-right: 15px;
+  display: block;
+}
+
+.btn {
+  width: fit-content;
+  font-size: 0.7em;
+  padding: 8px 15px;
+  margin: 0 10px 0 0;
+}
+
+.btn i {
+  margin-right: 5px;
+}
+
+.btn-add-product {
+  background-color: #3920f1;
+  color: #fff;
+}
+
+/* // */
+@keyframes width-1-100 {
+  0% {
+    width: 0%;
   }
-  
-  .close {
-    position: absolute;
-    top: 11px;
-    border-radius: 5px;
-    right: 12px;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    background-color: transparent;
-    color: var(--secon-text-color);
-    font-size: 1.5em;
-    padding: 5px 10px;
-    transition: all 0.5s ease-in-out;
-  }
-  
-  .insert {
-    position: absolute;
-    border: none;
-    outline: none;
-    font-family: var(--main-style);
-    cursor: pointer;
-    background-color: #eab35a;
-    color: #fff;
-    font-size: 1em;
-    padding: 5px 10px;
-    transition: all 0.5s ease-in-out;
-    bottom: -5%;
-    right: 2%;
-    border: 5px solid #fff;
-    border-radius: 5px;
-  }
-  
-  .del-btn {
-    position: absolute;
-    border: none;
-    outline: none;
-    font-family: var(--main-style);
-    cursor: pointer;
-    background-color: #545454;
-    color: #fff;
-    font-size: 1em;
-    border-radius: 5px;
-    padding: 5px 10px;
-    transition: all 0.5s ease-in-out;
-    bottom: -5%;
-    border: 5px solid #fff;
-    right: 20%;
-  }
-  
-  .close :hover {
-    color: var(--main-color);
-  }
-  
-  .header {
-    background: #f8990017;
+  100% {
     width: calc(100% - 15px);
-    height: 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 15px 0 0;
-    font-family: var(--main-style);
-    overflow: hidden;
-    white-space: nowrap;
-    /* width: 100%; */
-    color: #5f5f5f;
-    animation: width-1-100 3.5s ease-in-out;
   }
-  
-  .header-action {
-    width: calc(100% - 30px);
-    margin: 0 0 10px 0;
-    height: calc(50px - 10px);
-    padding: 5px 15px;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    box-shadow: 0 1px 0 0 #e0dfdf;
-  }
-  
-  .header > span {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .header > span > span {
-    height: 40px;
-    width: 10px;
-    background-color: var(--secon-color);
-    margin-right: 15px;
-    display: block;
-  }
-  
-  .btn {
-    width: fit-content;
-    font-size: 0.7em;
-    padding: 8px 15px;
-    margin: 0 10px 0 0;
-  }
-  
-  .btn i {
-    margin-right: 5px;
-  }
-  
-  .btn-add-product {
-    background-color: #3920f1;
-    color: #fff;
-  }
-  
-  /* // */
-  @keyframes width-1-100 {
-    0% {
-      width: 0%;
-    }
-    100% {
-      width: calc(100% - 15px);
-    }
-  }
-  
-  /* /############################/ */
-  .content {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    height: 250px;
-    justify-content: space-between;
-    align-items: flex-start;
-  }
-  
-  .inp-form {
-    font-size: 1em;
-    color: var(--secon-text-color);
-    font-family: var(--main-style);
-    width: 420px;
-    height: 25px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  
-  .inp-form input,
-  .inp-form select {
-    outline: none;
-    width: 215px;
-    border: none;
-    font-size: 0.9em;
-    font-family: inherit;
-    border-bottom: 1px solid var(--main-color);
-    padding: 5px 0 5px 5px;
-  }
-  
-  .inp-form textarea {
-    width: 215px;
-    height: 50px;
-    outline: none;
-  }
-  
+}
+
+/* /############################/ */
+.content {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  height: 250px;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.inp-form {
+  font-size: 1em;
+  color: var(--secon-text-color);
+  font-family: var(--main-style);
+  width: 420px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.inp-form input,
+.inp-form select {
+  outline: none;
+  width: 215px;
+  border: none;
+  font-size: 0.9em;
+  font-family: inherit;
+  border-bottom: 1px solid var(--main-color);
+  padding: 5px 0 5px 5px;
+}
+
+.inp-form textarea {
+  width: 215px;
+  height: 50px;
+  outline: none;
+}
+
+.notification {
+  top: 35px;
+  right: 0;
+  position: fixed;
+}

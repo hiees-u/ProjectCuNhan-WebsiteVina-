@@ -152,7 +152,7 @@
       {
         "Name": "cateName",
         "Type": "System.String",
-        "IsRequired": false
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []
@@ -1058,7 +1058,7 @@
       {
         "Name": "subCateName",
         "Type": "System.String",
-        "IsRequired": false
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []

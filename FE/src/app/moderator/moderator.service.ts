@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BaseResponseModel } from '../shared/module/base-response/base-response.module';
+import { BaseResponseModel, BaseResponseModule } from '../shared/module/base-response/base-response.module';
 import { InsertProduct } from './moderator.module';
 
 @Injectable({
@@ -18,6 +18,54 @@ export class ModeratorService {
   ngOnInit(): void {
     if (typeof window !== 'undefined') {
       this.token = localStorage.getItem('token') || '';
+    }
+  }
+
+  //post sub cate
+  async postSubCategory(subCateName: string): Promise<BaseResponseModel> {
+    try {
+      const url = 'https://localhost:7060/api/SubCategory';
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.token}`,
+        },
+        body: JSON.stringify(subCateName)
+      });
+      const data: BaseResponseModel = await response.json(); 
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.log('Lỗi: ', error);
+      return {
+        isSuccess: false,
+        message: 'Lỗi ròi mài ơi'
+      };
+    }
+  }
+
+  //post Cate
+  async postCategory(cateName: string): Promise<BaseResponseModel> {
+    try {
+      const url = 'https://localhost:7060/api/Category';
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.token}`,
+        },
+        body: JSON.stringify(cateName)
+      });
+      const data: BaseResponseModel = await response.json(); 
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.log('Lỗi: ', error);
+      return {
+        isSuccess: false,
+        message: 'Lỗi ròi mài ơi'
+      };
     }
   }
 
@@ -41,7 +89,6 @@ export class ModeratorService {
       return undefined;  // Đảm bảo trả về giá trị
     }
 }
-
 
   //get supplier
   async getSupplier(
