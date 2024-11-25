@@ -1,6 +1,6 @@
 # Ignore build files
 /bin/
-/obj/
+/obj/   # This line already exists in your provided snippet
 *.dll
 *.exe
 *.pdb
