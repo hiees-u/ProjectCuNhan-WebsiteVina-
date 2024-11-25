@@ -8,11 +8,13 @@ import { SubCategory } from '../../shared/module/sub-category/sub-category.modul
 import { Supplier } from '../../shared/module/supplier/supplier.module';
 import { ModeratorService } from '../moderator.service';
 import { AddCateComponent } from "../add-cate/add-cate.component";
+import { AddSubCateComponent } from "../add-sub-cate/add-sub-cate.component";
+import { AddSupplierComponent } from "../add-supplier/add-supplier.component";
 
 @Component({
   selector: 'app-add-product',
   standalone: true,
-  imports: [FormsModule, CommonModule, AddCateComponent],
+  imports: [FormsModule, CommonModule, AddCateComponent, AddSubCateComponent, AddSupplierComponent],
   templateUrl: './add-product.component.html',
   styleUrl: './add-product.component.css',
 })
@@ -40,8 +42,13 @@ export class AddProductComponent {
   isShow: boolean = false;
   flag:boolean = true;
 
-  isShowContenSecond() {
+  isShowBy: number = 1;
+
+  isShowContenSecond(i: number) {
     this.isShow = !this.isShow;
+    this.isShowBy = i;
+    console.log(this.isShowBy);
+    
   }
 
   handleClose(is: boolean) {

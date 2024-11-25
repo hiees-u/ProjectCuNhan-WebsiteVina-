@@ -58,11 +58,18 @@ export interface SubCategoryRequesModerator {
   subCategoryName: string;
 }
 
-export function ContructorCategoryModule() : CategoryRequesModerator {
+export function ContructorCategoryModule(): CategoryRequesModerator {
   return {
     categoryId: 0,
-    categoryName: ''
-  }
+    categoryName: '',
+  };
+}
+
+export function ContructorSubCategoryModule(): SubCategoryRequesModerator {
+  return {
+    subCategoryId: 0,
+    subCategoryName: '',
+  };
 }
 
 export function ContructorInsertProduct(): InsertProduct {

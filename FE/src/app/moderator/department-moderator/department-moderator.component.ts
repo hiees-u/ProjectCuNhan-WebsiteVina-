@@ -4,12 +4,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DepartmentRequestModerator } from '../moderator.module';
 import { ModeratorService } from '../moderator.service';
-import { AddCateComponent } from "../add-cate/add-cate.component";
+import { AddDeparmentComponent } from "../add-deparment/add-deparment.component";
 
 @Component({
   selector: 'app-department-moderator',
   standalone: true,
-  imports: [CommonModule, FormsModule, AddCateComponent],
+  imports: [CommonModule, FormsModule, AddDeparmentComponent],
   templateUrl: './department-moderator.component.html',
   styleUrl: './department-moderator.component.css'
 })

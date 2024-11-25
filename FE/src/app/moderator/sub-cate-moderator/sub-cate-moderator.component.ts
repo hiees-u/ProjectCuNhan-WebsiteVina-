@@ -3,8 +3,9 @@ import { SubCategory } from '../../shared/module/sub-category/sub-category.modul
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ModeratorService } from '../moderator.service';
-import { DepartmentRequestModerator } from '../moderator.module';
-import { AddCateComponent } from "../add-cate/add-cate.component";
+// import { DepartmentRequestModerator } from '../moderator.module';
+// import { AddCateComponent } from "../add-cate/add-cate.component";
+import { AddSubCateComponent } from "../add-sub-cate/add-sub-cate.component";
 
 @Component({
   selector: 'app-sub-cate-moderator',
@@ -12,7 +13,8 @@ import { AddCateComponent } from "../add-cate/add-cate.component";
   imports: [
     CommonModule,
     FormsModule,
-    AddCateComponent
+    // AddCateComponent,
+    AddSubCateComponent
 ],
   templateUrl: './sub-cate-moderator.component.html',
   styleUrl: './sub-cate-moderator.component.css'

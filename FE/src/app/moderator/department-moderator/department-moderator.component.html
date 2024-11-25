@@ -57,6 +57,7 @@
   [ngClass]="{ hiden: !isShowAddDepartment && flag, show: isShowAddDepartment }"
 >
   <div class="content-add-cate">
-     <app-add-cate (isClose)="handleClose($event)"></app-add-cate>
+     <!-- <app-add-cate (isClose)="handleClose($event)"></app-add-cate> -->
+      <app-add-deparment (isClose)="handleClose($event)"></app-add-deparment>
   </div>
 </div>
