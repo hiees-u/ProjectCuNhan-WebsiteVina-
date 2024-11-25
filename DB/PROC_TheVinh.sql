@@ -1,6 +1,27 @@
 ﻿--===========================================================================================
 --================================== Quản Lý Kho ============================================
 --===========================================================================================
+CREATE LOGIN TheVinhWarehouseEmployee WITH PASSWORD = '123';
+
+USE CAFFEE_VINA_DBv1;
+
+CREATE USER TheVinhWarehouseEmployee FOR LOGIN TheVinhWarehouseEmployee;
+
+--==============================
+USE CAFFEE_VINA_DBv1;
+
+ALTER ROLE WarehouseEmployee ADD MEMBER VinhWarehouseEmployee;
+--==============================================================
+SELECT 
+    m.name AS MemberName,
+    r.name AS RoleName
+FROM 
+    sys.database_role_members rm
+    JOIN sys.database_principals r ON rm.role_principal_id = r.principal_id
+    JOIN sys.database_principals m ON rm.member_principal_id = m.principal_id
+WHERE 
+    r.name = 'WarehouseEmployee';
+--======================================================================
 --create role Warehouse Employee
 Create ROLE WarehouseEmployee;
 
@@ -15,13 +36,26 @@ Grant Select, Update, Insert, Delete On dbo.Warehouse to WarehouseEmployee
 Grant Select, Update, Insert On dbo.DeliveryNote to WarehouseEmployee
 Grant Select, Update, Insert On dbo.DeliveryNoteDetail to WarehouseEmployee
 
-Grant Select, Update, Insert On dbo.WarehouseReceipt to WarehouseEmployee
-Grant Select, Update, Insert On dbo.WarehouseReceiptDetail to WarehouseEmployee
+Grant Select, Update, Insert, Delete On dbo.WarehouseReceipt to WarehouseEmployee
+Grant Select, Update, Insert, Delete On dbo.WarehouseReceiptDetail to WarehouseEmployee
+
+Grant Select, Update, Insert On dbo.PurchaseOrder to WarehouseEmployee
+Grant Select, Update, Insert On dbo.PurchaseOrderDetail to WarehouseEmployee
 
 Grant Select, Update, Insert, Delete On dbo.Shelve to WarehouseEmployee
 Grant Select, Update, Insert, Delete On dbo.Cells to WarehouseEmployee
 
 Grant Select On dbo.Product to WarehouseEmployee --bổ sung 18/11/2024
+Grant Select On dbo.PriceHistory to WarehouseEmployee
+
+Grant Select On dbo.Employee to WarehouseEmployee
+--Thu hồi quyền từ một user:
+REVOKE SELECT, INSERT, UPDATE, DELETE ON SCHEMA::dbo FROM HiuWarehouseEmployee;
+
+--Thu hồi quyền từ một vai trò:
+REVOKE SELECT, INSERT, UPDATE, DELETE ON SCHEMA::dbo FROM WarehouseEmployee;
+
+
 --############################################# GET ALL WAREHOUSE #####################################################################################
 go
 CREATE PROCEDURE GetAllWarehouses
@@ -81,7 +115,7 @@ GO
 --Lấy thông tin kho với id
 DECLARE @ResultMessage NVARCHAR(100);
 EXEC GetWarehouseByID
-    @WarehouseID = 25, 
+    @WarehouseID = 2, 
     @Message = @ResultMessage OUTPUT;
 PRINT @ResultMessage;
 
@@ -93,7 +127,6 @@ go
 CREATE PROCEDURE AddWarehouse
     @WarehouseName NVARCHAR(30),
 	@AddressID INT,
-    @ModifiedBy VARCHAR(25),
     @Message NVARCHAR(100) OUTPUT -- Thêm tham số OUTPUT
 AS
 BEGIN  
@@ -107,7 +140,7 @@ BEGIN
 
     BEGIN TRY
         INSERT INTO Warehouse (WarehouseName, AddressID, ModifiedBy, CreateTime)
-        VALUES (@WarehouseName, @AddressID, @ModifiedBy, GETDATE());
+        VALUES (@WarehouseName, @AddressID, SUSER_NAME(), GETDATE());
 
         -- Commit giao dịch nếu không có lỗi
         COMMIT TRANSACTION;
@@ -121,6 +154,8 @@ BEGIN
     END CATCH
 END;
 GO
+--============================================================
+
 --Phân quyền
 GRANT EXEC ON OBJECT::dbo.AddWarehouse TO  WarehouseEmployee;
 
@@ -129,7 +164,6 @@ DECLARE @Message NVARCHAR(100);
 EXEC AddWarehouse
     @WarehouseName = N'Thêm Kho Test 5 ',
 	@AddressID = 1,
-    @ModifiedBy = 'Vinh',
     @Message = @Message OUTPUT;
 -- Hiển thị giá trị của thông báo
 SELECT @Message AS Message;
@@ -139,7 +173,6 @@ CREATE PROCEDURE UpdateWarehouse
     @WarehouseID INT,
     @WarehouseName NVARCHAR(30),
 	@AddressID INT,
-    @ModifiedBy VARCHAR(25),
     @OutputMessage NVARCHAR(100) OUTPUT
 AS
 BEGIN  
@@ -164,7 +197,7 @@ BEGIN
         SET 
             WarehouseName = @WarehouseName,
             AddressID = @AddressID,
-            ModifiedBy = @ModifiedBy,
+            ModifiedBy = SUSER_NAME(),
             ModifiedTime = GETDATE()
         WHERE WarehouseID = @WarehouseID;
 
@@ -189,7 +222,6 @@ EXEC UpdateWarehouse
     @WarehouseID = 7,
     @WarehouseName = N'Kho D',
 	@AddressID = 2,
-    @ModifiedBy = 'Vinh',
     @OutputMessage = @OutputMessage OUTPUT;
 -- display alert
 SELECT @OutputMessage AS N'Result';
@@ -328,7 +360,6 @@ GO
 CREATE PROCEDURE AddShelves
     @ShelvesName NVARCHAR(30),
     @WarehouseID INT,
-    @ModifiedBy VARCHAR(25),
     @Message NVARCHAR(100) OUTPUT -- Tham số OUTPUT để trả về thông báo
 AS
 BEGIN  
@@ -345,7 +376,7 @@ BEGIN
     BEGIN TRY
         -- Thêm kệ vào bảng Shelve
         INSERT INTO Shelve (ShelvesName, WarehouseID, ModifiedBy, CreateTime)
-        VALUES (@ShelvesName, @WarehouseID, @ModifiedBy, GETDATE());
+        VALUES (@ShelvesName, @WarehouseID, SUSER_NAME(), GETDATE());
 
         -- Commit giao dịch nếu không có lỗi
         COMMIT TRANSACTION;
@@ -368,7 +399,6 @@ DECLARE @ResultMessage NVARCHAR(100);
 EXEC AddShelves 
     @ShelvesName = N'Test kệ',
     @WarehouseID = 2,
-    @ModifiedBy = 'TheVinh',
     @Message = @ResultMessage OUTPUT;
 -- In ra thông báo
 PRINT @ResultMessage;
@@ -381,7 +411,6 @@ CREATE PROCEDURE UpdateShelve
     @ShelvesID INT,
     @ShelvesName NVARCHAR(30),
     @WarehouseID INT,
-    @ModifiedBy VARCHAR(25),
     @OutputMessage NVARCHAR(100) OUTPUT
 AS
 BEGIN
@@ -408,7 +437,7 @@ BEGIN
         SET 
             ShelvesName = @ShelvesName,
             WarehouseID = @WarehouseID,
-            ModifiedBy = @ModifiedBy,
+            ModifiedBy = SUSER_NAME(),
             ModifiedTime = GETDATE()
         WHERE ShelvesID = @ShelvesID;
 
@@ -432,7 +461,6 @@ EXEC UpdateShelve
     @ShelvesID = 1,
     @ShelvesName = N'Kệ A2',
     @WarehouseID = 1,
-    @ModifiedBy = 'TheVinh',
     @OutputMessage = @ResultMessage OUTPUT;
 
 -- In ra thông báo
@@ -523,7 +551,7 @@ BEGIN
     FROM Cells c
     INNER JOIN Product p ON c.product_id = p.product_id
     WHERE 
-        c.ShelvesID = 11 
+        c.ShelvesID = @ShelvesID 
         AND c.DeleteTime IS NULL 
         AND p.DeleteTime IS NULL;
 
@@ -532,7 +560,7 @@ END;
 GO
 
 DECLARE @Message NVARCHAR(100);
-EXEC GetProductByShelveID @ShelvesID = 11, @Message = @Message OUTPUT;
+EXEC GetProductByShelveID @ShelvesID = 4, @Message = @Message OUTPUT;
 PRINT @Message;
 
 GRANT EXEC ON OBJECT::dbo.GetProductByShelveID TO  WarehouseEmployee;
@@ -596,7 +624,6 @@ CREATE PROCEDURE AddCell
     @ShelvesID INT,
     @Quantity INT,
     @product_id INT,
-    @ModifiedBy VARCHAR(25),
     @Message NVARCHAR(100) OUTPUT -- Tham số OUTPUT để trả về thông báo
 AS
 BEGIN
@@ -613,7 +640,7 @@ BEGIN
     BEGIN TRY
         -- Thêm ô vào bảng Cells
         INSERT INTO Cells (CellName, ShelvesID, Quantity, product_id, ModifiedBy, CreateTime)
-        VALUES (@CellName, @ShelvesID, @Quantity, @product_id, @ModifiedBy, GETDATE());
+        VALUES (@CellName, @ShelvesID, @Quantity, @product_id, SUSER_NAME(), GETDATE());
 
         -- Commit giao dịch nếu không có lỗi
         COMMIT TRANSACTION;
@@ -636,7 +663,6 @@ EXEC AddCell
     @ShelvesID = 11, 
     @Quantity = 20, 
     @product_id = 4,
-    @ModifiedBy = 'Vinh', 
     @Message = @Message OUTPUT;
 PRINT @Message;
 
@@ -654,7 +680,6 @@ CREATE PROCEDURE UpdateCell
     @ShelvesID INT,
     @Quantity INT,
     @product_id INT,
-    @ModifiedBy VARCHAR(25),
     @OutputMessage NVARCHAR(100) OUTPUT
 AS
 BEGIN
@@ -681,7 +706,7 @@ BEGIN
             ShelvesID = @ShelvesID,
             Quantity = @Quantity,
             product_id = @product_id,
-            ModifiedBy = @ModifiedBy,
+            ModifiedBy = SUSER_NAME(),
             ModifiedTime = GETDATE()
         WHERE CellID = @CellID;
         COMMIT TRANSACTION;
@@ -703,7 +728,6 @@ EXEC UpdateCell
     @ShelvesID = 3,
     @Quantity = 60,
     @product_id = 4,
-    @ModifiedBy = 'Vinh Sua',
     @OutputMessage = @OutputMessage OUTPUT;
 PRINT @OutputMessage;
 
@@ -786,3 +810,292 @@ BEGIN
     END
 END;
 GO
+--===========================================================================================
+--================================== Quản Lý Nhập Kho =======================================
+--===========================================================================================
+
+--===============Thêm Phiếu Nhập========================
+-- Bảng tạm để truyền danh sách chi tiết nhập kho
+CREATE TYPE dbo.ReceiptDetailType AS TABLE (
+    ProductID INT,
+    Quantity INT,
+    CellID INT,
+	PurchaseOrderID INT
+);
+GO
+go
+CREATE PROCEDURE sp_InsertWarehouseReceipt
+    @WarehouseID INT,
+    @ReceiptDetails dbo.ReceiptDetailType READONLY
+AS
+BEGIN
+    BEGIN TRANSACTION;
+
+    BEGIN TRY
+        -- Step 1: Add WarehouseReceipt
+        DECLARE @WarehouseReceiptID INT;
+
+		DECLARE @EmployeeID INT;
+
+		SELECT @EmployeeID = UF.Employ_ID 
+		FROM UserInfo UF 
+		WHERE UF.AccountName = SUSER_NAME();
+
+        INSERT INTO WarehouseReceipt (EmployeeID, CreateAt, WarehouseID)
+        VALUES (@EmployeeID, GETDATE(), @WarehouseID);
+
+        -- Get ID WarehouseReceipt
+        SET @WarehouseReceiptID = SCOPE_IDENTITY();
+		print @WarehouseReceiptID
+
+        -- Step 2: Add WarehouseReceiptDetail
+        INSERT INTO WarehouseReceiptDetail (WarehouseReceiptID, CellID, product_id, quantity, PurchaseOrderID, UpdateTime, UpdateBy)
+        SELECT @WarehouseReceiptID, CellID, ProductID, Quantity, PurchaseOrderID, GETDATE(), @EmployeeID
+        FROM @ReceiptDetails;
+
+        -- Step 3: Update QuantityDelivered of PurchaseOrderDetail
+        UPDATE POD 
+		SET POD.QuantityDelivered = POD.QuantityDelivered + RD.Quantity 
+		FROM PurchaseOrderDetail POD 
+		INNER JOIN PriceHistory PH ON POD.priceHistoryId = PH.priceHistoryId
+		INNER JOIN @ReceiptDetails RD ON PH.product_id = RD.ProductID
+		AND POD.PurchaseOrderID = RD.PurchaseOrderID
+		WHERE POD.QuantityDelivered + RD.Quantity <= POD.quantity;
+
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        ROLLBACK TRANSACTION;
+        THROW;
+    END CATCH;
+END;
+GO
+
+--Phân quyền
+GRANT EXECUTE ON TYPE::dbo.ReceiptDetailType TO WarehouseEmployee;
+GRANT EXEC ON OBJECT::dbo.sp_InsertWarehouseReceipt TO  WarehouseEmployee;
+
+--===============Thực thi
+DECLARE @ReceiptDetails dbo.ReceiptDetailType;
+INSERT INTO @ReceiptDetails (ProductID, Quantity, CellID, PurchaseOrderID)
+VALUES
+	(3, 1, 10, 1),
+    (5, 2, 11, 1),
+    (4, 5, 12, 1);
+SELECT * FROM @ReceiptDetails
+DECLARE @WarehouseID INT = 2;
+EXEC sp_InsertWarehouseReceipt 
+    @WarehouseID = @WarehouseID,
+    @ReceiptDetails = @ReceiptDetails;
+go
+--===============Xóa Phiếu Nhập========================
+CREATE PROCEDURE sp_DeleteWarehouseReceipt
+    @WarehouseReceiptID INT,
+    @Message NVARCHAR(100) OUTPUT
+AS
+BEGIN
+    BEGIN TRANSACTION;
+
+    BEGIN TRY
+        -- Kiểm tra xem WarehouseReceiptID có tồn tại không
+        IF NOT EXISTS (SELECT 1 FROM WarehouseReceipt WHERE WarehouseReceiptID = @WarehouseReceiptID)
+        BEGIN
+            SET @Message = N'Phiếu nhập kho không tồn tại';
+            ROLLBACK TRANSACTION;
+            RETURN;
+        END
+
+        -- Step 1: Xóa chi tiết nhập kho
+        DELETE FROM WarehouseReceiptDetail
+        WHERE WarehouseReceiptID = @WarehouseReceiptID;
+
+        -- Step 2: Xóa phiếu nhập kho
+        DELETE FROM WarehouseReceipt
+        WHERE WarehouseReceiptID = @WarehouseReceiptID;
+
+        SET @Message = N'Xóa thành công';
+
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        ROLLBACK TRANSACTION;
+        SET @Message = N'Xóa không thành công: ' + ERROR_MESSAGE();
+    END CATCH;
+END;
+GO
+
+-- Gán quyền 
+GRANT EXEC ON OBJECT::dbo.sp_DeleteWarehouseReceipt TO  WarehouseEmployee;
+
+-- Thực thi
+DECLARE @ResultMessage NVARCHAR(100);
+EXEC sp_DeleteWarehouseReceipt 
+    @WarehouseReceiptID = 12,
+    @Message = @ResultMessage OUTPUT;
+
+SELECT @ResultMessage AS ResultMessage;
+
+go
+--===============Xem Thông Tin Phiếu Nhập========================
+CREATE PROCEDURE sp_GetWarehouseReceiptInfo
+    @WarehouseReceiptID INT
+AS
+BEGIN
+    -- Trả về thông tin phiếu nhập kho
+    SELECT 
+        WR.WarehouseReceiptID,
+        WR.EmployeeID,
+        WR.CreateAt,
+        WR.WarehouseID
+    FROM 
+        WarehouseReceipt WR
+    WHERE 
+        WR.WarehouseReceiptID = @WarehouseReceiptID;
+
+    -- Trả về chi tiết phiếu nhập kho
+    SELECT 
+        WRD.WarehouseReceiptID,
+        WRD.CellID,
+        WRD.product_id,
+        WRD.quantity,
+        WRD.PurchaseOrderID,
+        WRD.UpdateTime,
+        WRD.UpdateBy
+    FROM 
+        WarehouseReceiptDetail WRD
+    WHERE 
+        WRD.WarehouseReceiptID = @WarehouseReceiptID;
+END;
+GO
+
+
+-- Gán quyền 
+GRANT EXEC ON OBJECT::dbo.sp_GetWarehouseReceiptInfo TO  WarehouseEmployee;
+
+-- Thực thi
+EXEC sp_GetWarehouseReceiptInfo @WarehouseReceiptID = 8;
+go
+--===============Xem Thông Tin Phiếu Nhập Theo Kho========================
+
+CREATE PROCEDURE sp_GetWarehouseReceiptsByWarehouse
+    @WarehouseID INT
+AS
+BEGIN
+    -- Trả về thông tin các phiếu nhập theo kho cùng tên nhân viên và tên kho
+    SELECT 
+        WR.WarehouseReceiptID,
+        E.EmployeeID,
+        WR.CreateAt,
+        W.WarehouseName
+    FROM 
+        WarehouseReceipt WR
+    JOIN 
+        Employee E ON WR.EmployeeID = E.EmployeeID
+    JOIN 
+        Warehouse W ON WR.WarehouseID = W.WarehouseID
+    WHERE 
+        WR.WarehouseID = @WarehouseID;
+END;
+GO
+
+-- Gán quyền 
+GRANT EXEC ON OBJECT::dbo.sp_GetWarehouseReceiptsByWarehouse TO  WarehouseEmployee;
+
+-- Thực thi
+EXEC sp_GetWarehouseReceiptsByWarehouse @WarehouseID = 2;
+
+
+
+--====================== XUẤT KHO =======================================
+
+--============cÒN LỖI CHƯA SỬA===========================================
+-- Bảng tạm để truyền danh sách chi tiết xuất kho theo đơn hàng
+CREATE TYPE dbo.DeliveryOrderDetailType AS TABLE (
+    OrderID INT,
+    ProductID INT,
+    Quantity INT,
+    CellID INT
+);
+GO
+
+CREATE PROCEDURE sp_ExportWarehouseGoodsByOrder
+    @WarehouseID INT,
+    @OrderDetails dbo.DeliveryOrderDetailType READONLY
+AS
+BEGIN
+    BEGIN TRANSACTION;
+
+    BEGIN TRY
+        -- Step 1: Add DeliveryNote
+        DECLARE @DeliveryNoteID INT;
+
+        DECLARE @EmployeeID INT;
+
+        SELECT @EmployeeID = UF.Employ_ID 
+        FROM UserInfo UF 
+        WHERE UF.AccountName = SUSER_NAME();
+
+        -- Lấy OrderID từ @OrderDetails
+        DECLARE @OrderID INT;
+        SELECT TOP 1 @OrderID = OrderID FROM @OrderDetails;
+
+        INSERT INTO DeliveryNote (CreateBy, CreateAt, OrderId, WarehouseId, Note)
+        VALUES (@EmployeeID, GETDATE(), @OrderID, @WarehouseID, 'Export goods by order');
+
+        -- Get ID of the newly created DeliveryNote
+        SET @DeliveryNoteID = SCOPE_IDENTITY();
+        PRINT @DeliveryNoteID;
+
+        -- Step 2: Add DeliveryNoteDetail based on OrderDetails
+        INSERT INTO DeliveryNoteDetail (DeliveryNote, product_id, CellID, quantity)
+        SELECT 
+            @DeliveryNoteID, 
+            OD.ProductID, 
+            OD.CellID, 
+            OD.Quantity
+        FROM 
+            @OrderDetails OD;
+
+        -- Step 3: Update Quantity in Cells and ensure quantity does not go below 0
+        UPDATE C
+        SET C.Quantity = C.Quantity - OD.Quantity
+        FROM Cell C
+        INNER JOIN @OrderDetails OD ON C.CellID = OD.CellID AND C.ProductID = OD.ProductID
+        WHERE C.Quantity >= OD.Quantity;
+
+        -- Check for any rows where quantity would go below 0
+        IF EXISTS (SELECT 1 FROM Cell C INNER JOIN @OrderDetails OD ON C.CellID = OD.CellID AND C.ProductID = OD.ProductID WHERE C.Quantity - OD.Quantity < 0)
+        BEGIN
+            ROLLBACK TRANSACTION;
+            RAISERROR ('Quantity cannot go below 0.', 16, 1);
+            RETURN;
+        END
+
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        ROLLBACK TRANSACTION;
+        THROW;
+    END CATCH;
+END;
+GO
+
+-- Phân quyền
+GRANT EXECUTE ON TYPE::dbo.DeliveryOrderDetailType TO WarehouseEmployee;
+GRANT EXEC ON OBJECT::dbo.sp_ExportWarehouseGoodsByOrder TO WarehouseEmployee;
+
+--=============== Thực thi
+DECLARE @OrderDetails dbo.DeliveryOrderDetailType;
+INSERT INTO @OrderDetails (OrderID, ProductID, Quantity, CellID)
+VALUES
+    (1, 3, 1, 10),
+    (1, 5, 2, 11),
+    (1, 4, 5, 12);
+SELECT * FROM @OrderDetails;
+
+DECLARE @WarehouseID INT = 2;
+EXEC sp_ExportWarehouseGoodsByOrder 
+    @WarehouseID = @WarehouseID,
+    @OrderDetails = @OrderDetails;
+GO
+--====================================================================================
