@@ -127,5 +127,44 @@ namespace BLL
                 };
             }
         }
+ 
+        public BaseResponseModel GetAccontName()
+        {
+            try
+            {
+                string accountName = string.Empty;
+                using (var conn = new SqlConnection(ConnectionStringHelper.Get()))
+                {
+                    using (SqlCommand cmd = new SqlCommand("GetUserAccountName", conn))
+                    {
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+                        conn.Open();
+
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                accountName = reader["AccountName"].ToString() ?? string.Empty;
+                            }
+                        }
+                    }
+                }
+                return new BaseResponseModel
+                {
+                    Data = accountName,
+                    IsSuccess = true,
+                    Message = "Lấy Thành Công!"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponseModel()
+                {
+                    IsSuccess = false,
+                    Message = $"Lỗi trong quá trình lấy Thông Tin Khách Hàng: {ex}"
+                };
+            }
+        }
     }
 }

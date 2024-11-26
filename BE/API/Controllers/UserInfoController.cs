@@ -17,6 +17,18 @@ namespace API.Controllers
             _userInfo = userInfo;
         }
 
+        [HttpGet("GET Account Name")]
+        public IActionResult GetAccountName()
+        {
+            BaseResponseModel result = this._userInfo.GetAccontName();
+
+            if (result.IsSuccess)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
         [HttpGet]
         [Authorize(Roles = "Customer")]
         public IActionResult Get()

@@ -1321,6 +1321,16 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "API.Controllers.UserInfoController",
+    "Method": "GetAccountName",
+    "RelativePath": "api/UserInfo/GET Account Name",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "API.Controllers.WarehouseController",
     "Method": "Delete",
     "RelativePath": "api/Warehouse/DeleteWareHouse/{warehouseId}",

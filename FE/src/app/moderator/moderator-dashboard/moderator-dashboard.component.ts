@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 // import { NavigationEnd, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Router, RouterOutlet } from '@angular/router';
+import { ModeratorService } from '../moderator.service';
+import { BaseResponseModel } from '../../shared/module/base-response/base-response.module';
 
 @Component({
   selector: 'app-moderator-dashboard',
@@ -12,14 +14,22 @@ import { Router, RouterOutlet } from '@angular/router';
 })
 export class ModeratorDashboardComponent {
   dashboardItem: number = 1;
+  accountName: string = '';
 
   ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
     this.navigateToProduct();
+    this.getAccountName();
   }
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private moderatorService: ModeratorService) { }
+
+  async getAccountName() {
+    const result: BaseResponseModel = await this.moderatorService.getAccountName();
+
+    if(result.isSuccess) {
+      this.accountName = result.data;
+    }
+  }
 
   changeDashboardItem(item: number) {
     this.dashboardItem = item;

@@ -7,5 +7,6 @@ namespace BLL.Interface
     {
         public BaseResponseModel Get();
         public BaseResponseModel Put(UserInfoRequestModel req);
+        public BaseResponseModel GetAccontName();
     }
 }
