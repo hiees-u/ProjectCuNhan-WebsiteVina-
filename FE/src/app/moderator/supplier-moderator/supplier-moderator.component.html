@@ -21,7 +21,7 @@
 
   <div class="content">
     <div class="content-body">
-      <div class="content-mini" *ngFor="let item of Suppliers">
+      <div class="content-mini" *ngFor="let item of Suppliers" (click)="onChangeSelectedSuppler(item)">
         <!-- <i class="fa-solid fa-users-viewfinder"></i> -->
         <i class="fa-solid fa-industry"></i>
         <div>
@@ -60,4 +60,11 @@
      <!-- <app-add-cate (isClose)="handleClose($event)"></app-add-cate> -->
       <app-add-supplier (isClose)="handleClose($event)"></app-add-supplier>
   </div>
+</div>
+<div
+  class="cate-detail"
+  *ngIf="flagDetail"
+  [ngClass]="{ hiden: !isShowDetail && flagDetail, show: isShowDetail }"
+>
+   <app-supplier-detail (isClose)="handleClose($event)" [Supplier]="selectSupplier"></app-supplier-detail>
 </div>

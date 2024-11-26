@@ -98,6 +98,11 @@
   height: calc(100% - 135px);
 }
 
+.address input {
+  width: 600px;
+  text-align: center;
+}
+
 .header-action .del {
   background-color: red;
 }

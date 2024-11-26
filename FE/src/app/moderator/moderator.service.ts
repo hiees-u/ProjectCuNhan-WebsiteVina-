@@ -3,7 +3,7 @@ import {
   BaseResponseModel,
   BaseResponseModule,
 } from '../shared/module/base-response/base-response.module';
-import { InsertProduct, SupplierResponseModerator } from './moderator.module';
+import { CategoryRequesModerator, InsertProduct, SupplierResponseModerator } from './moderator.module';
 
 @Injectable({
   providedIn: 'root',
@@ -21,6 +21,79 @@ export class ModeratorService {
   ngOnInit(): void {
     if (typeof window !== 'undefined') {
       this.token = localStorage.getItem('token') || '';
+    }
+  }
+
+  //delete Category
+  async deleteCategory(id: number): Promise<BaseResponseModel>  {
+    try {
+      const url = `https://localhost:7060/api/Category?cateId=${id}`;
+      const response = await fetch(url, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+      const data: BaseResponseModel = await response.json();
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.log('Lỗi: ', error);
+      return {
+        isSuccess: false,
+        message: 'Lỗi ròi mài ơi',
+      };
+    }
+  }
+
+  //update Category
+  async putCategory(cate: CategoryRequesModerator): Promise<BaseResponseModel>  {
+    try {
+      const url = 'https://localhost:7060/api/Category';
+      const response = await fetch(url, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.token}`,
+        },
+        body: JSON.stringify(cate),
+      });
+      const data: BaseResponseModel = await response.json();
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.log('Lỗi: ', error);
+      return {
+        isSuccess: false,
+        message: 'Lỗi ròi mài ơi',
+      };
+    }
+  }
+
+  //
+  async getStringAddresses(id: number): Promise<BaseResponseModel> {
+    //https://localhost:7060/api/Address/Get string address?idAddress=1
+    const url = `https://localhost:7060/api/Address/Get string address?idAddress=${id}`;
+    const option = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${this.token}`,
+      },
+    };
+
+    try {
+      const response = await fetch(url, option);
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      return await response.json();
+    } catch (error) {
+      console.error('Error:', error);
+      throw error;
     }
   }
 
