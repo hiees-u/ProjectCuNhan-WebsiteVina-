@@ -38,8 +38,7 @@
               "RelativeToolTip": "BLL\\Interface\\IAddress.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAABHAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-26T18:14:26.755Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-26T18:14:26.755Z"
             },
             {
               "$type": "Document",
@@ -49,7 +48,7 @@
               "RelativeDocumentMoniker": "BLL\\AddressBLL.cs",
               "ToolTip": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\AddressBLL.cs",
               "RelativeToolTip": "BLL\\AddressBLL.cs",
-              "ViewState": "AgIAAJMAAAAAAAAAAAAYwKcAAAAIAAAAAAAAAA==",
+              "ViewState": "AgIAAJMAAAAAAAAAAAAYwKUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-26T18:12:20.396Z",
               "EditorCaption": ""
@@ -64,8 +63,7 @@
               "RelativeToolTip": "API\\Controllers\\AddressController.cs",
               "ViewState": "AgIAAAYAAAAAAAAAAAAAADAAAABBAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-26T18:11:43.835Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-26T18:11:43.835Z"
             }
           ]
         }
