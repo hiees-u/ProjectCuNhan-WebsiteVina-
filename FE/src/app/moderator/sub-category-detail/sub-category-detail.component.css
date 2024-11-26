@@ -2,7 +2,8 @@
   max-width: 1400px;
   min-height: 800px;
   background-color: #fff;
-  width: 1400px;
+  width: 1300px;
+  /* width: 1400px; */
   height: 800px;
   position: relative;
   border-radius: 10px;
@@ -100,4 +101,10 @@
 
 .header-action .del {
   background-color: red;
+}
+
+.notification {
+  top: 70px;
+  right: 0;
+  position: fixed;
 }
