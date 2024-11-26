@@ -24,6 +24,29 @@ export class ModeratorService {
     }
   }
 
+  //get account name
+  async getAccountName() : Promise<BaseResponseModel> {
+    const url = `https://localhost:7060/api/UserInfo/GET Account Name`;
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data: BaseResponseModel = await response.json();
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.error('Error:', error);
+      throw error;
+    }
+  }
+
   //post supplier
   async postSupplier(
     supplier: SupplierResponseModerator

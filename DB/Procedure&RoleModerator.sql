@@ -1266,3 +1266,16 @@ GO--GÁN QUYỀN
 GRANT EXECUTE ON OBJECT::SP_DeleteCustomer TO Moderator;
 GO--RUN
 EXEC SP_DeleteCustomer @AccountName = N'hieuThu3'
+go
+--//////////////
+DROP PROC GetUserAccountName
+GO
+CREATE PROCEDURE GetUserAccountName
+AS
+BEGIN
+    SELECT SUSER_NAME() AS AccountName;
+END
+GO--GÁN QUYỀN
+GRANT EXECUTE ON OBJECT::GetUserAccountName TO Moderator;
+GO--RUN
+EXEC GetUserAccountName
