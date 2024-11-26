@@ -12,6 +12,7 @@
 .content {
   /* margin-top: 5px; */
   width: 100%;
+  position: relative;
 }
 
 .content table {
@@ -170,4 +171,19 @@ td span {
   justify-content: center;
   transition: all ease 0.5s;
   align-items: center;
+}
+
+
+.error {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.content {
+  /* margin-top: 5px; */
+  height: 100%;
+  width: 100%;
+  position: relative;
 }
