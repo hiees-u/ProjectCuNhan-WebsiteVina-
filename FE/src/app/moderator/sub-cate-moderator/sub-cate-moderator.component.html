@@ -21,7 +21,11 @@
 
   <div class="content">
     <div class="content-body">
-      <div class="content-mini" *ngFor="let item of subCategorys">
+      <div
+        class="content-mini"
+        *ngFor="let item of subCategorys"
+        (click)="changeSubCateSelect(item)"
+      >
         <!-- <i class="fa-solid fa-users-viewfinder"></i> -->
         <i class="fa-solid fa-tags"></i>
         <div>
@@ -57,7 +61,15 @@
   [ngClass]="{ hiden: !isShowAddSubCate && flag, show: isShowAddSubCate }"
 >
   <div class="content-add-cate">
-     <!-- <app-add-cate (isClose)="handleClose($event)"></app-add-cate> -->
-      <app-add-sub-cate (isClose)="handleClose($event)"></app-add-sub-cate>
+    <!-- <app-add-cate (isClose)="handleClose($event)"></app-add-cate> -->
+    <app-add-sub-cate (isClose)="handleClose($event)"></app-add-sub-cate>
   </div>
+</div>
+<div
+  class="cate-detail"
+  *ngIf="flagDetail"
+  [ngClass]="{ hiden: !isShowDetail && flagDetail, show: isShowDetail }"
+>
+  <!-- <app-category-detail (isClose)="handleClose($event)" [ca]></app-category-detail> -->
+   <app-sub-category-detail (isClose)="handleClose($event)" [subCate]="selectSubCate"></app-sub-category-detail>
 </div>

@@ -118,7 +118,7 @@
 
 .content-body {
   width: calc(100%);
-  height: 250px;
+  min-height: 250px;
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
@@ -224,6 +224,19 @@
 
 
 .add-cate {
+  width: 100%;
+  background: rgba(190, 193, 193, 0.532);
+  height: 100%;
+  position: absolute;
+  top: 0;  
+  left: 100%;
+  display: flex;
+  justify-content: center;
+  transition: all ease .5s;
+  align-items: center;
+}
+
+.cate-detail {
   width: 100%;
   background: rgba(190, 193, 193, 0.532);
   height: 100%;

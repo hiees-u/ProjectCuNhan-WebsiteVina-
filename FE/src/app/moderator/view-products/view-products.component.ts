@@ -11,13 +11,16 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule, CustomCurrencyPipe, FormsModule],
   templateUrl: './view-products.component.html',
-  styleUrl: './view-products.component.css'
+  styleUrl: './view-products.component.css',
 })
 export class ViewProductsComponent {
   constructor(
     private service: ModeratorService,
     private sanitizer: DomSanitizer
   ) {}
+
+  @Input() cateId: number | null = null;
+  @Input() subCateId: number | null = null;
 
   totalPage: number = 1;
   pages: number[] = [];
@@ -28,24 +31,34 @@ export class ViewProductsComponent {
 
   products: ProductModerator[] = [];
 
+  isError: boolean = false;
+
   imageUrls: { [key: number]: SafeUrl } = {};
   defaultImageUrl: string = '/assets/Products/p1.png';
 
   ngOnInit(): void {
-    console.log(this.searchText);
-    
     this.flag = false;
     this.getProduct();
 
     this.products.forEach((item, index) => {
-      this.checkImageExistence(`/assets/Products/${item.image}`, index)
-    })
+      this.checkImageExistence(`/assets/Products/${item.image}`, index);
+    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
     //Add '${implements OnChanges}' to the class.
-    if(changes['searchText']) {
+    if (changes['searchText']) {
+      this.getProduct();
+    }
+    if (changes['cateId']) {
+      console.log('Tới đây rồi: ',this.cateId);
+      
+      this.getProduct();
+    }
+    if(changes['subCateId']) {
+      console.log('Tới đây rồi: ',this.subCateId);
+      
       this.getProduct();
     }
   }
@@ -55,7 +68,7 @@ export class ViewProductsComponent {
       if (response.ok) {
         this.imageUrls[index] = this.sanitizer.bypassSecurityTrustUrl(url);
       } else {
-        this.handleImageErrors(index, this.products[index].image)
+        this.handleImageErrors(index, this.products[index].image);
       }
     });
   }
@@ -77,8 +90,8 @@ export class ViewProductsComponent {
     this.service
       .getProducts(
         null,
-        null,
-        null,
+        this.cateId,
+        this.subCateId,
         null,
         this.searchText,
         this.pageCurrent,
@@ -92,6 +105,8 @@ export class ViewProductsComponent {
         this.pages = Array(this.totalPage)
           .fill(0)
           .map((x, i) => i + 1);
+        console.log(this.products);
+        if (this.products.length <= 0) this.isError = true; else this.isError = false;
       })
       .catch((error) => {
         console.error('Error fetching product', error);
@@ -107,22 +122,14 @@ export class ViewProductsComponent {
     this.getProduct();
   }
 
-  // handleAddProduct() {
-  //   this.isShowAddProduct = true;
-  // }
-
-  // handleClose(is: boolean) {
-  //   this.isShowAddProduct = !is;
-  //   this.flag = true;
-  //   this.getProduct();
-  // }
-
   async handleImageErrors(index: number, fileName: string): Promise<void> {
     const imageUrl = await this.service.getImage(fileName);
     if (imageUrl) {
       this.imageUrls[index] = this.sanitizer.bypassSecurityTrustUrl(imageUrl);
     } else {
-      this.imageUrls[index] = this.sanitizer.bypassSecurityTrustUrl(this.defaultImageUrl);
+      this.imageUrls[index] = this.sanitizer.bypassSecurityTrustUrl(
+        this.defaultImageUrl
+      );
     }
     console.log('Không tìm thấy ảnh??', this.imageUrls[index]);
   }

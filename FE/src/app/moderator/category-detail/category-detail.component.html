@@ -1,0 +1,30 @@
+<div class="container">
+  <button class="close" (click)="sendIsClose()">
+    <i class="fa-solid fa-rectangle-xmark"></i>
+  </button>
+  <div class="header">
+    <span class="header-text no-select">
+      <span></span>
+      Chi Tiết Loại Sản Phẩm {{ cate.categoryName }}</span
+    >
+  </div>
+  <div class="header-action">
+    <div class="inp-box">
+        <label for="categoryName">Tên loại sản phẩm phụ: </label>
+        <input type="text" name="categoryName" id="categoryName" [(ngModel)]="cate.categoryName">
+    </div>
+
+    <div class="action">
+        <button class="update">
+            Cập Nhật
+        </button>
+        <button class="del">
+            Xóa
+        </button>
+    </div>
+  </div>
+
+  <div class="content">
+    <app-view-products [cateId]="cate.categoryId"></app-view-products>
+  </div>
+</div>

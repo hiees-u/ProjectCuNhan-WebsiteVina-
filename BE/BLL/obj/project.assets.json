@@ -3286,24 +3286,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\maith\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\ADMIN\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\HK I nam 4\\Do An Chuyen Nganh\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\BLL.csproj",
+      "projectUniqueName": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\BLL.csproj",
       "projectName": "BLL",
-      "projectPath": "E:\\HK I nam 4\\Do An Chuyen Nganh\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\BLL.csproj",
-      "packagesPath": "C:\\Users\\maith\\.nuget\\packages\\",
-      "outputPath": "E:\\HK I nam 4\\Do An Chuyen Nganh\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\obj\\",
+      "projectPath": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\BLL.csproj",
+      "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\maith\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -3311,18 +3306,18 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "https://api.nuget.org/v3/index.json": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "E:\\HK I nam 4\\Do An Chuyen Nganh\\ProjectCuNhan-WebsiteVina-\\BE\\DLL\\DLL.csproj": {
-              "projectPath": "E:\\HK I nam 4\\Do An Chuyen Nganh\\ProjectCuNhan-WebsiteVina-\\BE\\DLL\\DLL.csproj"
+            "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\DLL\\DLL.csproj": {
+              "projectPath": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\DLL\\DLL.csproj"
             },
-            "E:\\HK I nam 4\\Do An Chuyen Nganh\\ProjectCuNhan-WebsiteVina-\\BE\\DTO\\DTO.csproj": {
-              "projectPath": "E:\\HK I nam 4\\Do An Chuyen Nganh\\ProjectCuNhan-WebsiteVina-\\BE\\DTO\\DTO.csproj"
+            "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\DTO\\DTO.csproj": {
+              "projectPath": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\DTO\\DTO.csproj"
             }
           }
         }
@@ -3335,9 +3330,8 @@
       "restoreAuditProperties": {
         "enableAudit": "true",
         "auditLevel": "low",
-        "auditMode": "all"
-      },
-      "SdkAnalysisLevel": "9.0.100"
+        "auditMode": "direct"
+      }
     },
     "frameworks": {
       "net8.0": {
@@ -3372,7 +3366,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
