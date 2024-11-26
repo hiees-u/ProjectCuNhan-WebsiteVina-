@@ -1018,6 +1018,8 @@ CREATE TYPE dbo.DeliveryOrderDetailType AS TABLE (
 );
 GO
 
+drop proc sp_ExportWarehouseGoodsByOrder
+go
 CREATE PROCEDURE sp_ExportWarehouseGoodsByOrder
     @WarehouseID INT,
     @OrderDetails dbo.DeliveryOrderDetailType READONLY
