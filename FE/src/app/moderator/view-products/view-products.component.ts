@@ -21,6 +21,7 @@ export class ViewProductsComponent {
 
   @Input() cateId: number | null = null;
   @Input() subCateId: number | null = null;
+  @Input() supplierId: number | null = null;
 
   totalPage: number = 1;
   pages: number[] = [];
@@ -61,6 +62,11 @@ export class ViewProductsComponent {
       
       this.getProduct();
     }
+    if(changes['supplierId']) {
+      console.log('Tới đây rồi: ',this.subCateId);
+      
+      this.getProduct();
+    }
   }
 
   checkImageExistence(url: string, index: number) {
@@ -87,12 +93,14 @@ export class ViewProductsComponent {
   // }
 
   getProduct(): void {
+    console.log('cập nhật product');
+    
     this.service
       .getProducts(
         null,
         this.cateId,
         this.subCateId,
-        null,
+        this.supplierId,
         this.searchText,
         this.pageCurrent,
         7,

@@ -8,6 +8,6 @@ namespace BLL.Interface
         public BaseResponseModel GetById(int iD);
         public BaseResponseModel Post(AddressRequestModule req);
         public BaseResponseModel GetAddressID(AddressRequestModule request);
-        public BaseResponseModel GetAddressString();
+        public BaseResponseModel GetAddressString(int? idAddress = null);
     }
 }

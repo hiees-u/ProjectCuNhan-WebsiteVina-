@@ -46,9 +46,9 @@ namespace API.Controllers
 
         [Authorize]
         [HttpGet("Get string address")]
-        public IActionResult GetFullAddress()
+        public IActionResult GetFullAddress(int? idAddress = null)
         {
-            BaseResponseModel req = this.address.GetAddressString();
+            BaseResponseModel req = this.address.GetAddressString(idAddress);
             return req.IsSuccess ? Ok(req) : BadRequest(req);
         }
     }
