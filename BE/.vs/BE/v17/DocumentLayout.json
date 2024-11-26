@@ -92,7 +92,7 @@
               "RelativeDocumentMoniker": "API\\Controllers\\UserInfoController.cs",
               "ToolTip": "C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\BE\\API\\Controllers\\UserInfoController.cs",
               "RelativeToolTip": "API\\Controllers\\UserInfoController.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAABQAAAArAAAAAAAAAA==",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAcwCoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-26T06:59:09.709Z",
               "EditorCaption": ""
@@ -107,8 +107,7 @@
               "RelativeToolTip": "BLL\\Interface\\IUserInfo.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-26T06:59:00.143Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-26T06:59:00.143Z"
             },
             {
               "$type": "Document",
@@ -120,8 +119,7 @@
               "RelativeToolTip": "BLL\\UserInfoBLL.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAgwAgAAAAoAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-26T06:52:17.41Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-26T06:52:17.41Z"
             },
             {
               "$type": "Document",
@@ -181,8 +179,7 @@
               "RelativeToolTip": "API\\Controllers\\SupplierController.cs",
               "ViewState": "AgIAABYAAAAAAAAAAAD4vzUAAAA6AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-23T15:20:21.129Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-23T15:20:21.129Z"
             },
             {
               "$type": "Document",

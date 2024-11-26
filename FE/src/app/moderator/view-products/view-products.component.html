@@ -1,0 +1,78 @@
+<div class="content-pa">
+    <div class="content">
+      <table>
+        <tbody>
+          <tr>
+            <th style="width: 23%">Tên sản phẩm</th>
+            <th style="width: 7%">Ảnh</th>
+            <th style="width: 7%">Tồn kho</th>
+            <th style="width: 10%">Giá</th>
+            <th style="width: 15%">Loại sản phẩm</th>
+            <th style="width: 15%">Loại sản phẩm phụ</th>
+            <th style="width: 10%">Trạng thái</th>
+            <th style="width: 13%">Chức năng</th>
+          </tr>
+          <!-- 0 -->
+          <tr *ngFor="let item of products; let i = index">
+            <td class="td-name">{{ item.productName }}</td>
+            <td class="td-centered">
+              <img
+                [src]="imageUrls[i] || '/assets/Products/' + item?.image"
+                [alt]="item.productName"
+                (error)="handleImageErrors(i, item!.image)"
+              />
+            </td>
+            <td class="td-total-quantity text-center">
+              {{ item.totalQuantity }}
+            </td>
+            <td class="text-center min-text">
+              {{ item?.price ?? 0 | customCurrency }}
+            </td>
+            <td class="text-center min-text">{{ item.categoryName }}</td>
+            <td class="text-center min-text">{{ item.subCategoryName }}</td>
+            <td class="text-center min-text">
+              <span *ngIf="item.totalQuantity > 5; else lowStock">
+                <span class="bg-green">Còn hàng</span>
+              </span>
+              <ng-template #lowStock>
+                <span *ngIf="item.totalQuantity > 0; else outOfStock">
+                  <span class="bg-orange">Sắp hết hàng</span>
+                </span>
+              </ng-template>
+              <ng-template #outOfStock>
+                <span class="bg-red">Hết hàng</span>
+              </ng-template>
+            </td>
+            <td class="td-operation">
+              <button class="btn-del">
+                <i class="fa-regular fa-trash-can"></i>
+              </button>
+              <button class="btn-modi">
+                <i class="fa-regular fa-pen-to-square"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="f-content">
+      <span>Trang {{ pageCurrent }} / {{ totalPage }}</span>
+
+      <div class="f-content page">
+        <button
+          [ngClass]="{ 'no-active': pageCurrent === 1 }"
+          (click)="handlePageClick(-1)"
+        >
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <button class="btn-page">{{ pageCurrent }}</button>
+        <button
+          [ngClass]="{ 'no-active': pageCurrent === totalPage }"
+          (click)="handlePageClick(1)"
+        >
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+  </div>
