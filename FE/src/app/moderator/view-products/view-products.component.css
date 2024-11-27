@@ -8,6 +8,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  position: relative;
 }
 
 .content {
@@ -174,7 +175,6 @@ td span {
   align-items: center;
 }
 
-
 .error {
   position: absolute;
   top: 50%;
@@ -187,4 +187,109 @@ td span {
   height: 100%;
   width: 100%;
   position: relative;
+}
+
+/* //////////////// */
+
+.content-add-cate {
+  width: 50%;
+  min-width: 550px;
+  height: 35%;
+  min-height: 300px;
+}
+
+/* /////////// */
+.delete-product {
+  height: fit-content;
+  min-height: 150px;
+  width: fit-content;
+  padding: 10px 20px;
+  background-color: #e3bb4f;
+  color: var(--secon-text-color);
+  transition: all 0.5s ease-in-out;
+  position: absolute;
+  top: 50%;
+  left: -500%;
+  transform: translateY(-50%) scale(0.9);
+  opacity: 0;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  font-family: var(--main-style);
+}
+
+.delete-product p {
+  /* padding: 10px; */
+  color: #fff;
+  font-size: 1.5em;
+}
+
+.delete-product button {
+  padding: 10px;
+  font-size: 1.1em;
+  border: none;
+  outline: none;
+  font-family: initial;
+  margin: 0 10px;
+  padding: 10px 30px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.show-delete {
+  animation: showDelete 0.5s ease-in-out forwards;
+}
+
+@keyframes showDelete {
+  0% {
+    left: -10%;
+    opacity: 0;
+    transform: translateY(-50%) scale(0.9);
+  }
+  100% {
+    left: 50%;
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.hide-delete {
+  animation: hideDelete 0.5s ease-in-out forwards;
+}
+
+@keyframes hideDelete {
+  0% {
+    left: 50%;
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    left: -500%;
+    opacity: 0;
+    transform: translateY(-50%) scale(0.9);
+  }
+}
+
+.notification {
+  top: 40px;
+  right: 0;
+  position: fixed;
+}
+
+/* //////////////// */
+.detail-product {
+  height: fit-content;
+  width: fit-content;
+  padding: 10px;
+  background-color: #e3bb4f;
+  color: var(--secon-text-color);
+  transition: all 0.5s ease-in-out;
+  position: absolute;
+  top: 50%;
+  /* left: -10%; */
+  left: -500%;
+  transform: translateY(-50%) scale(0.9);
+  opacity: 0;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  font-family: var(--main-style);
 }

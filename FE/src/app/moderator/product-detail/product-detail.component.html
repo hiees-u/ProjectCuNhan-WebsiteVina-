@@ -1,0 +1,112 @@
+<div class="container">
+  <button class="close" (click)="sendIsClose()">
+    <i class="fa-solid fa-rectangle-xmark"></i>
+  </button>
+  <div class="header">
+    <span class="header-text no-select">
+      <span></span>
+      Chi Tiết Sản Phẩm:
+      <p class="text-main">{{ productName }}</p></span
+    >
+  </div>
+  <div class="content">
+    <div class="inp-form">
+      <label for="name-product">Tên sản phẩm: </label>
+      <input
+        type="text"
+        [(ngModel)]="product.productName"
+        id="name-product"
+        placeholder="Tên sản phẩm..."
+      />
+    </div>
+    <div class="inp-form">
+      <label for="loai-product">Loại sản phẩm: </label>
+      <select
+        id="loai-product"
+        [(ngModel)]="product.categoryId"
+        name="cate"
+        required
+      >
+        <option *ngFor="let item of categorys" [value]="item.categoryId">
+          {{ item.categoryName }}
+        </option>
+      </select>
+    </div>
+    <div class="inp-form">
+      <label for="loai-product">Loại sản phẩm phụ: </label>
+      <select
+        id="loai-product"
+        [(ngModel)]="product.subCategoryId"
+        name="cate"
+        required
+      >
+        <option *ngFor="let item of subCategorys" [value]="item.subCategoryId">
+          {{ item.subCategoryName }}
+        </option>
+      </select>
+    </div>
+    <div class="inp-form">
+      <label for="loai-product">Nhà sản xuất: </label>
+      <select
+        id="loai-product"
+        [(ngModel)]="product.supplier"
+        name="cate"
+        required
+      >
+        <option *ngFor="let item of supplier" [value]="item.supplierId">
+          {{ item.supplierName }}
+        </option>
+      </select>
+    </div>
+    <div class="inp-form">
+      <label for="des">Mô tả: </label>
+      <textarea
+        type="text"
+        [(ngModel)]="product.description"
+        id="des"
+        placeholder="Mô tả..."
+      ></textarea>
+    </div>
+
+    <div class="inp-img">
+      <img [src]="'/assets/Products/' + imgName" alt="" />
+      <input
+        type="file"
+        (change)="onProductImageChange($event)"
+        id="img-product"
+        placeholder="Ảnh sản phẩm..."
+      />
+    </div>
+
+    <div class="inp-form">
+      <label for="price">Giá: </label>
+      <input
+        type="text"
+        [(ngModel)]="formattedPrice"
+        id="price"
+        placeholder="Giá..."
+      />
+    </div>
+
+    <div class="inp-form">
+      <label for="date">Ngày hết hạn</label>
+      <input
+        type="date"
+        [(ngModel)]="formattedExpiryDate"
+        id="date"
+        placeholder="Ngày hết hạn..."
+      />
+    </div>
+  </div>
+
+  <div class="action-form">
+    <button class="upd" (click)="onUpdate()">Cập Nhật</button>
+  </div>
+  
+</div>
+<div  class="notification" >
+  <app-notification
+    [data]="dataNotification"
+    [trigger]="trigger"
+  ></app-notification>
+</div>

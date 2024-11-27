@@ -35,7 +35,7 @@
 }
 
 .hiden {
-    left: 100%;
+  left: 100%;
 }
 
 @keyframes slideInNotifi {
@@ -48,13 +48,13 @@
 }
 
 @keyframes slideOutNotifi {
-    from {
-      left: 0;
-    }
-    to {
-      left: 100%;
-    }
+  from {
+    left: 0;
   }
+  to {
+    left: 100%;
+  }
+}
 
 .message h2,
 .message p {
@@ -65,5 +65,5 @@
   animation: slideInNotifi 0.5s forwards; /* Thực hiện animation khi có class `show` */
 }
 .message.hiden {
-    animation: slideOutNotifi 0.5s forwards; /* Thực hiện animation khi có class `show` */
-  }
+  animation: slideOutNotifi 0.5s forwards; /* Thực hiện animation khi có class `show` */
+}

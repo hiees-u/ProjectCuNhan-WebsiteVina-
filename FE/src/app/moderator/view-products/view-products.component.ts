@@ -1,15 +1,30 @@
 import { Component, Input, SimpleChanges } from '@angular/core';
-import { ProductModerator } from '../moderator.module';
+import {
+  ContructorProductModerator,
+  ProductModerator,
+} from '../moderator.module';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ModeratorService } from '../moderator.service';
 import { CustomCurrencyPipe } from '../../shared/module/customCurrency';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import {
+  ConstructerNotification,
+  Notification,
+} from '../../shared/module/notification/notification.module';
+import { NotificationComponent } from '../../shared/item/notification/notification.component';
+import { ProductDetailComponent } from "../product-detail/product-detail.component";
 
 @Component({
   selector: 'app-view-products',
   standalone: true,
-  imports: [CommonModule, CustomCurrencyPipe, FormsModule],
+  imports: [
+    CommonModule,
+    CustomCurrencyPipe,
+    FormsModule,
+    NotificationComponent,
+    ProductDetailComponent
+],
   templateUrl: './view-products.component.html',
   styleUrl: './view-products.component.css',
 })
@@ -18,6 +33,8 @@ export class ViewProductsComponent {
     private service: ModeratorService,
     private sanitizer: DomSanitizer
   ) {}
+
+  @Input() key: number = 0;
 
   @Input() cateId: number | null = null;
   @Input() subCateId: number | null = null;
@@ -37,8 +54,22 @@ export class ViewProductsComponent {
   imageUrls: { [key: number]: SafeUrl } = {};
   defaultImageUrl: string = '/assets/Products/p1.png';
 
+  flagDetail: boolean = false;
+  isShowDetail: boolean = false;
+
+  isShowDelete: boolean = false;
+  flagDelete: boolean = false;
+
+  selectProduct: ProductModerator = ContructorProductModerator();
+
+  //-------------
+  trigger: any;
+  dataNotification: Notification = ConstructerNotification();
+
   ngOnInit(): void {
     this.flag = false;
+    this.flagDelete = false;
+    this.flagDetail = false;
     this.getProduct();
 
     this.products.forEach((item, index) => {
@@ -53,18 +84,21 @@ export class ViewProductsComponent {
       this.getProduct();
     }
     if (changes['cateId']) {
-      console.log('Tới đây rồi: ',this.cateId);
-      
+      console.log('Tới đây rồi: ', this.cateId);
+
       this.getProduct();
     }
-    if(changes['subCateId']) {
-      console.log('Tới đây rồi: ',this.subCateId);
-      
+    if (changes['subCateId']) {
+      console.log('Tới đây rồi: ', this.subCateId);
+
       this.getProduct();
     }
-    if(changes['supplierId']) {
-      console.log('Tới đây rồi: ',this.subCateId);
-      
+    if (changes['supplierId']) {
+      console.log('Tới đây rồi: ', this.subCateId);
+
+      this.getProduct();
+    }
+    if (changes['key']) {
       this.getProduct();
     }
   }
@@ -88,13 +122,9 @@ export class ViewProductsComponent {
     this.searchText = (event.target as HTMLInputElement).value;
   }
 
-  // onSearch() {
-  //   this.getProduct();
-  // }
-
   getProduct(): void {
     console.log('cập nhật product');
-    
+
     this.service
       .getProducts(
         null,
@@ -114,7 +144,8 @@ export class ViewProductsComponent {
           .fill(0)
           .map((x, i) => i + 1);
         console.log(this.products);
-        if (this.products.length <= 0) this.isError = true; else this.isError = false;
+        if (this.products.length <= 0) this.isError = true;
+        else this.isError = false;
       })
       .catch((error) => {
         console.error('Error fetching product', error);
@@ -140,5 +171,59 @@ export class ViewProductsComponent {
       );
     }
     console.log('Không tìm thấy ảnh??', this.imageUrls[index]);
+  }
+
+  handleClose(is: boolean) {
+    console.log('THOÁT THÊM');
+    this.isShowDetail = !is;
+    this.getProduct();
+    this.flag = true;
+  }
+
+  onShowDelete(product: ProductModerator) {
+    this.selectProduct = product;
+    this.isShowDelete = true;
+    this.flagDelete = true;
+    console.log(this.selectProduct);
+  }
+
+  async deleteProduct() {
+    try {
+      const result = await this.service.deleteProduct(
+        this.selectProduct.productId
+      );
+      if (result.isSuccess) {
+        this.getProduct();
+        this.dataNotification.status = 'success';
+      } else {
+        this.dataNotification.status = 'error';
+      }
+      this.dataNotification.messages = result.message!;
+      this.trigger = Date.now();
+    } catch (error) {
+      console.log(error);
+    }
+    setTimeout(() => {
+      this.onHidenDelete();
+    }, 500);
+  }
+
+  onHidenDelete() {
+    this.isShowDelete = !this.isShowDelete;
+    setTimeout(() => {
+      this.selectProduct = ContructorProductModerator();
+    }, 400);
+  }
+
+  onShowDetail(product: ProductModerator) {
+    this.selectProduct = product;
+    this.isShowDetail = true;
+    this.flagDetail = true;
+    console.log(this.selectProduct);
+  }
+
+  sendCloseDetail(is: boolean) {
+    this.isShowDetail = false;
+    this.selectProduct = ContructorProductModerator();
   }
 }
