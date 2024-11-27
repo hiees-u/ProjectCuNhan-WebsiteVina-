@@ -1008,20 +1008,23 @@ EXEC sp_GetWarehouseReceiptsByWarehouse @WarehouseID = 2;
 
 --====================== XUẤT KHO =======================================
 
---============cÒN LỖI CHƯA SỬA===========================================
--- Bảng tạm để truyền danh sách chi tiết xuất kho theo đơn hàng
+--============CÒN LỖI CHƯA SỬA===========================================
+DROP TYPE dbo.DeliveryOrderDetailType;
+
 CREATE TYPE dbo.DeliveryOrderDetailType AS TABLE (
     OrderID INT,
-    ProductID INT,
+    priceHistoryId INT,
     Quantity INT,
     CellID INT
 );
 GO
 
-drop proc sp_ExportWarehouseGoodsByOrder
-go
+DROP PROCEDURE IF EXISTS sp_ExportWarehouseGoodsByOrder;
+GO
+
 CREATE PROCEDURE sp_ExportWarehouseGoodsByOrder
     @WarehouseID INT,
+	@Note NVARCHAR(50),
     @OrderDetails dbo.DeliveryOrderDetailType READONLY
 AS
 BEGIN
@@ -1030,7 +1033,6 @@ BEGIN
     BEGIN TRY
         -- Step 1: Add DeliveryNote
         DECLARE @DeliveryNoteID INT;
-
         DECLARE @EmployeeID INT;
 
         SELECT @EmployeeID = UF.Employ_ID 
@@ -1041,32 +1043,39 @@ BEGIN
         DECLARE @OrderID INT;
         SELECT TOP 1 @OrderID = OrderID FROM @OrderDetails;
 
-        INSERT INTO DeliveryNote (CreateBy, CreateAt, OrderId, WarehouseId, Note)
-        VALUES (@EmployeeID, GETDATE(), @OrderID, @WarehouseID, 'Export goods by order');
+        INSERT INTO DeliveryNote (CreateAt, CreateBy, OrderId, WarehouseId, Note)
+        VALUES (GETDATE(), @EmployeeID, @OrderID, @WarehouseID, @Note);
 
         -- Get ID of the newly created DeliveryNote
         SET @DeliveryNoteID = SCOPE_IDENTITY();
-        PRINT @DeliveryNoteID;
 
         -- Step 2: Add DeliveryNoteDetail based on OrderDetails
         INSERT INTO DeliveryNoteDetail (DeliveryNote, product_id, CellID, quantity)
         SELECT 
             @DeliveryNoteID, 
-            OD.ProductID, 
+            PH.product_id, 
             OD.CellID, 
             OD.Quantity
         FROM 
-            @OrderDetails OD;
+            @OrderDetails OD
+        JOIN 
+            PriceHistory PH ON OD.priceHistoryId = PH.priceHistoryId;
 
         -- Step 3: Update Quantity in Cells and ensure quantity does not go below 0
         UPDATE C
         SET C.Quantity = C.Quantity - OD.Quantity
-        FROM Cell C
-        INNER JOIN @OrderDetails OD ON C.CellID = OD.CellID AND C.ProductID = OD.ProductID
+        FROM Cells C
+        INNER JOIN @OrderDetails OD ON C.CellID = OD.CellID
+        INNER JOIN PriceHistory PH ON OD.priceHistoryId = PH.priceHistoryId AND C.product_id = PH.product_id
         WHERE C.Quantity >= OD.Quantity;
 
         -- Check for any rows where quantity would go below 0
-        IF EXISTS (SELECT 1 FROM Cell C INNER JOIN @OrderDetails OD ON C.CellID = OD.CellID AND C.ProductID = OD.ProductID WHERE C.Quantity - OD.Quantity < 0)
+        IF EXISTS (SELECT 1 FROM Cells C 
+                   INNER JOIN @OrderDetails OD 
+                   ON C.CellID = OD.CellID 
+                   INNER JOIN PriceHistory PH 
+                   ON OD.priceHistoryId = PH.priceHistoryId AND C.product_id = PH.product_id
+                   WHERE C.Quantity - OD.Quantity < 0)
         BEGIN
             ROLLBACK TRANSACTION;
             RAISERROR ('Quantity cannot go below 0.', 16, 1);
@@ -1081,23 +1090,58 @@ BEGIN
     END CATCH;
 END;
 GO
-
--- Phân quyền
+--=============================================================
 GRANT EXECUTE ON TYPE::dbo.DeliveryOrderDetailType TO WarehouseEmployee;
 GRANT EXEC ON OBJECT::dbo.sp_ExportWarehouseGoodsByOrder TO WarehouseEmployee;
 
---=============== Thực thi
+--===================THUC THI========================================
+-- Tạo bảng tạm @OrderDetails và thêm dữ liệu vào
 DECLARE @OrderDetails dbo.DeliveryOrderDetailType;
-INSERT INTO @OrderDetails (OrderID, ProductID, Quantity, CellID)
-VALUES
-    (1, 3, 1, 10),
-    (1, 5, 2, 11),
-    (1, 4, 5, 12);
-SELECT * FROM @OrderDetails;
 
-DECLARE @WarehouseID INT = 2;
-EXEC sp_ExportWarehouseGoodsByOrder 
-    @WarehouseID = @WarehouseID,
+-- Thêm dữ liệu vào bảng tạm
+INSERT INTO @OrderDetails (OrderID, priceHistoryId, Quantity, CellID)
+VALUES
+    (24, 1, 1, 10),
+    (24, 2, 2, 11),
+    (24, 3, 2, 12);
+
+-- Thực thi thủ tục lưu trữ
+EXEC sp_ExportWarehouseGoodsByOrder
+    @WarehouseID = 2,
+    @Note = N'Xuất hàng theo đơn hàng',
     @OrderDetails = @OrderDetails;
-GO
 --====================================================================================
+select * from [Order]
+select * from OrderDetail
+
+select * from Warehouse
+
+select * from DeliveryNote
+select * from DeliveryNoteDetail
+
+select * from PriceHistory
+select * from Cells
+select * from Product
+select * from PurchaseOrder
+select * from PurchaseOrderDetail
+select * from
+GO
+
+UPDATE Cells
+SET product_id = 1 WHERE CellID = 10
+
+-- Lệnh chèn vào bảng Order
+INSERT INTO [Order] (Phone, Adress_ID, Name_Recipient, CreateBy, Total_Payment, Create_At, State, paymentStatus)
+VALUES 
+('0123456789', 24, 'Nguyen Van A', 1, 500000, GETDATE(), 0, NULL);
+
+-- Lấy ID của đơn hàng vừa được chèn
+DECLARE @OrderID INT;
+SET @OrderID = SCOPE_IDENTITY();
+
+-- Lệnh chèn vào bảng OrderDetail
+INSERT INTO OrderDetail (Order_Id, priceHistoryId, Quantity, State)
+VALUES
+(@OrderID, 1, 1, 0),
+(@OrderID, 2, 2, 0),
+(@OrderID, 3, 2, 0);

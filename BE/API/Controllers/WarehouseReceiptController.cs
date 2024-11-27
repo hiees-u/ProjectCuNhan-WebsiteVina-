@@ -1,5 +1,6 @@
 ﻿using BLL.Interface;
 using DTO.WarehouseReceipt;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,7 +27,7 @@ namespace API.Controllers
         }
 
         [HttpDelete("DeleteWarehouseReceipt/{warehouseReceipID}")]
-        // [Authorize(Roles = "WarehouseEmployee")]
+         [Authorize(Roles = "WarehouseEmployee")]
         public IActionResult Delete(int warehouseReceipID)
         {
             var result = this.iwarehouseReceipt.Delete(warehouseReceipID);
@@ -34,6 +35,7 @@ namespace API.Controllers
         }
 
         [HttpGet("GetWarehouseReceiptInfo/{warehouseReceiptID}")]
+        [Authorize(Roles = "WarehouseEmployee")]
         public IActionResult GetWarehouseReceiptInfo(int warehouseReceiptID)
         {
             var result = iwarehouseReceipt.GetWarehouseReceiptInfo(warehouseReceiptID);
@@ -41,6 +43,7 @@ namespace API.Controllers
         }
 
         [HttpGet("GetWarehouseReceiptsByWarehouse/{warehouseID}")]
+        [Authorize(Roles = "WarehouseEmployee")]
         public IActionResult GetWarehouseReceiptsByWarehouse(int warehouseID)
         {
             var result = iwarehouseReceipt.GetWarehouseReceiptsByWarehouse(warehouseID);
