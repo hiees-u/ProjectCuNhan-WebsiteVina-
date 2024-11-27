@@ -1,6 +1,7 @@
 ﻿using BLL.Interface;
 using DTO.Responses;
 using DTO.WareHouse;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,7 +18,7 @@ namespace API.Controllers
             this.iwarehouse = iwarehouse;
         }
         [HttpGet("GetWarehouse")]
-        //[Authorize(Roles = "WarehouseEmployee")]
+        [Authorize(Roles = "WarehouseEmployee")]
         public IActionResult Get()
         {
             BaseResponseModel response = iwarehouse.Get();
@@ -28,21 +29,21 @@ namespace API.Controllers
             return BadRequest(response);
         }
         [HttpGet("GetInForWarehouseID/{warehouseID}")]
-        //[Authorize(Roles = "WarehouseEmployee")]
+        [Authorize(Roles = "WarehouseEmployee")]
         public IActionResult GetWareHouseID(int warehouseID)
         {
             BaseResponseModel res = this.iwarehouse.GetWareHouseID(warehouseID);
             return res.IsSuccess ? Ok(res) : BadRequest(res);
         }
         [HttpPost("PostWarehouse")]
-        //[Authorize(Roles = "WarehouseEmployee")]
+        [Authorize(Roles = "WarehouseEmployee")]
         public IActionResult Post(WareHousePostRequestModule request)
         {
             BaseResponseModel model = this.iwarehouse.Post(request);
             return model.IsSuccess ? Ok(model) : BadRequest(model);
         }
         [HttpPut("PutWarehouse")]
-        //[Authorize(Roles = "WarehouseEmployee")]
+        [Authorize(Roles = "WarehouseEmployee")]
         public IActionResult Put(WareHouseRequestModule request)
         {
             BaseResponseModel model = this.iwarehouse.Put(request);
@@ -50,7 +51,7 @@ namespace API.Controllers
         }
 
         [HttpDelete("DeleteWareHouse/{warehouseId}")]
-        // [Authorize(Roles = "WarehouseEmployee")]
+         [Authorize(Roles = "WarehouseEmployee")]
         public IActionResult Delete(int warehouseId)
         {
             var result = this.iwarehouse.Delete(warehouseId);

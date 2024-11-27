@@ -1,6 +1,7 @@
 ﻿using BLL.Interface;
 using DTO.Cells;
 using DTO.Responses;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,7 +18,7 @@ namespace API.Controllers
             this.i_cell = i_cell;
         }
         [HttpGet("GetProductsByWarehouseID/{warehouseID}")]
-        //[Authorize(Roles = "WarehouseEmployee")]
+        [Authorize(Roles = "WarehouseEmployee")]
         public IActionResult GetProductsByWarehouseID(int warehouseID)
         {
             BaseResponseModel res = this.i_cell.GetProductsByWarehouseID(warehouseID);
@@ -25,7 +26,7 @@ namespace API.Controllers
         }
 
         [HttpGet("GetCellByShelve/{shelveID}")]
-        //[Authorize(Roles = "WarehouseEmployee")]
+        [Authorize(Roles = "WarehouseEmployee")]
         public IActionResult GetCellByShelve(int shelveID)
         {
             BaseResponseModel res = this.i_cell.GetCellByShelve(shelveID);
@@ -33,7 +34,7 @@ namespace API.Controllers
         }
 
         [HttpPost("PostCell")]
-        //[Authorize(Roles = "WarehouseEmployee")]
+        [Authorize(Roles = "WarehouseEmployee")]
         public IActionResult Post(CellPostRequestModule request)
         {
             BaseResponseModel model = this.i_cell.Post(request);
@@ -41,7 +42,7 @@ namespace API.Controllers
         }
 
         [HttpPut("PutCell")]
-        //[Authorize(Roles = "WarehouseEmployee")]
+        [Authorize(Roles = "WarehouseEmployee")]
         public IActionResult Put(CellRequestModule request)
         {
             BaseResponseModel model = this.i_cell.Put(request);
@@ -49,7 +50,7 @@ namespace API.Controllers
         }
 
         [HttpDelete("DeleteCell/{cellID}")]
-        // [Authorize(Roles = "WarehouseEmployee")]
+         [Authorize(Roles = "WarehouseEmployee")]
         public IActionResult Delete(int cellID)
         {
             var result = this.i_cell.Delete(cellID);
