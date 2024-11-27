@@ -99,12 +99,25 @@
   height: calc(100% - 135px);
 }
 
+.address input {
+  width: 600px;
+  text-align: center;
+}
+
 .header-action .del {
   background-color: red;
 }
 
 .notification {
-  top: 70px;
+  top: 40px;
   right: 0;
   position: fixed;
+}
+
+.header-action .action {
+  min-width: 165px;
+}
+
+.action button {
+  font-size: .8em;
 }

@@ -99,6 +99,28 @@ export function ContructorInsertProduct(): InsertProduct {
   };
 }
 
+export function ContructorProductModerator(): ProductModerator {
+  return {
+    productId: 0,
+    productName: '',
+    image: '',
+    totalQuantity: 0,
+    categoryId: 0,
+    supplier: 0,
+    subCategoryId: 0,
+    description: '',
+    modifiedBy: '',
+    price: 0,
+    priceHistoryId: 0,
+    subCategoryName: '',
+    categoryName: '',
+    expriryDate: '',
+    createTime: '',
+    modifiedTime: '',
+    deleteTime: '',
+  };
+}
+
 @NgModule({
   declarations: [],
   imports: [],

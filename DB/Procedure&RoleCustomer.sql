@@ -728,43 +728,61 @@ GRANT EXECUTE ON OBJECT::dbo.SP_GetUserInfoByUserName TO  Customer;
 EXEC SP_GetUserInfoByUserName;
 go
 --#########################################################################GET All Address#####################################################################################
+DROP PROC SP_GetFullAddress
 CREATE PROCEDURE SP_GetFullAddress
+    @idAddress INT = NULL
 AS
 BEGIN
-	DECLARE @UserName VARCHAR(25);
-	SET @UserName = SUSER_NAME();
-    
-	-- Khai báo biến kiểu TABLE
-	DECLARE @AddressTable TABLE (
-		AddressID INT
-	);
+    IF @idAddress IS NOT NULL
+    BEGIN
+        -- Truy vấn và trả về kết quả địa chỉ theo idAddress
+        SELECT a.AddressID, COALESCE(a.Note, '') + N', Xã ' + COALESCE(c.CommuneName, '') + N', Huyện ' + COALESCE(d.DistrictName, '') + N', Tỉnh ' + COALESCE(p.ProvinceName, '') AS N'Địa Chỉ'
+        FROM Address a
+        JOIN Commune c ON a.CommuneID = c.CommuneID
+        JOIN District d ON c.DistrictID = d.DistrictID
+        JOIN Province p ON d.ProvinceID = p.ProvinceID
+        WHERE a.AddressID = @idAddress;
+    END
+    ELSE
+    BEGIN
+        DECLARE @UserName VARCHAR(25);
+        SET @UserName = SUSER_NAME();
+        
+        -- Khai báo biến kiểu TABLE
+        DECLARE @AddressTable TABLE (
+            AddressID INT
+        );
 
-	-- Chèn dữ liệu vào biến @AddressTable từ câu lệnh SELECT đầu tiên
-	INSERT INTO @AddressTable (AddressID)
-	SELECT DISTINCT uf.address_id
-	FROM UserInfo uf
-	WHERE uf.AccountName = @UserName;
+        -- Chèn dữ liệu vào biến @AddressTable từ câu lệnh SELECT đầu tiên
+        INSERT INTO @AddressTable (AddressID)
+        SELECT DISTINCT uf.address_id
+        FROM UserInfo uf
+        WHERE uf.AccountName = @UserName;
 
-	-- Chèn dữ liệu vào biến @AddressTable từ câu lệnh SELECT thứ hai
-	INSERT INTO @AddressTable (AddressID)
-	SELECT DISTINCT o.Adress_ID
-	FROM UserInfo uf
-	JOIN [Order] o ON o.CreateBy = uf.customer_Id
-	WHERE uf.AccountName = @UserName;
+        -- Chèn dữ liệu vào biến @AddressTable từ câu lệnh SELECT thứ hai
+        INSERT INTO @AddressTable (AddressID)
+        SELECT DISTINCT o.Adress_ID
+        FROM UserInfo uf
+        JOIN [Order] o ON o.CreateBy = uf.customer_Id
+        WHERE uf.AccountName = @UserName;
 
-	-- Truy vấn và trả về kết quả đầy đủ của địa chỉ
-	SELECT DISTINCT a.AddressID, a.Note + N', Xã ' + co.CommuneName + N', Huyện ' + di.DistrictName + N', Tỉnh ' + pr.ProvinceName AS N'Địa Chỉ'
-	FROM @AddressTable ad
-	JOIN Address a ON a.AddressID = ad.AddressID
-	JOIN Commune co ON a.CommuneID = co.CommuneID
-	JOIN District di ON co.DistrictID = di.DistrictID
-	JOIN Province pr ON di.ProvinceID = pr.ProvinceID;
+        -- Truy vấn và trả về kết quả đầy đủ của địa chỉ
+        SELECT DISTINCT a.AddressID, COALESCE(a.Note, '') + N', Xã ' + COALESCE(co.CommuneName, '') + N', Huyện ' + COALESCE(di.DistrictName, '') + N', Tỉnh ' + COALESCE(pr.ProvinceName, '') AS N'Địa Chỉ'
+        FROM @AddressTable ad
+        JOIN Address a ON a.AddressID = ad.AddressID
+        JOIN Commune co ON a.CommuneID = co.CommuneID
+        JOIN District di ON co.DistrictID = di.DistrictID
+        JOIN Province pr ON di.ProvinceID = pr.ProvinceID;
+    END
 END;
 
 --phân quyền
 GRANT EXECUTE ON OBJECT::dbo.SP_GetFullAddress TO  Customer;
+GRANT EXECUTE ON OBJECT::dbo.SP_GetFullAddress TO  Moderator;
+
 --RUN
 EXEC SP_GetFullAddress;
+EXEC SP_GetFullAddress 3;
 go
 --#########################################################################GET User Province#####################################################################################
 CREATE PROCEDURE SP_GetProvinces

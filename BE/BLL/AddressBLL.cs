@@ -5,6 +5,7 @@ using DTO.Address;
 using DTO.Responses;
 using System.Data;
 using System.Data.SqlClient;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace BLL
 {
@@ -163,7 +164,7 @@ namespace BLL
             }
         }
 
-        public BaseResponseModel GetAddressString()
+        public BaseResponseModel GetAddressString(int? idAddress = null)
         {
             List<KeyValuePair<int, string>> address = new List<KeyValuePair<int, string>>();
             try
@@ -173,8 +174,12 @@ namespace BLL
                     using (var cmd = new SqlCommand("SP_GetFullAddress", conn))
                     {
                         cmd.CommandType= CommandType.StoredProcedure;
-
                         conn.Open();
+                        if (idAddress.HasValue) {
+                            cmd.Parameters.Add(new SqlParameter("@idAddress", idAddress.Value)); 
+                        } else {
+                            cmd.Parameters.Add(new SqlParameter("@idAddress", DBNull.Value)); 
+                        }
 
                         using (SqlDataReader reader = cmd.ExecuteReader())
                         {

@@ -2,7 +2,8 @@
   max-width: 1400px;
   min-height: 800px;
   background-color: #fff;
-  width: 1400px;
+  width: 1300px;
+  /* width: 1400px; */
   height: 800px;
   position: relative;
   border-radius: 10px;
@@ -81,19 +82,30 @@
 }
 
 .header-action .inp-box input {
-    font-size: 1.1em;
-    border: 1px solid var(--secon-color);
-    font-style:  var(--main-style);
-    padding: 8px 0 8px 10px;
-    outline: none;
+  font-size: 1.1em;
+  border: 1px solid var(--secon-color);
+  font-style: var(--main-style);
+  padding: 8px 0 8px 10px;
+  outline: none;
 }
 
 .header-action .inp-box label {
-    margin-right: 10px;
-    font-style: italic;
-    font-family: var(--main-style);
+  margin-right: 10px;
+  font-style: italic;
+  font-family: var(--main-style);
 }
 
 .content {
-    height: calc(100% - 135px);
+  width: 100%;
+  height: calc(100% - 135px);
+}
+
+.header-action .del {
+  background-color: red;
+}
+
+.notification {
+  top: 40px;
+  right: 0;
+  position: fixed;
 }

@@ -3,7 +3,7 @@ import {
   BaseResponseModel,
   BaseResponseModule,
 } from '../shared/module/base-response/base-response.module';
-import { InsertProduct, SupplierResponseModerator } from './moderator.module';
+import { CategoryRequesModerator, InsertProduct, ProductModerator, SubCategoryRequesModerator, SupplierRequestModerator, SupplierResponseModerator } from './moderator.module';
 
 @Injectable({
   providedIn: 'root',
@@ -21,6 +21,234 @@ export class ModeratorService {
   ngOnInit(): void {
     if (typeof window !== 'undefined') {
       this.token = localStorage.getItem('token') || '';
+    }
+  }
+
+  //PUT PRODUCT
+  async putProduct(product: ProductModerator): Promise<BaseResponseModel> {
+
+    const input = {
+      productId: product.productId,
+      productName: product.productName,
+      image: product.image,
+      categoryId: product.categoryId,
+      supplier: product.supplier,
+      subCategoryId: product.subCategoryId,
+      expiryDate: product.expriryDate,
+      description: product.description,
+      price: product.price,
+    };
+
+    try {
+      const url = 'https://localhost:7060/api/Product';
+      const response = await fetch(url, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.token}`,
+        },
+        body: JSON.stringify(input),
+      });
+      const data: BaseResponseModel = await response.json();
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.log('Lỗi: ', error);
+      return {
+        isSuccess: false,
+        message: 'Lỗi ròi mài ơi',
+      };
+    }
+  }
+
+  //Delete Product
+  async deleteProduct(productId: number): Promise<BaseResponseModel> {
+    try {
+      const url = `https://localhost:7060/api/Product?productId=${productId}`;
+      //https://localhost:7060/api/Product?productId=66
+      const response = await fetch(url, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+      const data: BaseResponseModel = await response.json();
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.log('Lỗi: ', error);
+      return {
+        isSuccess: false,
+        message: 'Lỗi ròi mài ơi',
+      };
+    }
+  }
+
+  //delete supplier
+  async deleteSupplier(id: number): Promise<BaseResponseModel>  {
+    try {
+      const url = `https://localhost:7060/api/Supplier?supplierId=${id}`;
+      const response = await fetch(url, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+      const data: BaseResponseModel = await response.json();
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.log('Lỗi: ', error);
+      return {
+        isSuccess: false,
+        message: 'Lỗi ròi mài ơi',
+      };
+    }
+  }
+
+  //update supplier
+  async putSupplier(supplier: SupplierRequestModerator): Promise<BaseResponseModel> {
+    try {
+      const url = 'https://localhost:7060/api/Supplier';
+      const response = await fetch(url, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.token}`,
+        },
+        body: JSON.stringify(supplier),
+      });
+      const data: BaseResponseModel = await response.json();
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.log('Lỗi: ', error);
+      return {
+        isSuccess: false,
+        message: 'Lỗi ròi mài ơi',
+      };
+    }
+  }
+
+  //delete SubCategory
+  async deleteSubCategory(id: number): Promise<BaseResponseModel>  {
+    try {
+      const url = `https://localhost:7060/api/SubCategory?subCateId=${id}`;
+      const response = await fetch(url, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+      const data: BaseResponseModel = await response.json();
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.log('Lỗi: ', error);
+      return {
+        isSuccess: false,
+        message: 'Lỗi ròi mài ơi',
+      };
+    }
+  }
+
+  //update sub-category
+  async putSubCategory(subCate: SubCategoryRequesModerator): Promise<BaseResponseModel> {
+    try {
+      const url = 'https://localhost:7060/api/SubCategory';
+      const response = await fetch(url, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.token}`,
+        },
+        body: JSON.stringify(subCate),
+      });
+      const data: BaseResponseModel = await response.json();
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.log('Lỗi: ', error);
+      return {
+        isSuccess: false,
+        message: 'Lỗi ròi mài ơi',
+      };
+    }
+  }
+
+  //delete Category
+  async deleteCategory(id: number): Promise<BaseResponseModel>  {
+    try {
+      const url = `https://localhost:7060/api/Category?cateId=${id}`;
+      const response = await fetch(url, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+      const data: BaseResponseModel = await response.json();
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.log('Lỗi: ', error);
+      return {
+        isSuccess: false,
+        message: 'Lỗi ròi mài ơi',
+      };
+    }
+  }
+
+  //update Category
+  async putCategory(cate: CategoryRequesModerator): Promise<BaseResponseModel>  {
+    try {
+      const url = 'https://localhost:7060/api/Category';
+      const response = await fetch(url, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.token}`,
+        },
+        body: JSON.stringify(cate),
+      });
+      const data: BaseResponseModel = await response.json();
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.log('Lỗi: ', error);
+      return {
+        isSuccess: false,
+        message: 'Lỗi ròi mài ơi',
+      };
+    }
+  }
+
+  //
+  async getStringAddresses(id: number): Promise<BaseResponseModel> {
+    //https://localhost:7060/api/Address/Get string address?idAddress=1
+    const url = `https://localhost:7060/api/Address/Get string address?idAddress=${id}`;
+    const option = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${this.token}`,
+      },
+    };
+
+    try {
+      const response = await fetch(url, option);
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      return await response.json();
+    } catch (error) {
+      console.error('Error:', error);
+      throw error;
     }
   }
 

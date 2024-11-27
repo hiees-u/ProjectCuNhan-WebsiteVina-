@@ -48,7 +48,6 @@ export class AddProductComponent {
     this.isShow = !this.isShow;
     this.isShowBy = i;
     console.log(this.isShowBy);
-    
   }
 
   handleClose(is: boolean) {

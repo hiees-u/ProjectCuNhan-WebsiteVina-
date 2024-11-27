@@ -1,0 +1,69 @@
+<div class="container">
+  <button class="close" (click)="sendIsClose()">
+    <i class="fa-solid fa-rectangle-xmark"></i>
+  </button>
+  <div class="header">
+    <span class="header-text no-select">
+      <span></span>
+      Chi Tiết Nhà Cung Cấp {{ Supplier.supplierName }}</span
+    >
+  </div>
+  <div class="header-action">
+    <div class="inp-box">
+      <label for="categoryName">Tên nhà cung cấp: </label>
+      <input
+        type="text"
+        name="categoryName"
+        id="categoryName"
+        [(ngModel)]="Supplier.supplierName"
+      />
+    </div>
+    <div class="inp-box">
+      <div class="address">
+        <label for="categoryName">Địa chỉ nhà cung cấp: </label>
+        <input type="text" [(ngModel)]="addressString" class="addres-string" />
+        <!-- <div class="insertAddress" *ngIf="isShowInsertAddress">
+          <div class="box-edit-address">
+            <app-address
+              [address]="addre"
+              (addressChange)="getAddressChangeChildComponent($event)"
+            ></app-address>
+            <app-commune
+              [selectedCommuneId]="communenInsert.communeId"
+              [selectedDistrictId]="districtSelect"
+              (communeOutput)="getCommutNameChangeChildComponent($event)"
+            ></app-commune>
+            <app-district
+              [selectedProvinceId]="provinceSelect"
+              (selectedDistrictIdChange)="
+                getDistrictIDChangeChildComponent($event)
+              "
+              [selectedDistrictId]="districtSelect"
+            ></app-district>
+            <app-province
+              [selectedProvinceId]="provinceSelect"
+              (selectedProvinceIdChange)="
+                getProvinceIDChangeChildComponent($event)
+              "
+            ></app-province>
+          </div>
+        </div> -->
+      </div>
+    </div>
+
+    <div class="action">
+      <button class="update" (click)="handleUpdate()">Cập Nhật</button>
+      <button class="del" (click)="handleDelete()">Xóa</button>
+    </div>
+  </div>
+
+  <div class="content">
+    <app-view-products [supplierId]="Supplier.supplierId"></app-view-products>
+  </div>
+  <div class="notification" >
+    <app-notification
+      [data]="dataNotification"
+      [trigger]="trigger"
+    ></app-notification>
+  </div>
+</div>

@@ -40,7 +40,7 @@
               "RelativeDocumentMoniker": "API\\Controllers\\FileController.cs",
               "ToolTip": "E:\\HK I nam 4\\Do An Chuyen Nganh\\ProjectCuNhan-WebsiteVina-\\BE\\API\\Controllers\\FileController.cs",
               "RelativeToolTip": "API\\Controllers\\FileController.cs",
-              "ViewState": "AgIAABkAAAAAAAAAAAAQwCIAAAA5AAAAAAAAAA==",
+              "ViewState": "AgIAABYAAAAAAAAAAAAQwCIAAAA5AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-27T04:00:31.267Z",
               "EditorCaption": ""
@@ -55,8 +55,7 @@
               "RelativeToolTip": "API\\Controllers\\ShelveController.cs",
               "ViewState": "AgIAAAkAAAAAAAAAAAAAADEAAAAxAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-27T05:13:47.649Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-27T05:13:47.649Z"
             },
             {
               "$type": "Document",
@@ -68,8 +67,7 @@
               "RelativeToolTip": "API\\Controllers\\CellController.cs",
               "ViewState": "AgIAAA4AAAAAAAAAAAAAwDQAAAAxAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-27T05:13:12.084Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-27T05:13:12.084Z"
             },
             {
               "$type": "Document",
@@ -81,8 +79,7 @@
               "RelativeToolTip": "API\\Controllers\\WarehouseController.cs",
               "ViewState": "AgIAAAMAAAAAAAAAAAAAAD0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-27T05:11:52.005Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-27T05:11:52.005Z"
             },
             {
               "$type": "Document",
@@ -94,8 +91,7 @@
               "RelativeToolTip": "BLL\\ConnectionStringHelper\\ConnectionStringHelper.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAACNAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-26T16:52:04.301Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-26T16:52:04.301Z"
             }
           ]
         }

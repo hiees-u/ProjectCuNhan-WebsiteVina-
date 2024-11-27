@@ -10,15 +10,15 @@
   </div>
   <div class="header-action">
     <div class="inp-box">
-        <label for="categoryName">Tên loại sản phẩm phụ: </label>
+        <label for="categoryName">Tên loại sản phẩm: </label>
         <input type="text" name="categoryName" id="categoryName" [(ngModel)]="cate.categoryName">
     </div>
 
     <div class="action">
-        <button class="update">
+        <button class="update" (click)="handleUpdate()">
             Cập Nhật
         </button>
-        <button class="del">
+        <button class="del" (click)="handleDelete()">
             Xóa
         </button>
     </div>
@@ -26,5 +26,11 @@
 
   <div class="content">
     <app-view-products [cateId]="cate.categoryId"></app-view-products>
+  </div>
+  <div class="notification" >
+    <app-notification
+      [data]="dataNotification"
+      [trigger]="trigger"
+    ></app-notification>
   </div>
 </div>
