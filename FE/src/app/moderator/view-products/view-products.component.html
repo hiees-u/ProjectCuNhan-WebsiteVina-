@@ -45,10 +45,10 @@
             </ng-template>
           </td>
           <td class="td-operation">
-            <button class="btn-del">
+            <button class="btn-del" (click)="onShowDelete(item)">
               <i class="fa-regular fa-trash-can"></i>
             </button>
-            <button class="btn-modi">
+            <button class="btn-modi" (click)="onShowDetail(item)">
               <i class="fa-regular fa-pen-to-square"></i>
             </button>
           </td>
@@ -75,5 +75,36 @@
         <i class="fa-solid fa-chevron-right"></i>
       </button>
     </div>
+  </div>
+
+  <!-- *ngIf="isShowDelete" -->
+  <div
+    class="delete-product"
+    [ngClass]="{
+      'show-delete': isShowDelete && flagDelete,
+      'hide-delete': !isShowDelete && flagDelete
+    }"
+  >
+    <p>Xóa sản phẩm: {{ selectProduct.productName }}</p>
+    <button (click)="onHidenDelete()">Đóng</button>
+    <button class="btn-del" (click)="deleteProduct()">Xóa</button>
+  </div>
+
+  <!-- *ngIf="isShowDetail" -->
+  <div
+    class="detail-product"
+    [ngClass]="{
+      'show-delete': isShowDetail && flagDetail,
+      'hide-delete': !isShowDetail && flagDetail
+    }"
+  >
+    <app-product-detail (isClose)="handleClose($event)" [product]="selectProduct" ></app-product-detail>
+  </div>
+
+  <div class="notification">
+    <app-notification
+      [data]="dataNotification"
+      [trigger]="trigger"
+    ></app-notification>
   </div>
 </div>

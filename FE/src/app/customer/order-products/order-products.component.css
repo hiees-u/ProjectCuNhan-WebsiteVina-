@@ -65,6 +65,10 @@
   border-color: var(--secon-text-color);
 }
 
+.address input {
+  width: .9em;
+}
+
 .operation {
   width: 10%;
   display: flex;

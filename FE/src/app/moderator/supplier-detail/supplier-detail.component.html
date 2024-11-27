@@ -52,12 +52,18 @@
     </div>
 
     <div class="action">
-      <button class="update">Cập Nhật</button>
-      <button class="del">Xóa</button>
+      <button class="update" (click)="handleUpdate()">Cập Nhật</button>
+      <button class="del" (click)="handleDelete()">Xóa</button>
     </div>
   </div>
 
   <div class="content">
     <app-view-products [supplierId]="Supplier.supplierId"></app-view-products>
+  </div>
+  <div class="notification" >
+    <app-notification
+      [data]="dataNotification"
+      [trigger]="trigger"
+    ></app-notification>
   </div>
 </div>
