@@ -282,3 +282,12 @@
   height: 35%;
   min-height: 300px;
 }
+
+.deparment-detail {
+  height: 100vh;
+  width: 100vw;
+  top: 0;
+  right: 0;
+  position: absolute;
+  background-color: #e7e7e791;
+}

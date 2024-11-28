@@ -6,47 +6,7 @@
     >
   </div>
 
-  <div class="header-action">
-    <div class="btn-add-product btn" (click)="onShowAddCate()">
-      <i class="fa-solid fa-plus"></i>
-      Thêm sản nhân viên
-    </div>
-    <div class="btn-search">
-      <input type="text" [(ngModel)]="searchText" name="search" id="search" />
-      <button class="search" (click)="onSearch()">
-        <i class="fa-solid fa-magnifying-glass"></i>
-      </button>
-    </div>
-  </div>
-
   <div class="content">
-    <div class="content-body">
-      <div class="content-mini" *ngFor="let item of deparments">
-        <i class="fa-solid fa-users-viewfinder"></i>
-        <div>
-          <span>{{ item.departmentName }}</span>
-          <span>Nhân viên: {{item.sumEmployee}}</span>
-        </div>
-      </div>
-    </div>
-    <div class="content-footer">
-      <span>Trang {{ pageCurrent }} / {{ totalPage }}</span>
-
-      <div class="f-content page">
-        <button
-          [ngClass]="{ 'no-active': pageCurrent === 1 }"
-          (click)="handlePageClick(-1)"
-        >
-          <i class="fa-solid fa-chevron-left"></i>
-        </button>
-        <button class="btn-page">{{ pageCurrent }}</button>
-        <button
-          [ngClass]="{ 'no-active': pageCurrent === totalPage }"
-          (click)="handlePageClick(1)"
-        >
-          <i class="fa-solid fa-chevron-right"></i>
-        </button>
-      </div>
-    </div>
+      <app-view-customers></app-view-customers>
   </div>
 </div>

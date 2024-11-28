@@ -24,6 +24,80 @@ export class ModeratorService {
     }
   }
 
+  //GET EMPLOYEE
+  async getEmployee(
+    employeeTypeID?: number,
+    departmentID?: number,
+    pageNumber: number = 1,
+    pageSize: number = 42
+  ): Promise<BaseResponseModel> {
+    //https://localhost:7060/api/Employee?pageNumber=2&pageSize=2&departmentID=7&employeeTypeID=51
+    let url = `${this.apiUrl}Employee?pageNumber=${pageNumber}&pageSize=${pageSize}`;
+    if (employeeTypeID) {
+      url += `&employeeTypeID=${employeeTypeID}`;
+    }
+    if (departmentID) {
+      url += `&employeeTypeID=${departmentID}`;
+    }
+
+    console.log(url);
+    
+
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data: BaseResponseModel = await response.json();
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.error('Error:', error);
+      throw error;
+    }
+  }
+
+  //GET CUSTOMER
+  async getCustomer(
+    TypeCustomerId?: number,
+    pageNumber: number = 1,
+    pageSize: number = 42
+  ): Promise<BaseResponseModel> {
+    //https://localhost:7060/api/Customer?TypeCustomerId=3&pageNumber=1&pageSize=8
+    let url = `${this.apiUrl}Customer?pageNumber=${pageNumber}&pageSize=${pageSize}`;
+    if (TypeCustomerId) {
+      url += `&TypeCustomerId=${TypeCustomerId}`;
+    }
+
+    console.log(url);
+    
+
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data: BaseResponseModel = await response.json();
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.error('Error:', error);
+      throw error;
+    }
+  }
+
   //PUT PRODUCT
   async putProduct(product: ProductModerator): Promise<BaseResponseModel> {
 
