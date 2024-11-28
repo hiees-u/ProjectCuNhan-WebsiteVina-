@@ -10,7 +10,8 @@ namespace BLL
 {
     public class EmployeeBLL : IEmployee
     {
-        public BaseResponseModel Get(int? departmentID = null, int? employeeTypeID = null)
+        public BaseResponseModel Get(int? departmentID = null, int? employeeTypeID = null, int pageNumber = 1,
+            int pageSize = 8)
         {
             try
             {
@@ -53,11 +54,20 @@ namespace BLL
                         }
                     }
                 }
+
+                int totalPages = (int)Math.Ceiling((double)employees.Count / pageSize);
+
+                employees = employees.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+
                 return new BaseResponseModel()
                 {
                     IsSuccess = true,
                     Message = employees.Count > 0 ? "Lấy danh sách nhân viên thành công..!" : "Không tìm thấy nhân viên..!",
-                    Data = employees
+                    Data = new
+                    {
+                        employees,
+                        totalPages,
+                    }
                 };
             }
             catch (Exception ex)

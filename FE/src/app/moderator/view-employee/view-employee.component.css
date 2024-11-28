@@ -1,0 +1,294 @@
+/* ################################################################################ */
+
+.content-pa {
+  margin-top: 5px;
+  width: 100%;
+  height: 650px;
+  /* max-height: 300px; */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+}
+
+.content {
+  /* margin-top: 5px; */
+  width: 100%;
+  position: relative;
+}
+
+.content table {
+  width: 100%;
+  border-collapse: separate; /* Để khoảng cách giữa các hàng hoạt động */
+  border-spacing: 0 10px; /* Tạo khoảng cách giữa các hàng */
+}
+
+.content table tr {
+  height: 50px;
+  width: 100%;
+  margin: 5px 0;
+}
+
+.content table tr th {
+  font-weight: 400;
+  font-family: var(--main-style);
+  color: var(--secon-text-color);
+  font-size: 1em;
+  box-shadow: 0 1px 0 0 #ddd;
+  padding: 0 0 10px 0;
+}
+
+.min-text {
+  font-size: 0.85em;
+}
+
+.td-name {
+  /* text-align: center; */
+  font-size: 1.15em;
+}
+
+.td-centered {
+  text-align: center;
+  font-size: .8em;
+}
+
+.td-centered > img {
+  height: 70px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.td-total-quantity {
+  font-size: 0.8em;
+}
+
+.td-operation {
+  text-align: center; /* Căn giữa theo chiều ngang */
+  vertical-align: middle; /* Căn giữa theo chiều dọc */
+}
+
+.td-operation button {
+  margin: 0 3px;
+  cursor: pointer;
+  border: none;
+  padding: 3px 5px;
+  border-radius: 3px;
+  outline: none;
+}
+
+.btn-del {
+  background-color: rgba(249, 102, 102, 0.7);
+  color: red;
+}
+
+.btn-modi {
+  background-color: #f7c66cb1;
+  color: #f89900;
+}
+
+td span {
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+.bg-green {
+  background-color: #00ff005c;
+  color: green;
+}
+
+.bg-red {
+  background-color: #fa1e1e5c;
+  color: red;
+}
+
+.bg-orange {
+  background-color: rgba(255, 167, 4, 0.323);
+  color: orange;
+}
+
+/* f-content */
+
+.f-content {
+  width: 100%;
+  height: 35px;
+  /* background-color: #5f5f5f; */
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.f-content span {
+  width: 50%;
+  text-align: left;
+  padding-left: 20px;
+  font-family: var(--main-style);
+  font-size: 0.7em;
+}
+
+.page {
+  padding-right: 20px;
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  /* background-color: #f89900; */
+}
+
+.page button {
+  padding: 2px;
+  width: 20px;
+  height: 20px;
+  border: none;
+  font-size: 0.8em;
+  outline: none;
+  margin: 0 2px;
+  cursor: pointer;
+  transition: all 0.5s ease-in-out;
+}
+
+.btn-page {
+  background-color: var(--main-color);
+  color: #fff;
+  cursor: none;
+}
+
+.no-active {
+  background-color: #626262ba;
+  color: #fff;
+  cursor: none !important;
+  opacity: 0.2;
+}
+
+.add-product {
+  width: 100%;
+  background: rgba(190, 193, 193, 0.532);
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 100%;
+  display: flex;
+  justify-content: center;
+  transition: all ease 0.5s;
+  align-items: center;
+}
+
+.error {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.content {
+  /* margin-top: 5px; */
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+
+/* //////////////// */
+
+.content-add-cate {
+  width: 50%;
+  min-width: 550px;
+  height: 35%;
+  min-height: 300px;
+}
+
+/* /////////// */
+.delete-product {
+  height: fit-content;
+  min-height: 150px;
+  width: fit-content;
+  padding: 10px 20px;
+  background-color: #e3bb4f;
+  color: var(--secon-text-color);
+  transition: all 0.5s ease-in-out;
+  position: absolute;
+  top: 50%;
+  left: -500%;
+  transform: translateY(-50%) scale(0.9);
+  opacity: 0;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  font-family: var(--main-style);
+}
+
+.delete-product p {
+  /* padding: 10px; */
+  color: #fff;
+  font-size: 1.5em;
+}
+
+.delete-product button {
+  padding: 10px;
+  font-size: 1.1em;
+  border: none;
+  outline: none;
+  font-family: initial;
+  margin: 0 10px;
+  padding: 10px 30px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.show-delete {
+  animation: showDelete 0.5s ease-in-out forwards;
+}
+
+@keyframes showDelete {
+  0% {
+    left: -10%;
+    opacity: 0;
+    transform: translateY(-50%) scale(0.9);
+  }
+  100% {
+    left: 50%;
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.hide-delete {
+  animation: hideDelete 0.5s ease-in-out forwards;
+}
+
+@keyframes hideDelete {
+  0% {
+    left: 50%;
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    left: -500%;
+    opacity: 0;
+    transform: translateY(-50%) scale(0.9);
+  }
+}
+
+.notification {
+  top: 40px;
+  right: 0;
+  position: fixed;
+}
+
+/* //////////////// */
+.detail-product {
+  height: fit-content;
+  width: fit-content;
+  padding: 10px;
+  background-color: #e3bb4f;
+  color: var(--secon-text-color);
+  transition: all 0.5s ease-in-out;
+  position: absolute;
+  top: 50%;
+  /* left: -10%; */
+  left: -500%;
+  transform: translateY(-50%) scale(0.9);
+  opacity: 0;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  font-family: var(--main-style);
+}

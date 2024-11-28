@@ -26,6 +26,7 @@ builder.Services.AddScoped<IAddress, AddressBLL>();
 builder.Services.AddScoped<IOrder, OrderBLL>();
 builder.Services.AddScoped<IWareHouse, WareHouseBLL>();
 builder.Services.AddScoped<IShelve, ShelveBLL>();
+builder.Services.AddScoped<ICustomer, CustomerBLL>();
 builder.Services.AddScoped<ICustomerType, CustomerTypeBLL>();
 builder.Services.AddScoped<IDepartment, DepartmentBLL>();
 builder.Services.AddScoped<IEmployee, EmployeeBLL>();

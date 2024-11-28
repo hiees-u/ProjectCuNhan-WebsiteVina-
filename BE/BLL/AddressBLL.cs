@@ -5,7 +5,6 @@ using DTO.Address;
 using DTO.Responses;
 using System.Data;
 using System.Data.SqlClient;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace BLL
 {

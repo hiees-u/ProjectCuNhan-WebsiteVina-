@@ -11,22 +11,16 @@
       <i class="fa-solid fa-plus"></i>
       Thêm sản phòng ban
     </div>
-    <!-- <div class="btn-search">
-      <input type="text" [(ngModel)]="searchText" name="search" id="search" />
-      <button class="search" (click)="onSearch()">
-        <i class="fa-solid fa-magnifying-glass"></i>
-      </button>
-    </div> -->
   </div>
 
   <div class="content">
     <div class="content-body">
-      <div class="content-mini" *ngFor="let item of deparments">
+      <div class="content-mini" *ngFor="let item of deparments" (click)="onShowDetail()">
         <i class="fa-regular fa-building"></i>
         <!-- <i class="fa-solid fa-users-viewfinder"></i> -->
         <div>
           <span>{{ item.departmentName }}</span>
-          <span>Nhân viên: {{item.sumEmployee}}</span>
+          <span>Nhân viên: {{ item.sumEmployee }}</span>
         </div>
       </div>
     </div>
@@ -57,7 +51,12 @@
   [ngClass]="{ hiden: !isShowAddDepartment && flag, show: isShowAddDepartment }"
 >
   <div class="content-add-cate">
-     <!-- <app-add-cate (isClose)="handleClose($event)"></app-add-cate> -->
-      <app-add-deparment (isClose)="handleClose($event)"></app-add-deparment>
+    <!-- <app-add-cate (isClose)="handleClose($event)"></app-add-cate> -->
+    <app-add-deparment (isClose)="handleClose($event)"></app-add-deparment>
   </div>
 </div>
+<div
+  class="deparment-detail"
+  *ngIf="flagDetail"
+  [ngClass]="{ hiden: !isShowDetail && flagDetail, show: isShowDetail }"
+></div>

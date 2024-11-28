@@ -1,5 +1,45 @@
 import { NgModule } from '@angular/core';
 
+//customer request module
+export interface CustomerRequestModule {
+  accountName:string;
+  fullName:string;
+  email:string;
+  phone:string;
+  gender: number;
+  typeCustomerId: number;
+  typeCustomerName:string;
+  addressId: number;
+  addressString:string;
+}
+
+//employee
+export interface EmployeeRequestModule {
+  accountName: string;
+  addressId?: number | null;
+  addressName?: string | null;
+  departmentId: number;
+  departmentName: string;
+  employId: number;
+  employeeTypeId: number;
+  employeeTypeName: string;
+  fullName?: string | null;
+  gender?: number | null;
+}
+
+/*
+accountName:"HiuModerator"
+addressId:null
+addressName:null
+departmentId:7
+departmentName:"VÔ GIA CƯ"
+employId: 47
+employeeTypeId: 6
+employeeTypeName:"Moderator"
+fullName:null
+gender:null
+*/
+
 // product-moderator.model.ts
 export interface ProductModerator {
   productId: number;

@@ -4,14 +4,16 @@ import { FormsModule } from '@angular/forms';
 import { SubCategory } from '../../shared/module/sub-category/sub-category.module';
 import { DepartmentRequestModerator } from '../moderator.module';
 import { ModeratorService } from '../moderator.service';
+import { ViewCustomersComponent } from "../view-customers/view-customers.component";
 
 @Component({
   selector: 'app-customer-moderator',
   standalone: true,
   imports: [
     CommonModule,
-    FormsModule
-  ],
+    FormsModule,
+    ViewCustomersComponent
+],
   templateUrl: './customer-moderator.component.html',
   styleUrl: './customer-moderator.component.css'
 })
