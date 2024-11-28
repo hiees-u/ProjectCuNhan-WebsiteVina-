@@ -13,6 +13,8 @@ import { CustomerModeratorComponent } from './moderator/customer-moderator/custo
 import { DepartmentModeratorComponent } from './moderator/department-moderator/department-moderator.component';
 import { EmployeeModeratorComponent } from './moderator/employee-moderator/employee-moderator.component';
 import { SupplierModeratorComponent } from './moderator/supplier-moderator/supplier-moderator.component';
+import { Test1Component } from './warehouse-employee/test1/test1.component';
+import { Test2Component } from './warehouse-employee/test2/test2.component';
 
 export const routes: Routes = [
   ...CustomerRoutingModule,
@@ -50,6 +52,11 @@ export const routes: Routes = [
   {
     path: 'warehouse-employee',
     component: WarehouseEmployeeComponent,
+    children: [
+      { path: 'test', component: Test1Component },
+      { path: 'test2', component: Test2Component },
+      { path: '', redirectTo: 'test', pathMatch: 'full' }
+    ]
   },
   {
     path: '',
