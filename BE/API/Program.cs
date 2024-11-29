@@ -31,6 +31,7 @@ builder.Services.AddScoped<IDepartment, DepartmentBLL>();
 builder.Services.AddScoped<IEmployee, EmployeeBLL>();
 builder.Services.AddScoped<IReport, ReportBLL>();
 builder.Services.AddScoped<IWarehouseReceipt, WarehouseReceiptBLL>();
+builder.Services.AddScoped<IDeliveryNote, DeliveryNoteBLL>();
 
 
 builder.Services.AddControllers();

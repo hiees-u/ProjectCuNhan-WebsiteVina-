@@ -14,7 +14,7 @@ export class WarehouseEmployeeComponent {
 
   constructor(private router: Router) {}
   
-  click() {
-    this.router.navigate(['/warehouse-employee/test2'])
+  click_add_warehouse() {
+    this.router.navigate(['/warehouse-employee/add-warehouse'])
   }
 }

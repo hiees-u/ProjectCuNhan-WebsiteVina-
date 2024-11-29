@@ -1,0 +1,45 @@
+<!-- Top Bar -->
+<header class="flex items-center justify-between bg-white p-4 shadow">
+  <h2 class="text-xl font-semibold">Quản Lý Kho</h2>
+  <button class="bg-blue-800 text-white py-2 px-4 rounded">Thêm Kho</button>
+</header>
+
+<!-- Kho Information Section -->
+<div class="mt-8 bg-white p-6 rounded-lg shadow">
+  <h3 class="text-lg font-bold mb-4">Danh Sách Kho</h3>
+
+  <table class="min-w-full bg-white rounded-lg shadow">
+    <thead>
+      <tr class="bg-gray-100 text-gray-600 uppercase text-sm leading-normal">
+        <th class="py-3 px-6 text-center">Mã Kho</th>
+        <th class="py-3 px-6 text-center">Tên Kho</th>
+        <th class="py-3 px-6 text-center">Địa Chỉ</th>
+        <th class="py-3 px-6 text-center">Nhân viên Tạo</th>
+        <th class="py-3 px-6 text-center">Thời gian tạo</th>
+        <th class="py-3 px-6 text-center">Thời gian sửa đổi</th>
+        <th class="py-3 px-6 text-center">Thao Tác</th>
+      </tr>
+    </thead>
+    <tbody class="text-gray-700">
+      <tr *ngFor="let warehouse of warehouses">
+        <td class="py-3 px-6 text-center">{{ warehouse.warehouseId }}</td>
+        <td class="py-3 px-6 text-center">{{ warehouse.warehouseName }}</td>
+        <td class="py-3 px-6 text-center">{{ warehouse.address }}</td>
+        <td class="py-3 px-6 text-center">{{ warehouse.modifiedBy }}</td>
+        <td class="py-3 px-6 text-center">{{ warehouse.createTime }}</td>
+        <td class="py-3 px-6 text-center">{{ warehouse.modifiedTime }}</td>
+        <td class="py-3 px-6 text-center">
+          <button class="bg-blue-600 text-white py-1 px-3 rounded">Xem</button>
+          <button class="bg-yellow-600 text-white py-1 px-3 rounded">Sửa</button>
+          <button class="bg-red-600 text-white py-1 px-3 rounded">Xóa</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Kệ và Ô Section -->
+<div class="mt-8 bg-white p-6 rounded-lg shadow">
+  <h3 class="text-lg font-bold mb-4">Danh Sách Kệ và Ô</h3>
+  <div id="rackInfo"></div>
+</div>

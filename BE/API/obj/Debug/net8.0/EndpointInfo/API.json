@@ -97,6 +97,16 @@
         "tags": [
           "Address"
         ],
+        "parameters": [
+          {
+            "name": "idAddress",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Success"
@@ -742,6 +752,37 @@
             }
           }
         ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/DeliveryNote/InsertDeliveryNote": {
+      "post": {
+        "tags": [
+          "DeliveryNote"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeliveryNoteRequestcsModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeliveryNoteRequestcsModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeliveryNoteRequestcsModel"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "Success"
@@ -2463,6 +2504,49 @@
           "typeCustomerName": {
             "type": "string",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DeliveryNoteRequestcsModel": {
+        "type": "object",
+        "properties": {
+          "warehouseID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "note": {
+            "type": "string",
+            "nullable": true
+          },
+          "deliveryNoteDetail": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DeliveryOrderDetai"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DeliveryOrderDetai": {
+        "type": "object",
+        "properties": {
+          "orderID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "priceHistoryId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "cellID": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false
