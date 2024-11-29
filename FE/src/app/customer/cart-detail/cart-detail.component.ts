@@ -42,7 +42,7 @@ export class CartDetailComponent {
     this.getCart();     
     this.onTotalPrice();
     console.log('đang oninit');
-    
+    this.isDisabled = false;
   }
 
   onTotalPrice() {
@@ -51,6 +51,7 @@ export class CartDetailComponent {
       if(c.checked)
         this.totalPrice += c.price * c.quantity;
     })
+    if(this.totalPrice != 0) this.isDisabled = true;
   }
 
   async updateCart(productId: number, quantity: number) {
@@ -139,12 +140,14 @@ export class CartDetailComponent {
   
   onCheckboxChange(item: CartItem, event: any): void {
     item.checked = event.target.checked;
+    this.isDisabled = event.target.checked;
     this.onTotalPrice();
     console.log(item.productId + 'is' + (item.checked ? 'checked' : 'uncheck'));    
   }
 
   onCheckboxChangev2(item: CartItem) {
     item.checked = !item.checked;
+    this.isDisabled = item.checked;
     this.onTotalPrice();
   }
 
