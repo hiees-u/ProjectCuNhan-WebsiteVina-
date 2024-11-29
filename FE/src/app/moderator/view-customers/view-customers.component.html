@@ -1,0 +1,90 @@
+<div class="content-pa">
+  <span class="error" *ngIf="isError">Hiện chưa tồn tại khách hàng...! </span>
+  <div class="content">
+    <table>
+      <tbody>
+        <tr>
+          <th style="width: 15%">Tên đăng nhập</th>
+          <th style="width: 18%">Họ và tên</th>
+          <th style="width: 17%">Email</th>
+          <th style="width: 15%">Số điện thoại</th>
+          <th style="width: 10%">Giới tính</th>
+          <th style="width: 10%">Loại khách hàng</th>
+          <th style="width: 15%">Chức năng</th>
+        </tr>
+        <!-- 0 -->
+        <tr *ngFor="let item of customers; let i = index">
+          <td class="td-name">{{ item.accountName }}</td>
+          <td class="td-centered">
+            {{ item.fullName }}
+          </td>
+          <td class="td-centered">
+            {{ item.email }}
+          </td>
+          <td class="td-centered">
+            {{ item.phone }}
+          </td>
+          <td class="td-centered">{{ item.gender == 0 ? 'Nữ' : 'Nam' }}</td>
+          <td class="td-centered">{{ item.typeCustomerName }}</td>
+          <td class="td-operation">
+            <!-- (click)="onShowDetail(item)" -->
+            <button class="btn-modi">
+              <i class="fa-regular fa-pen-to-square"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="f-content">
+    <span>Trang {{ pageCurrent }} / {{ totalPage }}</span>
+
+    <div class="f-content page">
+      <button
+        [ngClass]="{ 'no-active': pageCurrent === 1 }"
+        (click)="handlePageClick(-1)"
+      >
+        <i class="fa-solid fa-chevron-left"></i>
+      </button>
+      <button class="btn-page">{{ pageCurrent }}</button>
+      <button
+        [ngClass]="{ 'no-active': pageCurrent === totalPage }"
+        (click)="handlePageClick(1)"
+      >
+        <i class="fa-solid fa-chevron-right"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- <div
+  class="delete-product"
+  *ngIf="isShowDelete"
+  [ngClass]="{
+        'show-delete': isShowDelete && flagDelete,
+        'hide-delete': !isShowDelete && flagDelete
+      }"
+    >
+      <p>Xóa sản phẩm: {{ selectProduct.productName }}</p>
+      <button (click)="onHidenDelete()">Đóng</button>
+      <button class="btn-del" (click)="deleteProduct()">Xóa</button>
+    </div> -->
+
+  <!-- <div
+    class="detail-product"
+        *ngIf="isShowDetail"    
+      [ngClass]="{
+        'show-delete': isShowDetail && flagDetail,
+        'hide-delete': !isShowDetail && flagDetail
+      }"
+    >
+      <app-product-detail (isClose)="handleClose($event)" [product]="selectProduct" ></app-product-detail>
+    </div> -->
+
+  <!-- <div class="notification">
+      <app-notification
+        [data]="dataNotification"
+        [trigger]="trigger"
+      ></app-notification>
+    </div> -->
+</div>

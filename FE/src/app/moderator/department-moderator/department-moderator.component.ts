@@ -17,6 +17,9 @@ export class DepartmentModeratorComponent {
   isShowAddDepartment: boolean | undefined;
   flag: boolean = false;  
 
+  isShowDetail: boolean | undefined;
+  flagDetail: boolean = false;
+
   totalPage: number = 1;
   pages: number[] = [];
   pageCurrent: number = 1;
@@ -31,6 +34,11 @@ export class DepartmentModeratorComponent {
 
   ngOnInit(): void {
     this.getDepartments();
+  }
+
+  onShowDetail() {
+    this.isShowDetail = true;
+    this.flagDetail = true;
   }
 
   onShowAddCate() {

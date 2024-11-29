@@ -1118,6 +1118,7 @@ EXEC SP_DeleteEmployee @AccountName = N'';
 --##################################################################################################################
 GO									--Customer [ Khách Hàng ]
 --SELECT
+DROP PROC SP_GetCustomer 
 --> theo loại khách hàng
 CREATE PROCEDURE SP_GetCustomer
     @TypeCustomerID INT = NULL
@@ -1132,6 +1133,7 @@ BEGIN
         UF.phone, 
         UF.gender, 
         CT.type_customer_name, 
+		CT.type_customer_name,
         A.AddressID,
         A.Note + ' / ' + A.HouseNumber + ' , ' + CO.CommuneName + ' , ' + DI.DistrictName + ' , ' + PR.ProvinceName AS [ĐỊA CHỈ]
     FROM UserInfo UF

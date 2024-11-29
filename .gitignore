@@ -1,6 +1,6 @@
 # Ignore build files
 /bin/
-/obj/   # This line already exists in your provided snippet
+/obj/
 *.dll
 *.exe
 *.pdb
@@ -13,24 +13,9 @@
 *.userosscache
 *.sln.docstates
 
-# Ignore logs and temp files
-*.log
-*.tmp
-*.bak
-*.swp
-
-# Ignore system-specific files
-.DS_Store
-Thumbs.db
-ehthumbs.db
-Icon?
-
 # Ignore publish output
 /wwwroot/
-publish/
-dist/
+/publish/
+/dist/
 
-# Ignore NuGet packages
-*.nupkg
-packages/
-project.lock.json
+BE/.vs/
