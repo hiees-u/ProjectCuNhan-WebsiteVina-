@@ -45,6 +45,9 @@ builder.Services.AddDbContext<DbVINA>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DbVINA"))
 );
 
+builder.Services.Configure<MomoOptionModel>(builder.Configuration.GetSection("MomoAPI"));
+builder.Services.AddScoped<IMomoService, MomoService>();
+
 // Thêm dịch vụ CORS
 builder.Services.AddCors(options =>
 {
