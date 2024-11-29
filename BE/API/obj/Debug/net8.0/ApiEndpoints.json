@@ -481,6 +481,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "API.Controllers.DeliveryNoteController",
+    "Method": "InsertDeliveryNote",
+    "RelativePath": "api/DeliveryNote/InsertDeliveryNote",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "DTO.DeliveryNote.DeliveryNoteRequestcsModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "API.Controllers.DepartmentController",
     "Method": "Post",
     "RelativePath": "api/Department",

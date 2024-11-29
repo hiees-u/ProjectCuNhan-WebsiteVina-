@@ -7,7 +7,7 @@ using System.Data.SqlClient;
 
 namespace BLL
 {
-    public class WareHouseBLL: IWareHouse
+    public class WareHouseBLL : IWareHouse
     {
         public BaseResponseModel Delete(int warehouseId)
         {
@@ -75,10 +75,11 @@ namespace BLL
                                     WarehouseId = Convert.ToInt32(reader["WarehouseID"]),
                                     WarehouseName = reader["WarehouseName"] as string ?? string.Empty,
                                     Address = Convert.ToInt32(reader["AddressID"]),
+                                    FullAddress = reader["FullAddress"] as string ?? string.Empty,
                                     ModifiedBy = reader["ModifiedBy"] as string ?? string.Empty,
                                     CreateTime = (DateTime)(reader.IsDBNull(reader.GetOrdinal("CreateTime")) ? (DateTime?)null : Convert.ToDateTime(reader["CreateTime"])),
-                                    ModifiedTime = reader.IsDBNull(reader.GetOrdinal("ModifiedTime")) ? (DateTime?)null : Convert.ToDateTime(reader["ModifiedTime"]),
-                                    DeleteTime = reader.IsDBNull(reader.GetOrdinal("DeleteTime")) ? (DateTime?)null : Convert.ToDateTime(reader["DeleteTime"])
+                                    ModifiedTime = reader.IsDBNull(reader.GetOrdinal("ModifiedTime")) ? (DateTime?)null : Convert.ToDateTime(reader["ModifiedTime"])
+
 
                                 };
                                 listWareHouse.Add(warehouseResponseModel);
@@ -145,10 +146,10 @@ namespace BLL
                                     WarehouseId = reader.GetInt32(0),
                                     WarehouseName = reader.GetString(1),
                                     Address = reader.GetInt32(2),
-                                    ModifiedBy = reader.GetString(3),
-                                    CreateTime = !reader.IsDBNull(4) ? reader.GetDateTime(4) : DateTime.MinValue,
-                                    ModifiedTime = !reader.IsDBNull(5) ? reader.GetDateTime(5) : (DateTime?)null,
-                                    DeleteTime = !reader.IsDBNull(6) ? reader.GetDateTime(6) : (DateTime?)null
+                                    FullAddress = reader.GetString(3),
+                                    ModifiedBy = reader.GetString(4),
+                                    CreateTime = !reader.IsDBNull(5) ? reader.GetDateTime(5) : DateTime.MinValue,
+                                    ModifiedTime = !reader.IsDBNull(6) ? reader.GetDateTime(6) : (DateTime?)null,
                                 };
                             }
                         }

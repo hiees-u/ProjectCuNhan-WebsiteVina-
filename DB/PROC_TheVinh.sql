@@ -58,6 +58,7 @@ REVOKE SELECT, INSERT, UPDATE, DELETE ON SCHEMA::dbo FROM WarehouseEmployee;
 
 --############################################# GET ALL WAREHOUSE #####################################################################################
 go
+drop proc GetAllWarehouses
 CREATE PROCEDURE GetAllWarehouses
 AS
 BEGIN
@@ -65,15 +66,20 @@ BEGIN
         w.WarehouseID,
         w.WarehouseName,
         w.AddressID,
+        COALESCE(a.Note, '') + N', Xã ' + COALESCE(c.CommuneName, '') + N', Huyện ' + COALESCE(d.DistrictName, '') + N', Tỉnh ' + COALESCE(p.ProvinceName, '') AS FullAddress,
         w.ModifiedBy,
         w.CreateTime,
-        w.ModifiedTime,
-        w.DeleteTime
+        w.ModifiedTime
     FROM Warehouse w
-	WHERE w.DeleteTime IS NULL
+    LEFT JOIN Address a ON w.AddressID = a.AddressID
+    LEFT JOIN Commune c ON a.CommuneID = c.CommuneID
+    LEFT JOIN District d ON c.DistrictID = d.DistrictID
+    LEFT JOIN Province p ON d.ProvinceID = p.ProvinceID
+    WHERE w.DeleteTime IS NULL
     ORDER BY 
         w.CreateTime DESC;
 END;
+GO
 GO
 
 --Lấy thông tin kho
@@ -84,33 +90,70 @@ GRANT EXEC ON OBJECT::dbo.GetAllWarehouses TO  WarehouseEmployee;
 
 --############################################### GET WAREHOUSE BY ID #####################################################################################
 go
+--CREATE PROCEDURE GetWarehouseByID
+--    @WarehouseID INT,
+--    @Message NVARCHAR(100) OUTPUT
+--AS
+--BEGIN
+--    IF NOT EXISTS (SELECT 1 FROM Warehouse WHERE WarehouseID = @WarehouseID)
+--    BEGIN
+--        SET @Message = N'Không tìm thấy Warehouse với ID đã cho';
+--        RETURN;
+--    END
+
+--    SELECT 
+--        w.WarehouseID,
+--        w.WarehouseName,
+--        w.AddressID,
+--        w.ModifiedBy,
+--        w.CreateTime,
+--        w.ModifiedTime
+--    FROM 
+--        Warehouse w
+--    WHERE 
+--        w.WarehouseID = @WarehouseID AND W.DeleteTime IS NULL;
+
+--    SET @Message = N'Đã lấy thông tin kho thành công!';
+--END;
+
+--drop proc GetWarehouseByID
+
 CREATE PROCEDURE GetWarehouseByID
     @WarehouseID INT,
     @Message NVARCHAR(100) OUTPUT
 AS
 BEGIN
+    -- Kiểm tra xem Warehouse có tồn tại hay không
     IF NOT EXISTS (SELECT 1 FROM Warehouse WHERE WarehouseID = @WarehouseID)
     BEGIN
         SET @Message = N'Không tìm thấy Warehouse với ID đã cho';
         RETURN;
     END
 
+    -- Truy vấn thông tin Warehouse cùng với địa chỉ đầy đủ
     SELECT 
         w.WarehouseID,
         w.WarehouseName,
         w.AddressID,
+        COALESCE(a.Note, '') + N', Xã ' + COALESCE(c.CommuneName, '') + N', Huyện ' + COALESCE(d.DistrictName, '') + N', Tỉnh ' + COALESCE(p.ProvinceName, '') AS FullAddress,
         w.ModifiedBy,
         w.CreateTime,
-        w.ModifiedTime,
-        w.DeleteTime
+        w.ModifiedTime
     FROM 
         Warehouse w
+    LEFT JOIN Address a ON w.AddressID = a.AddressID
+    LEFT JOIN Commune c ON a.CommuneID = c.CommuneID
+    LEFT JOIN District d ON c.DistrictID = d.DistrictID
+    LEFT JOIN Province p ON d.ProvinceID = p.ProvinceID
     WHERE 
-        w.WarehouseID = @WarehouseID AND W.DeleteTime IS NULL;
+        w.WarehouseID = @WarehouseID AND w.DeleteTime IS NULL;
 
+    -- Đặt thông báo thành công
     SET @Message = N'Đã lấy thông tin kho thành công!';
 END;
 GO
+
+--GO
 
 --Lấy thông tin kho với id
 DECLARE @ResultMessage NVARCHAR(100);
@@ -1007,9 +1050,43 @@ EXEC sp_GetWarehouseReceiptsByWarehouse @WarehouseID = 2;
 
 
 --====================== XUẤT KHO =======================================
+-- Trigger
+SET ANSI_NULLS ON;
+GO
+SET QUOTED_IDENTIFIER ON;
+GO
 
---============CÒN LỖI CHƯA SỬA===========================================
-DROP TYPE dbo.DeliveryOrderDetailType;
+--DROP TRIGGER [dbo].[trg_validate_cell_for_warehouse]
+-- Tạo lại trigger
+CREATE TRIGGER [dbo].[trg_validate_cell_for_warehouse]
+ON [dbo].[DeliveryNoteDetail]
+AFTER INSERT, UPDATE
+AS
+BEGIN
+    IF EXISTS (
+        SELECT 1
+        FROM inserted i
+        INNER JOIN DeliveryNote dn ON i.DeliveryNote = dn.DeliveryNoteId
+        INNER JOIN Warehouse w ON w.WarehouseID = dn.WarehouseID
+        INNER JOIN Shelve s ON s.WarehouseID = w.WarehouseID
+        INNER JOIN Cells c ON 
+            i.CellId = c.CellId AND 
+            c.ShelvesID = s.ShelvesID AND 
+            c.product_id = i.product_id AND
+            c.Quantity < i.quantity -- Điều kiện kiểm tra đúng
+        WHERE w.WarehouseId = dn.WarehouseId
+    )
+    BEGIN
+        RAISERROR(N'Kiểm tra lại DeliveryNoteDetail!', 16, 1);
+        ROLLBACK TRANSACTION;
+    END
+END;
+GO
+
+--DROP TYPE dbo.DeliveryOrderDetailType;
+
+DROP PROCEDURE IF EXISTS sp_ExportWarehouseGoodsByOrder;
+GO
 
 CREATE TYPE dbo.DeliveryOrderDetailType AS TABLE (
     OrderID INT,
@@ -1017,9 +1094,6 @@ CREATE TYPE dbo.DeliveryOrderDetailType AS TABLE (
     Quantity INT,
     CellID INT
 );
-GO
-
-DROP PROCEDURE IF EXISTS sp_ExportWarehouseGoodsByOrder;
 GO
 
 CREATE PROCEDURE sp_ExportWarehouseGoodsByOrder

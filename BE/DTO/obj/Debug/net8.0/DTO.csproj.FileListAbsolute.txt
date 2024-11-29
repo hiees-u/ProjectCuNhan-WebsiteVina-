@@ -14,3 +14,19 @@ C:\Users\ADMIN\Desktop\ProjectCuNhan-WebsiteVina-\BE\DTO\obj\Debug\net8.0\DTO.dl
 C:\Users\ADMIN\Desktop\ProjectCuNhan-WebsiteVina-\BE\DTO\obj\Debug\net8.0\refint\DTO.dll
 C:\Users\ADMIN\Desktop\ProjectCuNhan-WebsiteVina-\BE\DTO\obj\Debug\net8.0\DTO.pdb
 C:\Users\ADMIN\Desktop\ProjectCuNhan-WebsiteVina-\BE\DTO\obj\Debug\net8.0\ref\DTO.dll
+E:\HK I nam 4\Do An Chuyen Nganh New 2\ProjectCuNhan-WebsiteVina-\BE\DTO\bin\Debug\net8.0\DTO.deps.json
+E:\HK I nam 4\Do An Chuyen Nganh New 2\ProjectCuNhan-WebsiteVina-\BE\DTO\bin\Debug\net8.0\DTO.dll
+E:\HK I nam 4\Do An Chuyen Nganh New 2\ProjectCuNhan-WebsiteVina-\BE\DTO\bin\Debug\net8.0\DTO.pdb
+E:\HK I nam 4\Do An Chuyen Nganh New 2\ProjectCuNhan-WebsiteVina-\BE\DTO\bin\Debug\net8.0\DLL.dll
+E:\HK I nam 4\Do An Chuyen Nganh New 2\ProjectCuNhan-WebsiteVina-\BE\DTO\bin\Debug\net8.0\DLL.pdb
+E:\HK I nam 4\Do An Chuyen Nganh New 2\ProjectCuNhan-WebsiteVina-\BE\DTO\obj\Debug\net8.0\DTO.csproj.AssemblyReference.cache
+E:\HK I nam 4\Do An Chuyen Nganh New 2\ProjectCuNhan-WebsiteVina-\BE\DTO\obj\Debug\net8.0\DTO.GeneratedMSBuildEditorConfig.editorconfig
+E:\HK I nam 4\Do An Chuyen Nganh New 2\ProjectCuNhan-WebsiteVina-\BE\DTO\obj\Debug\net8.0\DTO.AssemblyInfoInputs.cache
+E:\HK I nam 4\Do An Chuyen Nganh New 2\ProjectCuNhan-WebsiteVina-\BE\DTO\obj\Debug\net8.0\DTO.AssemblyInfo.cs
+E:\HK I nam 4\Do An Chuyen Nganh New 2\ProjectCuNhan-WebsiteVina-\BE\DTO\obj\Debug\net8.0\DTO.csproj.CoreCompileInputs.cache
+E:\HK I nam 4\Do An Chuyen Nganh New 2\ProjectCuNhan-WebsiteVina-\BE\DTO\obj\Debug\net8.0\DTO.sourcelink.json
+E:\HK I nam 4\Do An Chuyen Nganh New 2\ProjectCuNhan-WebsiteVina-\BE\DTO\obj\Debug\net8.0\DTO.csproj.Up2Date
+E:\HK I nam 4\Do An Chuyen Nganh New 2\ProjectCuNhan-WebsiteVina-\BE\DTO\obj\Debug\net8.0\DTO.dll
+E:\HK I nam 4\Do An Chuyen Nganh New 2\ProjectCuNhan-WebsiteVina-\BE\DTO\obj\Debug\net8.0\refint\DTO.dll
+E:\HK I nam 4\Do An Chuyen Nganh New 2\ProjectCuNhan-WebsiteVina-\BE\DTO\obj\Debug\net8.0\DTO.pdb
+E:\HK I nam 4\Do An Chuyen Nganh New 2\ProjectCuNhan-WebsiteVina-\BE\DTO\obj\Debug\net8.0\ref\DTO.dll
