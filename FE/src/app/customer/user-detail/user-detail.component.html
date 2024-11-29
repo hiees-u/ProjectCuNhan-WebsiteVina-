@@ -65,13 +65,13 @@
         <div class="box-content no-select">
           <label for="Name">Họ và tên:</label>
           <div class="box-input">
-            <input type="text" id="Name" [(ngModel)]="userInfo.fullName" />
+            <input type="text" id="Name" [(ngModel)]="userInfo.fullName" [placeholder]="userInfo.fullName ? userInfo.fullName : 'Chưa xác định!'" />
           </div>
         </div>
         <div class="box-content no-select">
           <label for="email">Email:</label>
           <div class="box-input">
-            <input type="text" id="email" [(ngModel)]="userInfo.email" />
+            <input type="text" id="email" [(ngModel)]="userInfo.email" [placeholder]="userInfo.email ? userInfo.email : 'Chưa xác định!'" />
           </div>
         </div>
         <div class="box-content no-select">
@@ -106,15 +106,16 @@
         <div class="box-content no-select">
           <label for="sdt">Số điện thoại:</label>
           <div class="box-input">
-            <input type="text" id="sdt" [(ngModel)]="userInfo.phone" />
+            <input type="text" id="sdt" [(ngModel)]="userInfo.phone" [placeholder]="userInfo.phone ? userInfo.phone : 'Chưa xác định!'" />
           </div>
         </div>
         <div class="box-content no-select">
           <label for="gender">Giới tính:</label>
           <div class="box-input">
-            <select name="gender" id="gender" [(ngModel)]="userInfo.gender">
+            <select name="gender" id="gender" [(ngModel)]="userInfo.gender" >
               <option value="0">Nữ</option>
               <option value="1">Nam</option>
+              <option value="-1">Chưa xác định</option>
             </select>
           </div>
         </div>

@@ -692,6 +692,7 @@ GRANT EXECUTE ON OBJECT::dbo.SP_UpdateUserInfo TO  Customer;
 --RUN
 EXEC SP_UpdateUserInfo @FullName = N'Tên đầy đủu', @Phone = '09876543210', @Email = 'email@example.com', @AddressID = 1, @Gender = 1;
 --#########################################################################GET User Info#####################################################################################
+DROP PROC SP_GetUserInfoByUserName
 CREATE PROCEDURE SP_GetUserInfoByUserName
 AS
 BEGIN
@@ -713,12 +714,12 @@ BEGIN
 	di.ProvinceID AS N'Tỉnh',
 	a.Note + N', Xã ' + co.CommuneName + N', Quận/Huyện ' + di.DistrictName + N', Tỉnh/Thành Phố ' + pr.ProvinceName as N'Địa Chỉ'
 	FROM UserInfo uf
-	JOIN Customer c ON uf.customer_Id = c.customerId
-	JOIN CustomerType ct ON c.type_customer_id = ct.type_customer_id
-	JOIN Address a ON a.AddressID = uf.address_id
-	JOIN Commune co ON a.CommuneID = co.CommuneID
-	JOIN District di ON co.DistrictID = di.DistrictID
-	JOIN Province pr ON di.ProvinceID = pr.ProvinceID
+	LEFT JOIN Customer c ON uf.customer_Id = c.customerId
+	LEFT JOIN CustomerType ct ON c.type_customer_id = ct.type_customer_id
+	LEFT JOIN Address a ON a.AddressID = uf.address_id
+	LEFT JOIN Commune co ON a.CommuneID = co.CommuneID
+	LEFT JOIN District di ON co.DistrictID = di.DistrictID
+	LEFT JOIN Province pr ON di.ProvinceID = pr.ProvinceID
 	WHERE uf.AccountName = @UserName;
 END;
 --phân quyền

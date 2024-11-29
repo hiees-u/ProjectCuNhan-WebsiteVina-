@@ -1132,8 +1132,8 @@ BEGIN
         UF.email, 
         UF.phone, 
         UF.gender, 
+		CT.type_customer_id,
         CT.type_customer_name, 
-		CT.type_customer_name,
         A.AddressID,
         A.Note + ' / ' + A.HouseNumber + ' , ' + CO.CommuneName + ' , ' + DI.DistrictName + ' , ' + PR.ProvinceName AS [ĐỊA CHỈ]
     FROM UserInfo UF
@@ -1279,5 +1279,6 @@ BEGIN
 END
 GO--GÁN QUYỀN
 GRANT EXECUTE ON OBJECT::GetUserAccountName TO Moderator;
+GRANT EXECUTE ON OBJECT::GetUserAccountName TO Customer;
 GO--RUN
 EXEC GetUserAccountName

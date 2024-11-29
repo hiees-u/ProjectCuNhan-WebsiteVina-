@@ -29,6 +29,7 @@ import {
 import { OrderDetailModel } from '../../shared/module/order/order.module';
 import { CustomCurrencyPipe } from '../../shared/module/customCurrency';
 import { Router } from '@angular/router';
+import { ModeratorService } from '../../moderator/moderator.service';
 
 @Component({
   selector: 'app-user-detail',
@@ -71,13 +72,25 @@ export class UserDetailComponent {
   constructor(
     private service: CustomerService,
     private servicee: ServicesService,
+    private serviceModerator: ModeratorService,
     private router: Router
   ) {}
 
   ngOnInit() {
     this.getUserInfo();
+    if(!this.userInfo.accountName) {
+      console.log('del co ten dang nhap');
+      this.getAccountName();
+    }
     console.log(this.userInfo);
     this.getOrder(-1);    
+  }
+
+  async getAccountName() {
+    await this.serviceModerator.getAccountName()
+    .then((data) => {
+      this.userInfo.accountName = data.data
+    })
   }
 
   async getAddressById(idAddress: number) {
