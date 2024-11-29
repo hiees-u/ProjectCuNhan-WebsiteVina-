@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
+using DTO.Payment;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -44,6 +45,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<DbVINA>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DbVINA"))
 );
+
+builder.Services.Configure<MomoOptionModel>(builder.Configuration.GetSection("MomoAPI"));
+builder.Services.AddScoped<IMomoService, MomoService>();
 
 // Thêm dịch vụ CORS
 builder.Services.AddCors(options =>

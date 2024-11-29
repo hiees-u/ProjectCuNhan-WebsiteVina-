@@ -1,7 +1,6 @@
 ﻿using BLL.Interface;
 using DTO.WarehouseReceipt;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -18,7 +17,6 @@ namespace API.Controllers
         }
 
         [HttpPost("InsertWarehouseReceipt")]
-        [Authorize(Roles = "WarehouseEmployee")]
         public IActionResult InsertWarehouseReceipt([FromBody] WarehouseReceiptRequestModel request)
         {
             // Map the request to the BLL method

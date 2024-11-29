@@ -7,6 +7,7 @@ import { CartDetailComponent } from './cart-detail/cart-detail.component';
 import { UserDetailComponent } from './user-detail/user-detail.component';
 import { ContactComponent } from './contact/contact.component';
 import { AboutUsComponent } from './about-us/about-us.component';
+import { PaymentComponent } from './payment/payment.component';
 
 const routes: Routes = [
   {
@@ -19,6 +20,7 @@ const routes: Routes = [
       { path: 'cart-details', component: CartDetailComponent},
       { path: 'user-details', component: UserDetailComponent},
       { path: 'contact', component: ContactComponent},
+      // { path: 'payment', component: PaymentComponent },
       { path: '', redirectTo: 'view-product', pathMatch: 'full'}
     ]
   }
