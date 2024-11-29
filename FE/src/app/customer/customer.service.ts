@@ -180,7 +180,7 @@ export class CustomerService {
           Authorization: `Bearer ${this.token}`,
         },
       });
-
+      
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
