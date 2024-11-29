@@ -514,6 +514,7 @@ GRANT EXECUTE ON OBJECT::dbo.SP_AddToCart TO  Customer;
 EXEC SP_AddToCart @ProductID = 4, @Quantity = 1
 go
 --#########################################################################Select Cart Customer#####################################################################################
+--DROP PROC SP_GetCartByUser
 CREATE PROCEDURE SP_GetCartByUser
 AS
 BEGIN
@@ -535,7 +536,7 @@ BEGIN
 	FROM Cart c
 	Join Product p on c.product_id = p.product_id
 	join PriceHistory ph on ph.product_id = p.product_id
-	WHERE c.customerId = @CustomerID;
+	WHERE c.customerId = @CustomerID AND ph.isActive = 0;
 END;
 
 --gán quyền
@@ -659,6 +660,8 @@ GRANT EXECUTE ON OBJECT::dbo.SP_InsertOrderWithDetails TO  Customer;
 --RUN EXAMPLE
 
 --#########################################################################Update User Info#####################################################################################
+--DROP PROC SP_UpdateUserInfo
+
 CREATE PROCEDURE SP_UpdateUserInfo
     @FullName NVARCHAR(100),
     @Phone VARCHAR(20),
@@ -677,14 +680,15 @@ BEGIN
 
     -- Cập nhật thông tin người dùng
     UPDATE UserInfo
-    SET full_name = @FullName, 
-        phone = @Phone, 
-        email = @Email, 
-        address_id = @AddressID, 
-        gender = @Gender,
+	SET full_name = @FullName, 
+		phone = @Phone, 
+		email = @Email, 
+		address_id = CASE WHEN @AddressID != 0 THEN @AddressID ELSE address_id END, 
+		gender = CASE WHEN @Gender IN (0, 1) THEN @Gender ELSE NULL END,
 		ModifiedBy = @UserName,
 		ModifiedTime = GETDATE()
-    WHERE AccountName = @UserName;
+	WHERE AccountName = @UserName;
+
 END;
 --phân quyền
 GRANT EXECUTE ON OBJECT::dbo.SP_UpdateUserInfo TO  Customer;
