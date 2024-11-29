@@ -18,7 +18,6 @@ namespace API.Controllers
         }
 
         [HttpPost("InsertWarehouseReceipt")]
-        [Authorize(Roles = "WarehouseEmployee")]
         public IActionResult InsertWarehouseReceipt([FromBody] WarehouseReceiptRequestModel request)
         {
             // Map the request to the BLL method

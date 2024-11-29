@@ -24,7 +24,30 @@ export class CustomerService {
       this.token = localStorage.getItem('token') || '';
     }
   }
-
+  
+  async createPaymentMomo(order: OrderRequestModule): Promise<any> {
+    const url = `${this.apiUrl}Payment/CreatePaymentUrl`;
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.token}`,
+        },
+        body: JSON.stringify(order),
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      console.log('MOMO Payment Response:', data); // Log phản hồi từ server
+      return data;
+    } catch (error) {
+      console.error('Error creating MOMO payment URL:', error);
+      throw error;
+    }
+  }
+  
   //lấy token
   ngOnInit(): void {
     if (typeof window !== 'undefined') {

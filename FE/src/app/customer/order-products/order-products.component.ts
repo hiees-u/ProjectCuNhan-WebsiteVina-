@@ -29,6 +29,7 @@ import {
   ProductQuantity,
 } from '../../shared/module/order/order.module';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-order-products',
@@ -75,7 +76,38 @@ export class OrderProductsComponent {
     products: []
   };
   
-  constructor(private service: CustomerService) {}
+  constructor(private service: CustomerService, private router: Router) {}
+
+  async showPayment() {
+    // this.router.navigate(['/customer/payment']);
+    const orderProducts: ProductQuantity[] = this.data.map((item) => ({
+      PriceHistoryId: item.priceHistoryId,
+      Quantity: item.quantity,
+    }));
+  
+    this.Order.products = orderProducts;
+    this.Order.paymentStatus = true;
+  
+    try {
+      const response = await this.service.postOrder(this.Order);
+      if (response.isSuccess) {
+        const momoResponse = await this.service.createPaymentMomo(this.Order);
+        console.log("MOMO Response:", momoResponse); // Log phản hồi từ MOMO
+        if (momoResponse && momoResponse.PayUrl) {
+          window.location.href = momoResponse.PayUrl; // Điều hướng tới URL QR
+        } else {
+          throw new Error("URL thanh toán MOMO không hợp lệ!");
+        }
+      } else {
+        throw new Error("Đặt hàng thất bại!");
+      }
+    } catch (error: any) { // Ép kiểu về `any`
+      console.error("Lỗi trong quá trình thanh toán:", error);
+      this.dataNotification.messages = error.message || "Lỗi không xác định!";
+      this.dataNotification.status = "error";
+      this.trigger = Date.now();
+    }
+  }
 
   async handleOrder() {
     if (this.addressSelectKey === 0) {

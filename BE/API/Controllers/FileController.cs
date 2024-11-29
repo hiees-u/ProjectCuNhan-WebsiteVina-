@@ -16,8 +16,8 @@ namespace API.Controllers
 
             //_targetFolder = Path.Combine("C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\FE\\src\\assets\\Products");
 
-            _targetFolder = Path.Combine("E:\\HK I nam 4\\Do An Chuyen Nganh\\ProjectCuNhan-WebsiteVina-\\FE\\public\\Products");
-            //_targetFolder = Path.Combine("C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\FE\\public\\Products");
+            //_targetFolder = Path.Combine("D:\\HOC\\Do An\\do an 2811\\ProjectCuNhan-WebsiteVina-\\FE\\public\\Products");
+            _targetFolder = Path.Combine("C:\\Users\\ADMIN\\Desktop\\ProjectCuNhan-WebsiteVina-\\FE\\public\\Products");
 
             // Tạo thư mục nếu chưa tồn tại
             if (!Directory.Exists(_targetFolder))
