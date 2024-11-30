@@ -145,7 +145,7 @@
   font-family: var(--main-style);
   color: var(--secon-text-color);
   font-size: 1em;
-  transition: all .5s ease-in-out;
+  transition: all .75s ease-in-out;
   box-shadow: 1px 1px 4px 0px #352f2fcf;
 }
 
@@ -156,8 +156,9 @@
 }
 
 .content-mini>i {
-  color: var(--main-color);
+  color: #000;
   font-size: 1.6em;
+  transition: all .5s ease-in-out;
 }
 
 .content-mini>div>span:last-child {
@@ -169,7 +170,19 @@
 .content-mini:hover {
   cursor: pointer;
   box-shadow: 1px 1px 120px 0px #352f2fcf, inset 1px 1px 15px 0px #352f2fcf;
-  color: var(--main-text-color);
+  /* color: var(--main-text-color); */
+  color: #000;
+  animation: Jumn .5s ease-in-out infinite;
+}
+
+.content-mini:hover>i {
+  color: #ddd;
+}
+
+@keyframes Jumn {
+  50% {
+    opacity: 85%; 
+  } 
 }
 
 .content-footer {
@@ -289,5 +302,8 @@
   top: 0;
   right: 0;
   position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: #e7e7e791;
 }

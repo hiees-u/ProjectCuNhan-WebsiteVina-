@@ -29,8 +29,18 @@
           <td class="text-center min-text">
             {{ item?.price ?? 0 | customCurrency }}
           </td>
-          <td class="text-center min-text">{{ item.categoryName }}</td>
-          <td class="text-center min-text">{{ item.subCategoryName }}</td>
+          <td class="text-center min-text">
+            <span
+              [ngClass]="{ 'error-text': item.categoryName === 'Ðã xóa' }"
+              >{{ item.categoryName }}</span
+            >
+          </td>
+          <td class="text-center min-text">
+            <span
+              [ngClass]="{ 'error-text': item.subCategoryName === 'Ðã xóa' }"
+              >{{ item.subCategoryName }}</span
+            >
+          </td>
           <td class="text-center min-text">
             <span *ngIf="item.totalQuantity > 5; else lowStock">
               <span class="bg-green">Còn hàng</span>
@@ -85,9 +95,20 @@
       'hide-delete': !isShowDelete && flagDelete
     }"
   >
-    <p>Xóa sản phẩm: {{ selectProduct.productName }}</p>
+    <span *ngIf="selectProduct.totalQuantity != 0">
+      <p>Không thể xóa. Sản phẩm còn tồn kho...!</p>
+    </span>
+    <p *ngIf="selectProduct.totalQuantity == 0">
+      Xóa sản phẩm: {{ selectProduct.productName }}
+    </p>
     <button (click)="onHidenDelete()">Đóng</button>
-    <button class="btn-del" (click)="deleteProduct()">Xóa</button>
+    <button
+      *ngIf="selectProduct.totalQuantity == 0"
+      class="btn-del"
+      (click)="deleteProduct()"
+    >
+      Xóa
+    </button>
   </div>
 
   <!-- *ngIf="isShowDetail" -->
@@ -98,7 +119,10 @@
       'hide-delete': !isShowDetail && flagDetail
     }"
   >
-    <app-product-detail (isClose)="handleClose($event)" [product]="selectProduct" ></app-product-detail>
+    <app-product-detail
+      (isClose)="handleClose($event)"
+      [product]="selectProduct"
+    ></app-product-detail>
   </div>
 
   <div class="notification">

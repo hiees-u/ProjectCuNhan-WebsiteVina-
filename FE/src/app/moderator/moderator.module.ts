@@ -2,15 +2,15 @@ import { NgModule } from '@angular/core';
 
 //customer request module
 export interface CustomerRequestModule {
-  accountName:string;
-  fullName:string;
-  email:string;
-  phone:string;
+  accountName: string;
+  fullName: string;
+  email: string;
+  phone: string;
   gender: number;
   typeCustomerId: number;
-  typeCustomerName:string;
+  typeCustomerName: string;
   addressId: number;
-  addressString:string;
+  addressString: string;
 }
 
 //employee
@@ -102,6 +102,14 @@ export interface CategoryRequesModerator {
 export interface SubCategoryRequesModerator {
   subCategoryId: number;
   subCategoryName: string;
+}
+
+export function ContructorDepartmentRequestModerator(): DepartmentRequestModerator {
+  return {
+    departmentId: 0,
+    departmentName: '',
+    sumEmployee: 0,
+  };
 }
 
 export function ContructorCategoryModule(): CategoryRequesModerator {

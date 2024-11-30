@@ -536,7 +536,7 @@ BEGIN
 	FROM Cart c
 	Join Product p on c.product_id = p.product_id
 	join PriceHistory ph on ph.product_id = p.product_id
-	WHERE c.customerId = @CustomerID AND ph.isActive = 0;
+	WHERE c.customerId = @CustomerID AND ph.isActive = 0 AND p.DeleteTime IS NULL
 END;
 
 --gán quyền

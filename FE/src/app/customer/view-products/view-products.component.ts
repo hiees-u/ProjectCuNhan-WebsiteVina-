@@ -128,11 +128,11 @@ export class ViewProductsComponent {
   }
 
   //nhận dữ liệu từ Search Box
-  receiveData(data: string) {
+  async receiveData(data: string) {
     this.searchString = data;
     this.pageActive = 1;
     console.log(`Nhận lại ${this.searchString}`);
-    this.getProduct(
+    await this.getProduct(
       null,
       this.cateActive,
       this.subCateActive,
@@ -334,9 +334,9 @@ export class ViewProductsComponent {
   }
 
   async ngOnInit(): Promise<void> {
-    this.getTop10Categories();
-    this.getTop10SubCategories();
-    this.getProduct();
+    await this.getTop10Categories();
+    await this.getTop10SubCategories();
+    await this.getProduct();
 
     this.dataNotification.status = 'info';
     this.dataNotification.messages = '';
@@ -346,16 +346,17 @@ export class ViewProductsComponent {
     }
   }
 
-  handleDataChange(data: Product) {
+  async handleDataChange(data: Product) {
     this.show = 1;
     this.receivedData = data;
     this.cart.quantity = 1;
     this.cart.productId = data.productId;
-    this.getSubCateProductDetail(this.receivedData?.subCategoryId!);
-    this.getCateProductDetail(this.receivedData?.categoryId!);
-    this.getSupplier(this.receivedData?.supplier!);
+    await this.getSubCateProductDetail(this.receivedData?.productId);
+    await this.getCateProductDetail(this.receivedData?.productId);
+    await this.getSupplier(this.receivedData?.supplier!);
     console.log(this.cart);
     console.log(this.receivedData);
+    console.log('handleDataChange', data);   
   }
 
   async getSubCateProductDetail(productID: number) {
@@ -378,7 +379,11 @@ export class ViewProductsComponent {
       const response: BaseResponseModel =
         await this.customer_service.getCateByProductID(productID);
       if (response.isSuccess) {
+        console.log(new Date() , productID);
+
         this.cateProductDetail = response.data;
+        console.log(new Date() + this.cateProductDetail);
+        
       } else {
         console.log('Failed to get categories');
       }

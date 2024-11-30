@@ -84,6 +84,7 @@ EXEC SP_SelectCategory @category_name = N'A';
 EXEC SP_SelectCategory @category_id = NULL, @category_name = N'A';
 GO
 --DELETE
+DROP PROC SP_DeleteCategory
 CREATE PROCEDURE SP_DeleteCategory
     @category_id INT = NULL
 AS
@@ -91,7 +92,7 @@ BEGIN
     SET NOCOUNT ON;
 
     -- Kiểm tra nếu còn sản phẩm nào sử dụng SubCategory này
-    IF EXISTS (
+    /*IF EXISTS (
         SELECT 1 
         FROM Product 
         WHERE Category_id = @category_id
@@ -100,11 +101,11 @@ BEGIN
     BEGIN
         -- Nếu tồn tại sản phẩm, trả về 0
         RETURN 0;
-    END
+    END*/
 
     -- Nếu không còn sản phẩm nào, thực hiện xóa mềm
     UPDATE Category
-    SET DeleteTime = GETDATE(), ModifiedBy = SUSER_NAME()
+    SET DeleteTime = GETDATE(), ModifiedBy = SUSER_NAME(), ModifiedTime = GETDATE()
     WHERE category_id = @category_id;
 
     -- Trả về 1 khi xóa thành công
@@ -187,12 +188,13 @@ EXEC SP_GetSubCategory @subCategory_id = 3, @subCategory_name = N'ca'
 EXEC SP_GetSubCategory @subCategory_name = N'Ca'
 GO
 --DELETE
+--DROP PROC SP_DeleteSubCategory
 CREATE PROCEDURE SP_DeleteSubCategory
     @subCategory_id INT = NULL
 AS
 BEGIN
     SET NOCOUNT ON;
-
+	/*
     IF EXISTS (
         SELECT 1 
         FROM Product 
@@ -202,9 +204,10 @@ BEGIN
     BEGIN
         RETURN 0;
     END
+	*/
 
     UPDATE SubCategory
-    SET DeleteTime = GETDATE(), ModifiedBy = SUSER_NAME()
+    SET DeleteTime = GETDATE(), ModifiedBy = SUSER_NAME(), ModifiedTime = GETDATE()
     WHERE SubCategoryID = @subCategory_id;
 
     RETURN 1;
@@ -219,18 +222,40 @@ EXEC SP_DeleteSubCategory @subCategory_id = 5
 
 GO									--PRODUCT [ SẢN PHẨM ]
 --GET
+--DROP PROC SP_GetAllProductsModerator
 CREATE PROCEDURE SP_GetAllProductsModerator
 AS
 BEGIN
-	SELECT p.*, ph.price, ph.priceHistoryId, sc.SubCategoryName, c.category_name
-	FROM Product p
-	JOIN PriceHistory ph ON p.product_id = ph.product_id
-	JOIN SubCategory sc ON sc.SubCategoryID = p.SubCategoryID
-	JOIN Category c ON c.category_id = p.Category_id
-	WHERE ph.isActive = 0 
-	  AND p.DeleteTime IS NULL
-	ORDER BY p.CreateTime DESC;
+    SELECT 
+        p.*, 
+        ph.price, 
+        ph.priceHistoryId, 
+        CASE 
+            WHEN sc.DeleteTime IS NOT NULL THEN 'Đã xóa' 
+            ELSE sc.SubCategoryName 
+        END AS SubCategoryName, 
+        CASE 
+            WHEN c.DeleteTime IS NOT NULL THEN 'Đã xóa' 
+            ELSE c.category_name 
+        END AS category_name,
+        CASE 
+            WHEN sc.DeleteTime IS NOT NULL THEN -1
+            ELSE sc.SubCategoryID 
+        END AS SubCategoryID,
+        CASE 
+            WHEN c.DeleteTime IS NOT NULL THEN -1
+            ELSE c.category_id 
+        END AS CategoryID
+    FROM Product p
+    JOIN PriceHistory ph ON p.product_id = ph.product_id
+    JOIN SubCategory sc ON sc.SubCategoryID = p.SubCategoryID
+    JOIN Category c ON c.category_id = p.Category_id
+    WHERE ph.isActive = 0 
+      AND p.DeleteTime IS NULL
+    ORDER BY p.CreateTime DESC;
 END;
+
+
 
 exec SP_GetAllProductsModerator;
 
@@ -507,7 +532,7 @@ BEGIN
 	ELSE
 	BEGIN
 		UPDATE Supplier
-		SET DeleteBy = SUSER_NAME(), DeleteTime = GETDATE(), SupplierName = N'Đã xóa'
+		SET DeleteBy = SUSER_NAME(), DeleteTime = GETDATE()
 		WHERE SupplierID = @SupplierID
 	END
 END
@@ -1283,3 +1308,44 @@ GRANT EXECUTE ON OBJECT::GetUserAccountName TO Moderator;
 GRANT EXECUTE ON OBJECT::GetUserAccountName TO Customer;
 GO--RUN
 EXEC GetUserAccountName
+
+--################################################ TRIGGER
+go
+CREATE TRIGGER trg_CheckCategoryName
+ON Category
+INSTEAD OF INSERT, UPDATE
+AS
+BEGIN
+    -- Kiểm tra trùng lặp tên danh mục với DeleteTime là NULL
+    IF EXISTS (
+        SELECT 1
+        FROM inserted i
+        JOIN Category c ON i.category_name = c.category_name
+        WHERE c.DeleteTime IS NULL AND i.category_id <> c.category_id
+    )
+    BEGIN
+        RAISERROR('Tên danh mục đã tồn tại và chưa bị xóa.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
+
+    -- Chèn hoặc cập nhật danh mục
+    IF (SELECT COUNT(*) FROM inserted) > 0
+    BEGIN
+        -- Chèn dữ liệu mới
+        INSERT INTO Category (category_name, DeleteTime)
+        SELECT i.category_name, i.DeleteTime
+        FROM inserted i
+        WHERE NOT EXISTS (
+            SELECT 1 FROM Category c
+            WHERE c.category_id = i.category_id
+        );
+
+        -- Cập nhật dữ liệu hiện có
+        UPDATE Category
+        SET category_name = i.category_name,
+            DeleteTime = i.DeleteTime
+        FROM inserted i
+        WHERE Category.category_id = i.category_id;
+    END
+END;

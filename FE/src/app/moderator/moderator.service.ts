@@ -37,7 +37,7 @@ export class ModeratorService {
       url += `&employeeTypeID=${employeeTypeID}`;
     }
     if (departmentID) {
-      url += `&employeeTypeID=${departmentID}`;
+      url += `&departmentID=${departmentID}`;
     }
 
     console.log(url);
