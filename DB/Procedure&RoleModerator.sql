@@ -1349,3 +1349,42 @@ BEGIN
         WHERE Category.category_id = i.category_id;
     END
 END;
+go
+CREATE TRIGGER trg_CheckSubCategoryName
+ON SubCategory
+INSTEAD OF INSERT, UPDATE
+AS
+BEGIN
+    -- Kiểm tra trùng lặp tên danh mục với DeleteTime là NULL
+    IF EXISTS (
+        SELECT 1
+        FROM inserted i
+        JOIN SubCategory c ON i.SubCategoryName = c.SubCategoryName
+        WHERE c.DeleteTime IS NULL AND i.SubCategoryID <> c.SubCategoryID
+    )
+    BEGIN
+        RAISERROR('Tên danh mục đã tồn tại và chưa bị xóa.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
+
+    -- Chèn hoặc cập nhật danh mục
+    IF (SELECT COUNT(*) FROM inserted) > 0
+    BEGIN
+        -- Chèn dữ liệu mới
+        INSERT INTO SubCategory (SubCategoryName, DeleteTime)
+        SELECT i.SubCategoryName, i.DeleteTime
+        FROM inserted i
+        WHERE NOT EXISTS (
+            SELECT 1 FROM SubCategory c
+            WHERE c.SubCategoryID = i.SubCategoryID
+        );
+
+        -- Cập nhật dữ liệu hiện có
+        UPDATE SubCategory
+        SET SubCategoryName = i.SubCategoryName,
+            DeleteTime = i.DeleteTime
+        FROM inserted i
+        WHERE SubCategory.SubCategoryID = i.SubCategoryID;
+    END
+END;

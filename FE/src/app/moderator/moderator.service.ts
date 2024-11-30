@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import {
   BaseResponseModel,
-  BaseResponseModule,
 } from '../shared/module/base-response/base-response.module';
-import { CategoryRequesModerator, InsertProduct, ProductModerator, SubCategoryRequesModerator, SupplierRequestModerator, SupplierResponseModerator } from './moderator.module';
+import { CategoryRequesModerator, CustomerRequestModule, InsertProduct, ProductModerator, SubCategoryRequesModerator, SupplierRequestModerator, SupplierResponseModerator } from './moderator.module';
 
 @Injectable({
   providedIn: 'root',
@@ -21,6 +20,54 @@ export class ModeratorService {
   ngOnInit(): void {
     if (typeof window !== 'undefined') {
       this.token = localStorage.getItem('token') || '';
+    }
+  }
+
+  //PUT CUSTOMER
+  async putCustomer(customer: { accountName: string; typeCustomerId: number }) : Promise<BaseResponseModel> {
+    try {
+      const url = 'https://localhost:7060/api/Customer'
+      const response = await fetch(url, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.token}`,
+        },
+        body: JSON.stringify(customer),
+      });
+      const data: BaseResponseModel = await response.json();
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.log('Lỗi: ', error);
+      return {
+        isSuccess: false,
+        message: 'Lỗi ròi mài ơi',
+      };
+    }
+  }
+
+  //GET CUSTOMER TYPE
+  async getCustomerType(): Promise<BaseResponseModel> {
+    const url = 'https://localhost:7060/api/CustomerType'
+
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data: BaseResponseModel = await response.json();
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.error('Error:', error);
+      throw error;
     }
   }
 
