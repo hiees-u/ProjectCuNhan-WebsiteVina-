@@ -493,6 +493,7 @@ GO
 EXEC SP_InsertSupplier N'TEST INSERT', 29
 GO
 --DELETE
+--DROP PROC SP_DeleteSupplier
 CREATE PROCEDURE SP_DeleteSupplier
 	@SupplierID INT
 AS
@@ -506,7 +507,7 @@ BEGIN
 	ELSE
 	BEGIN
 		UPDATE Supplier
-		SET DeleteBy = SUSER_NAME(), DeleteTime = GETDATE()
+		SET DeleteBy = SUSER_NAME(), DeleteTime = GETDATE(), SupplierName = N'Đã xóa'
 		WHERE SupplierID = @SupplierID
 	END
 END

@@ -121,6 +121,7 @@ export class CartDetailComponent {
         cart.totalPrice = cart.price * cart.quantity;
       }
     });
+    this.onTotalPrice();
   }
 
   onCheckAll(event: any) {

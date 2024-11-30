@@ -252,7 +252,7 @@ namespace BLL
                 return new BaseResponseModel()
                 {
                     IsSuccess = false,
-                    Message = $"Lỗi trong quá trình: {ex}"
+                    Message = $"Không thể xóa. Còn sản phẩm"
                 };
             }
         }

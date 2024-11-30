@@ -10,7 +10,7 @@ USE CAFFEE_VINA_DBv1;
 --==============================
 USE CAFFEE_VINA_DBv1;
 
-ALTER ROLE WarehouseEmployee ADD MEMBER VinhWarehouseEmployee;
+--ALTER ROLE WarehouseEmployee ADD MEMBER VinhWarehouseEmployee;
 --==============================================================
 SELECT 
     m.name AS MemberName,
@@ -23,7 +23,7 @@ WHERE
     r.name = 'WarehouseEmployee';
 --======================================================================
 --create role Warehouse Employee
-Create ROLE WarehouseEmployee;
+--Create ROLE WarehouseEmployee;
 
 Grant Select On dbo.Users to WarehouseEmployee
 Grant Select, Update, Insert On dbo.UserInfo to WarehouseEmployee
@@ -50,15 +50,15 @@ Grant Select On dbo.PriceHistory to WarehouseEmployee
 
 Grant Select On dbo.Employee to WarehouseEmployee
 --Thu hồi quyền từ một user:
-REVOKE SELECT, INSERT, UPDATE, DELETE ON SCHEMA::dbo FROM HiuWarehouseEmployee;
+--REVOKE SELECT, INSERT, UPDATE, DELETE ON SCHEMA::dbo FROM HiuWarehouseEmployee;
 
 --Thu hồi quyền từ một vai trò:
-REVOKE SELECT, INSERT, UPDATE, DELETE ON SCHEMA::dbo FROM WarehouseEmployee;
+--REVOKE SELECT, INSERT, UPDATE, DELETE ON SCHEMA::dbo FROM WarehouseEmployee;
 
 
 --############################################# GET ALL WAREHOUSE #####################################################################################
 go
-drop proc GetAllWarehouses
+--drop proc GetAllWarehouses
 CREATE PROCEDURE GetAllWarehouses
 AS
 BEGIN
@@ -1083,9 +1083,6 @@ BEGIN
 END;
 GO
 
---DROP TYPE dbo.DeliveryOrderDetailType;
-
-DROP PROCEDURE IF EXISTS sp_ExportWarehouseGoodsByOrder;
 GO
 
 CREATE TYPE dbo.DeliveryOrderDetailType AS TABLE (

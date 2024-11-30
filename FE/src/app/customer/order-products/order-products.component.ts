@@ -75,8 +75,15 @@ export class OrderProductsComponent {
     paymentStatus: false,
     products: []
   };
+
+  //-- phương thức thanh toán
+  // paymentMethod: boolean = false;
   
   constructor(private service: CustomerService, private router: Router) {}
+
+  changePaymentMethod() {
+    this.isPayment = !this.isPayment;
+  }
 
   async showPayment() {
     // this.router.navigate(['/customer/payment']);
@@ -150,6 +157,7 @@ export class OrderProductsComponent {
       orderProducts.push(product);
     })
 
+    //nếu thanh toán trước hoặc không
     this.Order.paymentStatus = this.isPayment;
     this.Order.products = orderProducts;
 
@@ -215,6 +223,8 @@ export class OrderProductsComponent {
 
     if (this.address.length > 0) {
       this.addressSelectKey = this.address[0].key;
+      console.log(this.addressSelectKey);
+      
     } else {
       this.onShowInsertAddress();
     }
@@ -231,6 +241,7 @@ export class OrderProductsComponent {
     const response: BaseResponseModel = await this.service.getStringAddresses();
     if (response.isSuccess) {
       this.address = response.data;
+      
     }
     this.address.forEach((addres) => {
       console.log(addres);

@@ -102,8 +102,10 @@
     <div class="header">
       <span class="no-select">Phương thức thanh toán</span>
       <div class="paymentMethod">
-        <span class="no-select">Thanh toán khi nhận hàng</span>
-        <button class="no-select">Thay đổi</button>
+        <!-- 0 thanh toán khi nhận hàng -->
+        <span *ngIf="!isPayment" class="no-select">Thanh toán khi nhận hàng</span> 
+        <span *ngIf="isPayment" class="no-select">Thanh toán trước</span> 
+        <button class="no-select" (click)="changePaymentMethod()">Thay đổi</button>
       </div>
     </div>
     <div class="content">
@@ -115,8 +117,8 @@
       </div>
     </div>
     <div class="footer no-select">
-      <!-- <button (click)="handleOrder()">Đặt Hàng</button> -->
-      <button (click)="showPayment()">Đặt Hàng</button>
+      <button *ngIf="!isPayment" (click)="handleOrder()">Đặt Hàng</button>
+      <button *ngIf="isPayment" (click)="showPayment()">Đặt Hàng</button>
        
     </div>
   </div>

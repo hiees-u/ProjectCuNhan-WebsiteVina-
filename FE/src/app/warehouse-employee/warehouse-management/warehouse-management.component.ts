@@ -11,7 +11,6 @@
   
 // }
 import { Component, OnInit } from '@angular/core';
-import { WarehouseEmployeeService } from '../warehouse-employee.service';
 
 @Component({
   selector: 'app-warehouse-management',
@@ -21,21 +20,23 @@ import { WarehouseEmployeeService } from '../warehouse-employee.service';
 export class WarehouseManagementComponent implements OnInit {
   warehouses: any[] = [];
 
-  constructor(private warehouseEmployeeService: WarehouseEmployeeService) {}
+  constructor() {}
 
   ngOnInit(): void {
-    this.getWarehouses();
+    // this.getWarehouses();
   }
 
-  getWarehouses(): void {
-    this.warehouseEmployeeService.getWarehouses().subscribe(response => {
-      if (response.isSuccess) {
-        this.warehouses = response.data;
-      } else {
-        console.error('Failed to fetch warehouses:', response.message);
-      }
-    }, error => {
-      console.error('Error fetching warehouses:', error);
-    });
-  }
+  // getWarehouses(): void {
+  //   this.warehouseEmployeeService.getWarehouses().subscribe(response => {
+  //     if (response.isSuccess) {
+  //       this.warehouses = response.data;
+  //       console.log(this.warehouses);
+        
+  //     } else {
+  //       console.error('Failed to fetch warehouses:', response.message);
+  //     }
+  //   }, error => {
+  //     console.error('Error fetching warehouses:', error);
+  //   });
+  // }
 }
