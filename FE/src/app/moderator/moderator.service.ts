@@ -23,6 +23,59 @@ export class ModeratorService {
     }
   }
 
+  //PUT EMPLOYEE
+  async putEmployee(emp: {
+    accountName: string;
+    employeeTypeId: number;
+    departmentId: number;
+    fullName: string | null;
+    gender: number | null
+  }) : Promise<BaseResponseModel> {
+    try {
+      const url = 'https://localhost:7060/api/Employee';
+      const response = await fetch(url, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.token}`,
+        },
+        body: JSON.stringify(emp),
+      });
+      const data: BaseResponseModel = await response.json();
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.log('Lỗi: ', error);
+      return {
+        isSuccess: false,
+        message: 'Lỗi ròi mài ơi',
+      };
+    }
+  }
+
+  //DELETE EMPLOYEE BY ACCOUNT NAME
+  async deleteEmployee(accountName: string) : Promise<BaseResponseModel> {
+    try {
+      const url = `https://localhost:7060/api/Employee?accountName=${accountName}`;
+      const response = await fetch(url, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+      const data: BaseResponseModel = await response.json();
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.log('Lỗi: ', error);
+      return {
+        isSuccess: false,
+        message: 'Lỗi ròi mài ơi',
+      };
+    } 
+  }
+
   //PUT CUSTOMER
   async putCustomer(customer: { accountName: string; typeCustomerId: number }) : Promise<BaseResponseModel> {
     try {

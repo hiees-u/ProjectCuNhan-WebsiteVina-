@@ -16,13 +16,21 @@
         <tr *ngFor="let item of customers; let i = index">
           <td class="td-name">{{ item.accountName }}</td>
           <td class="td-centered">
-            {{ item.fullName ? item.fullName : "Chưa xác định" }}
+            <!-- {{ item.fullName ? item.fullName : "Chưa xác định" }} -->
+            <span [ngClass]="{'text-error': !item.fullName}">
+              {{ item.fullName ? item.fullName : "Chưa xác định" }}
+            </span>
           </td>
           <td class="td-centered">
-            {{ item.email ? item.email : "Chưa xác định" }}
+           
+            <span [ngClass]="{'text-error': !item.email}">
+              {{ item.email ? item.email : "Chưa xác định" }}
+            </span>
           </td>
-          <td class="td-centered">
-            {{ item.phone ? item.phone : "Chưa xác định" }}
+          <td class="td-centered" >
+            <span [ngClass]="{'text-error': !item.phone}">
+              {{ item.phone ? item.phone : "Chưa xác định" }}
+            </span>
           </td>
           <td class="td-centered">{{ item.gender == 0 ? "Nữ" : "Nam" }}</td>
           <!-- <td class="td-centered">{{ item.typeCustomerName }}</td> -->

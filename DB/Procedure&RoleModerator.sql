@@ -936,32 +936,44 @@ GO--RUN
 EXEC SP_InsertEmployee @EmployeeTypeID = 6, @DepartmentID = 7, @AccountName = 'HiuModerator'
 
 GO--UPDATE
+--DROP PROC SP_UpdateEmployee
 CREATE PROCEDURE SP_UpdateEmployee
     @AccountName NVARCHAR(25),
     @EmployeeTypeID INT,
     @DepartmentID INT,
-    @FullName NVARCHAR(100),
-    @Email NVARCHAR(100),
-    @AddressID INT,
-    @Phone NVARCHAR(15),
-    @Gender INT
+    @FullName NVARCHAR(100) = NULL, -- Cho phép NULL
+    @Gender INT = NULL -- Cho phép NULL
 AS
 BEGIN
     SET NOCOUNT ON;
     DECLARE @EmployeeID INT;
     DECLARE @CurrentEmployeeTypeID INT;
+    DECLARE @ROLE_ID INT;
     DECLARE @ErrorMessage NVARCHAR(4000);
 
     BEGIN TRY
         BEGIN TRANSACTION;
 
         -- Lấy EmployeeID và loại nhân viên hiện tại từ bảng UserInfo và Employee
+        PRINT N'Bắt đầu lấy EmployeeID và loại nhân viên hiện tại';
         SELECT @EmployeeID = UF.Employ_ID, @CurrentEmployeeTypeID = E.EmployeeTypeID
         FROM UserInfo UF
         JOIN Employee E ON UF.Employ_ID = E.EmployeeID
         WHERE UF.AccountName = @AccountName;
+        PRINT N'EmployeeID: ' + CAST(@EmployeeID AS NVARCHAR(10));
+        PRINT N'CurrentEmployeeTypeID: ' + CAST(@CurrentEmployeeTypeID AS NVARCHAR(10));
+
+        -- Kiểm tra nếu không tìm thấy EmployeeID
+        IF @EmployeeID IS NULL
+        BEGIN
+            PRINT N'Không tìm thấy EmployeeID cho AccountName: ' + @AccountName;
+            RAISERROR('Không tìm thấy EmployeeID cho AccountName: %s', 16, 1, @AccountName);
+            ROLLBACK TRANSACTION;
+            RETURN;
+        END
 
         -- Cập nhật bảng Employee
+        PRINT N'Bắt đầu cập nhật bảng Employee';
         UPDATE Employee
         SET 
             EmployeeTypeID = @EmployeeTypeID,
@@ -969,41 +981,64 @@ BEGIN
             ModifiedBy = SUSER_NAME(),
             ModifiedTime = GETDATE()
         WHERE EmployeeID = @EmployeeID;
+        PRINT N'Đã cập nhật bảng Employee';
 
         -- Cập nhật bảng UserInfo
+        PRINT N'Bắt đầu cập nhật bảng UserInfo';
         UPDATE UserInfo
         SET 
-            full_name = @FullName,
-            email = @Email,
-            address_id = @AddressID,
-            phone = @Phone,
-            gender = @Gender,
+            full_name = CASE WHEN @FullName IS NULL THEN full_name ELSE @FullName END,
+            gender = CASE WHEN @Gender IS NULL THEN gender ELSE @Gender END,
             ModifiedBy = SUSER_NAME(),
             ModifiedTime = GETDATE()
         WHERE Employ_ID = @EmployeeID;
+        PRINT N'Đã cập nhật bảng UserInfo';
+
+        -- Lấy ROLE_ID từ bảng Roles
+        PRINT N'Bắt đầu lấy ROLE_ID';
+        SELECT @ROLE_ID = r.role_id
+        FROM Roles r
+        JOIN EmployeeType et ON r.role_name = et.EmployeeTypeName
+        WHERE et.EmployeeTypeID = @EmployeeTypeID;
+        PRINT N'ROLE_ID: ' + CAST(@ROLE_ID AS NVARCHAR(10));
+
+        -- Cập nhật role_id trong bảng Users
+        PRINT N'Bắt đầu cập nhật role_id trong bảng Users';
+        UPDATE Users
+        SET role_id = @ROLE_ID
+        WHERE AccountName = @AccountName;
+        PRINT N'Đã cập nhật role_id trong bảng Users';
 
         -- Nếu loại nhân viên thay đổi, cập nhật quyền
         IF @CurrentEmployeeTypeID <> @EmployeeTypeID
         BEGIN
+            PRINT N'EmployeeTypeID thay đổi từ ' + CAST(@CurrentEmployeeTypeID AS NVARCHAR(10)) + ' sang ' + CAST(@EmployeeTypeID AS NVARCHAR(10));
+            
             -- Lấy tên loại nhân viên mới
             DECLARE @NewEmployeeType NVARCHAR(30);
             SELECT @NewEmployeeType = EmployeeTypeName
             FROM EmployeeType 
             WHERE EmployeeTypeID = @EmployeeTypeID;
+            PRINT N'NewEmployeeType: ' + @NewEmployeeType;
 
             -- Xóa quyền cũ
             DECLARE @OldEmployeeType NVARCHAR(30);
             SELECT @OldEmployeeType = EmployeeTypeName
             FROM EmployeeType 
             WHERE EmployeeTypeID = @CurrentEmployeeTypeID;
+            PRINT N'OldEmployeeType: ' + @OldEmployeeType;
+
             EXEC sp_droprolemember @OldEmployeeType, @AccountName;
+            PRINT N'Đã xóa quyền cũ';
 
             -- Gán quyền mới
             EXEC sp_addrolemember @NewEmployeeType, @AccountName;
+            PRINT N'Đã gán quyền mới';
 
             -- Xử lý đặc biệt nếu EmployeeTypeID = 6
             IF @EmployeeTypeID = 6
             BEGIN
+                PRINT N'Bắt đầu xử lý đặc biệt cho EmployeeTypeID = 6';
                 -- Gán tài khoản vào vai trò 'CustomerServerRole' nếu role này tồn tại
                 IF EXISTS (SELECT 1 FROM sys.server_principals WHERE name = 'CustomerServerRole')
                 BEGIN
@@ -1011,8 +1046,9 @@ BEGIN
                     EXEC sp_addsrvrolemember @AccountName, 'sysadmin'; -- Hoặc cấp quyền sysadmin cho tài khoản hiện tại
 
                     DECLARE @Sql NVARCHAR(MAX);
-                    SET @Sql = 'ALTER SERVER ROLE CustomerServerRole ADD MEMBER [' + @AccountName + '];';
+                    SET @Sql = N'ALTER SERVER ROLE CustomerServerRole ADD MEMBER [' + @AccountName + '];';
                     EXEC sp_executesql @Sql;
+                    PRINT N'Đã thêm vào vai trò CustomerServerRole';
                 END
                 ELSE
                 BEGIN
@@ -1021,29 +1057,34 @@ BEGIN
             END
             ELSE
             BEGIN
+                PRINT N'Xử lý khác cho EmployeeTypeID khác 6';
                 -- Nếu EmployeeTypeID khác 6, xóa bỏ quyền nếu tồn tại
                 IF EXISTS (
-					SELECT 1 FROM sys.server_role_members 
-					WHERE role_principal_id = (SELECT principal_id FROM sys.server_principals 
-					WHERE name = 'CustomerServerRole') AND member_principal_id = (SELECT principal_id FROM sys.server_principals WHERE name = @AccountName)
-				)
+                    SELECT 1 FROM sys.server_role_members 
+                    WHERE role_principal_id = (SELECT principal_id FROM sys.server_principals 
+                    WHERE name = 'CustomerServerRole') AND member_principal_id = (SELECT principal_id FROM sys.server_principals WHERE name = @AccountName)
+                )
                 BEGIN
                     --DECLARE @Sql NVARCHAR(MAX);
-                    SET @Sql = 'ALTER SERVER ROLE CustomerServerRole DROP MEMBER [' + @AccountName + '];';
+                    SET @Sql = N'ALTER SERVER ROLE CustomerServerRole DROP MEMBER [' + @AccountName + '];';
                     EXEC sp_executesql @Sql;
+                    PRINT N'Đã xóa khỏi vai trò CustomerServerRole';
                 END
             END
         END
 
         COMMIT TRANSACTION;
+        PRINT N'Đã commit transaction';
     END TRY
     BEGIN CATCH
         -- Rollback nếu có lỗi xảy ra
         ROLLBACK TRANSACTION;
         SET @ErrorMessage = ERROR_MESSAGE();
+        PRINT N'Lỗi: ' + @ErrorMessage;
         RAISERROR(@ErrorMessage, 16, 1);
     END CATCH
 END
+
 
 
 select * from EmployeeType
