@@ -1,42 +1,44 @@
-// import { Component } from '@angular/core';
-
-// @Component({
-//   selector: 'app-warehouse-management',
-//   standalone: true,
-//   imports: [],
-//   templateUrl: './warehouse-management.component.html',
-//   styleUrl: './warehouse-management.component.css'
-// })
-// export class WarehouseManagementComponent {
-  
-// }
-import { Component, OnInit } from '@angular/core';
-
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Router, RouterOutlet } from '@angular/router';
+import { WarehouseEmployeeService } from '../warehouse-employee.service';
+import { BaseResponseModel } from '../../shared/module/base-response/base-response.module';
+import { Warehouse } from '../warehouse-employee.module';
 @Component({
   selector: 'app-warehouse-management',
+  standalone: true,
+  imports: [RouterOutlet, CommonModule],
   templateUrl: './warehouse-management.component.html',
-  styleUrls: ['./warehouse-management.component.css']
+  styleUrls: ['./warehouse-management.component.css'],
+  
 })
-export class WarehouseManagementComponent implements OnInit {
-  warehouses: any[] = [];
-
-  constructor() {}
+export class WarehouseManagementComponent{
+  warehouses: Warehouse[] = [];
 
   ngOnInit(): void {
     // this.getWarehouses();
   }
+  constructor( private routes: Router, private warehouseEmployeeService: WarehouseEmployeeService) {}
 
-  // getWarehouses(): void {
-  //   this.warehouseEmployeeService.getWarehouses().subscribe(response => {
-  //     if (response.isSuccess) {
-  //       this.warehouses = response.data;
-  //       console.log(this.warehouses);
-        
-  //     } else {
-  //       console.error('Failed to fetch warehouses:', response.message);
-  //     }
-  //   }, error => {
-  //     console.error('Error fetching warehouses:', error);
-  //   });
+  // async getWarehouses() {
+  //   console.log('Vào Warehouse');
+  //   const result: BaseResponseModel = await this.warehouseEmployeeService.getWarehouses();
+
+  //   if(result.isSuccess) {
+  //     this.warehouses = result.data;
+  //   }
   // }
+  async getWarehouses() {
+    try {
+      const result: BaseResponseModel = await this.warehouseEmployeeService.getWarehouses();
+      if (result.isSuccess) {
+        this.warehouses = result.data;
+      } else {
+        console.error('Không thể lấy dữ liệu:', result.message);
+      }
+    } catch (error) {
+      console.error('Lỗi khi lấy dữ liệu:', error);
+    }
+  }
+  
 }
