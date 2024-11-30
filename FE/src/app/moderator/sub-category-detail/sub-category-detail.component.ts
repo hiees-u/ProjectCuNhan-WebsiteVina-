@@ -68,7 +68,7 @@ export class SubCategoryDetailComponent {
       }, 3000)
     } else {
       this.dataNotification.status = 'error';
-      this.dataNotification.messages = 'Vui lòng kiểm tra lại thông tin..!';
+      this.dataNotification.messages = result.message!;
     }
     this.trigger = Date.now();
     // Đặt lại `trigger` thành `undefined` sau 30 giây

@@ -147,6 +147,7 @@ export class ProductDetailComponent {
   set formattedPrice(value: string) {
     this.product.price = this.parseCurrency(value);
   }
+
   formatCurrency(value: number): string {
     return new Intl.NumberFormat('vi-VN', {
       style: 'currency',
@@ -154,7 +155,9 @@ export class ProductDetailComponent {
     }).format(value);
   }
   parseCurrency(value: string): number {
-    return Number(value.replace(/[^0-9.-]+/g, ''));
+    // Loại bỏ các ký tự không phải là số hoặc dấu tách thập phân
+    const cleanedValue = value.replace(/[^0-9,-]+/g, '').replace(',', '.');
+    return parseFloat(cleanedValue);
   }
 
   //date

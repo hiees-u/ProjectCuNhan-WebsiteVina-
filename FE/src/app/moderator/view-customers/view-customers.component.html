@@ -16,13 +16,13 @@
         <tr *ngFor="let item of customers; let i = index">
           <td class="td-name">{{ item.accountName }}</td>
           <td class="td-centered">
-            {{ item.fullName }}
+            {{ item.fullName ? item.fullName : 'Chưa xác định' }}
           </td>
           <td class="td-centered">
-            {{ item.email }}
+            {{ item.email ? item.email : 'Chưa xác định' }}
           </td>
           <td class="td-centered">
-            {{ item.phone }}
+            {{ item.phone ? item.phone : 'Chưa xác định'}}
           </td>
           <td class="td-centered">{{ item.gender == 0 ? 'Nữ' : 'Nam' }}</td>
           <td class="td-centered">{{ item.typeCustomerName }}</td>
