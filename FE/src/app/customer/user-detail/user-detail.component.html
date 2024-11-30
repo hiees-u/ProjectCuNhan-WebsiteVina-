@@ -65,13 +65,25 @@
         <div class="box-content no-select">
           <label for="Name">Họ và tên:</label>
           <div class="box-input">
-            <input type="text" id="Name" [(ngModel)]="userInfo.fullName" [placeholder]="userInfo.fullName ? userInfo.fullName : 'Chưa xác định!'" />
+            <input
+              type="text"
+              id="Name"
+              [(ngModel)]="userInfo.fullName"
+              [placeholder]="
+                userInfo.fullName ? userInfo.fullName : 'Chưa xác định!'
+              "
+            />
           </div>
         </div>
         <div class="box-content no-select">
           <label for="email">Email:</label>
           <div class="box-input">
-            <input type="text" id="email" [(ngModel)]="userInfo.email" [placeholder]="userInfo.email ? userInfo.email : 'Chưa xác định!'" />
+            <input
+              type="text"
+              id="email"
+              [(ngModel)]="userInfo.email"
+              [placeholder]="userInfo.email ? userInfo.email : 'Chưa xác định!'"
+            />
           </div>
         </div>
         <div class="box-content no-select">
@@ -106,13 +118,18 @@
         <div class="box-content no-select">
           <label for="sdt">Số điện thoại:</label>
           <div class="box-input">
-            <input type="text" id="sdt" [(ngModel)]="userInfo.phone" [placeholder]="userInfo.phone ? userInfo.phone : 'Chưa xác định!'" />
+            <input
+              type="text"
+              id="sdt"
+              [(ngModel)]="userInfo.phone"
+              [placeholder]="userInfo.phone ? userInfo.phone : 'Chưa xác định!'"
+            />
           </div>
         </div>
         <div class="box-content no-select">
           <label for="gender">Giới tính:</label>
           <div class="box-input">
-            <select name="gender" id="gender" [(ngModel)]="userInfo.gender" >
+            <select name="gender" id="gender" [(ngModel)]="userInfo.gender">
               <option value="0">Nữ</option>
               <option value="1">Nam</option>
               <option value="-1">Chưa xác định</option>
@@ -236,6 +253,69 @@
             >Thành tiền
             <span>{{ item.totalprice | customCurrency }}</span></span
           >
+        </div>
+      </div>
+    </div>
+    <div class="change-password content" *ngIf="isActive === 3">
+      <div class="header">
+        <span>Đổi mật khẩu</span>
+      </div>
+      <div class="secon-content">
+        <div class="box-content no-select">
+          <label for="userName">Tên Đăng Nhập:</label>
+          <div class="box-input">
+            <input
+              type="text"
+              disabled=""
+              class="no-change"
+              id="userName"
+              [(ngModel)]="changePass.accountName"
+            />
+          </div>
+        </div>
+        <div class="box-content no-select">
+          <label for="pass">Mật khẩu hiện tại:</label>
+          <div class="box-input">
+            <input
+              type="password"
+              id="pass"
+              [(ngModel)]="changePass.password"
+            />
+          </div>
+        </div>
+        <div class="box-content no-select">
+          <label for="newpass">Mật khẩu mới:</label>
+          <div class="box-input">
+            <input
+              type="password"
+              id="newpass"
+              [(ngModel)]="changePass.newPassword"
+            />
+          </div>
+        </div>
+
+        <div class="button-main no-select" (click)="onShowConfirmChangePass()">
+          Đổi mật khẩu
+        </div>
+      </div>
+
+      <!-- *ngIf="isShowConfirmChangePass" -->
+      <div
+        class="confirm-change-pass"
+        [ngClass]="{
+          show: isShowConfirmChangePass,
+          hiden: !isShowConfirmChangePass
+        }"
+      >
+        <div class="container-confirm">
+          <div>
+            <p class="text-main">Xác nhận thay đổi mật khẩu</p>
+            <span>Sau khi thay đổi mật khẩu vui lòng đăng nhập lại...!</span>
+          </div>
+          <div>
+            <button class="close-btn" (click)="onShowConfirmChangePass()">Đóng</button>
+            <button class="confirm-btn" (click)="onChangePassword()">Xác nhận</button>
+          </div>
         </div>
       </div>
     </div>

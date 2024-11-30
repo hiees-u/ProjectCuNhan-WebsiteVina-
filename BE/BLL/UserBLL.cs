@@ -133,6 +133,11 @@ namespace BLL
 
             try
             {
+                ConnectionStringHelper.Set(new LoginRequestModule()
+                {
+                    AccountName = module.AccountName,
+                    Password = module.Password,
+                });
                 using (var conn = new SqlConnection(ConnectionStringHelper.Get()))
                 {
                     conn.Open();

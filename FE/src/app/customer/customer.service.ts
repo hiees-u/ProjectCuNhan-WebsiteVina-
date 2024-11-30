@@ -5,6 +5,7 @@ import { UserInfoRequestModel } from '../shared/module/user-info/user-info.modul
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { AddressRequest } from '../shared/module/address/address.module';
 import { OrderRequestModule } from '../shared/module/order/order.module';
+import { ChangePass } from '../shared/module/change-pass/change-pass.module';
 
 @Injectable({
   providedIn: 'root',
@@ -24,7 +25,32 @@ export class CustomerService {
       this.token = localStorage.getItem('token') || '';
     }
   }
-  
+
+  async changePassword(data: ChangePass): Promise<BaseResponseModel> {
+    // const url = `${this.apiUrl}/User/ChangePassword`;
+    const url = 'https://localhost:7060/api/User/ChangePassword';
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${this.token}`,
+        },
+        body: JSON.stringify(data),
+      });
+      console.log(response);
+      
+      if (!response.ok) {
+        throw new Error('Lỗi ở Change Password');
+      }
+      const result :BaseResponseModel = await response.json();
+      return result as BaseResponseModel;
+    } catch (error) {
+      console.error('Error changing password:', error);
+      throw error;
+    }
+  }
+
   async createPaymentMomo(order: OrderRequestModule): Promise<any> {
     const url = `${this.apiUrl}Payment/CreatePaymentUrl`;
     try {
@@ -47,7 +73,7 @@ export class CustomerService {
       throw error;
     }
   }
-  
+
   //lấy token
   ngOnInit(): void {
     if (typeof window !== 'undefined') {
@@ -65,7 +91,7 @@ export class CustomerService {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${this.token}`,
-      }
+      },
     }).then((response) => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -75,7 +101,10 @@ export class CustomerService {
   }
 
   //Delete Order detail
-  async deleteOrder(orderId: Number, priceHistoryId: number): Promise<BaseResponseModel> {
+  async deleteOrder(
+    orderId: Number,
+    priceHistoryId: number
+  ): Promise<BaseResponseModel> {
     //https://localhost:7060/api/Order?OrderId=12&PriceHistory=1
     const url = `${this.apiUrl}Order?OrderId=${orderId}&PriceHistory=${priceHistoryId}`;
     return await fetch(url, {
@@ -83,7 +112,7 @@ export class CustomerService {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${this.token}`,
-      }
+      },
     }).then((response) => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -93,14 +122,12 @@ export class CustomerService {
   }
 
   //post order
-  async postOrder(order: OrderRequestModule) : Promise<BaseResponseModel> {
+  async postOrder(order: OrderRequestModule): Promise<BaseResponseModel> {
     //https://localhost:7060/api/Order
     const url = `${this.apiUrl}Order`;
 
     console.log('log order ở service');
     console.log(order);
-    
-    
 
     return fetch(url, {
       method: 'POST',
@@ -118,7 +145,7 @@ export class CustomerService {
   }
 
   //post address
-  async postAddress(address: AddressRequest) : Promise<BaseResponseModel> {
+  async postAddress(address: AddressRequest): Promise<BaseResponseModel> {
     // https://localhost:7060/api/Address
     const url = `${this.apiUrl}Address`;
 
@@ -203,7 +230,7 @@ export class CustomerService {
           Authorization: `Bearer ${this.token}`,
         },
       });
-      
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -290,6 +317,10 @@ export class CustomerService {
   async getCart(): Promise<BaseResponseModel> {
     const url = `${this.apiUrl}Cart`;
     // const token = localStorage.getItem('token');
+    if (typeof window !== 'undefined') {
+      this.token = localStorage.getItem('token') || '';
+    }
+
     try {
       const response = await fetch(url, {
         method: 'GET',
@@ -302,8 +333,6 @@ export class CustomerService {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-
-      // const data: CartResponse[] = await response.json();
 
       return await response.json();
     } catch (error) {
@@ -454,7 +483,7 @@ export class CustomerService {
       sortByPrice,
     };
     console.log(params);
-    
+
     const queryString = Object.keys(params)
       .filter((key) => params[key] !== null && params[key] !== undefined)
       .map(
