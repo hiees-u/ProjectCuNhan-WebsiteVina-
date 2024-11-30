@@ -101,32 +101,30 @@ export class OrderProductsComponent {
 
   async showPayment() {
     // this.router.navigate(['/customer/payment']);
-    const orderProducts: ProductQuantity[] = this.data.map((item) => ({
-      PriceHistoryId: item.priceHistoryId,
-      Quantity: item.quantity,
-    }));
-  
-    this.Order.products = orderProducts;
-    this.Order.paymentStatus = true;
-  
+  }
+  async goToMomoPayment() {
     try {
-      const response = await this.service.postOrder(this.Order);
-      if (response.isSuccess) {
-        const momoResponse = await this.service.createPaymentMomo(this.Order);
-        console.log("MOMO Response:", momoResponse); // Log phản hồi từ MOMO
-        if (momoResponse && momoResponse.PayUrl) {
-          window.location.href = momoResponse.PayUrl; // Điều hướng tới URL QR
-        } else {
-          throw new Error("URL thanh toán MOMO không hợp lệ!");
-        }
+      const orderInfo = {
+        FullName: this.Order.nameRecipient,
+        OrderId: Date.now().toString(),  // Tạo OrderId duy nhất
+        OrderInfomation: 'Thanh toán đơn hàng cafe Vina',  // Nội dung đơn hàng
+        Amount: this.ResponseOrder.totalPayment.toString()  // Tổng tiền đơn hàng
+      };
+  
+      console.log('Dữ liệu gửi tới Momo:', orderInfo); // Log dữ liệu gửi
+  
+      const momoResponse = await this.service.createPaymentMomo(orderInfo);
+  
+      // Kiểm tra đúng thuộc tính `payUrl`
+      if (momoResponse && momoResponse.payUrl) {
+        console.log('URL thanh toán Momo:', momoResponse.payUrl); // Log payUrl trả về
+        window.location.href = momoResponse.payUrl; // Điều hướng tới URL thanh toán
       } else {
-        throw new Error("Đặt hàng thất bại!");
+        throw new Error('Không thể tạo URL thanh toán Momo!');
       }
-    } catch (error: any) { // Ép kiểu về `any`
-      console.error("Lỗi trong quá trình thanh toán:", error);
-      this.dataNotification.messages = error.message || "Lỗi không xác định!";
-      this.dataNotification.status = "error";
-      this.trigger = Date.now();
+    } catch (error: any) {
+      console.error('Lỗi khi tạo thanh toán Momo:', error.message);
+      alert('Lỗi khi tạo thanh toán. Vui lòng thử lại!');
     }
   }
 

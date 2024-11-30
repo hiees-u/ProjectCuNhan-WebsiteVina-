@@ -25,7 +25,7 @@ export class CustomerService {
     }
   }
   
-  async createPaymentMomo(order: OrderRequestModule): Promise<any> {
+  async createPaymentMomo(orderInfo: { FullName: string; OrderId: string; OrderInfomation: string; Amount: string }): Promise<any> {
     const url = `${this.apiUrl}Payment/CreatePaymentUrl`;
     try {
       const response = await fetch(url, {
@@ -34,17 +34,28 @@ export class CustomerService {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${this.token}`,
         },
-        body: JSON.stringify(order),
+        body: JSON.stringify(orderInfo),
       });
+  
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        const errorText = await response.text();
+        console.error('Phản hồi lỗi từ server:', errorText);
+        throw new Error(`HTTP error! status: ${response.status} - ${errorText}`);
       }
+  
       const data = await response.json();
-      console.log('MOMO Payment Response:', data); // Log phản hồi từ server
-      return data;
-    } catch (error) {
-      console.error('Error creating MOMO payment URL:', error);
-      throw error;
+      console.log('Phản hồi từ API Momo:', data);  // Log phản hồi từ Momo
+  
+      // Kiểm tra nếu trả về payUrl hợp lệ
+      if (data && data.payUrl) {
+        console.log('URL thanh toán Momo:', data.payUrl);  // Log payUrl
+        return data;  // Trả về URL thanh toán
+      } else {
+        throw new Error('Không thể tạo URL thanh toán Momo!');
+      }
+    } catch (error:any) {
+      console.error('Lỗi khi tạo thanh toán Momo:', error.message);
+      throw error;  // Bắn lại lỗi để xử lý tại nơi gọi hàm
     }
   }
   
