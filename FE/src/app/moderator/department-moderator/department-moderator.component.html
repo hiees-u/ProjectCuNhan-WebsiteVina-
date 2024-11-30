@@ -15,9 +15,8 @@
 
   <div class="content">
     <div class="content-body">
-      <div class="content-mini" *ngFor="let item of deparments" (click)="onShowDetail()">
+      <div class="content-mini" *ngFor="let item of deparments" (click)="onShowDetail(item)">
         <i class="fa-regular fa-building"></i>
-        <!-- <i class="fa-solid fa-users-viewfinder"></i> -->
         <div>
           <span>{{ item.departmentName }}</span>
           <span>Nhân viên: {{ item.sumEmployee }}</span>
@@ -59,4 +58,6 @@
   class="deparment-detail"
   *ngIf="flagDetail"
   [ngClass]="{ hiden: !isShowDetail && flagDetail, show: isShowDetail }"
-></div>
+>
+  <app-deparment-detail [depar]="selectedDeparment" (isClose)="handleClose($event)"></app-deparment-detail>
+</div>

@@ -48,10 +48,12 @@ export class AddCateComponent {
       console.log('Thêm thành công!!');
       //
       this.dataNotification.status = 'success';
-      this.dataNotification.messages =
-        'Thêm Loại Sản phẩm thành công!!';
-      this.trigger = Date.now();
+      this.dataNotification.messages = 'Thêm Loại Sản phẩm thành công!!';
+    } else {
+      this.dataNotification.status = 'error';
+      this.dataNotification.messages = response.message!;
     }
+    this.trigger = Date.now();
   }
 
   sendIsClose() {

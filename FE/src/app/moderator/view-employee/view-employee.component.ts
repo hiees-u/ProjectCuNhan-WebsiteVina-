@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, SimpleChanges } from '@angular/core';
 import { EmployeeRequestModule } from '../moderator.module';
 import { CommonModule } from '@angular/common';
 import { ModeratorService } from '../moderator.service';
@@ -11,6 +11,8 @@ import { ModeratorService } from '../moderator.service';
   styleUrl: './view-employee.component.css',
 })
 export class ViewEmployeeComponent {
+  @Input() deparmentID: number | undefined;
+
   customers: EmployeeRequestModule[] = [];
 
   totalPage: number = 1;
@@ -21,15 +23,22 @@ export class ViewEmployeeComponent {
 
   constructor(private service: ModeratorService) {}
 
-  ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
-    this.getEmployee();
+  ngOnChanges(changes: SimpleChanges): void {
+    //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
+    //Add '${implements OnChanges}' to the class.
+    if(changes['deparmentID']) {
+      this.getEmployee();
+    }
   }
 
+  ngOnInit(): void {
+    this.getEmployee();
+  }
+  
   async getEmployee() {
+    console.log(this.deparmentID);
     await this.service
-      .getEmployee(undefined, undefined, this.pageCurrent, 7)
+      .getEmployee(undefined, this.deparmentID, this.pageCurrent, 7)
       .then((data) => {
         this.customers = data.data.employees;
         this.totalPage = data.data.totalPages;

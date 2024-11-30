@@ -54,7 +54,7 @@
 
 .btn {
   width: fit-content;
-  font-size: .9em;
+  font-size: 0.9em;
   padding: 10px 15px;
   margin: 0;
 }
@@ -145,23 +145,24 @@
   font-family: var(--main-style);
   color: var(--secon-text-color);
   font-size: 1em;
-  transition: all .5s ease-in-out;
   box-shadow: 1px 1px 4px 0px #352f2fcf;
+  transition: all 0.5s ease-in-out;
 }
 
-.content-mini>div {
+.content-mini > div {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.content-mini>i {
+.content-mini > i {
+  transition: all 0.5s ease-in-out;
   color: var(--main-color);
   font-size: 1.6em;
 }
 
-.content-mini>div>span:last-child {
-  font-size: .8em;
+.content-mini > div > span:last-child {
+  font-size: 0.8em;
   color: var(--secon-text-color2);
   font-style: italic;
 }
@@ -172,6 +173,20 @@
   color: var(--main-text-color);
 }
 
+.content-mini:hover {
+  animation: Jumn 0.5s ease-in-out infinite;
+}
+
+.content-mini:hover>i {
+  color: #ddd;
+}
+
+@keyframes Jumn {
+  50% {
+    opacity: 85%;
+  }
+}
+
 .content-footer {
   width: 100%;
   height: 35px;
@@ -180,13 +195,12 @@
   align-items: center;
 }
 
-
 .content-footer span {
   width: 50%;
   text-align: left;
   padding-left: 20px;
   font-family: var(--main-style);
-  font-size: .7em;
+  font-size: 0.7em;
 }
 
 .page {
@@ -219,20 +233,19 @@
   background-color: #626262ba;
   color: #fff;
   cursor: none !important;
-  opacity: .2;
+  opacity: 0.2;
 }
-
 
 .add-cate {
   width: 100%;
   background: rgba(190, 193, 193, 0.532);
   height: 100%;
   position: absolute;
-  top: 0;  
+  top: 0;
   left: 100%;
   display: flex;
   justify-content: center;
-  transition: all ease .5s;
+  transition: all ease 0.5s;
   align-items: center;
 }
 
@@ -254,7 +267,8 @@
   0% {
     left: 100%;
     opacity: 0;
-  } 100% {
+  }
+  100% {
     left: 0;
     opacity: 1;
   }
@@ -270,7 +284,8 @@
   0% {
     left: 0;
     opacity: 1;
-  } 100% {
+  }
+  100% {
     left: 100%;
     opacity: 0;
   }
@@ -288,10 +303,10 @@
   background: rgba(190, 193, 193, 0.532);
   height: 100%;
   position: absolute;
-  top: 0;  
+  top: 0;
   left: 100%;
   display: flex;
   justify-content: center;
-  transition: all ease .5s;
+  transition: all ease 0.5s;
   align-items: center;
 }

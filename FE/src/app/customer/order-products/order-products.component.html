@@ -117,8 +117,8 @@
       </div>
     </div>
     <div class="footer no-select">
-      <button *ngIf="!isPayment" (click)="handleOrder()">Đặt Hàng</button>
-      <button *ngIf="isPayment" (click)="showPayment()">Đặt Hàng</button>
+      <button (click)="onOrder()">Đặt Hàng</button>
+      <!-- <button *ngIf="isPayment" (click)="showPayment()">Đặt Hàng</button> -->
        
     </div>
   </div>

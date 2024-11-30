@@ -76,6 +76,8 @@ export class OrderProductsComponent {
     products: []
   };
 
+  ResponseOrder: OrderResponseModel = constructorOrderResponseModel();
+
   //-- phương thức thanh toán
   // paymentMethod: boolean = false;
   
@@ -83,6 +85,18 @@ export class OrderProductsComponent {
 
   changePaymentMethod() {
     this.isPayment = !this.isPayment;
+  }
+
+  async onOrder() {
+    if(this.isPayment) {
+      console.log('Thanh toán QR trước');
+      await this.showPayment();
+      // gọi QR
+      // nếu thành công thì tiếp tục
+    }
+
+    console.log('Thêm vào DB');
+    await this.handleOrder();
   }
 
   async showPayment() {
@@ -179,9 +193,6 @@ export class OrderProductsComponent {
       };
     }
   }
-
-  ResponseOrder: OrderResponseModel = constructorOrderResponseModel();
-
 
   onShowInsertAddress() {
     console.log(this.address);

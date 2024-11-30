@@ -293,3 +293,8 @@ td span {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   font-family: var(--main-style);
 }
+
+.error-text {
+  background-color: rgb(241, 156, 156);
+  color: red;
+}

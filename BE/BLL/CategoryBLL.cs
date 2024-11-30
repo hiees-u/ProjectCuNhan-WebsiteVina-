@@ -215,7 +215,7 @@ namespace BLL
                     return new BaseResponseModel()
                     {
                         IsSuccess = false,
-                        Message = $"Lỗi trong quá trình: {ex}"
+                        Message = $"Tên Loại sản phẩm đã tồn tại"
                     };
                 }
             }
@@ -313,7 +313,7 @@ namespace BLL
                     return new BaseResponseModel()
                     {
                         IsSuccess = false,
-                        Message = $"Lỗi trong quá trình: {ex}"
+                        Message = $"Tên Loại sản phẩm đã tồn tại"
                     };
                 }
             }

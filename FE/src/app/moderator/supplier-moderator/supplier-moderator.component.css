@@ -157,7 +157,12 @@
 
 .content-mini>i {
   color: var(--main-color);
+  transition: all .5s ease-in-out;
   font-size: 1.6em;
+}
+
+.content-mini:hover > i {
+  color: #ddd;
 }
 
 .content-mini>div>span:last-child {
