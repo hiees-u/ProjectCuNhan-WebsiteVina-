@@ -107,11 +107,12 @@
 
 .content {
   width: calc(100% - 20px);
-  height: calc(100vh - 200px);
+  min-height: calc(100vh - 200px);
   /* background-color: aqua; */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  height: fit-content;
   padding: 10px;
 }
 

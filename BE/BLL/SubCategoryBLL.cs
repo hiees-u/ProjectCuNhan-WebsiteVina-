@@ -253,7 +253,7 @@ namespace BLL
                             return new BaseResponseModel()
                             {
                                 IsSuccess = false,
-                                Message = "Không thể xóa danh mục phụ vì vẫn còn sản phẩm liên quan!!"
+                                Message = "Không thể xóa. Còn sản phẩm liên quan!!"
                             };
                         }
                         return new BaseResponseModel()

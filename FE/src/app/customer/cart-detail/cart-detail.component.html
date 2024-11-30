@@ -47,7 +47,6 @@
         <span class="product-name" (click)="onCheckboxChangev2(item)">
           {{ item.productName }}
         </span>
-        <!-- <span>{{item.productId}}</span> -->
       </div>
       <div class="price-header">{{ item.price | customCurrency }}</div>
       <div class="quantity-header">
@@ -91,14 +90,17 @@
     </div>
     <div class="operation-footer">
       <span class="total-product-check no-select"
-        >Tổng thanh toán ( 0 sản phẩm):
+        >
+        Tổng thanh toán 
+        <!-- ( 0 sản phẩm) -->
+        :
         <span class="color-var-main">{{ totalPrice | customCurrency }}</span></span
       >
       <div class="btn-thanhtoan">
         <button
           (click)="onOrder()"
           class="thanhToan"
-          [ngClass]="{ disable: isDisabled }"
+          [ngClass]="{ disable: !isDisabled }"
         >
           Đặt Hàng
         </button>

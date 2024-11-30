@@ -514,6 +514,7 @@ GRANT EXECUTE ON OBJECT::dbo.SP_AddToCart TO  Customer;
 EXEC SP_AddToCart @ProductID = 4, @Quantity = 1
 go
 --#########################################################################Select Cart Customer#####################################################################################
+--DROP PROC SP_GetCartByUser
 CREATE PROCEDURE SP_GetCartByUser
 AS
 BEGIN
@@ -535,7 +536,7 @@ BEGIN
 	FROM Cart c
 	Join Product p on c.product_id = p.product_id
 	join PriceHistory ph on ph.product_id = p.product_id
-	WHERE c.customerId = @CustomerID;
+	WHERE c.customerId = @CustomerID AND ph.isActive = 0 AND p.DeleteTime IS NULL
 END;
 
 --gán quyền
@@ -659,6 +660,8 @@ GRANT EXECUTE ON OBJECT::dbo.SP_InsertOrderWithDetails TO  Customer;
 --RUN EXAMPLE
 
 --#########################################################################Update User Info#####################################################################################
+--DROP PROC SP_UpdateUserInfo
+
 CREATE PROCEDURE SP_UpdateUserInfo
     @FullName NVARCHAR(100),
     @Phone VARCHAR(20),
@@ -677,14 +680,15 @@ BEGIN
 
     -- Cập nhật thông tin người dùng
     UPDATE UserInfo
-    SET full_name = @FullName, 
-        phone = @Phone, 
-        email = @Email, 
-        address_id = @AddressID, 
-        gender = @Gender,
+	SET full_name = @FullName, 
+		phone = @Phone, 
+		email = @Email, 
+		address_id = CASE WHEN @AddressID != 0 THEN @AddressID ELSE address_id END, 
+		gender = CASE WHEN @Gender IN (0, 1) THEN @Gender ELSE NULL END,
 		ModifiedBy = @UserName,
 		ModifiedTime = GETDATE()
-    WHERE AccountName = @UserName;
+	WHERE AccountName = @UserName;
+
 END;
 --phân quyền
 GRANT EXECUTE ON OBJECT::dbo.SP_UpdateUserInfo TO  Customer;
@@ -692,6 +696,7 @@ GRANT EXECUTE ON OBJECT::dbo.SP_UpdateUserInfo TO  Customer;
 --RUN
 EXEC SP_UpdateUserInfo @FullName = N'Tên đầy đủu', @Phone = '09876543210', @Email = 'email@example.com', @AddressID = 1, @Gender = 1;
 --#########################################################################GET User Info#####################################################################################
+DROP PROC SP_GetUserInfoByUserName
 CREATE PROCEDURE SP_GetUserInfoByUserName
 AS
 BEGIN
@@ -713,12 +718,12 @@ BEGIN
 	di.ProvinceID AS N'Tỉnh',
 	a.Note + N', Xã ' + co.CommuneName + N', Quận/Huyện ' + di.DistrictName + N', Tỉnh/Thành Phố ' + pr.ProvinceName as N'Địa Chỉ'
 	FROM UserInfo uf
-	JOIN Customer c ON uf.customer_Id = c.customerId
-	JOIN CustomerType ct ON c.type_customer_id = ct.type_customer_id
-	JOIN Address a ON a.AddressID = uf.address_id
-	JOIN Commune co ON a.CommuneID = co.CommuneID
-	JOIN District di ON co.DistrictID = di.DistrictID
-	JOIN Province pr ON di.ProvinceID = pr.ProvinceID
+	LEFT JOIN Customer c ON uf.customer_Id = c.customerId
+	LEFT JOIN CustomerType ct ON c.type_customer_id = ct.type_customer_id
+	LEFT JOIN Address a ON a.AddressID = uf.address_id
+	LEFT JOIN Commune co ON a.CommuneID = co.CommuneID
+	LEFT JOIN District di ON co.DistrictID = di.DistrictID
+	LEFT JOIN Province pr ON di.ProvinceID = pr.ProvinceID
 	WHERE uf.AccountName = @UserName;
 END;
 --phân quyền

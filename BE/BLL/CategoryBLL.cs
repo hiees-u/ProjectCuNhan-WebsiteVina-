@@ -215,7 +215,7 @@ namespace BLL
                     return new BaseResponseModel()
                     {
                         IsSuccess = false,
-                        Message = $"Lỗi trong quá trình: {ex}"
+                        Message = $"Tên Loại sản phẩm đã tồn tại"
                     };
                 }
             }
@@ -254,7 +254,7 @@ namespace BLL
                             return new BaseResponseModel()
                             {
                                 IsSuccess = false,
-                                Message = "Không thể xóa loại sản phẩm về vẫn còn sản phẩm liên quan!!"
+                                Message = "Không thể xóa. Còn sản phẩm liên quan!!"
                             };
                         }
                         return new BaseResponseModel()
@@ -270,7 +270,7 @@ namespace BLL
                 return new BaseResponseModel()
                 {
                     IsSuccess = false,
-                    Message = $"Lỗi trong quá trình: {ex}"
+                    Message = $"Không thể xóa. Còn sản phẩm"
                 };
             }
         }
@@ -313,7 +313,7 @@ namespace BLL
                     return new BaseResponseModel()
                     {
                         IsSuccess = false,
-                        Message = $"Lỗi trong quá trình: {ex}"
+                        Message = $"Tên Loại sản phẩm đã tồn tại"
                     };
                 }
             }

@@ -31,7 +31,9 @@ export class WarehouseEmployeeComponent {
   }
 
   click_add_warehouse() {
-    this.router.navigate(['/warehouse-employee/add-warehouse'])
+    // Điều hướng tới trang thêm kho
+    // console.log('add-warehouse');
+    this.router.navigate(['/warehouse-employee/add-warehouse']);
   }
   logOutHandler() {
     this.router.navigate(['/login']);

@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { CustomerService } from '../customer.service';
-import { BaseResponseModel } from '../../shared/module/base-response/base-response.module';
+import {
+  BaseResponseModel,
+  BaseResponseModule,
+} from '../../shared/module/base-response/base-response.module';
 import {
   ConstructerUserInfoResponseModel,
   UserInfoResponseModel,
@@ -29,6 +32,11 @@ import {
 import { OrderDetailModel } from '../../shared/module/order/order.module';
 import { CustomCurrencyPipe } from '../../shared/module/customCurrency';
 import { Router } from '@angular/router';
+import { ModeratorService } from '../../moderator/moderator.service';
+import {
+  ChangePass,
+  ConstructorChangePass,
+} from '../../shared/module/change-pass/change-pass.module';
 
 @Component({
   selector: 'app-user-detail',
@@ -41,13 +49,10 @@ import { Router } from '@angular/router';
     CommuneComponent,
     AddressComponent,
     NotificationComponent,
-    CustomCurrencyPipe
+    CustomCurrencyPipe,
   ],
   templateUrl: './user-detail.component.html',
-  styleUrls: [
-    './user-detail.component.css',
-    './user-detail.component-v2.css'
-  ],
+  styleUrls: ['./user-detail.component.css', './user-detail.component-v2.css'],
 })
 export class UserDetailComponent {
   addressString: string = '';
@@ -67,17 +72,57 @@ export class UserDetailComponent {
   Active: number = -1;
   orders: OrderDetailModel[] = [];
 
+  //---
+  changePass: ChangePass = ConstructorChangePass();
+
+  //---
+  isShowConfirmChangePass: boolean = false;
 
   constructor(
     private service: CustomerService,
     private servicee: ServicesService,
+    private serviceModerator: ModeratorService,
     private router: Router
   ) {}
 
   ngOnInit() {
     this.getUserInfo();
+    if (!this.userInfo.accountName) {
+      console.log('del co ten dang nhap');
+      this.getAccountName();
+    }
     console.log(this.userInfo);
-    this.getOrder(-1);    
+    this.getOrder(-1);
+
+    console.log('SHow', this.isShowConfirmChangePass);
+  }
+
+  async onChangePassword() {
+    const response = await this.service.changePassword(this.changePass);
+
+    if (response.isSuccess) {
+      this.dataNotification.messages = 'Đổi mật khẩu thành công...!';
+      this.dataNotification.status = 'success';
+
+      setTimeout(() => {
+        this.router.navigate(['/login']);
+        localStorage.removeItem('token');
+      }, 5000)
+    } else {
+      this.dataNotification.messages = 'Vui lòng xử lý lại..!';
+      this.dataNotification.status = 'error';
+    }
+    this.trigger = Date.now();
+  }
+
+  onShowConfirmChangePass() {
+    this.isShowConfirmChangePass = !this.isShowConfirmChangePass;
+  }
+
+  async getAccountName() {
+    await this.serviceModerator.getAccountName().then((data) => {
+      this.userInfo.accountName = data.data;
+    });
   }
 
   async getAddressById(idAddress: number) {
@@ -170,6 +215,7 @@ export class UserDetailComponent {
   changeActive(number: number) {
     this.isActive = number;
     this.getOrder(-1);
+    this.changePass.accountName = this.userInfo.accountName;
   }
 
   logOutHandler() {
@@ -180,34 +226,34 @@ export class UserDetailComponent {
 
   moveUnderline(index: number): void {
     this.underActive = index;
-    const percentage = (index * 100);
+    const percentage = index * 100;
     this.underlineTransform = `translateX(${percentage}%)`;
   }
 
   //-- select Order
   async getOrder(oredrState: number | undefined) {
-    if(oredrState === undefined)
-      oredrState = this.Active;
-    else
-      this.Active = oredrState;
+    if (oredrState === undefined) oredrState = this.Active;
+    else this.Active = oredrState;
     const response: BaseResponseModel = await this.service.getOrder(oredrState);
-    if(response.isSuccess) {
+    if (response.isSuccess) {
       this.orders = response.data;
     }
   }
 
   async deleteOrder(orderId: Number, priceHistoryId: number) {
-    console.log('OrderId: ', orderId);    
+    console.log('OrderId: ', orderId);
     console.log('priceHistoryId: ', priceHistoryId);
-    const response: BaseResponseModel = await this.service.deleteOrder(orderId, priceHistoryId);
-    this.trigger = new Date()
+    const response: BaseResponseModel = await this.service.deleteOrder(
+      orderId,
+      priceHistoryId
+    );
+    this.trigger = new Date();
     this.dataNotification.messages = response.message ? response.message : '';
-    if(response.isSuccess) {
-      this.dataNotification.status = 'success'
+    if (response.isSuccess) {
+      this.dataNotification.status = 'success';
       this.getOrder(undefined);
     } else {
       this.dataNotification.status = 'error';
     }
-
   }
 }

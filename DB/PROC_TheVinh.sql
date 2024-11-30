@@ -10,83 +10,134 @@ USE CAFFEE_VINA_DBv1;
 --==============================
 USE CAFFEE_VINA_DBv1;
 
-ALTER ROLE WarehouseEmployee ADD MEMBER VinhWarehouseEmployee;
+--ALTER ROLE WarehouseEmployee ADD MEMBER VinhWarehouseEmployee;
 --==============================================================
-SELECT 
-    m.name AS MemberName,
-    r.name AS RoleName
-FROM 
-    sys.database_role_members rm
+SELECT m.name AS MemberName, r.name AS RoleName
+FROM sys.database_role_members rm
     JOIN sys.database_principals r ON rm.role_principal_id = r.principal_id
     JOIN sys.database_principals m ON rm.member_principal_id = m.principal_id
-WHERE 
+WHERE
     r.name = 'WarehouseEmployee';
 --======================================================================
 --create role Warehouse Employee
-Create ROLE WarehouseEmployee;
+--Create ROLE WarehouseEmployee;
 
-Grant Select On dbo.Users to WarehouseEmployee
-Grant Select, Update, Insert On dbo.UserInfo to WarehouseEmployee
-Grant Select On dbo.Province to WarehouseEmployee
-Grant Select, Insert On dbo.District to WarehouseEmployee
-Grant Select, Insert On dbo.Commune to WarehouseEmployee
-Grant Select, Insert On dbo.Address to WarehouseEmployee
-Grant Select, Update, Insert, Delete On dbo.Warehouse to WarehouseEmployee
+Grant
+Select On dbo.Users to WarehouseEmployee
+Grant
+Select,
+Update,
+Insert
+    On dbo.UserInfo to WarehouseEmployee
+Grant
+Select On dbo.Province to WarehouseEmployee
+Grant
+Select,
+Insert
+    On dbo.District to WarehouseEmployee
+Grant
+Select,
+Insert
+    On dbo.Commune to WarehouseEmployee
+Grant
+Select,
+Insert
+    On dbo.Address to WarehouseEmployee
+Grant
+Select,
+Update,
+Insert
+,
+    Delete On dbo.Warehouse to WarehouseEmployee
 
-Grant Select, Update, Insert On dbo.DeliveryNote to WarehouseEmployee
-Grant Select, Update, Insert On dbo.DeliveryNoteDetail to WarehouseEmployee
+Grant
+Select,
+Update,
+Insert
+    On dbo.DeliveryNote to WarehouseEmployee
+Grant
+Select,
+Update,
+Insert
+    On dbo.DeliveryNoteDetail to WarehouseEmployee
 
-Grant Select, Update, Insert, Delete On dbo.WarehouseReceipt to WarehouseEmployee
-Grant Select, Update, Insert, Delete On dbo.WarehouseReceiptDetail to WarehouseEmployee
+Grant
+Select,
+Update,
+Insert
+,
+    Delete On dbo.WarehouseReceipt to WarehouseEmployee
+Grant
+Select,
+Update,
+Insert
+,
+    Delete On dbo.WarehouseReceiptDetail to WarehouseEmployee
 
-Grant Select, Update, Insert On dbo.PurchaseOrder to WarehouseEmployee
-Grant Select, Update, Insert On dbo.PurchaseOrderDetail to WarehouseEmployee
+Grant
+Select,
+Update,
+Insert
+    On dbo.PurchaseOrder to WarehouseEmployee
+Grant
+Select,
+Update,
+Insert
+    On dbo.PurchaseOrderDetail to WarehouseEmployee
 
-Grant Select, Update, Insert, Delete On dbo.Shelve to WarehouseEmployee
-Grant Select, Update, Insert, Delete On dbo.Cells to WarehouseEmployee
+Grant
+Select,
+Update,
+Insert
+,
+    Delete On dbo.Shelve to WarehouseEmployee
+Grant
+Select,
+Update,
+Insert
+,
+    Delete On dbo.Cells to WarehouseEmployee
 
-Grant Select On dbo.Product to WarehouseEmployee --bổ sung 18/11/2024
-Grant Select On dbo.PriceHistory to WarehouseEmployee
+Grant
+Select On dbo.Product to WarehouseEmployee --bổ sung 18/11/2024
+Grant
+Select On dbo.PriceHistory to WarehouseEmployee
 
-Grant Select On dbo.Employee to WarehouseEmployee
---Thu hồi quyền từ một user:
-REVOKE SELECT, INSERT, UPDATE, DELETE ON SCHEMA::dbo FROM HiuWarehouseEmployee;
-
---Thu hồi quyền từ một vai trò:
-REVOKE SELECT, INSERT, UPDATE, DELETE ON SCHEMA::dbo FROM WarehouseEmployee;
-
-
+Grant
+Select On dbo.Employee to WarehouseEmployee
+    --Thu hồi quyền từ một user:
+    --REVOKE SELECT, INSERT, UPDATE, DELETE ON SCHEMA::dbo FROM HiuWarehouseEmployee;
+    --Thu hồi quyền từ một vai trò:
+    --REVOKE SELECT, INSERT, UPDATE, DELETE ON SCHEMA::dbo FROM WarehouseEmployee;
 --############################################# GET ALL WAREHOUSE #####################################################################################
 go
 --drop proc GetAllWarehouses
-CREATE PROCEDURE GetAllWarehouses
-AS
-BEGIN
-    SELECT 
-        w.WarehouseID,
-        w.WarehouseName,
-        w.AddressID,
-        COALESCE(a.Note, '') + N', Xã ' + COALESCE(c.CommuneName, '') + N', Huyện ' + COALESCE(d.DistrictName, '') + N', Tỉnh ' + COALESCE(p.ProvinceName, '') AS FullAddress,
-        w.ModifiedBy,
-        w.CreateTime,
-        w.ModifiedTime
-    FROM Warehouse w
+CREATE PROCEDURE GetAllWarehouses AS BEGIN
+SELECT
+    w.WarehouseID,
+    w.WarehouseName,
+    w.AddressID,
+    COALESCE(a.Note, '') + N', Xã ' + COALESCE(c.CommuneName, '') + N', Huyện ' + COALESCE(d.DistrictName, '') + N', Tỉnh ' + COALESCE(p.ProvinceName, '') AS FullAddress,
+    w.ModifiedBy,
+    w.CreateTime,
+    w.ModifiedTime
+FROM
+    Warehouse w
     LEFT JOIN Address a ON w.AddressID = a.AddressID
     LEFT JOIN Commune c ON a.CommuneID = c.CommuneID
     LEFT JOIN District d ON c.DistrictID = d.DistrictID
     LEFT JOIN Province p ON d.ProvinceID = p.ProvinceID
-    WHERE w.DeleteTime IS NULL
-    ORDER BY 
-        w.CreateTime DESC;
-END;
-GO
-GO
+WHERE
+    w.DeleteTime IS NULL
+ORDER BY w.CreateTime DESC;
 
+END;
+
+GO GO
 --Lấy thông tin kho
 EXEC GetAllWarehouses
-
 --PHân quyền
-GRANT EXEC ON OBJECT::dbo.GetAllWarehouses TO  WarehouseEmployee;
+GRANT EXEC ON OBJECT::dbo.GetAllWarehouses TO WarehouseEmployee;
 
 --############################################### GET WAREHOUSE BY ID #####################################################################################
 go
@@ -1056,9 +1107,6 @@ BEGIN
 END;
 GO
 
---DROP TYPE dbo.DeliveryOrderDetailType;
-
---DROP PROCEDURE IF EXISTS sp_ExportWarehouseGoodsByOrder;
 GO
 
 CREATE TYPE dbo.DeliveryOrderDetailType AS TABLE (

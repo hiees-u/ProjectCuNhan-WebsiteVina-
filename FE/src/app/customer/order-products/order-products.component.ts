@@ -29,6 +29,7 @@ import {
   ProductQuantity,
 } from '../../shared/module/order/order.module';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-order-products',
@@ -74,8 +75,60 @@ export class OrderProductsComponent {
     paymentStatus: false,
     products: []
   };
+
+  ResponseOrder: OrderResponseModel = constructorOrderResponseModel();
+
+  //-- phương thức thanh toán
+  // paymentMethod: boolean = false;
   
-  constructor(private service: CustomerService) {}
+  constructor(private service: CustomerService, private router: Router) {}
+
+  changePaymentMethod() {
+    this.isPayment = !this.isPayment;
+  }
+
+  async onOrder() {
+    if(this.isPayment) {
+      console.log('Thanh toán QR trước');
+      await this.showPayment();
+      // gọi QR
+      // nếu thành công thì tiếp tục
+    }
+
+    console.log('Thêm vào DB');
+    await this.handleOrder();
+  }
+
+  async showPayment() {
+    // this.router.navigate(['/customer/payment']);
+    const orderProducts: ProductQuantity[] = this.data.map((item) => ({
+      PriceHistoryId: item.priceHistoryId,
+      Quantity: item.quantity,
+    }));
+  
+    this.Order.products = orderProducts;
+    this.Order.paymentStatus = true;
+  
+    try {
+      const response = await this.service.postOrder(this.Order);
+      if (response.isSuccess) {
+        const momoResponse = await this.service.createPaymentMomo(this.Order);
+        console.log("MOMO Response:", momoResponse); // Log phản hồi từ MOMO
+        if (momoResponse && momoResponse.PayUrl) {
+          window.location.href = momoResponse.PayUrl; // Điều hướng tới URL QR
+        } else {
+          throw new Error("URL thanh toán MOMO không hợp lệ!");
+        }
+      } else {
+        throw new Error("Đặt hàng thất bại!");
+      }
+    } catch (error: any) { // Ép kiểu về `any`
+      console.error("Lỗi trong quá trình thanh toán:", error);
+      this.dataNotification.messages = error.message || "Lỗi không xác định!";
+      this.dataNotification.status = "error";
+      this.trigger = Date.now();
+    }
+  }
 
   async handleOrder() {
     if (this.addressSelectKey === 0) {
@@ -118,6 +171,7 @@ export class OrderProductsComponent {
       orderProducts.push(product);
     })
 
+    //nếu thanh toán trước hoặc không
     this.Order.paymentStatus = this.isPayment;
     this.Order.products = orderProducts;
 
@@ -139,9 +193,6 @@ export class OrderProductsComponent {
       };
     }
   }
-
-  ResponseOrder: OrderResponseModel = constructorOrderResponseModel();
-
 
   onShowInsertAddress() {
     console.log(this.address);
@@ -183,6 +234,8 @@ export class OrderProductsComponent {
 
     if (this.address.length > 0) {
       this.addressSelectKey = this.address[0].key;
+      console.log(this.addressSelectKey);
+      
     } else {
       this.onShowInsertAddress();
     }
@@ -199,6 +252,7 @@ export class OrderProductsComponent {
     const response: BaseResponseModel = await this.service.getStringAddresses();
     if (response.isSuccess) {
       this.address = response.data;
+      
     }
     this.address.forEach((addres) => {
       console.log(addres);

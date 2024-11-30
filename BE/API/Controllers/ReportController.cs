@@ -1,5 +1,6 @@
 ﻿using BLL.Interface;
 using DTO.Responses;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -15,6 +16,7 @@ namespace API.Controllers
             this.report = report;
         }
         [HttpGet("Daily")]
+        [Authorize(Roles = "Moderator")]
         public IActionResult GetDailySalesReport(DateTime InputDate)
         {
             BaseResponseModel res = this.report.GetDailySalesReport(InputDate);
@@ -22,6 +24,7 @@ namespace API.Controllers
         }
 
         [HttpGet("Weekly")]
+        [Authorize(Roles = "Moderator")]
         public IActionResult GetWeeklySalesReport(DateTime StartDate, DateTime EndDate) 
         {
             var res = this.report.GetWeeklySalesReport(StartDate, EndDate);
@@ -29,6 +32,7 @@ namespace API.Controllers
         }
 
         [HttpGet("Monthly")]
+        [Authorize(Roles = "Moderator")]
         public IActionResult GetMonthlySalesReport(int Month, int Year)
         {
             var res = this.report.GetMonthlySalesReport(Month, Year);
@@ -36,6 +40,7 @@ namespace API.Controllers
         }
 
         [HttpGet("Yearly")]
+        [Authorize(Roles = "Moderator")]
         public IActionResult GetYearlySalesReport(int Year)
         {
             var res = this.report.GetYearlySalesReport(Year);

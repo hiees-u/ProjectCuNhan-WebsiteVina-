@@ -31,21 +31,22 @@ namespace BLL
                         using (SqlDataReader reader = cmd.ExecuteReader()) 
                         { 
                             if (reader.Read()) 
-                            { 
-                                uf = new UserInfoResponseModel { 
-                                    accountName = reader["Tên Đăng Nhập"]?.ToString() ?? string.Empty, 
-                                    fullName = reader["Họ Tên"].ToString(), 
-                                    email = reader["Email"].ToString(), 
-                                    phone = reader["Số Điện Thoại"].ToString(), 
-                                    gender = Convert.ToInt32(reader["Giới Tính"]),
-                                    customerType = reader["Loại Khách Hàng"].ToString(),
-                                    address = reader["Địa Chỉ"].ToString() ,
-                                    addressId = Convert.ToInt32(reader["Địa Chỉ ID"]),
-                                    commune = Convert.ToInt32(reader["Xã"]),
-                                    province = Convert.ToInt32(reader["Tỉnh"]),
-                                    district = Convert.ToInt32(reader["Quận"]),
-                                }; 
-                            } 
+                            {
+                                uf = new UserInfoResponseModel
+                                {
+                                    accountName = reader["Tên Đăng Nhập"]?.ToString() ?? string.Empty,
+                                    fullName = reader["Họ Tên"]?.ToString() ?? string.Empty,
+                                    email = reader["Email"]?.ToString() ?? string.Empty,
+                                    phone = reader["Số Điện Thoại"]?.ToString() ?? string.Empty,
+                                    gender = reader["Giới Tính"] != DBNull.Value ? (reader["Giới Tính"] as int?).GetValueOrDefault() : -1,
+                                    customerType = reader["Loại Khách Hàng"]?.ToString(),
+                                    address = reader["Địa Chỉ"]?.ToString() ?? string.Empty,
+                                    addressId = reader["Địa Chỉ ID"] != DBNull.Value ? (reader["Địa Chỉ ID"] as int?).GetValueOrDefault() : 0,
+                                    commune = reader["Xã"] != DBNull.Value ? (reader["Xã"] as int?).GetValueOrDefault() : 0,
+                                    province = reader["Tỉnh"] != DBNull.Value ? (reader["Tỉnh"] as int?).GetValueOrDefault() : 0,
+                                    district = reader["Quận"] != DBNull.Value ? (reader["Quận"] as int?).GetValueOrDefault() : 0,
+                                };
+                            }
                         }
                     }
                 }
@@ -79,7 +80,7 @@ namespace BLL
             })).Data!); //-- trả về  0 hoăc AddressId
 
             //--> chưa tồn tại địa chỉ --> insert mới
-            if (req.addressId <= 0) {
+            if (req.addressId <= 0 && req.commune != 0) {
                 req.addressId = (int)(this._address.Post(new DTO.Address.AddressRequestModule()
                 {
                     CommuneName = req.communeName,
@@ -129,6 +130,7 @@ namespace BLL
         }
  
         public BaseResponseModel GetAccontName()
+       
         {
             try
             {

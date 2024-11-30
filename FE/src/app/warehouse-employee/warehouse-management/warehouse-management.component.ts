@@ -16,7 +16,7 @@ export class WarehouseManagementComponent{
   warehouses: Warehouse[] = [];
 
   ngOnInit(): void {
-    this.getWarehouses();
+    // this.getWarehouses();
   }
   constructor( private routes: Router, private warehouseEmployeeService: WarehouseEmployeeService) {}
 

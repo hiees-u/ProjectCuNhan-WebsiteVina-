@@ -13,8 +13,10 @@
 
 .content {
   /* margin-top: 5px; */
-  width: 100%;
+  width: calc(100% - 20px);
   position: relative;
+  padding: 0 5px;
+  /* position: relative; */
 }
 
 .content table {
@@ -181,12 +183,12 @@ td span {
   transform: translate(-50%, -50%);
 }
 
-.content {
-  /* margin-top: 5px; */
+/* margin-top: 5px; */
+/* .content {
   height: 100%;
   width: 100%;
   position: relative;
-}
+} */
 
 /* //////////////// */
 

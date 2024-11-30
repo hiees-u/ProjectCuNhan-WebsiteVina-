@@ -40,7 +40,6 @@ p {
   padding-right: 5%;
 }
 
-
 .box-content input,
 .box-input,
 .box-input select {
@@ -267,3 +266,97 @@ select {
   cursor: pointer;
 }
 
+.change-password {
+  position: relative;
+}
+
+.confirm-change-pass {
+  width: 100%;
+  height: 100%;
+  background-color: #cfcdcd59;
+  position: absolute;
+  top: 0;
+  /* left: 0; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container-confirm {
+  min-width: 280px;
+  width: fit-content;
+  background-color: #fff;
+  height: 150px;
+  border-radius: 5%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--main-style);
+  justify-content: space-between;
+}
+
+.text-main {
+  width: calc(100% - 40px);
+  padding: 10px 0;
+}
+
+.show {
+  animation: show 0.5s ease-in-out forwards;
+}
+
+.hiden {
+  animation: hiden 0.5s ease-in-out forwards;
+}
+
+@keyframes show {
+  0% {
+    right: 150%;
+  }
+  100% {
+    right: 0%;
+  }
+}
+
+@keyframes hiden {
+  0% {
+    right: 0;
+  }
+  100% {
+    right: 150%;
+  }
+}
+
+.container-confirm > div > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.container-confirm > div > button {
+  border: none;
+  outline: none;
+  padding: 10px 15px;
+  margin: 0 10px;
+  border-radius: 7px;
+  cursor: pointer;
+  font-size: 1.1em;
+  transition: all .5s ease-in-out;
+}
+
+.text-main {
+  font-size: 1.3em;
+}
+
+.container-confirm > div > button:hover {
+  color: #fff;
+}
+
+.confirm-btn {
+  background-color: rgb(152, 152, 255);
+  color: blue;
+}
+
+.close-btn {
+  color: #000;
+  background-color: #686868;
+}

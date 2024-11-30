@@ -1,24 +1,25 @@
 <div class="container">
   <div class="wrapper-header">
     <div class="header">
-      <div class="logo">
+      <div class="logo" (click)="navigateToAboutUs()" >
         <img src="/assets/Logo/logo2.png" alt="logo" />
       </div>
       <ul class="menu-ul">
-        <li
+        <!-- <li
           class="no-select menu-li menu-li-content"
           [ngClass]="{ active: isActive === 1 }"
           (click)="changeActive(1)"
         >
           Trang Chủ
-        </li>
+        </li> -->
         <li
           class="no-select menu-li menu-li-content"
           (click)="navigateToAboutUs()"
           [ngClass]="{ active: isActive === 2 }"
           (click)="changeActive(2)"
         >
-          Về Chúng Tôi
+          Trang Chủ
+          <!-- Về Chúng Tôi -->
         </li>
         <li
           class="no-select menu-li menu-li-content"
@@ -87,7 +88,7 @@
         </a>
         © 2024. All rights reserved.
       </p>
-      <div class="logo-ft">
+      <div class="logo-ft" (click)="navigateToAboutUs()">
         <img src="/assets/Logo/logo2.png" alt="logo" />
       </div>
       <div class="group-btn">
