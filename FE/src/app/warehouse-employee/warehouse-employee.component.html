@@ -1,199 +1,24 @@
 <div class="bg-gray-100">
     <!-- Container -->
-    <div class="flex min-h-screen">
-        <!-- Sidebar -->
-        <div class="w-64 h-screen bg-gray-800 text-white flex flex-col">
-            <h4 class="text-2xl font-bold text-center py-6 border-b border-gray-700">Nhân Viên Quản Lý</h4>
-            <nav class="mt-6 flex flex-col space-y-2">
-                <a (click)="click_add_warehouse()" class="py-2 px-4 hover:bg-gray-700 focus:bg-gray-700 focus:outline-none">Nhập
-                    Kho</a>
-                <a class="py-2 px-4 hover:bg-gray-700 focus:bg-gray-700 focus:outline-none">Xuất Kho</a>
-                <a class="py-2 px-4 hover:bg-gray-700 focus:bg-gray-700 focus:outline-none">Quản Lý Đơn
-                    Hàng</a>
-                <a class="py-2 px-4 hover:bg-gray-700 focus:bg-gray-700 focus:outline-none">Báo Cáo Thống
-                    Kê</a>
-                <a class="py-2 px-4 hover:bg-gray-700 focus:bg-gray-700 focus:outline-none">Cài Đặt</a>
-            </nav>
-        </div>
-
-        <!-- Main Content -->
-        <div class="flex-1 p-6">
-            <router-outlet></router-outlet>
-        </div>
-        <!-- JavaScript -->
-        <script>
-
-            // Dữ liệu kho, kệ, ô (Có thể lấy từ database hoặc API)
-            const warehouses = [
-                { id: "WH001", name: "Kho 1", address: "Địa chỉ Kho 1", createdBy: "Nhân viên A", createdAt: "2024-01-01", updatedAt: "2024-01-02", deletedAt: null },
-                { id: "WH002", name: "Kho 2", address: "Địa chỉ Kho 2", createdBy: "Nhân viên B", createdAt: "2024-01-05", updatedAt: "2024-01-07", deletedAt: null }
-            ];
-
-            const racks = {
-                WH001: [
-                    {
-                        rackId: "R001", name: "Kệ 1", cells: [
-                            { cellId: "Cell001", product: "Sản phẩm A", isEmpty: false },
-                            { cellId: "Cell002", product: "Sản phẩm B", isEmpty: false },
-                            { cellId: "Cell003", product: "", isEmpty: true }
-                        ]
-                    },
-                    {
-                        rackId: "R002", name: "Kệ 2", cells: [
-                            { cellId: "Cell004", product: "", isEmpty: true },
-                            { cellId: "Cell005", product: "Sản phẩm C", isEmpty: false }
-                        ]
-                    }
-                ],
-                WH002: [
-                    {
-                        rackId: "R003", name: "Kệ 3", cells: [
-                            { cellId: "Cell006", product: "", isEmpty: true },
-                            { cellId: "Cell007", product: "Sản phẩm D", isEmpty: false }
-                        ]
-                    }
-                ]
-            };
-
-            // Hàm hiển thị danh sách kho
-            function displayWarehouses() {
-                const warehouseList = document.getElementById("warehouseList");
-                warehouseList.innerHTML = "";
-
-                warehouses.forEach(warehouse => {
-                    const row = document.createElement("tr");
-                    row.innerHTML = `
-          <td class="text-center">${warehouse.id}</td>
-          <td class="text-center">${warehouse.name}</td>
-          <td class="text-center">${warehouse.address}</td>
-          <td class="text-center">${warehouse.createdBy}</td>
-          <td class="text-center">${warehouse.createdAt}</td>
-          <td class="text-center">${warehouse.updatedAt || "Chưa cập nhật"}</td>
-          <td class="text-center">${warehouse.deletedAt || "Chưa xóa"}</td>
-          <td class="text-center">
-            <button onclick="viewWarehouse('${warehouse.id}')" class="bg-blue-600 text-white py-1 px-3 rounded">Xem</button>
-            <button onclick="editWarehouse('${warehouse.id}')" class="bg-yellow-600 text-white py-1 px-3 rounded">Sửa</button>
-            <button onclick="deleteWarehouse('${warehouse.id}')" class="bg-red-600 text-white py-1 px-3 rounded">Xóa</button>
-          </td>
-        `;
-                    warehouseList.appendChild(row);
-                });
-            }
-
-            // Hàm hiển thị thông tin kệ và ô khi chọn kho
-            function viewWarehouse(warehouseId) {
-                const rackInfoDiv = document.getElementById("rackInfo");
-                rackInfoDiv.innerHTML = "";
-
-                const selectedRacks = racks[warehouseId] || [];
-                selectedRacks.forEach(rack => {
-                    const rackDiv = document.createElement("div");
-                    rackDiv.classList.add("mt-4");
-                    rackDiv.innerHTML = `
-          <h4 class="text-lg font-semibold">${rack.name}</h4>
-          <ul class="list-disc pl-6">
-            ${rack.cells.map(cell => `
-              <li class="text-gray-700">${cell.cellId}: ${cell.product ? cell.product : 'Trống'}</li>
-            `).join('')}
-          </ul>
-        `;
-                    rackInfoDiv.appendChild(rackDiv);
-                });
-            }
-
-            // Hàm sửa thông tin kho
-            function editWarehouse(warehouseId) {
-                const warehouse = warehouses.find(w => w.id === warehouseId);
-                if (!warehouse) return;
-
-                Swal.fire({
-                    title: 'Sửa Thông Tin Kho',
-                    html: `
-          <input type="text" id="editWarehouseName" class="swal2-input" value="${warehouse.name}" placeholder="Tên kho" required />
-          <input type="text" id="editWarehouseAddress" class="swal2-input" value="${warehouse.address}" placeholder="Địa chỉ" required />
-        `,
-                    showCancelButton: true,
-                    confirmButtonText: 'Lưu',
-                    cancelButtonText: 'Hủy',
-                    preConfirm: () => {
-                        const name = document.getElementById("editWarehouseName").value;
-                        const address = document.getElementById("editWarehouseAddress").value;
-                        if (!name || !address) {
-                            Swal.showValidationMessage("Vui lòng nhập đầy đủ thông tin.");
-                        }
-                        return { name, address };
-                    }
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        warehouse.name = result.value.name;
-                        warehouse.address = result.value.address;
-                        warehouse.updatedAt = new Date().toLocaleString();
-                        displayWarehouses();
-                        Swal.fire('Thành công!', 'Thông tin kho đã được cập nhật.', 'success');
-                    }
-                });
-            }
-
-            // Hàm xóa kho (Cập nhật thời gian xóa)
-            function deleteWarehouse(warehouseId) {
-                const warehouse = warehouses.find(w => w.id === warehouseId);
-                if (!warehouse) return;
-
-                Swal.fire({
-                    title: 'Xác nhận xóa kho?',
-                    text: "Thời gian xóa sẽ được cập nhật nhưng dữ liệu không bị xóa.",
-                    showCancelButton: true,
-                    confirmButtonText: 'Xóa',
-                    cancelButtonText: 'Hủy'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        warehouse.deletedAt = new Date().toLocaleString();
-                        displayWarehouses();
-                        Swal.fire('Đã xóa!', 'Thời gian xóa đã được cập nhật.', 'success');
-                    }
-                });
-            }
-
-            // Hàm thêm kho (Demo)
-            function addWarehouse() {
-                Swal.fire({
-                    title: 'Thêm Kho Mới',
-                    html: `
-          <input type="text" id="newWarehouseName" class="swal2-input" placeholder="Tên kho" required />
-          <input type="text" id="newWarehouseAddress" class="swal2-input" placeholder="Địa chỉ" required />
-        `,
-                    showCancelButton: true,
-                    confirmButtonText: 'Thêm',
-                    cancelButtonText: 'Hủy',
-                    preConfirm: () => {
-                        const name = document.getElementById("newWarehouseName").value;
-                        const address = document.getElementById("newWarehouseAddress").value;
-                        if (!name || !address) {
-                            Swal.showValidationMessage("Vui lòng nhập đầy đủ thông tin.");
-                        }
-                        return { name, address };
-                    }
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        const newWarehouse = {
-                            id: `WH00${warehouses.length + 1}`,
-                            name: result.value.name,
-                            address: result.value.address,
-                            createdBy: "Nhân viên X",
-                            createdAt: new Date().toLocaleString(),
-                            updatedAt: null,
-                            deletedAt: null
-                        };
-                        warehouses.push(newWarehouse);
-                        displayWarehouses();
-                        Swal.fire('Thành công!', 'Kho mới đã được thêm.', 'success');
-                    }
-                });
-            }
-
-            // Gọi hàm hiển thị kho lần đầu
-            displayWarehouses();
-        </script>
-
+    <div class="container">
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <h4 class="sidebar-title">Nhân Viên Quản Lý</h4>
+        <nav class="sidebar-nav">
+          <a (click)="click_add_warehouse()" class="sidebar-item">Nhập Kho</a>
+          <a class="sidebar-item"
+            >Xuất Kho</a
+          >
+          <a class="sidebar-item">Quản Lý Đơn Hàng</a>
+          <a class="sidebar-item">Báo Cáo Thống Kê</a>
+          <a class="sidebar-item">Cài Đặt</a>
+        </nav>
+      </div>
+  
+      <!-- Main Content -->
+      <div class="main-content">
+        <router-outlet></router-outlet>
+      </div>
     </div>
-</div>
+  </div>
+  

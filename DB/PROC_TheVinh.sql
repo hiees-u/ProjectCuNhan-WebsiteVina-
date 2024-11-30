@@ -58,7 +58,7 @@ REVOKE SELECT, INSERT, UPDATE, DELETE ON SCHEMA::dbo FROM WarehouseEmployee;
 
 --############################################# GET ALL WAREHOUSE #####################################################################################
 go
-drop proc GetAllWarehouses
+--drop proc GetAllWarehouses
 CREATE PROCEDURE GetAllWarehouses
 AS
 BEGIN
@@ -90,33 +90,6 @@ GRANT EXEC ON OBJECT::dbo.GetAllWarehouses TO  WarehouseEmployee;
 
 --############################################### GET WAREHOUSE BY ID #####################################################################################
 go
---CREATE PROCEDURE GetWarehouseByID
---    @WarehouseID INT,
---    @Message NVARCHAR(100) OUTPUT
---AS
---BEGIN
---    IF NOT EXISTS (SELECT 1 FROM Warehouse WHERE WarehouseID = @WarehouseID)
---    BEGIN
---        SET @Message = N'Không tìm thấy Warehouse với ID đã cho';
---        RETURN;
---    END
-
---    SELECT 
---        w.WarehouseID,
---        w.WarehouseName,
---        w.AddressID,
---        w.ModifiedBy,
---        w.CreateTime,
---        w.ModifiedTime
---    FROM 
---        Warehouse w
---    WHERE 
---        w.WarehouseID = @WarehouseID AND W.DeleteTime IS NULL;
-
---    SET @Message = N'Đã lấy thông tin kho thành công!';
---END;
-
---drop proc GetWarehouseByID
 
 CREATE PROCEDURE GetWarehouseByID
     @WarehouseID INT,
@@ -1085,7 +1058,7 @@ GO
 
 --DROP TYPE dbo.DeliveryOrderDetailType;
 
-DROP PROCEDURE IF EXISTS sp_ExportWarehouseGoodsByOrder;
+--DROP PROCEDURE IF EXISTS sp_ExportWarehouseGoodsByOrder;
 GO
 
 CREATE TYPE dbo.DeliveryOrderDetailType AS TABLE (
