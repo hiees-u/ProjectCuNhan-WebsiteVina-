@@ -18,7 +18,7 @@ import { ViewCustomersComponent } from "../view-customers/view-customers.compone
   styleUrl: './customer-moderator.component.css'
 })
 export class CustomerModeratorComponent {
-  isShowAddCate: boolean = false;
+  // isShowAddCate: boolean = false;
 
   totalPage: number = 1;
   pages: number[] = [];
@@ -30,6 +30,9 @@ export class CustomerModeratorComponent {
   //--
   deparments: DepartmentRequestModerator[] = [];
 
+  //
+  isShowDetail: boolean = false;
+
   constructor(private moderatorService: ModeratorService) {}
 
   ngOnInit(): void {
@@ -37,7 +40,7 @@ export class CustomerModeratorComponent {
   }
 
   onShowAddCate() {
-    this.isShowAddCate = true;
+    // this.isShowAddCate = true;
   }
 
   // getDepartments() {

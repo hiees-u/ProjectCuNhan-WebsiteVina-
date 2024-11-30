@@ -1,12 +1,17 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { CustomerRequestModule } from '../moderator.module';
+import { Component, Output } from '@angular/core';
+import {
+  ContructorCustomerRequestModule,
+  CustomerRequestModule,
+  CustomerType,
+} from '../moderator.module';
 import { ModeratorService } from '../moderator.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-view-customers',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './view-customers.component.html',
   styleUrl: './view-customers.component.css',
 })
@@ -19,10 +24,25 @@ export class ViewCustomersComponent {
 
   isError: boolean = false;
 
+  customerTypes: CustomerType[] = [];
+
   constructor(private service: ModeratorService) {}
 
   ngOnInit(): void {
     this.getCustomer();
+    this.getCustomerType();
+  }
+
+  //
+  async handleSelectCusType(customer: CustomerRequestModule) {
+    console.log(customer);
+    this.service.putCustomer({accountName: customer.accountName, typeCustomerId: customer.typeCustomerId})
+    .then((data) => {
+      console.log(data);
+    })
+    .catch((error) => {
+      console.log(error);
+    })
   }
 
   getCustomer() {
@@ -41,6 +61,25 @@ export class ViewCustomersComponent {
         console.error(error);
       });
   }
+
+  //API GET CUSTOMER TYPE
+  async getCustomerType() {
+    try {
+      const response = await this.service.getCustomerType();
+      if (response.isSuccess) {
+        this.customerTypes = response.data;
+      } else {
+        console.error('Failed to load customer types:', response.message);
+      }
+    } catch (error) {
+      console.error('Error loading customer types:', error);
+    }
+  }
+
+  // handleSelectedCustomer(Customer: CustomerRequestModule) {
+  //   this.selectedCustomer = Customer;
+  //   // this.selectedCustomer.
+  // }
 
   handlePageClick(page: number) {
     if (page === 1) {

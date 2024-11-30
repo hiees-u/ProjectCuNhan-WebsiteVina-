@@ -1,5 +1,11 @@
 import { NgModule } from '@angular/core';
 
+//Customer type
+export interface CustomerType {
+  typeCustomerId: 0;
+  typeCustomerName: '';
+}
+
 //customer request module
 export interface CustomerRequestModule {
   accountName: string;
@@ -26,19 +32,6 @@ export interface EmployeeRequestModule {
   fullName?: string | null;
   gender?: number | null;
 }
-
-/*
-accountName:"HiuModerator"
-addressId:null
-addressName:null
-departmentId:7
-departmentName:"VÔ GIA CƯ"
-employId: 47
-employeeTypeId: 6
-employeeTypeName:"Moderator"
-fullName:null
-gender:null
-*/
 
 // product-moderator.model.ts
 export interface ProductModerator {
@@ -102,6 +95,20 @@ export interface CategoryRequesModerator {
 export interface SubCategoryRequesModerator {
   subCategoryId: number;
   subCategoryName: string;
+}
+
+export function ContructorCustomerRequestModule(): CustomerRequestModule {
+  return {
+    accountName: '',
+    fullName: '',
+    email: '',
+    phone: '',
+    gender: 0,
+    typeCustomerId: 0,
+    typeCustomerName: '',
+    addressId: 0,
+    addressString: '',
+  };
 }
 
 export function ContructorDepartmentRequestModerator(): DepartmentRequestModerator {
