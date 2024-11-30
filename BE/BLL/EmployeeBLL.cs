@@ -167,9 +167,6 @@ namespace BLL
                             cmd.Parameters.Add(new SqlParameter("@EmployeeTypeID", req.employeeTypeId));
                             cmd.Parameters.Add(new SqlParameter("@DepartmentID", req.departmentId));
                             cmd.Parameters.Add(new SqlParameter("@FullName", req.fullName));
-                            cmd.Parameters.Add(new SqlParameter("@Email", req.email));
-                            cmd.Parameters.Add(new SqlParameter("@AddressID", req.addressId));
-                            cmd.Parameters.Add(new SqlParameter("@Phone", req.phone));
                             cmd.Parameters.Add(new SqlParameter("@Gender", req.gender));
 
                             cmd.ExecuteNonQuery();

@@ -316,3 +316,8 @@ td span {
   outline: none;
   text-align: center;
 }
+
+.text-error {
+  color: red;
+  background-color: rgba(255, 0, 0, 0.267);
+}

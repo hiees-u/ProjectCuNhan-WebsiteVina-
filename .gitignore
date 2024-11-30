@@ -22,3 +22,12 @@ BE/.vs/
 
 # Ignore Visual Studio files
 .vs/
+
+# Ignore build outputs
+/bin/
+/obj/
+
+# Ignore Visual Studio files
+/.vs/
+*.suo
+*.user
