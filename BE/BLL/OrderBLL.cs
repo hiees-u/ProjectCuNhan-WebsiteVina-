@@ -2,6 +2,7 @@
 using BLL.LoginBLL;
 using DTO.Order;
 using DTO.Responses;
+using DTO.Payment;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -173,5 +174,25 @@ namespace BLL
                 };
             }
         }
+
+        public async Task<bool> UpdateOrderPaymentStatus(string orderId, MomoInfoModel paymentInfo)
+        {
+            using (var conn = new SqlConnection(ConnectionStringHelper.Get()))
+            {
+                using (var command = new SqlCommand("SP_UpdatePaymentStatus", conn))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.Add(new SqlParameter("@OrderId", orderId));
+                    command.Parameters.Add(new SqlParameter("@Amount", paymentInfo.Amount));
+                    command.Parameters.Add(new SqlParameter("@DatePaid", paymentInfo.DatePaid));
+                    command.Parameters.Add(new SqlParameter("@PaymentStatus", true)); // Chuyển trạng thái thành công
+
+                    conn.Open();
+                    var rowsAffected = await command.ExecuteNonQueryAsync();
+                    return rowsAffected > 0;
+                }
+            }
+        }
+
     }
 }

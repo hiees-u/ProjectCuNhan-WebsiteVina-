@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using DTO.Order;
 using Newtonsoft.Json;
 using System.Security.Claims;
+using DTO.Payment;
 
 namespace API.Controllers
 {
@@ -11,9 +12,11 @@ namespace API.Controllers
     public class PaymentController : Controller
     {
         private IMomoService _momoService;
-        public PaymentController(IMomoService momoService)
+        private IOrder _orderService;
+        public PaymentController(IMomoService momoService, IOrder orderService)
         {
             _momoService = momoService;
+            _orderService = orderService;
 
         }
 
@@ -55,36 +58,38 @@ namespace API.Controllers
 
         [HttpGet]
         [Route("Save")]
-        public IActionResult PaymentCallBacks() 
+        public async Task<IActionResult> PaymentCallBacks([FromQuery] string orderId, [FromQuery] decimal amount, [FromQuery] int resultCode)
         {
-            var response = _momoService.PaymentExecuteAsync();
-            return View(response);
+            try
+            {
+                if (resultCode == 0) // Thành công
+                {
+                    // Lưu dữ liệu vào DB
+                    var paymentInfo = new MomoInfoModel
+                    {
+                        OrderId = orderId,
+                        Amount = amount,
+                        DatePaid = DateTime.Now,
+                        PaymentStatus = true
+                    };
 
-            //var response = _momoService.PaymentExecuteAsync(HttpContext.Request.Query);
-            //var requestQuery = HttpContext.Request.Query;
-            //if (requestQuery["resultCode"] == 0)
-            //{
-            //    var newMomoInsert = new MomoInfoModel
-            //    {
-            //        OrderId = requestQuery["orderId"],
-            //        FullName = User.FindFirstValue(ClaimTypes.Email),
-            //        Amount = decimal.Parse(requestQuery["Amount"]),
-            //        OrderInfo = requestQuery["orderInfo"],
-            //        DatePaid = DateTime.Now
-            //    };
-            //    _dataContext.Add(newMomoInsert);
-            //    await _dataContext.SaveChangesAsync();
-            //}
-            //else
-            //{
-            //    TempData["success"] = "Đã hủy giao dịch Momo.";
-            //    return RedirectToAction("Index", "Cart");
-            //}
+                    await _orderService.UpdateOrderPaymentStatus(orderId, paymentInfo);
 
-            //// Call checkout method after saving MomoInfo
-            //var checkoutResult = await Checkout(requestQuery["orderId"]);
-            //return View(response);
+                    return Ok(new { message = "Giao dịch thành công!" });
+                }
+                else
+                {
+                    return BadRequest(new { message = "Giao dịch thất bại!" });
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Lỗi xử lý callback:");
+                Console.WriteLine(ex.Message);
+                return StatusCode(500, new { message = "Lỗi xử lý!", detailedMessage = ex.Message });
+            }
         }
+
 
     }
 }

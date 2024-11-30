@@ -56,7 +56,7 @@ export class LoginComponent {
           this.response = res.message;
         }
       } catch (error) {
-        this.response = 'Đã xảy ra lỗi trong quá trình đăng nhập.';
+        this.response = 'Kiểm tra lại mật khẩu..!';
         console.error('Login error:', error);
       }
     } else {
