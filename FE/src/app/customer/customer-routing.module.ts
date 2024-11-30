@@ -26,4 +26,11 @@ const routes: Routes = [
   }
 ];
 
+interface MomoOrderInfo {
+  FullName: string;
+  OrderId: string;
+  OrderInfomation: string;
+  Amount: string;
+}
+
 export default routes;

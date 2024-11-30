@@ -25,7 +25,7 @@ export class CustomerService {
     }
   }
   
-  async createPaymentMomo(order: OrderRequestModule): Promise<any> {
+  async createPaymentMomo(orderInfo: { FullName: string; OrderId: string; OrderInfomation: string; Amount: string }): Promise<any> {
     const url = `${this.apiUrl}Payment/CreatePaymentUrl`;
     try {
       const response = await fetch(url, {
@@ -34,20 +34,30 @@ export class CustomerService {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${this.token}`,
         },
-        body: JSON.stringify(order),
+        body: JSON.stringify(orderInfo),
       });
+  
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        const errorText = await response.text();
+        console.error('Phản hồi lỗi từ server:', errorText);
+        throw new Error(`HTTP error! status: ${response.status} - ${errorText}`);
       }
+  
       const data = await response.json();
-      console.log('MOMO Payment Response:', data); // Log phản hồi từ server
-      return data;
-    } catch (error) {
-      console.error('Error creating MOMO payment URL:', error);
-      throw error;
+      console.log('Phản hồi từ API Momo:', data);  // Log phản hồi từ Momo
+  
+      // Kiểm tra nếu trả về payUrl hợp lệ
+      if (data && data.payUrl) {
+        console.log('URL thanh toán Momo:', data.payUrl);  // Log payUrl
+        return data;  // Trả về URL thanh toán
+      } else {
+        throw new Error('Không thể tạo URL thanh toán Momo!');
+      }
+    } catch (error:any) {
+      console.error('Lỗi khi tạo thanh toán Momo:', error.message);
+      throw error;  // Bắn lại lỗi để xử lý tại nơi gọi hàm
     }
   }
-  
   //lấy token
   ngOnInit(): void {
     if (typeof window !== 'undefined') {
@@ -92,29 +102,32 @@ export class CustomerService {
     });
   }
 
-  //post order
-  async postOrder(order: OrderRequestModule) : Promise<BaseResponseModel> {
-    //https://localhost:7060/api/Order
+  async postOrder(order: OrderRequestModule): Promise<BaseResponseModel> {
     const url = `${this.apiUrl}Order`;
-
-    console.log('log order ở service');
-    console.log(order);
-    
-    
-
-    return fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${this.token}`,
-      },
-      body: JSON.stringify(order),
-    }).then((response) => {
+  
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.token}`,
+        },
+        body: JSON.stringify(order),
+      });
+  
       if (!response.ok) {
-        throw new Error('Lỗi ở Post Order');
+        // Lấy nội dung lỗi từ phản hồi server
+        const errorText = await response.text(); 
+        console.error('Server Error Response:', errorText);
+        throw new Error(`Lỗi ở Post Order: HTTP ${response.status} - ${errorText}`);
       }
+  
+      // Trả về kết quả JSON nếu thành công
       return response.json() as Promise<BaseResponseModel>;
-    });
+    } catch (error:any) {
+      console.error('Post Order Error:', error.message);
+      throw error;
+    }  
   }
 
   //post address

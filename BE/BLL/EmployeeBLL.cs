@@ -197,5 +197,10 @@ namespace BLL
                 Message = "Kiểm tra lại thông tin..!"
             };
         }
+
+        public BaseResponseModel Get(int? departmentID = null, int? employeeTypeID = null)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
