@@ -346,3 +346,11 @@ tbody tr {
 .input-fullname::placeholder {
   color: #6c757d; /* Màu chữ của placeholder */
 }
+
+.error-text-box::placeholder {
+  color: red;
+}
+
+.error-text-box {
+  background-color: rgba(255, 2, 2, 0.178);
+}
