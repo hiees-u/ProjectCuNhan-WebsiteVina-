@@ -7,6 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
 using DTO.Payment;
+using API.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,7 +35,8 @@ builder.Services.AddScoped<IEmployee, EmployeeBLL>();
 builder.Services.AddScoped<IReport, ReportBLL>();
 builder.Services.AddScoped<IWarehouseReceipt, WarehouseReceiptBLL>();
 builder.Services.AddScoped<IDeliveryNote, DeliveryNoteBLL>();
-
+builder.Services.AddScoped<ITransactionBLL, TransactionBLL>();
+builder.Services.AddScoped<IVnPayService, VnPayService>(); 
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

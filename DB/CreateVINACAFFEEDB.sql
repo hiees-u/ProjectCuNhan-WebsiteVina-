@@ -98,6 +98,17 @@ CREATE TABLE ORDER_DETAIL(
 
 GO
 
+--Transaction
+CREATE TABLE Transactions (
+	LocalTransactionId INT IDENTITY(1,1) PRIMARY KEY,
+	OrderId INT NOT NULL, -- FK
+	PaymentMethod NVARCHAR(255) NOT NULL,
+	Information NVARCHAR(500) NOT NULL,
+	TransactionId NVARCHAR(255) NOT NULL,
+	State NVARCHAR(255) NOT NULL,
+	CreateAt DateTime NOT NULL,
+)
+
 Create table Employee 
 (
 	EmployeeID int IDENTITY(1,1) PRIMARY KEY,

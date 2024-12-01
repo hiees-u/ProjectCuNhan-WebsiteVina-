@@ -1,16 +1,24 @@
 ﻿using BLL.Interface;
 using Microsoft.AspNetCore.Mvc;
 using DTO.Order;
+using API.Services;
+using API.Models;
 
 namespace API.Controllers
 {
     public class PaymentController : Controller
     {
         private IMomoService _momoService;
-        public PaymentController(IMomoService momoService)
+        private readonly IVnPayService _vnPayService;
+        private readonly ITransactionBLL _transactionBLL;
+        private readonly IOrder _order;
+
+        public PaymentController(IMomoService momoService, IVnPayService vnPayService, ITransactionBLL transactionBLL, IOrder order)
         {
             _momoService = momoService;
-
+            _vnPayService = vnPayService;
+            _transactionBLL = transactionBLL;
+            _order = order;
         }
 
         [HttpPost]
@@ -19,6 +27,26 @@ namespace API.Controllers
         {
             try
             {
+                if (model.PaymentMethod == "vnpay")
+                {
+                    var payModel = new PaymentInformationModel
+                    {
+                        Amount = double.Parse(model.PaymentMethod),
+                        Name = model.OrderId,
+                        OrderDescription = model.OrderInfomation,
+                        OrderType = "other"
+                    };
+
+                    var res = _vnPayService.CreatePaymentUrl(payModel, HttpContext);
+
+                    // Create Draf Order Here
+
+                    if (!string.IsNullOrEmpty(res))
+                    {
+                        return Ok(new { PayUrl = res });
+                    }
+                }
+
                 // Gọi dịch vụ tạo URL thanh toán MOMO
                 var response = await _momoService.CreatePaymentMomo(model);
 
@@ -55,6 +83,35 @@ namespace API.Controllers
                     innerException = ex.InnerException?.Message
                 });
             }
+        }
+
+        [HttpPost]
+        [Route("ProcessCheckout")]
+        public IActionResult ProcessCheckout()
+        {
+            var query = Request.Query;
+            var paymentMethod = Request.Query.FirstOrDefault(s => s.Key.Equals("payment_method")).Value.ToString();
+            if (paymentMethod == "vnpay")
+            {
+                var vnpayResponse = _vnPayService.PaymentExecute(Request.Query);
+                var dto = new DTO.Transaction.TransactionDto()
+                {
+                    CreateAt = DateTime.Now,
+                    Information = vnpayResponse.OrderDescription,
+                    PaymentMethod = vnpayResponse.PaymentMethod,
+                    State = vnpayResponse.Success ? "Thanh toán thành công" : "Thanh toán thất bại",
+                    TransactionId = vnpayResponse.TransactionId,
+                };
+                
+                var trans = _transactionBLL.CreateTransaction(dto);
+
+                // Update Draf Order Here
+
+                return Created();
+            }
+            
+            var response = _momoService.PaymentExecuteAsync();
+            return View(response);
         }
 
         [HttpGet]
