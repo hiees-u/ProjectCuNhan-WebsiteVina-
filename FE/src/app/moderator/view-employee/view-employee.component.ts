@@ -23,6 +23,7 @@ import { debounceTime } from 'rxjs/operators';
 })
 export class ViewEmployeeComponent {
   @Input() deparmentID: number | undefined;
+  @Input() flag: any;
 
   customers: EmployeeRequestModule[] = [];
 
@@ -70,6 +71,11 @@ export class ViewEmployeeComponent {
     //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
     //Add '${implements OnChanges}' to the class.
     if (changes['deparmentID']) {
+      this.getEmployee();
+    }
+    if (changes['flag']) {
+      console.log('load lại danh sách nhân viên');
+      
       this.getEmployee();
     }
   }
