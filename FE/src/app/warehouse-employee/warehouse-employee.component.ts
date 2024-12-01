@@ -6,13 +6,12 @@ import { Router, RouterOutlet } from '@angular/router';
 import { BaseResponseModel } from '../shared/module/base-response/base-response.module';
 
 @Component({
-  selector: 'app-warehouse-employee',
-  standalone: true,
-  imports: [
-    RouterOutlet, CommonModule
-  ],
-  templateUrl: './warehouse-employee.component.html',
-  styleUrl: './warehouse-employee.component.css'
+    selector: 'app-warehouse-employee',
+    imports: [
+        RouterOutlet, CommonModule
+    ],
+    templateUrl: './warehouse-employee.component.html',
+    styleUrl: './warehouse-employee.component.css'
 })
 export class WarehouseEmployeeComponent {
 

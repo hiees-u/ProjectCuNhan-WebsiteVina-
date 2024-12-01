@@ -3,11 +3,10 @@ import { CommonModule } from '@angular/common';
 import { WarehouseEmployeeService } from '../warehouse-employee.service';
 
 @Component({
-  selector: 'app-add-warehouse',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './add-warehouse.component.html',
-  styleUrl: './add-warehouse.component.css'
+    selector: 'app-add-warehouse',
+    imports: [CommonModule],
+    templateUrl: './add-warehouse.component.html',
+    styleUrl: './add-warehouse.component.css'
 })
 export class AddWarehouseComponent {
 

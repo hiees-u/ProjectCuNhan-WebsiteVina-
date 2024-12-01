@@ -9,11 +9,10 @@ import {
 import { NotificationComponent } from "../../shared/item/notification/notification.component";
 
 @Component({
-  selector: 'app-add-deparment',
-  standalone: true,
-  imports: [CommonModule, FormsModule, NotificationComponent],
-  templateUrl: './add-deparment.component.html',
-  styleUrl: './add-deparment.component.css',
+    selector: 'app-add-deparment',
+    imports: [CommonModule, FormsModule, NotificationComponent],
+    templateUrl: './add-deparment.component.html',
+    styleUrl: './add-deparment.component.css'
 })
 export class AddDeparmentComponent {
   @Output() isClose: EventEmitter<boolean> = new EventEmitter<boolean>();

@@ -39,20 +39,19 @@ import {
 } from '../../shared/module/change-pass/change-pass.module';
 
 @Component({
-  selector: 'app-user-detail',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    ProvinceComponent,
-    DistrictComponent,
-    CommuneComponent,
-    AddressComponent,
-    NotificationComponent,
-    CustomCurrencyPipe,
-  ],
-  templateUrl: './user-detail.component.html',
-  styleUrls: ['./user-detail.component.css', './user-detail.component-v2.css'],
+    selector: 'app-user-detail',
+    imports: [
+        CommonModule,
+        FormsModule,
+        ProvinceComponent,
+        DistrictComponent,
+        CommuneComponent,
+        AddressComponent,
+        NotificationComponent,
+        CustomCurrencyPipe,
+    ],
+    templateUrl: './user-detail.component.html',
+    styleUrls: ['./user-detail.component.css', './user-detail.component-v2.css']
 })
 export class UserDetailComponent {
   addressString: string = '';

@@ -13,11 +13,10 @@ import {
 } from '../../shared/module/notification/notification.module';
 
 @Component({
-  selector: 'app-add-cate',
-  standalone: true,
-  imports: [CommonModule, FormsModule, NotificationComponent],
-  templateUrl: './add-cate.component.html',
-  styleUrl: './add-cate.component.css',
+    selector: 'app-add-cate',
+    imports: [CommonModule, FormsModule, NotificationComponent],
+    templateUrl: './add-cate.component.html',
+    styleUrl: './add-cate.component.css'
 })
 export class AddCateComponent {
   @Output() isClose: EventEmitter<boolean> = new EventEmitter<boolean>();

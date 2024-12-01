@@ -8,11 +8,10 @@ import { AddDeparmentComponent } from "../add-deparment/add-deparment.component"
 import { DeparmentDetailComponent } from "../deparment-detail/deparment-detail.component";
 
 @Component({
-  selector: 'app-department-moderator',
-  standalone: true,
-  imports: [CommonModule, FormsModule, AddDeparmentComponent, DeparmentDetailComponent],
-  templateUrl: './department-moderator.component.html',
-  styleUrl: './department-moderator.component.css'
+    selector: 'app-department-moderator',
+    imports: [CommonModule, FormsModule, AddDeparmentComponent, DeparmentDetailComponent],
+    templateUrl: './department-moderator.component.html',
+    styleUrl: './department-moderator.component.css'
 })
 export class DepartmentModeratorComponent {
   isShowAddDepartment: boolean | undefined;

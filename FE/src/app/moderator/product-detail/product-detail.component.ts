@@ -25,11 +25,10 @@ import {
 import { NotificationComponent } from '../../shared/item/notification/notification.component';
 
 @Component({
-  selector: 'app-product-detail',
-  standalone: true,
-  imports: [FormsModule, CommonModule, NotificationComponent],
-  templateUrl: './product-detail.component.html',
-  styleUrl: './product-detail.component.css',
+    selector: 'app-product-detail',
+    imports: [FormsModule, CommonModule, NotificationComponent],
+    templateUrl: './product-detail.component.html',
+    styleUrl: './product-detail.component.css'
 })
 export class ProductDetailComponent {
   @Output() isClose: EventEmitter<boolean> = new EventEmitter<boolean>();

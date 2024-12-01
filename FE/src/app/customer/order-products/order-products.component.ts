@@ -32,20 +32,19 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-order-products',
-  standalone: true,
-  imports: [
-    FormsModule,
-    CommonModule,
-    CustomCurrencyPipe,
-    NotificationComponent,
-    AddressComponent,
-    CommuneComponent,
-    DistrictComponent,
-    ProvinceComponent,
-  ],
-  templateUrl: './order-products.component.html',
-  styleUrl: './order-products.component.css',
+    selector: 'app-order-products',
+    imports: [
+        FormsModule,
+        CommonModule,
+        CustomCurrencyPipe,
+        NotificationComponent,
+        AddressComponent,
+        CommuneComponent,
+        DistrictComponent,
+        ProvinceComponent,
+    ],
+    templateUrl: './order-products.component.html',
+    styleUrl: './order-products.component.css'
 })
 export class OrderProductsComponent {
   data: CartItem[] = [];

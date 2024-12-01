@@ -7,11 +7,10 @@ import { AddCateComponent } from '../add-cate/add-cate.component';
 import { CategoryDetailComponent } from "../category-detail/category-detail.component";
 
 @Component({
-  selector: 'app-cate-moderator',
-  standalone: true,
-  imports: [CommonModule, FormsModule, AddCateComponent, CategoryDetailComponent],
-  templateUrl: './cate-moderator.component.html',
-  styleUrl: './cate-moderator.component.css',
+    selector: 'app-cate-moderator',
+    imports: [CommonModule, FormsModule, AddCateComponent, CategoryDetailComponent],
+    templateUrl: './cate-moderator.component.html',
+    styleUrl: './cate-moderator.component.css'
 })
 export class CateModeratorComponent {
   isShowAddCate: boolean = false;

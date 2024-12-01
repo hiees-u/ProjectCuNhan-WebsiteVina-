@@ -14,16 +14,15 @@ import {
 import { NotificationComponent } from '../../shared/item/notification/notification.component';
 
 @Component({
-  selector: 'app-employee-moderator',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    ViewEmployeeComponent,
-    NotificationComponent,
-  ],
-  templateUrl: './employee-moderator.component.html',
-  styleUrl: './employee-moderator.component.css',
+    selector: 'app-employee-moderator',
+    imports: [
+        CommonModule,
+        FormsModule,
+        ViewEmployeeComponent,
+        NotificationComponent,
+    ],
+    templateUrl: './employee-moderator.component.html',
+    styleUrl: './employee-moderator.component.css'
 })
 export class EmployeeModeratorComponent {
   typeCustomerIdSelected: number | undefined;

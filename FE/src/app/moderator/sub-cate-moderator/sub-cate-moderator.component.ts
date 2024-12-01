@@ -7,16 +7,15 @@ import { AddSubCateComponent } from '../add-sub-cate/add-sub-cate.component';
 import { SubCategoryDetailComponent } from "../sub-category-detail/sub-category-detail.component";
 
 @Component({
-  selector: 'app-sub-cate-moderator',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    AddSubCateComponent,
-    SubCategoryDetailComponent
-],
-  templateUrl: './sub-cate-moderator.component.html',
-  styleUrl: './sub-cate-moderator.component.css',
+    selector: 'app-sub-cate-moderator',
+    imports: [
+        CommonModule,
+        FormsModule,
+        AddSubCateComponent,
+        SubCategoryDetailComponent
+    ],
+    templateUrl: './sub-cate-moderator.component.html',
+    styleUrl: './sub-cate-moderator.component.css'
 })
 export class SubCateModeratorComponent {
   isShowAddSubCate: boolean | undefined;

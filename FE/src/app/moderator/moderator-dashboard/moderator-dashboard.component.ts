@@ -6,11 +6,10 @@ import { ModeratorService } from '../moderator.service';
 import { BaseResponseModel } from '../../shared/module/base-response/base-response.module';
 
 @Component({
-  selector: 'app-moderator-dashboard',
-  standalone: true,
-  imports: [RouterOutlet, CommonModule],
-  templateUrl: './moderator-dashboard.component.html',
-  styleUrl: './moderator-dashboard.component.css',
+    selector: 'app-moderator-dashboard',
+    imports: [RouterOutlet, CommonModule],
+    templateUrl: './moderator-dashboard.component.html',
+    styleUrl: './moderator-dashboard.component.css'
 })
 
 export class ModeratorDashboardComponent {

@@ -6,14 +6,13 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-province',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule
-  ],
-  templateUrl: './province.component.html',
-  styleUrl: './province.component.css'
+    selector: 'app-province',
+    imports: [
+        CommonModule,
+        FormsModule
+    ],
+    templateUrl: './province.component.html',
+    styleUrl: './province.component.css'
 })
 export class ProvinceComponent {
   provinces: ProvincesResponseModel[] = [];

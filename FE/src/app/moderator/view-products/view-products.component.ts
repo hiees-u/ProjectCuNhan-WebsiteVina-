@@ -16,17 +16,16 @@ import { NotificationComponent } from '../../shared/item/notification/notificati
 import { ProductDetailComponent } from "../product-detail/product-detail.component";
 
 @Component({
-  selector: 'app-view-products',
-  standalone: true,
-  imports: [
-    CommonModule,
-    CustomCurrencyPipe,
-    FormsModule,
-    NotificationComponent,
-    ProductDetailComponent
-],
-  templateUrl: './view-products.component.html',
-  styleUrl: './view-products.component.css',
+    selector: 'app-view-products',
+    imports: [
+        CommonModule,
+        CustomCurrencyPipe,
+        FormsModule,
+        NotificationComponent,
+        ProductDetailComponent
+    ],
+    templateUrl: './view-products.component.html',
+    styleUrl: './view-products.component.css'
 })
 export class ViewProductsComponent {
   constructor(

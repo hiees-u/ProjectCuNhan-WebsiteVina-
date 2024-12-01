@@ -2,13 +2,12 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-search-box',
-  standalone: true,
-  imports: [
-    FormsModule,
-  ],
-  templateUrl: './search-box.component.html',
-  styleUrl: './search-box.component.css'
+    selector: 'app-search-box',
+    imports: [
+        FormsModule,
+    ],
+    templateUrl: './search-box.component.html',
+    styleUrl: './search-box.component.css'
 })
 export class SearchBoxComponent {
   searchBox: string = '';

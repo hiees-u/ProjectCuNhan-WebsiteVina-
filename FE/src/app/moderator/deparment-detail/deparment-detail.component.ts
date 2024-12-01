@@ -8,11 +8,10 @@ import { FormsModule } from '@angular/forms';
 import { ViewEmployeeComponent } from "../view-employee/view-employee.component";
 
 @Component({
-  selector: 'app-deparment-detail',
-  standalone: true,
-  imports: [NotificationComponent, CommonModule, FormsModule, ViewEmployeeComponent],
-  templateUrl: './deparment-detail.component.html',
-  styleUrl: './deparment-detail.component.css'
+    selector: 'app-deparment-detail',
+    imports: [NotificationComponent, CommonModule, FormsModule, ViewEmployeeComponent],
+    templateUrl: './deparment-detail.component.html',
+    styleUrl: './deparment-detail.component.css'
 })
 export class DeparmentDetailComponent {
   @Input() depar: DepartmentRequestModerator = ContructorDepartmentRequestModerator();

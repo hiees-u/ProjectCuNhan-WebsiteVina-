@@ -14,11 +14,10 @@ import {
 import { BaseResponseModel } from '../../shared/module/base-response/base-response.module';
 
 @Component({
-  selector: 'app-sub-category-detail',
-  standalone: true,
-  imports: [FormsModule, ViewProductsComponent, NotificationComponent],
-  templateUrl: './sub-category-detail.component.html',
-  styleUrl: './sub-category-detail.component.css',
+    selector: 'app-sub-category-detail',
+    imports: [FormsModule, ViewProductsComponent, NotificationComponent],
+    templateUrl: './sub-category-detail.component.html',
+    styleUrl: './sub-category-detail.component.css'
 })
 export class SubCategoryDetailComponent {
   @Input() subCate: SubCategoryRequesModerator = ContructorSubCategoryModule();
