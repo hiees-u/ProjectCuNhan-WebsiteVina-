@@ -16,11 +16,10 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-commune',
-  standalone: true,
-  imports: [CommonModule, FormsModule],
-  templateUrl: './commune.component.html',
-  styleUrl: './commune.component.css',
+    selector: 'app-commune',
+    imports: [CommonModule, FormsModule],
+    templateUrl: './commune.component.html',
+    styleUrl: './commune.component.css'
 })
 export class CommuneComponent {
   @Input() selectedCommuneId: number = 0;

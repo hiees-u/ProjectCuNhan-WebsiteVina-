@@ -100,7 +100,8 @@
 }
 
 .copyright-text {
-  font-size: 0.7em;
+  font-size: 0.9em;
+  font-family: var(--main-style);
 }
 
 .logo-ft {

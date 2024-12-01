@@ -9,11 +9,10 @@ import { ModeratorService } from '../moderator.service';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-view-customers',
-  standalone: true,
-  imports: [CommonModule, FormsModule],
-  templateUrl: './view-customers.component.html',
-  styleUrl: './view-customers.component.css',
+    selector: 'app-view-customers',
+    imports: [CommonModule, FormsModule],
+    templateUrl: './view-customers.component.html',
+    styleUrl: './view-customers.component.css'
 })
 export class ViewCustomersComponent {
   customers: CustomerRequestModule[] = [];

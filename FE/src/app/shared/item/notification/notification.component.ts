@@ -6,11 +6,10 @@ import {
 } from '../../module/notification/notification.module';
 
 @Component({
-  selector: 'app-notification',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './notification.component.html',
-  styleUrls: ['./notification.component.css'],
+    selector: 'app-notification',
+    imports: [CommonModule],
+    templateUrl: './notification.component.html',
+    styleUrls: ['./notification.component.css']
 })
 export class NotificationComponent implements OnChanges {
   @Input() data: Notification = ConstructerNotification();

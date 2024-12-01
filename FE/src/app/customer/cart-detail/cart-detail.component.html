@@ -29,7 +29,7 @@
         Không có sản phẩm nào trong giỏ hàng!!
       </marquee>
     </div>
-    <div class="cart-item" *ngFor="let item of cartItems">
+    <div class="cart-item" *ngFor="let item of cartItems" data-aos="fade-up-left">
       <div class="check-all">
         <input
           type="checkbox"
@@ -86,15 +86,18 @@
         id="check-all"
         (change)="onCheckAll($event)"
       />
-      <label class="no-select" for="check-all">Chọn tất cả ({{ cartItems.length }})</label>
+      <label class="no-select" for="check-all"
+        >Chọn tất cả ({{ cartItems.length }})</label
+      >
     </div>
     <div class="operation-footer">
-      <span class="total-product-check no-select"
-        >
-        Tổng thanh toán 
+      <span class="total-product-check no-select">
+        Tổng thanh toán
         <!-- ( 0 sản phẩm) -->
         :
-        <span class="color-var-main">{{ totalPrice | customCurrency }}</span></span
+        <span class="color-var-main">{{
+          totalPrice | customCurrency
+        }}</span></span
       >
       <div class="btn-thanhtoan">
         <button

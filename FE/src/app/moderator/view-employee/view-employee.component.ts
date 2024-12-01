@@ -15,11 +15,10 @@ import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-view-employee',
-  standalone: true,
-  imports: [CommonModule, FormsModule, NotificationComponent],
-  templateUrl: './view-employee.component.html',
-  styleUrl: './view-employee.component.css',
+    selector: 'app-view-employee',
+    imports: [CommonModule, FormsModule, NotificationComponent],
+    templateUrl: './view-employee.component.html',
+    styleUrl: './view-employee.component.css'
 })
 export class ViewEmployeeComponent {
   @Input() deparmentID: number | undefined;

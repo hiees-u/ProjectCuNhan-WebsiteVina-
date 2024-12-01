@@ -5,12 +5,10 @@ import { WarehouseEmployeeService } from '../warehouse-employee.service';
 import { BaseResponseModel } from '../../shared/module/base-response/base-response.module';
 import { Warehouse } from '../warehouse-employee.module';
 @Component({
-  selector: 'app-warehouse-management',
-  standalone: true,
-  imports: [RouterOutlet, CommonModule],
-  templateUrl: './warehouse-management.component.html',
-  styleUrls: ['./warehouse-management.component.css'],
-  
+    selector: 'app-warehouse-management',
+    imports: [RouterOutlet, CommonModule],
+    templateUrl: './warehouse-management.component.html',
+    styleUrls: ['./warehouse-management.component.css']
 })
 export class WarehouseManagementComponent{
   warehouses: Warehouse[] = [];

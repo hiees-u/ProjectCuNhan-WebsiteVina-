@@ -6,14 +6,13 @@ import { CommonModule } from '@angular/common';
 import { CustomerService } from '../customer.service';
 
 @Component({
-  selector: 'app-about-us',
-  standalone: true,
-  imports: [
-    ProductItemComponent,
-    CommonModule
-  ],
-  templateUrl: './about-us.component.html',
-  styleUrl: './about-us.component.css'
+    selector: 'app-about-us',
+    imports: [
+        ProductItemComponent,
+        CommonModule
+    ],
+    templateUrl: './about-us.component.html',
+    styleUrl: './about-us.component.css'
 })
 export class AboutUsComponent {
   products: Product[] = [];

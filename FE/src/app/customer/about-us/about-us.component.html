@@ -5,13 +5,14 @@
     <p class="box-header">GIỚI THIỆU VỀ CÂY CÀ PHÊ</p>
     <div class="content">
       <div>
-        <span>
+        <span data-aos="fade-right">
           Cây cà phê thích hợp với vùng đất bazan trên các cao nguyên. Cà phê là
           loại cây thân gỗ, cao từ 2m đến 4m. Hoa cà phê trắng, thơm nhẹ như hoa
           nhài. Quả cà phê khi chín có màu đỏ, chứa hai hạt được bao bọc bởi
           thịt quả mọng nước.
         </span>
         <img
+          data-aos="fade-up-left"
           [src]="'/assets/background/bg1.jpg'"
           [width]="300"
           [height]="300"
@@ -22,20 +23,21 @@
   </div>
 
   <div class="box">
-    <p class="box-header">QUY TRÌNH SẢN XUẤT CÀ PHÊ</p>
+    <p class="box-header" data-aos="zoom-out">QUY TRÌNH SẢN XUẤT CÀ PHÊ</p>
   </div>
 
   <div class="box">
-    <p class="box-header2">Thu hoạch</p>
+    <p class="box-header2" data-aos="zoom-in-down">Thu hoạch</p>
     <div class="content">
       <div>
         <img
+          data-aos="fade-up-right"
           [src]="'/assets/background/bg2.jpg'"
           [width]="350"
           [height]="300"
           alt=""
         />
-        <span>
+        <span data-aos="fade-left">
           Tiến hành thu hoạch trái cà phê để có thể bắt đầu các công đoạn sau là
           khâu chế biến. Chất lượng của trái cà phê khi tiến hành thu hoạch phải
           đảm bảo được các tiêu chuẩn về kỹ thuật, tiêu chuẩn cảm quan cũng như
@@ -46,10 +48,10 @@
   </div>
 
   <div class="box">
-    <p class="box-header2">Sơ chế làm sạch</p>
+    <p class="box-header2" data-aos="zoom-in-down">Sơ chế làm sạch</p>
     <div class="content">
       <div>
-        <span>
+        <span data-aos="fade-right">
           Ở công đoạn này của chúng tôi, trái cà phê sẽ được tiến hành làm sạch,
           loại bỏ đi những tạp chất như sạn, cát, vỏ, cành, lá… Công đoạn làm
           sạch này rất quan trọng bởi nó sẽ ảnh hưởng đến chất lượng cà phê
@@ -57,6 +59,7 @@
           trang thiết bị phục vụ chế biến.
         </span>
         <img
+          data-aos="fade-up-left"
           [src]="'/assets/background/bg3.png'"
           [width]="300"
           [height]="300"
@@ -67,16 +70,17 @@
   </div>
 
   <div class="box">
-    <p class="box-header2">Phối trộn cà phê</p>
+    <p class="box-header2" data-aos="zoom-in-down">Phối trộn cà phê</p>
     <div class="content">
       <div>
         <img
+          data-aos="fade-up-right"
           [src]="'/assets/background/bg4.jpg'"
           [width]="300"
           [height]="300"
           alt=""
         />
-        <span>
+        <span data-aos="fade-left">
           Với mục đích mang đến những sản phẩm cà phê với đa dạng hơn các hương
           vị khác nhau, người chế biến có thể thực hiện trộn các loại cà phê với
           nhau. Thông thường, họ sẽ phối trộn cà phê Robusta và cà phê Arabica
@@ -87,15 +91,16 @@
   </div>
 
   <div class="box">
-    <p class="box-header2">Rang cà phê</p>
+    <p class="box-header2" data-aos="zoom-in-down">Rang cà phê</p>
     <div class="content">
       <div>
-        <span>
+        <span data-aos="fade-right">
           Rang cà phê cẩn thận để đạt hương vị tốt nhất. Chúng tôi sử dụng kỹ
           thuật điều chỉnh thời gian và nhiệt độ để tạo ra nhiều hương vị đa
           dạng, phù hợp với sở thích của từng khách hàng.
         </span>
         <img
+          data-aos="fade-up-left"
           [src]="'/assets/background/bg5.jpg'"
           [width]="300"
           [height]="300"
@@ -106,16 +111,17 @@
   </div>
 
   <div class="box">
-    <p class="box-header2">Xay cà phê</p>
+    <p class="box-header2" data-aos="zoom-in-down">Xay cà phê</p>
     <div class="content">
       <div>
         <img
+          data-aos="fade-up-right"
           [src]="'/assets/background/bg6.png'"
           [width]="300"
           [height]="300"
           alt=""
         />
-        <span>
+        <span data-aos="fade-left">
           Hạt cà phê rang được xay mịn đều, phù hợp với các phương pháp pha chế
           khác nhau.
         </span>
@@ -123,18 +129,20 @@
     </div>
   </div>
 
-  <div class="box-product">
-    <p class="box-product-header">Các Sản Phẩm</p>
+  <div
+    class="box-product"
+    data-aos="fade-up"
+    
+  >
+    <p class="box-product-header" data-aos="zoom-in-down">Các Sản Phẩm</p>
 
     <div class="box-product-content">
-
       <div class="wapper" *ngFor="let item of products">
         <app-product-item
           (dataChange)="handleDataChange(item)"
           [data]="item"
         ></app-product-item>
       </div>
-
     </div>
 
     <div class="box-product-footer">
