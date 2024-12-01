@@ -32,12 +32,10 @@ import {
   selector: 'app-view-products',
   standalone: true,
   imports: [
-    // OrderProductsComponent,
     CommonModule,
     NgIf,
     NgFor,
     NgClass,
-    // FilterPriceComponent,
     ProductItemComponent,
     SearchBoxComponent,
     CustomCurrencyPipe,
