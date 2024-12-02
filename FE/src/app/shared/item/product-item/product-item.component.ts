@@ -5,15 +5,14 @@ import { Product } from '../../module/product/product.module';
 // import { NgOptimizedImage } from '@angular/common'
 
 @Component({
-  selector: 'app-product-item',
-  standalone: true,
-  imports: [
-    CommonModule,
-    CustomCurrencyPipe,
-    // NgOptimizedImage
-  ],
-  templateUrl: './product-item.component.html',
-  styleUrl: './product-item.component.css'
+    selector: 'app-product-item',
+    imports: [
+        CommonModule,
+        CustomCurrencyPipe,
+        // NgOptimizedImage
+    ],
+    templateUrl: './product-item.component.html',
+    styleUrl: './product-item.component.css'
 })
 export class ProductItemComponent {
   @Input() data: Product | undefined;

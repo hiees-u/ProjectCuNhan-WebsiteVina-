@@ -7,14 +7,13 @@ import { ConstructerNotification, Notification } from '../../shared/module/notif
 import { NotificationComponent } from "../../shared/item/notification/notification.component";
 
 @Component({
-  selector: 'app-add-sub-cate',
-  standalone: true,
-  imports: [
-    CommonModule, FormsModule,
-    NotificationComponent
-],
-  templateUrl: './add-sub-cate.component.html',
-  styleUrl: './add-sub-cate.component.css'
+    selector: 'app-add-sub-cate',
+    imports: [
+        CommonModule, FormsModule,
+        NotificationComponent
+    ],
+    templateUrl: './add-sub-cate.component.html',
+    styleUrl: './add-sub-cate.component.css'
 })
 export class AddSubCateComponent {
   @Output() isClose: EventEmitter<boolean> = new EventEmitter<boolean>();

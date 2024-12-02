@@ -25,19 +25,18 @@ import { ModeratorService } from '../moderator.service';
 import { NotificationComponent } from "../../shared/item/notification/notification.component";
 
 @Component({
-  selector: 'app-add-supplier',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    AddressComponent,
-    CommuneComponent,
-    DistrictComponent,
-    ProvinceComponent,
-    NotificationComponent
-],
-  templateUrl: './add-supplier.component.html',
-  styleUrl: './add-supplier.component.css',
+    selector: 'app-add-supplier',
+    imports: [
+        CommonModule,
+        FormsModule,
+        AddressComponent,
+        CommuneComponent,
+        DistrictComponent,
+        ProvinceComponent,
+        NotificationComponent
+    ],
+    templateUrl: './add-supplier.component.html',
+    styleUrl: './add-supplier.component.css'
 })
 export class AddSupplierComponent {
   @Output() isClose: EventEmitter<boolean> = new EventEmitter<boolean>();

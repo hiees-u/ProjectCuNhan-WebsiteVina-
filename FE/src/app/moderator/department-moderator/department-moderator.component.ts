@@ -8,11 +8,10 @@ import { AddDeparmentComponent } from "../add-deparment/add-deparment.component"
 import { DeparmentDetailComponent } from "../deparment-detail/deparment-detail.component";
 
 @Component({
-  selector: 'app-department-moderator',
-  standalone: true,
-  imports: [CommonModule, FormsModule, AddDeparmentComponent, DeparmentDetailComponent],
-  templateUrl: './department-moderator.component.html',
-  styleUrl: './department-moderator.component.css'
+    selector: 'app-department-moderator',
+    imports: [CommonModule, FormsModule, AddDeparmentComponent, DeparmentDetailComponent],
+    templateUrl: './department-moderator.component.html',
+    styleUrl: './department-moderator.component.css'
 })
 export class DepartmentModeratorComponent {
   isShowAddDepartment: boolean | undefined;
@@ -87,5 +86,13 @@ export class DepartmentModeratorComponent {
     // this.getCategorys();
     this.isShowDetail = !is;
     this.flagDetail = true;
+  }
+
+  handleCloseAdd(is: boolean) {
+    console.log('THOÁT DeTAIL');
+    this.getDepartments();
+    // this.getCategorys();
+    this.isShowAddDepartment = !is;
+    this.flag = true;
   }
 }

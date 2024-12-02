@@ -9,7 +9,7 @@ import { ConstructerNotification, Notification } from '../../shared/module/notif
 @Component({
   selector: 'app-warehouse-management',
   standalone: true,
-  imports: [CommonModule, NotificationComponent],
+  imports: [CommonModule],
   templateUrl: './warehouse-management.component.html',
   styleUrls: ['./warehouse-management.component.css'],
   

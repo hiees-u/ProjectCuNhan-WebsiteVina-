@@ -21,7 +21,7 @@ const routes: Routes = [
       { path: 'user-details', component: UserDetailComponent},
       { path: 'contact', component: ContactComponent},
       // { path: 'payment', component: PaymentComponent },
-      { path: '', redirectTo: 'view-product', pathMatch: 'full'}
+      { path: '', redirectTo: 'about-us', pathMatch: 'full'}
     ]
   }
 ];

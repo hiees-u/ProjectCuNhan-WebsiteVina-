@@ -5,11 +5,10 @@ import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
-  selector: 'app-customer-dashboard',
-  standalone: true,
-  imports: [CommonModule, RouterOutlet],
-  templateUrl: './customer-dashboard.component.html',
-  styleUrl: './customer-dashboard.component.css',
+    selector: 'app-customer-dashboard',
+    imports: [CommonModule, RouterOutlet],
+    templateUrl: './customer-dashboard.component.html',
+    styleUrl: './customer-dashboard.component.css'
 })
 export class CustomerDashboardComponent {
   isLogin: boolean = true;

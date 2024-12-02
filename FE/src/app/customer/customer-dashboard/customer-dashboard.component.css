@@ -1,7 +1,7 @@
 .container {
   width: 100vw;
   animation: left-to-right 0.75s ease;
-  background-color: #f0f0f047;
+  background-color: #f0f0f0;
 }
 
 .wrapper-header {
@@ -100,7 +100,8 @@
 }
 
 .copyright-text {
-  font-size: 0.7em;
+  font-size: 0.9em;
+  font-family: var(--main-style);
 }
 
 .logo-ft {

@@ -14,6 +14,7 @@
     </div>
     <ul>
       <li
+        data-aos="fade-right"
         class="dashboard-item no-select"
         [ngClass]="{ active: isActive === 1 }"
         (click)="changeActive(1)"
@@ -22,6 +23,7 @@
         <span>Hồ Sơ</span>
       </li>
       <li
+        data-aos="fade-right"
         class="dashboard-item no-select"
         [ngClass]="{ active: isActive === 3 }"
         (click)="changeActive(3)"
@@ -30,6 +32,7 @@
         <span>Đổi Mật Khẩu</span>
       </li>
       <li
+        data-aos="fade-right"
         class="dashboard-item no-select"
         [ngClass]="{ active: isActive === 2 }"
         (click)="changeActive(2)"
@@ -37,7 +40,11 @@
         <i class="fa-solid fa-truck"></i>
         <span>Đơn Mua</span>
       </li>
-      <li class="dashboard-item no-select" (click)="logOutHandler()">
+      <li
+        class="dashboard-item no-select"
+        data-aos="fade-right"
+        (click)="logOutHandler()"
+      >
         <i class="fa-solid fa-arrow-right-from-bracket"></i>
         <span>Đăng Xuất</span>
       </li>
@@ -149,7 +156,11 @@
           </div>
         </div>
 
-        <div class="button-main no-select" (click)="isHandleUpdate()">
+        <div
+          class="button-main no-select"
+          data-aos="fade-left"
+          (click)="isHandleUpdate()"
+        >
           Cập Nhật
         </div>
       </div>
@@ -212,7 +223,11 @@
         </ul>
       </div>
 
-      <div class="content-order" *ngFor="let item of orders">
+      <div
+        class="content-order"
+        *ngFor="let item of orders"
+        data-aos="fade-down-right"
+      >
         <div class="content-order-header">
           <div class="content-order-header-header">
             <span *ngIf="item.paymentStatus">Đã thanh toán</span>
@@ -313,8 +328,12 @@
             <span>Sau khi thay đổi mật khẩu vui lòng đăng nhập lại...!</span>
           </div>
           <div>
-            <button class="close-btn" (click)="onShowConfirmChangePass()">Đóng</button>
-            <button class="confirm-btn" (click)="onChangePassword()">Xác nhận</button>
+            <button class="close-btn" (click)="onShowConfirmChangePass()">
+              Đóng
+            </button>
+            <button class="confirm-btn" (click)="onChangePassword()">
+              Xác nhận
+            </button>
           </div>
         </div>
       </div>

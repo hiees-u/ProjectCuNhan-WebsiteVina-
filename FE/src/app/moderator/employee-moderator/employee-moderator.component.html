@@ -17,6 +17,80 @@
 
   <div class="content">
     <!-- nơi hiện view employees -->
-     <app-view-employee></app-view-employee>
+    <app-view-employee [flag]="addSuccess"></app-view-employee>
+  </div>
+
+  <div
+    class="add-employee"
+    [ngClass]="{
+      'show-delete': isShowAdd && flagAdd,
+      'hide-delete': !isShowAdd && flagAdd
+    }"
+  >
+    <div class="add-emp-content">
+      <button class="close" (click)="onShowAddEmployee()">
+        <i class="fa-solid fa-rectangle-xmark"></i>
+      </button>
+      <div class="header">
+        <span class="header-text">
+          <span></span>
+          Thêm Nhân Viên</span
+        >
+      </div>
+      <div class="content">
+        <div class="inp-form">
+          <label for="account-name">Tên đăng nhập: </label>
+          <input
+            type="text"
+            [ngClass]="{'error-text-box': errorTextBoxAccount}"
+            [(ngModel)]="newEmployee.accountName"
+            id="account-name"
+            placeholder="Tên đăng nhập..."
+            />
+        </div>
+        <div class="inp-form">
+          <label for="account-name">Nhân viên: </label>
+          <select
+              name="employeeType"
+              id="employeeType"
+              [(ngModel)]="newEmployee.employeeTypeId"
+            >
+              <option
+                *ngFor="let employeeType of employeeTypes"
+                [value]="employeeType.id"
+              >
+                {{ employeeType.name }}
+              </option>
+            </select>
+        </div>
+        <div class="inp-form">
+          <label for="account-name">Phòng ban: </label>
+          <select
+              name="department"
+              id="department"
+              [(ngModel)]="newEmployee.departmentId"
+            >
+              <option
+                *ngFor="let department of departments"
+                [value]="department.departmentId"
+              >
+                {{ department.departmentName }}
+              </option>
+            </select>
+        </div>
+      </div>
+      <div class="action">
+        <button class="btn btn-add-product" (click)="handleAddEmployee()">
+          <i class="fa-solid fa-user-plus"></i>
+          Thêm
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="notification">
+    <app-notification
+      [data]="dataNotification"
+      [trigger]="trigger"
+    ></app-notification>
   </div>
 </div>

@@ -8,5 +8,6 @@
         public string OrderInfomation { get; set; }
 
         public string Amount { get; set; }
+        public string PaymentMethod { get; set; } = "vnpay";
     }
 }

@@ -12,11 +12,10 @@ import { AddSubCateComponent } from "../add-sub-cate/add-sub-cate.component";
 import { AddSupplierComponent } from "../add-supplier/add-supplier.component";
 
 @Component({
-  selector: 'app-add-product',
-  standalone: true,
-  imports: [FormsModule, CommonModule, AddCateComponent, AddSubCateComponent, AddSupplierComponent],
-  templateUrl: './add-product.component.html',
-  styleUrl: './add-product.component.css',
+    selector: 'app-add-product',
+    imports: [FormsModule, CommonModule, AddCateComponent, AddSubCateComponent, AddSupplierComponent],
+    templateUrl: './add-product.component.html',
+    styleUrl: './add-product.component.css'
 })
 export class AddProductComponent {
   @Output() isClose: EventEmitter<boolean> = new EventEmitter<boolean>();

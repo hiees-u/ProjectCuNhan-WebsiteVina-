@@ -10,11 +10,10 @@ import { AddSupplierComponent } from '../add-supplier/add-supplier.component';
 import { SupplierDetailComponent } from "../supplier-detail/supplier-detail.component";
 
 @Component({
-  selector: 'app-supplier-moderator',
-  standalone: true,
-  imports: [CommonModule, FormsModule, AddSupplierComponent, SupplierDetailComponent],
-  templateUrl: './supplier-moderator.component.html',
-  styleUrl: './supplier-moderator.component.css',
+    selector: 'app-supplier-moderator',
+    imports: [CommonModule, FormsModule, AddSupplierComponent, SupplierDetailComponent],
+    templateUrl: './supplier-moderator.component.html',
+    styleUrl: './supplier-moderator.component.css'
 })
 export class SupplierModeratorComponent {
   isShowAddSupplier: boolean | undefined;

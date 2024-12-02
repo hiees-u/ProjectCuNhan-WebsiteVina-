@@ -7,18 +7,17 @@ import { ModeratorService } from '../moderator.service';
 import { ViewCustomersComponent } from "../view-customers/view-customers.component";
 
 @Component({
-  selector: 'app-customer-moderator',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    ViewCustomersComponent
-],
-  templateUrl: './customer-moderator.component.html',
-  styleUrl: './customer-moderator.component.css'
+    selector: 'app-customer-moderator',
+    imports: [
+        CommonModule,
+        FormsModule,
+        ViewCustomersComponent
+    ],
+    templateUrl: './customer-moderator.component.html',
+    styleUrl: './customer-moderator.component.css'
 })
 export class CustomerModeratorComponent {
-  isShowAddCate: boolean = false;
+  // isShowAddCate: boolean = false;
 
   totalPage: number = 1;
   pages: number[] = [];
@@ -30,6 +29,9 @@ export class CustomerModeratorComponent {
   //--
   deparments: DepartmentRequestModerator[] = [];
 
+  //
+  isShowDetail: boolean = false;
+
   constructor(private moderatorService: ModeratorService) {}
 
   ngOnInit(): void {
@@ -37,7 +39,7 @@ export class CustomerModeratorComponent {
   }
 
   onShowAddCate() {
-    this.isShowAddCate = true;
+    // this.isShowAddCate = true;
   }
 
   // getDepartments() {

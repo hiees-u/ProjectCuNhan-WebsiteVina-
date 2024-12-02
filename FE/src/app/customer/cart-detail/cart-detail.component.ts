@@ -11,18 +11,18 @@ import {
 } from '../../shared/module/notification/notification.module';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { AOS } from 'aos';
 
 @Component({
-  selector: 'app-cart-detail',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    CustomCurrencyPipe,
-    NotificationComponent
-],
-  templateUrl: './cart-detail.component.html',
-  styleUrl: './cart-detail.component.css',
+    selector: 'app-cart-detail',
+    imports: [
+        CommonModule,
+        FormsModule,
+        CustomCurrencyPipe,
+        NotificationComponent
+    ],
+    templateUrl: './cart-detail.component.html',
+    styleUrl: './cart-detail.component.css'
 })
 export class CartDetailComponent {
 

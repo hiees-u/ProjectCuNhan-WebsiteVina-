@@ -12,11 +12,10 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-district',
-  standalone: true,
-  imports: [CommonModule, FormsModule],
-  templateUrl: './district.component.html',
-  styleUrl: './district.component.css',
+    selector: 'app-district',
+    imports: [CommonModule, FormsModule],
+    templateUrl: './district.component.html',
+    styleUrl: './district.component.css'
 })
 export class DistrictComponent {
   districts: DistrictResponseModel[] = [];

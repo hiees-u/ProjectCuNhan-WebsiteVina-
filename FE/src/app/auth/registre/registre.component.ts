@@ -9,11 +9,10 @@ import { AuthService } from '../auth.service';
 import { BaseResponseModel, BaseResponseModule } from '../../shared/module/base-response/base-response.module';
 
 @Component({
-  selector: 'app-registre',
-  standalone: true,
-  imports: [FormsModule, CommonModule, NotificationComponent],
-  templateUrl: './registre.component.html',
-  styleUrl: './registre.component.css',
+    selector: 'app-registre',
+    imports: [FormsModule, CommonModule, NotificationComponent],
+    templateUrl: './registre.component.html',
+    styleUrl: './registre.component.css'
 })
 export class RegistreComponent {
   data: Register = {

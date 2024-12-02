@@ -44,6 +44,8 @@
 
 .td-name {
   /* text-align: center; */
+  padding-left: 15px;
+  font-family: var(--main-style);
   font-size: 1.25em;
 }
 
@@ -89,6 +91,7 @@
 .btn-modi {
   background-color: #f7c66cb1;
   color: #f89900;
+  padding: 5px 10px !important;
 }
 
 td span {
@@ -294,4 +297,27 @@ td span {
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   font-family: var(--main-style);
+}
+
+.td-contered2 {
+  display: flex;
+  justify-content: center;
+}
+
+.td-contered2 select {
+  background-color: #f7ba5a;
+  color: #fff;
+  border-radius: 9px;
+  padding: 10px 5px;
+  border: none;
+  font-size: 0.8em;
+  font-weight: 600;
+  font-family: var(--main-style);
+  outline: none;
+  text-align: center;
+}
+
+.text-error {
+  color: red;
+  background-color: rgba(255, 0, 0, 0.267);
 }

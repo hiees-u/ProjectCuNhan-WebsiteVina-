@@ -10,27 +10,44 @@
           <th style="width: 15%">Số điện thoại</th>
           <th style="width: 10%">Giới tính</th>
           <th style="width: 10%">Loại khách hàng</th>
-          <th style="width: 15%">Chức năng</th>
+          <!-- <th style="width: 15%">Chức năng</th> -->
         </tr>
         <!-- 0 -->
         <tr *ngFor="let item of customers; let i = index">
           <td class="td-name">{{ item.accountName }}</td>
           <td class="td-centered">
-            {{ item.fullName ? item.fullName : 'Chưa xác định' }}
+            <!-- {{ item.fullName ? item.fullName : "Chưa xác định" }} -->
+            <span [ngClass]="{'text-error': !item.fullName}">
+              {{ item.fullName ? item.fullName : "Chưa xác định" }}
+            </span>
           </td>
           <td class="td-centered">
-            {{ item.email ? item.email : 'Chưa xác định' }}
+           
+            <span [ngClass]="{'text-error': !item.email}">
+              {{ item.email ? item.email : "Chưa xác định" }}
+            </span>
           </td>
-          <td class="td-centered">
-            {{ item.phone ? item.phone : 'Chưa xác định'}}
+          <td class="td-centered" >
+            <span [ngClass]="{'text-error': !item.phone}">
+              {{ item.phone ? item.phone : "Chưa xác định" }}
+            </span>
           </td>
-          <td class="td-centered">{{ item.gender == 0 ? 'Nữ' : 'Nam' }}</td>
-          <td class="td-centered">{{ item.typeCustomerName }}</td>
-          <td class="td-operation">
-            <!-- (click)="onShowDetail(item)" -->
-            <button class="btn-modi">
-              <i class="fa-regular fa-pen-to-square"></i>
-            </button>
+          <td class="td-centered">{{ item.gender == 0 ? "Nữ" : "Nam" }}</td>
+          <!-- <td class="td-centered">{{ item.typeCustomerName }}</td> -->
+          <td class="td-contered2">
+            <select
+              name="customer-type"
+              id="customer-type"
+              [(ngModel)]="item.typeCustomerId"
+              (ngModelChange)="handleSelectCusType(item)"
+            >
+              <option
+                *ngFor="let cType of customerTypes"
+                [value]="cType.typeCustomerId"
+              >
+                {{ cType.typeCustomerName }}
+              </option>
+            </select>
           </td>
         </tr>
       </tbody>

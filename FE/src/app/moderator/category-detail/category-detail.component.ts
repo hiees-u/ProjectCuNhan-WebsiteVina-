@@ -8,15 +8,14 @@ import { BaseResponseModel } from '../../shared/module/base-response/base-respon
 import { NotificationComponent } from "../../shared/item/notification/notification.component";
 
 @Component({
-  selector: 'app-category-detail',
-  standalone: true,
-  imports: [
-    FormsModule,
-    ViewProductsComponent,
-    NotificationComponent
-],
-  templateUrl: './category-detail.component.html',
-  styleUrl: './category-detail.component.css'
+    selector: 'app-category-detail',
+    imports: [
+        FormsModule,
+        ViewProductsComponent,
+        NotificationComponent
+    ],
+    templateUrl: './category-detail.component.html',
+    styleUrl: './category-detail.component.css'
 })
 export class CategoryDetailComponent {
   @Input() cate: CategoryRequesModerator = ContructorCategoryModule();

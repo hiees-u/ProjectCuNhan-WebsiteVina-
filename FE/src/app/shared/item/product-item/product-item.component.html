@@ -1,12 +1,7 @@
-<div class="wapper" (click)="sendData(data?.productName)">
-  <!-- <img src="/assets/Products/{{ data?.image }}" alt="" /> -->
-  <!-- <img
-    ngSrc="assets/Products/{{ data?.image }} || 'anh1.jpg"
-    alt=""
-    [width]="250"
-    [height]="250"
-    priority=""
-  /> -->
+<div
+  class="wapper"
+  (click)="sendData(data?.productName)"
+>
   <img
     [src]="
       data?.image

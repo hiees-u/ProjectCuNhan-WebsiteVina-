@@ -5,11 +5,10 @@ import { AddProductComponent } from '../add-product/add-product.component';
 import { ViewProductsComponent } from '../view-products/view-products.component';
 
 @Component({
-  selector: 'app-product-moderator',
-  standalone: true,
-  imports: [CommonModule, FormsModule, AddProductComponent, ViewProductsComponent],
-  templateUrl: './product-moderator.component.html',
-  styleUrl: './product-moderator.component.css',
+    selector: 'app-product-moderator',
+    imports: [CommonModule, FormsModule, AddProductComponent, ViewProductsComponent],
+    templateUrl: './product-moderator.component.html',
+    styleUrl: './product-moderator.component.css'
 })
 export class ProductModeratorComponent {
   constructor(

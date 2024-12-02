@@ -29,22 +29,19 @@ import {
 } from '../../shared/module/notification/notification.module';
 
 @Component({
-  selector: 'app-view-products',
-  standalone: true,
-  imports: [
-    // OrderProductsComponent,
-    CommonModule,
-    NgIf,
-    NgFor,
-    NgClass,
-    // FilterPriceComponent,
-    ProductItemComponent,
-    SearchBoxComponent,
-    CustomCurrencyPipe,
-    NotificationComponent,
-  ],
-  templateUrl: './view-products.component.html',
-  styleUrls: ['./view-products.component.css', './product-detail.css'],
+    selector: 'app-view-products',
+    imports: [
+        CommonModule,
+        NgIf,
+        NgFor,
+        NgClass,
+        ProductItemComponent,
+        SearchBoxComponent,
+        CustomCurrencyPipe,
+        NotificationComponent,
+    ],
+    templateUrl: './view-products.component.html',
+    styleUrls: ['./view-products.component.css', './product-detail.css']
 })
 export class ViewProductsComponent {
   trigger: any;

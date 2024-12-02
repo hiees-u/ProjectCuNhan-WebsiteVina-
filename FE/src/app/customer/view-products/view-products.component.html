@@ -1,11 +1,11 @@
 <div class="container">
   <div class="secon-content">
-    <div class="search-box">
+    <div class="search-box" data-aos="fade-up-right">
       <p class="header-secon">Tìm kiếm:</p>
       <app-search-box (products)="receiveData($event)"></app-search-box>
     </div>
     <div class="br"></div>
-    <div class="categorys">
+    <div class="categorys" data-aos="fade-right">
       <p class="header-secon">Loại Sản Phẩm:</p>
       <ul>
         <li
@@ -25,7 +25,7 @@
       </ul>
     </div>
     <div class="br"></div>
-    <div class="sub-categorys">
+    <div class="sub-categorys" data-aos="fade-up-right">
       <p class="header-secon">Loại Sản Phẩm Phụ:</p>
       <ul>
         <li
@@ -46,7 +46,7 @@
     </div>
   </div>
   <div class="content">
-    <div class="sort-content">
+    <div class="sort-content" data-aos="fade-up-left">
       <label for="sort">Sắp Xếp:</label>
       <select (change)="handleSort($event)" name="sort" id="sort">
         <option value="0" selected>Mới Nhất</option>

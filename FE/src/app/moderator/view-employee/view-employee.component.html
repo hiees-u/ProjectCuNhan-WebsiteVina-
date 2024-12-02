@@ -2,40 +2,79 @@
   <span class="error" *ngIf="isError">Hiện chưa tồn tại khách hàng...! </span>
   <div class="content">
     <table>
-      <tbody>
+      <thead>
         <tr>
-          <th style="width: 20%">Tên đăng nhập</th>
+          <th style="width: 17%">Tên đăng nhập</th>
           <th style="width: 30%">Họ và tên</th>
-          <th style="width: 10%">Giới tính</th>
-          <th style="width: 15%">Nhân viên</th>
-          <th style="width: 15%">Phòng ban</th>
-          <th style="width: 10%">Chức năng</th>
+          <th style="width: 13%">Giới tính</th>
+          <th style="width: 17%">Nhân viên</th>
+          <th style="width: 17%">Phòng ban</th>
+          <th style="width: 6%">Chức năng</th>
         </tr>
-        <!-- 0 -->
+      </thead>
+      <tbody>
         <tr *ngFor="let item of customers; let i = index">
           <td class="td-name">{{ item.accountName }}</td>
           <td class="td-centered">
-            {{ item.fullName ? item.fullName : "Chưa xác định..." }}
+            <input
+              type="text"
+              name="fname"
+              [(ngModel)]="item.fullName"
+              (ngModelChange)="onModelChange(item)"
+              [ngClass]="{ 'text-error': !item.fullName }"
+              id="fname"
+              placeholder="Chưa xác định..."
+              class="input-fullname"
+            />
           </td>
           <td class="td-centered">
-            {{
-              item.gender
-                ? item.gender == 0
-                  ? "Nữ"
-                  : "Nam"
-                : "chưa xác định.."
-            }}
+            <select
+              name="gender"
+              id="gender"
+              [(ngModel)]="item.gender"
+              (ngModelChange)="onModelChange(item)"
+              [ngClass]="{ 'text-error': item.gender === null }"
+            >
+              <option [value]="null" disabled selected>Chưa xác định</option>
+              <option *ngFor="let gender of genders" [value]="gender.id">
+                {{ gender.name }}
+              </option>
+            </select>
           </td>
           <td class="td-centered">
-            {{ item.employeeTypeName }}
+            <select
+              name="employeeType"
+              id="employeeType"
+              [(ngModel)]="item.employeeTypeId"
+              (ngModelChange)="onModelChange(item)"
+            >
+              <option
+                *ngFor="let employeeType of employeeTypes"
+                [value]="employeeType.id"
+              >
+                {{ employeeType.name }}
+              </option>
+            </select>
           </td>
           <td class="td-centered">
-            {{ item.departmentName }}
+            <select
+              name="department"
+              id="department"
+              [(ngModel)]="item.departmentId"
+              [ngClass]="{'text-error': item.departmentId === 7}"
+              (ngModelChange)="onModelChange(item)"
+            >
+              <option
+                *ngFor="let department of departments"
+                [value]="department.departmentId"
+              >
+                {{ department.departmentName }}
+              </option>
+            </select>
           </td>
           <td class="td-operation">
-            <!-- (click)="onShowDetail(item)" -->
-            <button class="btn-modi">
-              <i class="fa-regular fa-pen-to-square"></i>
+            <button class="btn-del" (click)="onShowDelete(item.accountName)">
+              <i class="fa-regular fa-trash-can"></i>
             </button>
           </td>
         </tr>
@@ -63,34 +102,24 @@
     </div>
   </div>
 
-  <!-- <div
+  <div
     class="delete-product"
-    *ngIf="isShowDelete"
     [ngClass]="{
-          'show-delete': isShowDelete && flagDelete,
-          'hide-delete': !isShowDelete && flagDelete
-        }"
-      >
-        <p>Xóa sản phẩm: {{ selectProduct.productName }}</p>
-        <button (click)="onHidenDelete()">Đóng</button>
-        <button class="btn-del" (click)="deleteProduct()">Xóa</button>
-      </div> -->
+      'show-delete': isShowDelete && flagDelete,
+      'hide-delete': !isShowDelete && flagDelete
+    }"
+  >
+    <p>Xác nhận xóa nhân viên: {{ accountDelete }}</p>
+    <button (click)="onHidenDelete()">Đóng</button>
+    <button class="btn-del" (click)="handleDeleteEmployee(accountDelete)">
+      Xóa
+    </button>
+  </div>
 
-  <!-- <div
-      class="detail-product"
-          *ngIf="isShowDetail"    
-        [ngClass]="{
-          'show-delete': isShowDetail && flagDetail,
-          'hide-delete': !isShowDetail && flagDetail
-        }"
-      >
-        <app-product-detail (isClose)="handleClose($event)" [product]="selectProduct" ></app-product-detail>
-      </div> -->
-
-  <!-- <div class="notification">
-        <app-notification
-          [data]="dataNotification"
-          [trigger]="trigger"
-        ></app-notification>
-      </div> -->
+  <div class="notification">
+    <app-notification
+      [data]="dataNotification"
+      [trigger]="trigger"
+    ></app-notification>
+  </div>
 </div>

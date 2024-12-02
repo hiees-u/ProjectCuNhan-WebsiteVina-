@@ -8,15 +8,14 @@ import { ConstructerNotification, Notification } from '../../shared/module/notif
 import { NotificationComponent } from "../../shared/item/notification/notification.component";
 
 @Component({
-  selector: 'app-supplier-detail',
-  standalone: true,
-  imports: [
-    FormsModule,
-    ViewProductsComponent,
-    NotificationComponent
-],
-  templateUrl: './supplier-detail.component.html',
-  styleUrl: './supplier-detail.component.css'
+    selector: 'app-supplier-detail',
+    imports: [
+        FormsModule,
+        ViewProductsComponent,
+        NotificationComponent
+    ],
+    templateUrl: './supplier-detail.component.html',
+    styleUrl: './supplier-detail.component.css'
 })
 export class SupplierDetailComponent {
   @Input() Supplier: SupplierRequestModerator = ContructorSupplierRequestModerator();
