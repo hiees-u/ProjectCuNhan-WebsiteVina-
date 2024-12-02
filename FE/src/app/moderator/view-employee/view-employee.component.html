@@ -33,7 +33,7 @@
               id="gender"
               [(ngModel)]="item.gender"
               (ngModelChange)="onModelChange(item)"
-              [ngClass]="{ 'text-error': !item.gender }"
+              [ngClass]="{ 'text-error': item.gender === null }"
             >
               <option [value]="null" disabled selected>Chưa xác định</option>
               <option *ngFor="let gender of genders" [value]="gender.id">
@@ -61,6 +61,7 @@
               name="department"
               id="department"
               [(ngModel)]="item.departmentId"
+              [ngClass]="{'text-error': item.departmentId === 7}"
               (ngModelChange)="onModelChange(item)"
             >
               <option
