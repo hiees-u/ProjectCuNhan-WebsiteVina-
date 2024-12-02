@@ -20,7 +20,7 @@ const routes: Routes = [
       { path: 'cart-details', component: CartDetailComponent},
       { path: 'user-details', component: UserDetailComponent},
       { path: 'contact', component: ContactComponent},
-      // { path: 'payment', component: PaymentComponent },
+      { path: 'payment', component: PaymentComponent },
       { path: '', redirectTo: 'view-product', pathMatch: 'full'}
     ]
   }

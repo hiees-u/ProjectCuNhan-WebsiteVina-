@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { CustomerService } from '../customer.service';
 
 import { PaymentComponent } from './payment.component';
 

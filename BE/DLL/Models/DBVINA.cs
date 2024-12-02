@@ -79,6 +79,8 @@ public partial class DbVINA : DbContext
 
     public virtual DbSet<WarehouseReceiptDetail> WarehouseReceiptDetails { get; set; }
 
+    public virtual DbSet<Transaction> Transactions { get; set; }
+
     //    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
     //        => optionsBuilder.UseSqlServer("Data Source=DESKTOP-L6DVGTI;Initial Catalog=CAFFEE_VINA_DBv1;User ID=sa;Password=12345;Encrypt=False;Trust Server Certificate=True");
@@ -524,6 +526,11 @@ public partial class DbVINA : DbContext
             entity.HasOne(d => d.PurchaseOrderDetail).WithMany(p => p.WarehouseReceiptDetails)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_WarehouseReceiptDetail_PurchaseOrderDetail");
+        });
+
+        modelBuilder.Entity<Transaction>(entity =>
+        {
+            entity.HasKey(e => new { e.LocalTransactionId });
         });
 
         OnModelCreatingPartial(modelBuilder);

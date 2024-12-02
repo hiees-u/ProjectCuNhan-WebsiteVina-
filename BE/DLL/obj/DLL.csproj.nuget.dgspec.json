@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\HOC\\Do An\\doan 3011 2\\ProjectCuNhan-WebsiteVina-\\BE\\DLL\\DLL.csproj": {}
+    "D:\\HOC\\Do An\\doan 0112\\ProjectCuNhan-WebsiteVina-\\BE\\DLL\\DLL.csproj": {}
   },
   "projects": {
-    "D:\\HOC\\Do An\\doan 3011 2\\ProjectCuNhan-WebsiteVina-\\BE\\DLL\\DLL.csproj": {
+    "D:\\HOC\\Do An\\doan 0112\\ProjectCuNhan-WebsiteVina-\\BE\\DLL\\DLL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\HOC\\Do An\\doan 3011 2\\ProjectCuNhan-WebsiteVina-\\BE\\DLL\\DLL.csproj",
+        "projectUniqueName": "D:\\HOC\\Do An\\doan 0112\\ProjectCuNhan-WebsiteVina-\\BE\\DLL\\DLL.csproj",
         "projectName": "DLL",
-        "projectPath": "D:\\HOC\\Do An\\doan 3011 2\\ProjectCuNhan-WebsiteVina-\\BE\\DLL\\DLL.csproj",
+        "projectPath": "D:\\HOC\\Do An\\doan 0112\\ProjectCuNhan-WebsiteVina-\\BE\\DLL\\DLL.csproj",
         "packagesPath": "C:\\Users\\MSI\\.nuget\\packages\\",
-        "outputPath": "D:\\HOC\\Do An\\doan 3011 2\\ProjectCuNhan-WebsiteVina-\\BE\\DLL\\obj\\",
+        "outputPath": "D:\\HOC\\Do An\\doan 0112\\ProjectCuNhan-WebsiteVina-\\BE\\DLL\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "D:\\Download\\VisualStudio\\Shared\\NuGetPackages"

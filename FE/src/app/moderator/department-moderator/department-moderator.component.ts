@@ -88,4 +88,12 @@ export class DepartmentModeratorComponent {
     this.isShowDetail = !is;
     this.flagDetail = true;
   }
+
+  handleCloseAdd(is: boolean) {
+    console.log('THOÁT DeTAIL');
+    this.getDepartments();
+    // this.getCategorys();
+    this.isShowAddDepartment = !is;
+    this.flag = true;
+  }
 }

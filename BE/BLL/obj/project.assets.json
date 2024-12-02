@@ -46,6 +46,27 @@
           }
         }
       },
+      "Mapster/7.4.0": {
+        "type": "package",
+        "dependencies": {
+          "Mapster.Core": "1.2.1"
+        },
+        "compile": {
+          "lib/net7.0/Mapster.dll": {}
+        },
+        "runtime": {
+          "lib/net7.0/Mapster.dll": {}
+        }
+      },
+      "Mapster.Core/1.2.1": {
+        "type": "package",
+        "compile": {
+          "lib/net7.0/Mapster.Core.dll": {}
+        },
+        "runtime": {
+          "lib/net7.0/Mapster.Core.dll": {}
+        }
+      },
       "Microsoft.AspNetCore.Cryptography.Internal/2.1.0": {
         "type": "package",
         "compile": {
@@ -1305,6 +1326,34 @@
         "azureicon.png",
         "lib/netstandard2.0/Azure.Identity.dll",
         "lib/netstandard2.0/Azure.Identity.xml"
+      ]
+    },
+    "Mapster/7.4.0": {
+      "sha512": "RYGoDqvS4WTKIq0HDyPBBVIj6N0mluOCXQ1Vk95JKseMHEsbCXSEGKSlP95oL+s42IXAXbqvHj7p0YaRBUcfqg==",
+      "type": "package",
+      "path": "mapster/7.4.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "icon.png",
+        "lib/net6.0/Mapster.dll",
+        "lib/net7.0/Mapster.dll",
+        "mapster.7.4.0.nupkg.sha512",
+        "mapster.nuspec"
+      ]
+    },
+    "Mapster.Core/1.2.1": {
+      "sha512": "11lokmfliBEMMmjeqxFGNpqGXq6tN96zFqpBmfYeahr4Ybk63oDmeJmOflsATjobYkX248g5Y62oQ2NNnZaeww==",
+      "type": "package",
+      "path": "mapster.core/1.2.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "icon.png",
+        "lib/net6.0/Mapster.Core.dll",
+        "lib/net7.0/Mapster.Core.dll",
+        "mapster.core.1.2.1.nupkg.sha512",
+        "mapster.core.nuspec"
       ]
     },
     "Microsoft.AspNetCore.Cryptography.Internal/2.1.0": {
@@ -3623,6 +3672,7 @@
     "net8.0": [
       "DLL >= 1.0.0",
       "DTO >= 1.0.0",
+      "Mapster >= 7.4.0",
       "Microsoft.AspNetCore.Session >= 2.1.0",
       "Microsoft.CodeAnalysis.Analyzers >= 3.3.3",
       "Newtonsoft.Json >= 13.0.3",
@@ -3638,11 +3688,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\HOC\\Do An\\doan 3011 2\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\BLL.csproj",
+      "projectUniqueName": "D:\\HOC\\Do An\\doan 0112\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\BLL.csproj",
       "projectName": "BLL",
-      "projectPath": "D:\\HOC\\Do An\\doan 3011 2\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\BLL.csproj",
+      "projectPath": "D:\\HOC\\Do An\\doan 0112\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\BLL.csproj",
       "packagesPath": "C:\\Users\\MSI\\.nuget\\packages\\",
-      "outputPath": "D:\\HOC\\Do An\\doan 3011 2\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\obj\\",
+      "outputPath": "D:\\HOC\\Do An\\doan 0112\\ProjectCuNhan-WebsiteVina-\\BE\\BLL\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "D:\\Download\\VisualStudio\\Shared\\NuGetPackages"
@@ -3664,11 +3714,11 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "D:\\HOC\\Do An\\doan 3011 2\\ProjectCuNhan-WebsiteVina-\\BE\\DLL\\DLL.csproj": {
-              "projectPath": "D:\\HOC\\Do An\\doan 3011 2\\ProjectCuNhan-WebsiteVina-\\BE\\DLL\\DLL.csproj"
+            "D:\\HOC\\Do An\\doan 0112\\ProjectCuNhan-WebsiteVina-\\BE\\DLL\\DLL.csproj": {
+              "projectPath": "D:\\HOC\\Do An\\doan 0112\\ProjectCuNhan-WebsiteVina-\\BE\\DLL\\DLL.csproj"
             },
-            "D:\\HOC\\Do An\\doan 3011 2\\ProjectCuNhan-WebsiteVina-\\BE\\DTO\\DTO.csproj": {
-              "projectPath": "D:\\HOC\\Do An\\doan 3011 2\\ProjectCuNhan-WebsiteVina-\\BE\\DTO\\DTO.csproj"
+            "D:\\HOC\\Do An\\doan 0112\\ProjectCuNhan-WebsiteVina-\\BE\\DTO\\DTO.csproj": {
+              "projectPath": "D:\\HOC\\Do An\\doan 0112\\ProjectCuNhan-WebsiteVina-\\BE\\DTO\\DTO.csproj"
             }
           }
         }
@@ -3688,6 +3738,10 @@
       "net8.0": {
         "targetAlias": "net8.0",
         "dependencies": {
+          "Mapster": {
+            "target": "Package",
+            "version": "[7.4.0, )"
+          },
           "Microsoft.AspNetCore.Session": {
             "target": "Package",
             "version": "[2.1.0, )"

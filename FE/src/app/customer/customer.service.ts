@@ -18,8 +18,34 @@ export class CustomerService {
     this.data.next(data);
   }
 
+  processVnpayCallback(paymentData: any): Observable<any> {
+    const url = `${this.apiUrl}Payment/Callback`;
+    const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.token}`,
+    };
+
+    return new Observable(observer => {
+        fetch(url, {
+            method: 'POST',
+            headers: headers,
+            body: JSON.stringify(paymentData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            observer.next(data);
+            observer.complete();
+        })
+        .catch(error => {
+            observer.error(error);
+        });
+    });
+}
+    
+
   private token: string = '';
   private apiUrl = 'https://localhost:7060/api/';
+
   constructor() {
     if (typeof window !== 'undefined') {
       this.token = localStorage.getItem('token') || '';
@@ -50,39 +76,38 @@ export class CustomerService {
     }
   }
 
-  async createPaymentMomo(orderInfo: { FullName: string; OrderId: string; OrderInfomation: string; Amount: string }): Promise<any> {
+  async createPaymentMomo(orderInfo: { FullName: string; OrderId: string; OrderInfomation: string; Amount: string, PaymentMethod: string }): Promise<any> {
     const url = `${this.apiUrl}Payment/CreatePaymentUrl`;
     try {
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${this.token}`,
-        },
-        body: JSON.stringify(orderInfo),
-      });
-  
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error('Phản hồi lỗi từ server:', errorText);
-        throw new Error(`HTTP error! status: ${response.status} - ${errorText}`);
-      }
-  
-      const data = await response.json();
-      console.log('Phản hồi từ API Momo:', data);  // Log phản hồi từ Momo
-  
-      // Kiểm tra nếu trả về payUrl hợp lệ
-      if (data && data.payUrl) {
-        console.log('URL thanh toán Momo:', data.payUrl);  // Log payUrl
-        return data;  // Trả về URL thanh toán
-      } else {
-        throw new Error('Không thể tạo URL thanh toán Momo!');
-      }
-    } catch (error:any) {
-      console.error('Lỗi khi tạo thanh toán Momo:', error.message);
-      throw error;  // Bắn lại lỗi để xử lý tại nơi gọi hàm
+        orderInfo.PaymentMethod = "vnpay"; // Mặc định PaymentMethod là vnpay
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${this.token}`,
+            },
+            body: JSON.stringify(orderInfo),
+        });
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error('Phản hồi lỗi từ server:', errorText);
+            throw new Error(`HTTP error! status: ${response.status} - ${errorText}`);
+        }
+
+        const data = await response.json();
+        console.log('Phản hồi từ API:', data); // Log phản hồi từ BE
+
+        if (data && data.payUrl) {
+            return data; // Trả về URL thanh toán
+        } else {
+            throw new Error('Không thể tạo URL thanh toán VNPay!');
+        }
+    } catch (error: any) {
+        console.error('Lỗi khi tạo thanh toán VNPay:', error.message);
+        throw error;
     }
-  }
+}
 
   //lấy token
   ngOnInit(): void {

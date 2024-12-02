@@ -17,19 +17,17 @@
         <th class="table-cell">Nhân viên Tạo</th>
         <th class="table-cell">Thời gian tạo</th>
         <th class="table-cell">Thời gian sửa đổi</th>
-        <th class="table-cell">Thời gian xóa</th>
         <th class="table-cell">Thao Tác</th>
       </tr>
     </thead>
     <tbody class="text-gray-700">
-      <!-- <tr *ngFor="let warehouse of warehouses"> -->
-        <tr>
-        <!-- <td class="table-cell">{{ warehouse.warehouseId }}</td>
+      <tr *ngFor="let warehouse of warehouses">
+        <td class="table-cell">{{ warehouse.warehouseId }}</td>
         <td class="table-cell">{{ warehouse.warehouseName }}</td>
         <td class="table-cell">{{ warehouse.address }}</td>
         <td class="table-cell">{{ warehouse.modifiedBy }}</td>
         <td class="table-cell">{{ warehouse.createTime }}</td>
-        <td class="table-cell">{{ warehouse.modifiedTime }}</td> -->
+        <td class="table-cell">{{ warehouse.modifiedTime }}</td>
         <td class="table-cell">
           <button class="btn-view">Xem</button>
           <button class="btn-edit">Sửa</button>

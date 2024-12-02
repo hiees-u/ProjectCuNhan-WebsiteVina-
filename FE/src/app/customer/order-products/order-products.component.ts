@@ -104,29 +104,29 @@ export class OrderProductsComponent {
   }
   async goToMomoPayment() {
     try {
-      const orderInfo = {
-        FullName: this.Order.nameRecipient,
-        OrderId: Date.now().toString(),  // Tạo OrderId duy nhất
-        OrderInfomation: 'Thanh toán đơn hàng cafe Vina',  // Nội dung đơn hàng
-        Amount: this.ResponseOrder.totalPayment.toString()  // Tổng tiền đơn hàng
-      };
-  
-      console.log('Dữ liệu gửi tới Momo:', orderInfo); // Log dữ liệu gửi
-  
-      const momoResponse = await this.service.createPaymentMomo(orderInfo);
-  
-      // Kiểm tra đúng thuộc tính `payUrl`
-      if (momoResponse && momoResponse.payUrl) {
-        console.log('URL thanh toán Momo:', momoResponse.payUrl); // Log payUrl trả về
-        window.location.href = momoResponse.payUrl; // Điều hướng tới URL thanh toán
-      } else {
-        throw new Error('Không thể tạo URL thanh toán Momo!');
-      }
+        const orderInfo = {
+            FullName: this.Order.nameRecipient,
+            OrderId: Date.now().toString(),  // Tạo OrderId duy nhất
+            OrderInfomation: 'Thanh toán đơn hàng cafe Vina',  // Nội dung đơn hàng
+            Amount: this.ResponseOrder.totalPayment.toString(),  // Tổng tiền đơn hàng
+            PaymentMethod: "vnpay" // Mặc định thanh toán qua VNPay
+        };
+
+        console.log('Dữ liệu gửi tới VNPay:', orderInfo); // Log dữ liệu gửi
+
+        const vnpayResponse = await this.service.createPaymentMomo(orderInfo);
+
+        if (vnpayResponse && vnpayResponse.payUrl) {
+            console.log('URL thanh toán VNPay:', vnpayResponse.payUrl); // Log payUrl trả về
+            window.location.href = vnpayResponse.payUrl; // Điều hướng tới URL thanh toán
+        } else {
+            throw new Error('Không thể tạo URL thanh toán VNPay!');
+        }
     } catch (error: any) {
-      console.error('Lỗi khi tạo thanh toán Momo:', error.message);
-      alert('Lỗi khi tạo thanh toán. Vui lòng thử lại!');
+        console.error('Lỗi khi tạo thanh toán VNPay:', error.message);
+        alert('Lỗi khi tạo thanh toán. Vui lòng thử lại!');
     }
-  }
+}
 
   async handleOrder() {
     if (this.addressSelectKey === 0) {

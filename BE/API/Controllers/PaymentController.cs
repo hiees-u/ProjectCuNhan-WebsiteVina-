@@ -1,8 +1,9 @@
 ﻿using BLL.Interface;
 using Microsoft.AspNetCore.Mvc;
 using DTO.Order;
+using API.Services;
+using API.Models;
 using Newtonsoft.Json;
-using System.Security.Claims;
 using DTO.Payment;
 
 namespace API.Controllers
@@ -12,12 +13,16 @@ namespace API.Controllers
     public class PaymentController : Controller
     {
         private IMomoService _momoService;
-        private IOrder _orderService;
-        public PaymentController(IMomoService momoService, IOrder orderService)
+        private readonly IVnPayService _vnPayService;
+        private readonly ITransactionBLL _transactionBLL;
+        private readonly IOrder _order;
+
+        public PaymentController(IMomoService momoService, IVnPayService vnPayService, ITransactionBLL transactionBLL, IOrder order)
         {
             _momoService = momoService;
-            _orderService = orderService;
-
+            _vnPayService = vnPayService;
+            _transactionBLL = transactionBLL;
+            _order = order;
         }
 
         [HttpPost]
@@ -29,6 +34,26 @@ namespace API.Controllers
 
             try
             {
+                if (model.PaymentMethod == "vnpay")
+                {
+                    var payModel = new PaymentInformationModel
+                    {
+                        Amount = double.Parse(model.Amount),
+                        Name = model.OrderId,
+                        OrderDescription = model.OrderInfomation,
+                        OrderType = "other"
+                    };
+
+                    var res = _vnPayService.CreatePaymentUrl(payModel, HttpContext);
+
+                    // Create Draf Order Here
+
+                    if (!string.IsNullOrEmpty(res))
+                    {
+                        return Ok(new { PayUrl = res });
+                    }
+                }
+
                 // Gọi dịch vụ tạo URL thanh toán MOMO
                 var response = await _momoService.CreatePaymentMomo(model);
                 Console.WriteLine("Phản hồi từ Momo:");
@@ -56,38 +81,42 @@ namespace API.Controllers
             }
         }
 
-        [HttpGet]
-        [Route("Save")]
-        public async Task<IActionResult> PaymentCallBacks([FromQuery] string orderId, [FromQuery] decimal amount, [FromQuery] int resultCode)
+        [HttpPost]
+        [Route("ProcessCheckout")]
+        public IActionResult ProcessCheckout()
         {
-            try
+            var query = Request.Query;
+            var paymentMethod = Request.Query.FirstOrDefault(s => s.Key.Equals("payment_method")).Value.ToString();
+            if (paymentMethod == "vnpay")
             {
-                if (resultCode == 0) // Thành công
+                var vnpayResponse = _vnPayService.PaymentExecute(Request.Query);
+                var dto = new DTO.Transaction.TransactionDto()
                 {
-                    // Lưu dữ liệu vào DB
-                    var paymentInfo = new MomoInfoModel
-                    {
-                        OrderId = orderId,
-                        Amount = amount,
-                        DatePaid = DateTime.Now,
-                        PaymentStatus = true
-                    };
+                    CreateAt = DateTime.Now,
+                    Information = vnpayResponse.OrderDescription,
+                    PaymentMethod = vnpayResponse.PaymentMethod,
+                    State = vnpayResponse.Success ? "Thanh toán thành công" : "Thanh toán thất bại",
+                    TransactionId = vnpayResponse.TransactionId,
+                    OrderId = int.Parse(vnpayResponse.OrderId),
+                };
 
-                    await _orderService.UpdateOrderPaymentStatus(orderId, paymentInfo);
+                var trans = _transactionBLL.CreateTransaction(dto);
 
-                    return Ok(new { message = "Giao dịch thành công!" });
-                }
-                else
-                {
-                    return BadRequest(new { message = "Giao dịch thất bại!" });
-                }
+                var orderId = vnpayResponse?.OrderId;
+                // Get Order by id
+                // Update Draf Order Here
+                return Created();
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Lỗi xử lý callback:");
-                Console.WriteLine(ex.Message);
-                return StatusCode(500, new { message = "Lỗi xử lý!", detailedMessage = ex.Message });
-            }
+
+            var response = _momoService.PaymentExecuteAsync();
+            return View(response);
+        }
+
+        [HttpGet]
+        public IActionResult PaymentCallBacks() 
+        {
+            var response = _momoService.PaymentExecuteAsync();
+            return View(response);
         }
 
 

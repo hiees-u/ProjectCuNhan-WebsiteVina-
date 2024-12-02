@@ -46,7 +46,7 @@ namespace API.Controllers
 
         [HttpPut]
         [Authorize(Roles = "Moderator")]
-        public IActionResult Put(EmployeeRequestPutModule req)
+        public IActionResult Put([FromBody] EmployeeRequestPutModule req)
         {
             BaseResponseModel result = employee.Put(req);
             return result.IsSuccess ? Ok(result) : BadRequest(result);

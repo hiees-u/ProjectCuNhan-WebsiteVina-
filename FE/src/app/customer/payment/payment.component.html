@@ -1,1 +1,7 @@
-<p>payment works!</p>
+<div class="payment-status">
+    <h2 *ngIf="paymentSuccess; else paymentFailed">Thanh toán thành công!</h2>
+    <ng-template #paymentFailed>
+      <h2>Thanh toán thất bại. Vui lòng thử lại!</h2>
+    </ng-template>
+  </div>
+  

@@ -12,6 +12,7 @@ import { BaseResponseModel } from '../../shared/module/base-response/base-respon
   templateUrl: './moderator-dashboard.component.html',
   styleUrl: './moderator-dashboard.component.css',
 })
+
 export class ModeratorDashboardComponent {
   dashboardItem: number = 1;
   accountName: string = '';

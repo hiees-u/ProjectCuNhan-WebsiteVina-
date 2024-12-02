@@ -1,9 +1,14 @@
 import { Injectable } from '@angular/core';
+import { BaseResponseModel } from '../shared/module/base-response/base-response.module';
 import {
-  BaseResponseModel,
-  BaseResponseModule,
-} from '../shared/module/base-response/base-response.module';
-import { CategoryRequesModerator, InsertProduct, ProductModerator, SubCategoryRequesModerator, SupplierRequestModerator, SupplierResponseModerator } from './moderator.module';
+  CategoryRequesModerator,
+  CustomerRequestModule,
+  InsertProduct,
+  ProductModerator,
+  SubCategoryRequesModerator,
+  SupplierRequestModerator,
+  SupplierResponseModerator,
+} from './moderator.module';
 
 @Injectable({
   providedIn: 'root',
@@ -24,6 +29,138 @@ export class ModeratorService {
     }
   }
 
+  //POST EMPLOYEE
+  async postEmployee(emp: {
+    employeeTypeId: number;
+    departmentId: number;
+    accountName: string;
+  }): Promise<BaseResponseModel> {
+    try {
+      const url = 'https://localhost:7060/api/Employee';
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.token}`,
+        },
+        body: JSON.stringify(emp),
+      });
+      const data: BaseResponseModel = await response.json();
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.log('Lỗi: ', error);
+      return {
+        isSuccess: false,
+        message: 'Lỗi ròi mài ơi',
+      };
+    }
+  }
+
+  //PUT EMPLOYEE
+  async putEmployee(emp: {
+    accountName: string;
+    employeeTypeId: number;
+    departmentId: number;
+    fullName: string | null;
+    gender: number | null;
+  }): Promise<BaseResponseModel> {
+    try {
+      const url = 'https://localhost:7060/api/Employee';
+      const response = await fetch(url, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.token}`,
+        },
+        body: JSON.stringify(emp),
+      });
+      const data: BaseResponseModel = await response.json();
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.log('Lỗi: ', error);
+      return {
+        isSuccess: false,
+        message: 'Lỗi ròi mài ơi',
+      };
+    }
+  }
+
+  //DELETE EMPLOYEE BY ACCOUNT NAME
+  async deleteEmployee(accountName: string): Promise<BaseResponseModel> {
+    try {
+      const url = `https://localhost:7060/api/Employee?accountName=${accountName}`;
+      const response = await fetch(url, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+      const data: BaseResponseModel = await response.json();
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.log('Lỗi: ', error);
+      return {
+        isSuccess: false,
+        message: 'Lỗi ròi mài ơi',
+      };
+    }
+  }
+
+  //PUT CUSTOMER
+  async putCustomer(customer: {
+    accountName: string;
+    typeCustomerId: number;
+  }): Promise<BaseResponseModel> {
+    try {
+      const url = 'https://localhost:7060/api/Customer';
+      const response = await fetch(url, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.token}`,
+        },
+        body: JSON.stringify(customer),
+      });
+      const data: BaseResponseModel = await response.json();
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.log('Lỗi: ', error);
+      return {
+        isSuccess: false,
+        message: 'Lỗi ròi mài ơi',
+      };
+    }
+  }
+
+  //GET CUSTOMER TYPE
+  async getCustomerType(): Promise<BaseResponseModel> {
+    const url = 'https://localhost:7060/api/CustomerType';
+
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data: BaseResponseModel = await response.json();
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.error('Error:', error);
+      throw error;
+    }
+  }
+
   //GET EMPLOYEE
   async getEmployee(
     employeeTypeID?: number,
@@ -41,7 +178,6 @@ export class ModeratorService {
     }
 
     console.log(url);
-    
 
     try {
       const response = await fetch(url, {
@@ -76,7 +212,6 @@ export class ModeratorService {
     }
 
     console.log(url);
-    
 
     try {
       const response = await fetch(url, {
@@ -100,7 +235,6 @@ export class ModeratorService {
 
   //PUT PRODUCT
   async putProduct(product: ProductModerator): Promise<BaseResponseModel> {
-
     const input = {
       productId: product.productId,
       productName: product.productName,
@@ -160,7 +294,7 @@ export class ModeratorService {
   }
 
   //delete supplier
-  async deleteSupplier(id: number): Promise<BaseResponseModel>  {
+  async deleteSupplier(id: number): Promise<BaseResponseModel> {
     try {
       const url = `https://localhost:7060/api/Supplier?supplierId=${id}`;
       const response = await fetch(url, {
@@ -183,7 +317,9 @@ export class ModeratorService {
   }
 
   //update supplier
-  async putSupplier(supplier: SupplierRequestModerator): Promise<BaseResponseModel> {
+  async putSupplier(
+    supplier: SupplierRequestModerator
+  ): Promise<BaseResponseModel> {
     try {
       const url = 'https://localhost:7060/api/Supplier';
       const response = await fetch(url, {
@@ -207,7 +343,7 @@ export class ModeratorService {
   }
 
   //delete SubCategory
-  async deleteSubCategory(id: number): Promise<BaseResponseModel>  {
+  async deleteSubCategory(id: number): Promise<BaseResponseModel> {
     try {
       const url = `https://localhost:7060/api/SubCategory?subCateId=${id}`;
       const response = await fetch(url, {
@@ -230,7 +366,9 @@ export class ModeratorService {
   }
 
   //update sub-category
-  async putSubCategory(subCate: SubCategoryRequesModerator): Promise<BaseResponseModel> {
+  async putSubCategory(
+    subCate: SubCategoryRequesModerator
+  ): Promise<BaseResponseModel> {
     try {
       const url = 'https://localhost:7060/api/SubCategory';
       const response = await fetch(url, {
@@ -254,7 +392,7 @@ export class ModeratorService {
   }
 
   //delete Category
-  async deleteCategory(id: number): Promise<BaseResponseModel>  {
+  async deleteCategory(id: number): Promise<BaseResponseModel> {
     try {
       const url = `https://localhost:7060/api/Category?cateId=${id}`;
       const response = await fetch(url, {
@@ -277,7 +415,7 @@ export class ModeratorService {
   }
 
   //update Category
-  async putCategory(cate: CategoryRequesModerator): Promise<BaseResponseModel>  {
+  async putCategory(cate: CategoryRequesModerator): Promise<BaseResponseModel> {
     try {
       const url = 'https://localhost:7060/api/Category';
       const response = await fetch(url, {
@@ -327,7 +465,7 @@ export class ModeratorService {
   }
 
   //get account name
-  async getAccountName() : Promise<BaseResponseModel> {
+  async getAccountName(): Promise<BaseResponseModel> {
     const url = `https://localhost:7060/api/UserInfo/GET Account Name`;
     try {
       const response = await fetch(url, {
