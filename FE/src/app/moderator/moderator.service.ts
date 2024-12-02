@@ -3,6 +3,7 @@ import { BaseResponseModel } from '../shared/module/base-response/base-response.
 import {
   CategoryRequesModerator,
   CustomerRequestModule,
+  DepartmentRequestModerator,
   InsertProduct,
   ProductModerator,
   SubCategoryRequesModerator,
@@ -26,6 +27,54 @@ export class ModeratorService {
   ngOnInit(): void {
     if (typeof window !== 'undefined') {
       this.token = localStorage.getItem('token') || '';
+    }
+  }
+
+  //DELETE DEPARTMENT
+  async deleteDepartment(departId: number) : Promise<BaseResponseModel> {
+    try {
+      const url = `https://localhost:7060/api/Department?depID=${departId}`;
+      //https://localhost:7060/api/Department?depID=13
+      const response = await fetch(url, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+      const data: BaseResponseModel = await response.json();
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.log('Lỗi: ', error);
+      return {
+        isSuccess: false,
+        message: 'Lỗi ròi mài ơi',
+      };
+    }
+  }
+
+  //PUT DEPARTMENT
+  async putDepartment(depar: DepartmentRequestModerator) : Promise<BaseResponseModel> {
+    try {
+      const url = 'https://localhost:7060/api/Department';
+      const response = await fetch(url, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.token}`,
+        },
+        body: JSON.stringify(depar),
+      });
+      const data: BaseResponseModel = await response.json();
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.log('Lỗi: ', error);
+      return {
+        isSuccess: false,
+        message: 'Lỗi ròi mài ơi',
+      };
     }
   }
 

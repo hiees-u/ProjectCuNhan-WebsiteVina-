@@ -89,14 +89,15 @@ export class EmployeeModeratorComponent {
         });
       this.trigger = Date.now();
       setTimeout(() => {
-        this.onShowAddEmployee();
+        // this.onShowAddEmployee();
+    this.isShowAdd = false;
+
       }, 3000);
     }
     console.log(this.newEmployee);
   }
 
   onShowAddEmployee() {
-    // this.isShowAddCate = true;
     this.flagAdd = true;
     this.isShowAdd = !this.isShowAdd;
     this.newEmployee.accountName = '';

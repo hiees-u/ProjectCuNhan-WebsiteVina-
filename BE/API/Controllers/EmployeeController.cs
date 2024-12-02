@@ -19,9 +19,9 @@ namespace API.Controllers
 
         [HttpGet]
         [Authorize(Roles = "Moderator")]
-        public IActionResult Get(int? departmentID = null, int? employeeTypeID = null)
+        public IActionResult Get(int pageNumber, int pageSize ,int? departmentID = null, int? employeeTypeID = null)
         {
-            BaseResponseModel result = employee.Get(departmentID, employeeTypeID);
+            BaseResponseModel result = employee.Get(departmentID, employeeTypeID, pageNumber, pageSize);
 
             return result.IsSuccess ? Ok(result) : BadRequest(result);
         }

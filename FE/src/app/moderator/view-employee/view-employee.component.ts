@@ -141,7 +141,7 @@ export class ViewEmployeeComponent {
   async getEmployee() {
     console.log(this.deparmentID);
     await this.service
-      .getEmployee(undefined, this.deparmentID, this.pageCurrent, 7)
+      .getEmployee(undefined, this.deparmentID, this.pageCurrent, 9)
       .then((data) => {
         this.customers = data.data.employees;
         this.totalPage = data.data.totalPages;
