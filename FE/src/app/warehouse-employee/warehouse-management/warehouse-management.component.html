@@ -24,22 +24,47 @@
       <tr *ngFor="let warehouse of warehouses">
         <td class="table-cell">{{ warehouse.warehouseId }}</td>
         <td class="table-cell">{{ warehouse.warehouseName }}</td>
-        <td class="table-cell">{{ warehouse.address }}</td>
+        <td class="table-cell">{{ warehouse.fullAddress }}</td>
         <td class="table-cell">{{ warehouse.modifiedBy }}</td>
         <td class="table-cell">{{ warehouse.createTime }}</td>
         <td class="table-cell">{{ warehouse.modifiedTime }}</td>
         <td class="table-cell">
-          <button class="btn-view">Xem</button>
+          <!-- <button class="btn-view">Xem</button> -->
           <button class="btn-edit">Sửa</button>
-          <button class="btn-delete">Xóa</button>
+          <button
+            class="btn-delete"
+            (click)="onShowDeleteWareHouse(warehouse.warehouseId)"
+          >
+            Xóa
+          </button>
         </td>
       </tr>
     </tbody>
   </table>
 </div>
 
+<!-- <div class="notification">
+  <app-notification
+    [data]="dataNotification"
+    [trigger]="trigger"
+  ></app-notification>
+</div> -->
+
+<!-- <div class="notification">
+  <app-notification [data]="dataNotification"></app-notification>
+</div> -->
+
+<div *ngIf="dataNotification" [ngClass]="{'alert-success': dataNotification.status === 'success',
+                                          'alert-warning': dataNotification.status === 'warning',
+                                          'alert-danger': dataNotification.status === 'error'}"
+     class="alert">
+  {{ dataNotification.messages }}
+</div>
+
+
 <!-- Kệ và Ô Section -->
 <div class="section">
   <h3 class="section-title">Danh Sách Kệ và Ô</h3>
-  <div id="rackInfo"></div> <!-- Kệ và ô sẽ được hiển thị ở đây -->
+  <div id="rackInfo"></div>
+  <!-- Kệ và ô sẽ được hiển thị ở đây -->
 </div>

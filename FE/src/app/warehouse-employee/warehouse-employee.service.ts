@@ -27,27 +27,6 @@ export class WarehouseEmployeeService {
     }
   }
   
-  // async getWarehouses(): Promise<BaseResponseModel> {
-  //   const url = `${this.apiUrl}Warehouse/GetWarehouse`;
-  //   try {
-  //     const response = await fetch(url, {
-  //       method: 'GET',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //         Authorization: `Bearer ${this.token}`,
-  //       },
-  //     });
-  //     if (!response.ok) {
-  //       throw new Error(`HTTP error! status: ${response.status}`);
-  //     }
-  //     const data: BaseResponseModel = await response.json();
-  //     console.log(data);
-  //     return data;
-  //   } catch (error) {
-  //     console.error('Error:', error);
-  //     throw error;
-  //   }
-  // }
   async getWarehouses(): Promise<BaseResponseModel> {
     const url = `${this.apiUrl}Warehouse/GetWarehouse`;
     try {
@@ -81,28 +60,29 @@ export class WarehouseEmployeeService {
     }
   }
   //Delete Warehouse
-  // async deleteWarehouse(warehousreId: number): Promise<BaseResponseModel> {
-  //   try {
-  //     const url = `https://localhost:7060/api/Product?productId=${productId}`;
-  //     //https://localhost:7060/api/Product?productId=66
-  //     const response = await fetch(url, {
-  //       method: 'DELETE',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //         Authorization: `Bearer ${this.token}`,
-  //       },
-  //     });
-  //     const data: BaseResponseModel = await response.json();
-  //     console.log(data);
-  //     return data;
-  //   } catch (error) {
-  //     console.log('Lỗi: ', error);
-  //     return {
-  //       isSuccess: false,
-  //       message: 'Lỗi ròi mài ơi',
-  //     };
-  //   }
-  // }
+  async deleteWarehouse(warehousreId: number): Promise<BaseResponseModel> {
+    try {
+      const url = `https://localhost:7060/api/Warehouse/DeleteWareHouse/${warehousreId}`;
+      //https://localhost:7060/api/Warehouse/DeleteWareHouse/4
+      
+      const response = await fetch(url, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+      const data: BaseResponseModel = await response.json();
+      // console.log(data);
+      return data;
+    } catch (error) {
+      // console.log('Lỗi: ', error);
+      return {
+        isSuccess: false,
+        message: 'Lỗi xóa Warehouse',
+      };
+    }
+  }
 }
 
 

@@ -229,7 +229,7 @@ GRANT EXEC ON OBJECT::dbo.AddWarehouse TO  WarehouseEmployee;
 --Thêm Kho
 DECLARE @Message NVARCHAR(100);
 EXEC AddWarehouse
-    @WarehouseName = N'Thêm Kho Test 5 ',
+    @WarehouseName = N'Thêm Kho Test 1',
 	@AddressID = 1,
     @Message = @Message OUTPUT;
 -- Hiển thị giá trị của thông báo
@@ -295,13 +295,17 @@ SELECT @OutputMessage AS N'Result';
 
 --################################################ DELETE WAREHOUSE #####################################################################################
 go
+
+--====PROC UPDATE 02-12-2024
 CREATE PROCEDURE DeleteWarehouse
     @WarehouseID INT,
     @Message NVARCHAR(100) OUTPUT
 AS
 BEGIN
     DECLARE @count_id INT;
+    DECLARE @product_count INT;
 
+    -- Check if the warehouse exists
     SELECT @count_id = COUNT(*) 
     FROM Warehouse 
     WHERE WarehouseID = @WarehouseID;
@@ -312,12 +316,25 @@ BEGIN
         RETURN;
     END
 
-    -- Xóa kho (cập nhật DeleteTime thay vì xóa vật lý)
+    -- Check if there are any products in the warehouse
+    SELECT @product_count = COUNT(*)
+    FROM Product p
+    JOIN Cells c ON p.product_id = c.product_id
+    JOIN Shelve s ON c.ShelvesID = s.ShelvesID
+    WHERE s.WarehouseID = @WarehouseID;
+
+    IF @product_count > 0
+    BEGIN
+        SET @Message = N'Kho còn sản phẩm, không thể xóa';
+        RETURN;
+    END
+
+    -- Update DeleteTime instead of physical deletion
     UPDATE Warehouse 
     SET DeleteTime = GETDATE()
     WHERE WarehouseID = @WarehouseID;
 
-    -- Kiểm tra xem kho đã được xóa thành công chưa
+    -- Check if the warehouse was successfully deleted
     IF @@ROWCOUNT > 0
     BEGIN
         SET @Message = N'Xóa thành công';
@@ -465,7 +482,7 @@ GRANT EXEC ON OBJECT::dbo.AddShelves TO  WarehouseEmployee;
 DECLARE @ResultMessage NVARCHAR(100);
 EXEC AddShelves 
     @ShelvesName = N'Test kệ',
-    @WarehouseID = 2,
+    @WarehouseID = 8,
     @Message = @ResultMessage OUTPUT;
 -- In ra thông báo
 PRINT @ResultMessage;
@@ -727,7 +744,7 @@ GRANT EXEC ON OBJECT::dbo.AddCell TO  WarehouseEmployee;
 DECLARE @Message NVARCHAR(100);
 EXEC AddCell 
     @CellName = N'test cell 1', 
-    @ShelvesID = 11, 
+    @ShelvesID = 5, 
     @Quantity = 20, 
     @product_id = 4,
     @Message = @Message OUTPUT;
