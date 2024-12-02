@@ -1,0 +1,50 @@
+CREATE PROCEDURE DeleteWarehouse
+    @WarehouseID INT,
+    @Message NVARCHAR(100) OUTPUT
+AS
+BEGIN
+    DECLARE @count_id INT;
+    DECLARE @product_count INT;
+
+    -- Check if the warehouse exists
+    SELECT @count_id = COUNT(*) 
+    FROM Warehouse 
+    WHERE WarehouseID = @WarehouseID;
+    
+    IF @count_id = 0 
+    BEGIN
+        SET @Message = N'WarehouseID không tồn tại';
+        RETURN;
+    END
+
+    -- Check if there are any products in the warehouse
+    SELECT @product_count = COUNT(*)
+    FROM Product p
+    JOIN Cells c ON p.product_id = c.product_id
+    JOIN Shelve s ON c.ShelvesID = s.ShelvesID
+    WHERE s.WarehouseID = @WarehouseID;
+
+    IF @product_count > 0
+    BEGIN
+        SET @Message = N'Kho còn sản phẩm, không thể xóa';
+        RETURN;
+    END
+
+    -- Update DeleteTime instead of physical deletion
+    UPDATE Warehouse 
+    SET DeleteTime = GETDATE()
+    WHERE WarehouseID = @WarehouseID;
+
+    -- Check if the warehouse was successfully deleted
+    IF @@ROWCOUNT > 0
+    BEGIN
+        SET @Message = N'Xóa thành công';
+    END
+    ELSE
+    BEGIN
+        SET @Message = N'Có lỗi xảy ra khi xóa kho';
+    END
+END;
+GO
+
+GRANT EXEC ON OBJECT::dbo.DeleteWarehouse TO WarehouseEmployee;

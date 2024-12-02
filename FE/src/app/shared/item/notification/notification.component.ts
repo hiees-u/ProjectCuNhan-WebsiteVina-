@@ -7,6 +7,7 @@ import {
 
 @Component({
     selector: 'app-notification',
+    standalone: true,
     imports: [CommonModule],
     templateUrl: './notification.component.html',
     styleUrls: ['./notification.component.css']
@@ -30,13 +31,13 @@ export class NotificationComponent implements OnChanges {
         this.lable = 'Thành công';
       }
     }
-    console.log(this.data.status);
+    // console.log(this.data.status);
   }
 
   showNotification() {
     this.show = true;
     clearTimeout(this.timeOutId);
-    console.log('show', this.show);
+    // console.log('show', this.show);
 
     this.timeOutId = setTimeout(() => {
       this.show = false;
