@@ -1,5 +1,6 @@
 ﻿using BLL.Interface;
 using BLL.LoginBLL;
+using DLL.Models;
 using DTO.Order;
 using DTO.Responses;
 using System.Data;
@@ -31,7 +32,7 @@ namespace BLL
                         command.Parameters.Add(new SqlParameter("@Phone", System.Data.SqlDbType.NVarChar, 11) { Value = request.phone });
                         command.Parameters.Add(new SqlParameter("@Address_ID", System.Data.SqlDbType.Int) { Value = request.addressId });
                         command.Parameters.Add(new SqlParameter("@Name_Recipient", System.Data.SqlDbType.NVarChar, 50) { Value = request.namerecipient });
-                        command.Parameters.Add(new SqlParameter("@PaymentStatus", SqlDbType.Bit) { Value = request.paymendStatus});
+                        command.Parameters.Add(new SqlParameter("@PaymentStatus", SqlDbType.Bit) { Value = request.paymendStatus });
 
                         SqlParameter tvpParam = command.Parameters.AddWithValue("@ProductQuantities", CreateProductQuantityDataTable(request.products));
                         tvpParam.SqlDbType = SqlDbType.Structured;
@@ -74,7 +75,8 @@ namespace BLL
 
         public BaseResponseModel Get(int orderState)
         {
-            if (orderState < -1 || orderState > 4) {
+            if (orderState < -1 || orderState > 4)
+            {
                 return new BaseResponseModel()
                 {
                     IsSuccess = false,
@@ -122,7 +124,7 @@ namespace BLL
 
                             }
                         }
-                    }    
+                    }
                 }
                 return new BaseResponseModel()
                 {
@@ -171,6 +173,99 @@ namespace BLL
                     IsSuccess = false,
                     Message = $"Lỗi trong quá trình Lấy Đơn Đặt Hàng: {ex}"
                 };
+            }
+        }
+        public BaseResponseModel UpdatePaymentStatus(string orderId, bool isPaid)
+        {
+            try
+            {
+                using (var conn = new SqlConnection(ConnectionStringHelper.Get()))
+                {
+                    conn.Open();
+                    using (SqlCommand command = new SqlCommand("SP_UpdatePaymentStatus", conn))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.Add(new SqlParameter("@OrderId", orderId));
+                        command.Parameters.Add(new SqlParameter("@PaymentStatus", isPaid));
+
+                        command.ExecuteNonQuery();
+                    }
+                }
+
+                return new BaseResponseModel()
+                {
+                    IsSuccess = true,
+                    Message = "Cập nhật trạng thái thanh toán thành công!"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponseModel()
+                {
+                    IsSuccess = false,
+                    Message = $"Lỗi khi cập nhật trạng thái thanh toán: {ex.Message}"
+                };
+            }
+        }
+
+        public BaseResponseModel UpdateOrder(Order order)
+        {
+            try
+            {
+                using (var conn = new SqlConnection(ConnectionStringHelper.Get()))
+                {
+                    conn.Open();
+                    using (var command = new SqlCommand("SP_UpdatePaymentStatus", conn))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.Add(new SqlParameter("@OrderId", order.OrderId));
+                        command.Parameters.Add(new SqlParameter("@PaymentStatus", order.State = 1));
+
+                        command.ExecuteNonQuery();
+                    }
+                }
+                return new BaseResponseModel { IsSuccess = true, Message = "Cập nhật đơn hàng thành công!" };
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponseModel { IsSuccess = false, Message = $"Lỗi khi cập nhật đơn hàng: {ex.Message}" };
+            }
+        }
+
+        public BaseResponseModel CreateOrder(Order order)
+        {
+            try
+            {
+                using (var conn = new SqlConnection(ConnectionStringHelper.Get()))
+                {
+                    conn.Open();
+                    using (var command = new SqlCommand("SP_CreateOrder", conn))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        command.Parameters.Add(new SqlParameter("@TotalPayment", order.TotalPayment));
+                        command.Parameters.Add(new SqlParameter("@State", order.State));
+                        command.Parameters.Add(new SqlParameter("@CreateAt", order.CreateAt));
+
+                        // Lấy OrderId sau khi thêm
+                        var orderIdParam = new SqlParameter("@OrderId", SqlDbType.Int)
+                        {
+                            Direction = ParameterDirection.Output
+                        };
+                        command.Parameters.Add(orderIdParam);
+
+                        command.ExecuteNonQuery();
+
+                        // Gắn OrderId tự động sinh
+                        order.OrderId = (int)orderIdParam.Value;
+                    }
+                }
+
+                return new BaseResponseModel { IsSuccess = true, Message = "Tạo đơn hàng thành công!", Data = order };
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponseModel { IsSuccess = false, Message = $"Lỗi: {ex.Message}" };
             }
         }
     }
