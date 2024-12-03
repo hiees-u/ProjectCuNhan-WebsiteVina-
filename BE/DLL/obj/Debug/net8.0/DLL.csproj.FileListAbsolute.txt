@@ -24,3 +24,16 @@ E:\HK I nam 4\Do An Chuyen Nganh NEW\ProjectCuNhan-WebsiteVina-\BE\DLL\obj\Debug
 E:\HK I nam 4\Do An Chuyen Nganh NEW\ProjectCuNhan-WebsiteVina-\BE\DLL\obj\Debug\net8.0\refint\DLL.dll
 E:\HK I nam 4\Do An Chuyen Nganh NEW\ProjectCuNhan-WebsiteVina-\BE\DLL\obj\Debug\net8.0\DLL.pdb
 E:\HK I nam 4\Do An Chuyen Nganh NEW\ProjectCuNhan-WebsiteVina-\BE\DLL\obj\Debug\net8.0\ref\DLL.dll
+D:\HOC\Do An\doan 0312\ProjectCuNhan-WebsiteVina-\BE\DLL\bin\Debug\net8.0\DLL.deps.json
+D:\HOC\Do An\doan 0312\ProjectCuNhan-WebsiteVina-\BE\DLL\bin\Debug\net8.0\DLL.dll
+D:\HOC\Do An\doan 0312\ProjectCuNhan-WebsiteVina-\BE\DLL\bin\Debug\net8.0\DLL.pdb
+D:\HOC\Do An\doan 0312\ProjectCuNhan-WebsiteVina-\BE\DLL\obj\Debug\net8.0\DLL.csproj.AssemblyReference.cache
+D:\HOC\Do An\doan 0312\ProjectCuNhan-WebsiteVina-\BE\DLL\obj\Debug\net8.0\DLL.GeneratedMSBuildEditorConfig.editorconfig
+D:\HOC\Do An\doan 0312\ProjectCuNhan-WebsiteVina-\BE\DLL\obj\Debug\net8.0\DLL.AssemblyInfoInputs.cache
+D:\HOC\Do An\doan 0312\ProjectCuNhan-WebsiteVina-\BE\DLL\obj\Debug\net8.0\DLL.AssemblyInfo.cs
+D:\HOC\Do An\doan 0312\ProjectCuNhan-WebsiteVina-\BE\DLL\obj\Debug\net8.0\DLL.csproj.CoreCompileInputs.cache
+D:\HOC\Do An\doan 0312\ProjectCuNhan-WebsiteVina-\BE\DLL\obj\Debug\net8.0\DLL.sourcelink.json
+D:\HOC\Do An\doan 0312\ProjectCuNhan-WebsiteVina-\BE\DLL\obj\Debug\net8.0\DLL.dll
+D:\HOC\Do An\doan 0312\ProjectCuNhan-WebsiteVina-\BE\DLL\obj\Debug\net8.0\refint\DLL.dll
+D:\HOC\Do An\doan 0312\ProjectCuNhan-WebsiteVina-\BE\DLL\obj\Debug\net8.0\DLL.pdb
+D:\HOC\Do An\doan 0312\ProjectCuNhan-WebsiteVina-\BE\DLL\obj\Debug\net8.0\ref\DLL.dll
