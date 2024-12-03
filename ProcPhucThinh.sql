@@ -22,9 +22,14 @@ BEGIN
     ORDER BY TongSoLuongBan DESC;
 END;
 
-exec SP_GetDailySalesReport @InputDate='11-11-2024'
+--PHân quyền
+GRANT EXEC ON OBJECT::dbo.SP_GetDailySalesReport TO Moderator;
+--PHân quyền
+GRANT EXEC ON OBJECT::dbo.SP_GetDailySalesReport TO WarehouseEmployee;
 
-EXEC SP_GetDailySalesReport @InputDate = '2024-11-11';
+exec SP_GetDailySalesReport @InputDate='11-12-2024'
+
+EXEC SP_GetDailySalesReport @InputDate = '2024-11-12';
 --#####################################################################################thong ke so luong ban ra trong 1 khoang thoi gian cu the#############################
 CREATE PROCEDURE SP_GetWeeklySalesReport
     @StartDate DATE, 
@@ -65,8 +70,11 @@ BEGIN
         TongSoLuongBanRa DESC; 
 END;
 GO
-
-EXEC SP_GetWeeklySalesReport @StartDate = '2024-11-01', @EndDate = '2024-11-12';
+--PHân quyền
+GRANT EXEC ON OBJECT::dbo.SP_GetWeeklySalesReport TO Moderator;
+--PHân quyền
+GRANT EXEC ON OBJECT::dbo.SP_GetWeeklySalesReport TO WarehouseEmployee;
+EXEC SP_GetWeeklySalesReport @StartDate = '2024-01-11', @EndDate = '2024-11-30';
 
 --####################################################################thong ke so luong ban ra trong 1 thang#############################################
 CREATE PROCEDURE SP_GetMonthlySalesReport
@@ -111,6 +119,11 @@ BEGIN
         TongSoLuongBanRa DESC;
 END;
 GO
+--PHân quyền
+GRANT EXEC ON OBJECT::dbo.SP_GetMonthlySalesReport TO Moderator;
+--PHân quyền
+GRANT EXEC ON OBJECT::dbo.SP_GetMonthlySalesReport TO WarehouseEmployee;
+
 --############################################################################################thong ke so luong ban ra trong 1 nam#######################
 	CREATE PROCEDURE SP_GetSalesReportInYear
 		@Year INT 
@@ -145,6 +158,11 @@ GO
 			TongSoLuongBanRa DESC;
 	END;
 	GO
+
+	--PHân quyền
+GRANT EXEC ON OBJECT::dbo.SP_GetSalesReportInYear TO Moderator;
+--PHân quyền
+GRANT EXEC ON OBJECT::dbo.SP_GetSalesReportInYear TO WarehouseEmployee;
 
 EXEC SP_GetSalesReportInYear
     @Year = 2024;

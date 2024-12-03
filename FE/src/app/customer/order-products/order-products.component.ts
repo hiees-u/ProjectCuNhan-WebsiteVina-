@@ -92,6 +92,7 @@ export class OrderProductsComponent {
       await this.showPayment();
       // gọi QR
       // nếu thành công thì tiếp tục
+      this.Order.paymentStatus = true;
     }
 
     console.log('Thêm vào DB');
