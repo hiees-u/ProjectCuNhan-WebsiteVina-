@@ -14,5 +14,6 @@ namespace BLL.Interface
         BaseResponseModel UpdateOrder(Order order);
 
         BaseResponseModel CreateOrder(Order order);
+        public BaseResponseModel GetByWarehouseEmp();
     }
 }

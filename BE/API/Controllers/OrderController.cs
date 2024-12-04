@@ -43,5 +43,13 @@ namespace API.Controllers
 
             return response.IsSuccess ? Ok(response) : BadRequest(response);
         }
+
+        [HttpGet("Get by WarehouseEmp")]
+        public IActionResult GetbyWarehouseEmp()
+        {
+            BaseResponseModel res = order.GetByWarehouseEmp();
+
+            return res.IsSuccess ? Ok(res) : BadRequest(res);
+        }
     }
 }
