@@ -1044,6 +1044,6 @@ BEGIN
 END;
 
 --Phân quyền
-GRANT EXEC ON OBJECT::dbo.SP_DeleteOrderDetailState TO  Customer;
+GRANT EXEC ON OBJECT::dbo.SP_DeleteOrderDetailState TO Customer;
 --RUN
 EXEC SP_DeleteOrderDetailState @OrderId = 12, @PriceHistoryId = 3

@@ -235,7 +235,7 @@
   opacity: 0;
   font-family: var(--main-style);
   width: 100vw;
-  height: 100vh;
+  height: calc(100vh - 20px);
   display: flex;
   justify-content: center;
   align-items: center;

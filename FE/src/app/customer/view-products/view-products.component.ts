@@ -116,12 +116,6 @@ export class ViewProductsComponent {
       this.sortByName,
       this.sortByPrice
     );
-    // console.log(this.cateActive);
-    // console.log(this.subCateActive);
-    // console.log(this.searchString);
-    // console.log(this.pageActive);
-    // console.log(this.sortByName);
-    // console.log(this.sortByPrice);
   }
 
   //nhận dữ liệu từ Search Box
@@ -321,6 +315,12 @@ export class ViewProductsComponent {
 
         // console.log(response.data.totalPages);
         console.log(`CHẠY LẠI GET PRODUCT ${new Date()}`);
+        console.log(this.products);
+        if(this.products.length === 0) {
+          console.log('không tìm thấy sản phẩm...!');
+          this.logError = 'Không tìm thấy sản phẩm...!'
+          
+        }
       } else {
         console.log('Failed to get products');
       }

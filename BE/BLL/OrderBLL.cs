@@ -157,7 +157,9 @@ namespace BLL
                         command.Parameters.Add(new SqlParameter("@OrderId", OrderId));
                         command.Parameters.Add(new SqlParameter("@PriceHistoryId", PriceHistory));
 
-                        command.ExecuteNonQuery();
+                        string resultMessage = (string)command.ExecuteScalar();
+
+                        //command.ExecuteNonQuery();
                     }
                 }
                 return new BaseResponseModel()

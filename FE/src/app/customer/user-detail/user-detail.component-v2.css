@@ -156,7 +156,7 @@ select {
   position: absolute;
   bottom: 0;
   width: 16.6666%;
-  z-index: 2;
+  z-index: 0;
   pointer-events: none;
   transition: transform 0.35s;
   transform: translateX(0); /* Sử dụng translateX để di chuyển */
