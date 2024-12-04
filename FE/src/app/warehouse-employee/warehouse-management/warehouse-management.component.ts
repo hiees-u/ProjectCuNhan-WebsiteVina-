@@ -1,20 +1,30 @@
+import { AddWarehouseComponent } from './../add-warehouse/add-warehouse.component';
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { WarehouseEmployeeService } from '../warehouse-employee.service';
 import { BaseResponseModel, BaseResponseModule } from '../../shared/module/base-response/base-response.module';
 import { Warehouse, ContructorWarehouse } from '../warehouse-employee.module';
 import { NotificationComponent } from "../../shared/item/notification/notification.component";
 import { ConstructerNotification, Notification } from '../../shared/module/notification/notification.module';
+import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-warehouse-management',
-  standalone: true,
-  imports: [CommonModule],
+  // standalone: true,
+  imports: [CommonModule,
+    AddWarehouseComponent,
+    RouterOutlet,
+    FormsModule,
+    NotificationComponent
+  ],
   templateUrl: './warehouse-management.component.html',
   styleUrls: ['./warehouse-management.component.css'],
-  
+
 })
-export class WarehouseManagementComponent{
+export class WarehouseManagementComponent {
+
+  isShowAddWarehouuse: boolean | undefined;
+  flag: boolean = false;
 
   selectWarehouse: Warehouse = ContructorWarehouse();
   isShowDelete: boolean = false;
@@ -29,11 +39,7 @@ export class WarehouseManagementComponent{
     this.getWarehouses();
   }
 
-  constructor( private routes: Router, private warehouseEmployeeService: WarehouseEmployeeService) {
-    console.log('123')
-        // Đảm bảo console.log và console.error luôn là một hàm hợp lệ
-        console.log = console.log || function (...args: any[]) { /* Do nothing */ };
-        console.error = console.error || function (...args: any[]) { /* Do nothing */ };
+  constructor(private router: Router, private warehouseEmployeeService: WarehouseEmployeeService) {
   }
 
   async getWarehouses() {
@@ -49,75 +55,70 @@ export class WarehouseManagementComponent{
     }
   }
 
-  // async onShowDeleteWareHouse(warehouseID: number) {
-  //   const response: BaseResponseModel = await this.warehouseEmployeeService.deleteWarehouse(warehouseID);
-    
-  //   if(response.isSuccess) {
-  //     this.dataNotification.status = 'success',
-  //     this.dataNotification.messages = response.message!;
-  //     await this.getWarehouses();
-  //   } else {
-  //     this.dataNotification.status = 'warning',
-  //     this.dataNotification.messages = response.message!;      
-  //   }
-  //   this.trigger = new Date();
-  // }
-
   async onShowDeleteWareHouse(warehouseID: number) {
-    try {
-      // Gọi API xóa kho
-      const response: BaseResponseModel = await this.warehouseEmployeeService.deleteWarehouse(warehouseID);
-  
-      // Kiểm tra trạng thái phản hồi
-      if (response.isSuccess) {
-        this.dataNotification = {
-          status: 'success',
-          messages: response.message || 'Xóa thành công!',
-        };
-        await this.getWarehouses(); // Cập nhật danh sách kho sau khi xóa
-      } else {
-        this.dataNotification = {
-          status: 'warning',
-          messages: response.message || 'Không thể xóa kho!',
-        };
-      }
-  
-      // Kích hoạt lại giao diện nếu cần
-      this.trigger = new Date();
-    } catch (error) {
-      // Xử lý lỗi nếu API thất bại
+    // try {
+    // Gọi API xóa kho
+    const response: BaseResponseModel = await this.warehouseEmployeeService.deleteWarehouse(warehouseID);
+
+    // Kiểm tra trạng thái phản hồi
+    if (response.isSuccess) {
       this.dataNotification = {
-        status: 'error',
-        messages: 'Có lỗi xảy ra khi thực hiện xóa kho!',
+        messages: response.message!,
+        status: 'success',
       };
-      console.error('Error deleting warehouse:', error);
+
+      await this.getWarehouses(); // Cập nhật danh sách kho sau khi xóa
+
+    } else {
+      this.dataNotification = {
+        messages: response.message!,
+        status: 'error',
+
+      };
     }
+    // Kích hoạt lại giao diện nếu cần
+    this.trigger = new Date();
   }
 
-  // async onShowDeleteWareHouse(warehouseID: number) {
-  //   try {
-  //     const response: BaseResponseModel = await this.warehouseEmployeeService.deleteWarehouse(warehouseID);
+  handleAddWareHouse() {
+    this.flag = true;
+    this.isShowAddWarehouuse = true;
+  }
 
-  //     if (response.isSuccess) {
-  //       this.dataNotification = {
-  //         status: 'success',
-  //         messages: response.message || 'Xóa kho thành công!',
-  //       };
-  //       await this.getWarehouses();
-  //     } else {
-  //       this.dataNotification = {
-  //         status: 'warning',
-  //         messages: response.message || 'Không thể xóa kho!',
-  //       };
-  //     }
-  //   } catch (error) {
-  //     this.dataNotification = {
-  //       status: 'error',
-  //       messages: 'Có lỗi xảy ra khi thực hiện xóa kho!',
-  //     };
-  //     console.error(error);
-  //   }
-  // }
-  
-  
+  logOutHandler() {
+    this.router.navigate(['/login']);
+    localStorage.removeItem('token');
+  }
+
+  handleCloseAdd(is: boolean) {
+    this.isShowAddWarehouuse = false;
+    this.flag = false;
+    this.getWarehouses();
+  }
+
+  getWarehouse() {
+    this.warehouseEmployeeService
+      .getSupplier(this.searchText)
+      .then((data) => {
+        this.Suppliers = data.data.data;
+        this.totalPage = data.data.totalPages;
+        this.pages = Array(this.totalPage)
+          .fill(0)
+          .map((x, i) => i + 1);
+        console.log(this.Suppliers);
+        console.log(this.pages);
+        console.log(this.totalPage);
+      })
+      .catch((error) => {
+        console.error('Error fetching product', error);
+      });
+  }
+  handleCloseWD(is: boolean) {
+    console.log('THOÁT THÊM');
+    // this.getCategorys();
+    this.isShowAddSupplier = !is;
+    this.isShowDetail = !is;
+    this.flag = false;
+    this.getSupplier();
+  }
 }

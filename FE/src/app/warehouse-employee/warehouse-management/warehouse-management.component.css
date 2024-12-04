@@ -156,20 +156,31 @@
     padding: 10px;
     border-radius: 5px;
     margin: 10px 0;
-  }
-  
-  .alert-success {
+}
+
+.alert-success {
     background-color: #d4edda;
     color: #155724;
-  }
-  
-  .alert-warning {
+}
+
+.alert-warning {
     background-color: #fff3cd;
     color: #856404;
-  }
-  
-  .alert-danger {
+}
+
+.alert-danger {
     background-color: #f8d7da;
     color: #721c24;
-  }
-  
+}
+
+/* .content-add-cate {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #9b9ea01c;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} */

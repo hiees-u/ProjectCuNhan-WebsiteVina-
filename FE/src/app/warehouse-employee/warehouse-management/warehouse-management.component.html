@@ -1,8 +1,18 @@
 <!-- Top Bar -->
 <header class="top-bar">
   <h2 class="top-bar-title">Quản Lý Kho</h2>
-  <button class="top-bar-button">Thêm Kho</button>
+  <button class="top-bar-button" (click)="handleAddWareHouse()">Thêm Kho</button>
 </header>
+
+<div class="add-cate" *ngIf="flag" [ngClass]="{ hiden: !isShowAddWarehouuse && flag, show: isShowAddWarehouuse }">
+  <div class="content-add-cate">
+      <app-add-warehouse (isClose)="handleCloseAdd($event)"></app-add-warehouse>
+  </div>
+</div>
+
+<div class="cate-detail" *ngIf="flagDetail" [ngClass]="{ hiden: !isShowDetail && flagDetail, show: isShowDetail }">
+  <app-view-warehouse (isClose)="handleCloseWD($event)" [Supplier]="selectSupplier"></app-view-warehouse>
+</div>
 
 <!-- Kho Information Section -->
 <div class="section">
@@ -43,22 +53,10 @@
   </table>
 </div>
 
-<!-- <div class="notification">
-  <app-notification
-    [data]="dataNotification"
-    [trigger]="trigger"
-  ></app-notification>
-</div> -->
-
-<!-- <div class="notification">
-  <app-notification [data]="dataNotification"></app-notification>
-</div> -->
-
-<div *ngIf="dataNotification" [ngClass]="{'alert-success': dataNotification.status === 'success',
-                                          'alert-warning': dataNotification.status === 'warning',
-                                          'alert-danger': dataNotification.status === 'error'}"
-     class="alert">
-  {{ dataNotification.messages }}
+<div class="notification">
+  <app-notification [data]="dataNotification" [trigger]="trigger">
+      
+  </app-notification>
 </div>
 
 

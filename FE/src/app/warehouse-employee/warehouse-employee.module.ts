@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 export interface Warehouse {
   warehouseId: number;
   warehouseName: string;
-  address: string;
+  addressId: number;
   fullAddress: string;
   modifiedBy: string;
   createTime: string;
@@ -18,7 +18,7 @@ export function ContructorWarehouse(): Warehouse {
   return {
     warehouseId: 0,
     warehouseName: '',
-    address: '',
+    addressId: 0,
     fullAddress: '',
     modifiedBy: '',
     createTime: '',
@@ -27,6 +27,29 @@ export function ContructorWarehouse(): Warehouse {
   };
 }
 
+export interface PostWareHouseRequestWarehouseEmployee {
+  warehouseName: string;
+  addressId: number;
+}
+export function ContructorPostWarehouseModule(): PostWareHouseRequestWarehouseEmployee {
+  return {
+    warehouseName: '',
+    addressId: 0,
+  };
+}
+
+export interface WareHouseRequestWarehouseEmployee {
+  warehouseId: number;
+  warehouseName: string;
+  addressId: number;
+}
+export function ContructorRequestWarehouseModule(): WareHouseRequestWarehouseEmployee {
+  return {
+    warehouseId: 0,
+    warehouseName: '',
+    addressId: 0,
+  };
+}
 
 @NgModule({
   declarations: [],
