@@ -157,7 +157,9 @@ namespace BLL
                         command.Parameters.Add(new SqlParameter("@OrderId", OrderId));
                         command.Parameters.Add(new SqlParameter("@PriceHistoryId", PriceHistory));
 
-                        command.ExecuteNonQuery();
+                        string resultMessage = (string)command.ExecuteScalar();
+
+                        //command.ExecuteNonQuery();
                     }
                 }
                 return new BaseResponseModel()
@@ -266,6 +268,56 @@ namespace BLL
             catch (Exception ex)
             {
                 return new BaseResponseModel { IsSuccess = false, Message = $"Lỗi: {ex.Message}" };
+            }
+        }
+
+        //get order warehouse employee
+        public BaseResponseModel GetByWarehouseEmp()
+        {
+            try
+            {
+                List<OrderResponseModelv3> lst = new List<OrderResponseModelv3>();
+                using (var conn = new SqlConnection(ConnectionStringHelper.Get()))
+                {
+                    using (SqlCommand cmd = new SqlCommand("getOrderWarehouseEmp", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        conn.Open();
+
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                OrderResponseModelv3 res = new OrderResponseModelv3()
+                                {
+                                    orderId = Convert.ToInt32(reader["Mã đơn hàng"]),
+                                    phone = reader["SDT nhận hàng"].ToString()!,
+                                    nameRecip = reader["Tên người nhận"].ToString()!,
+                                    total = Convert.ToDecimal(reader["Tổng tiền"]),
+                                    created = Convert.ToDateTime(reader["Thời gian đặt"]),
+                                    createBy = reader["Người đặt"].ToString()!
+                                };
+                                lst.Add(res);
+                            }
+                        }
+                    }
+                    return new BaseResponseModel()
+                    {
+                        IsSuccess = true,
+                        Message = "Lấy danh sách đơn đặt hàng thành công..!",
+                        Data = lst
+                    };
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponseModel()
+                {
+                    IsSuccess = false,
+                    Message = "Đã xảy ra lỗi..!"
+                };
             }
         }
     }

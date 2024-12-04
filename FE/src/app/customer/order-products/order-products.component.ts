@@ -89,14 +89,14 @@ export class OrderProductsComponent {
   async onOrder() {
     if(this.isPayment) {
       console.log('Thanh toán QR trước');
-      await this.showPayment();
-      // gọi QR
-      // nếu thành công thì tiếp tục
-      this.Order.paymentStatus = true;
+      // await this.goToMomoPayment();
+      // this.Order.paymentStatus = true;
+      // await this.handleOrder();
+    } else {
+      console.log('Thanh toán khi nhận hàng');
+      this.Order.paymentStatus = false;
+      await this.handleOrder();
     }
-
-    console.log('Thêm vào DB');
-    await this.handleOrder();
   }
 
   async showPayment() {
@@ -169,9 +169,6 @@ export class OrderProductsComponent {
       }
       orderProducts.push(product);
     })
-
-    //nếu thanh toán trước hoặc không
-    this.Order.paymentStatus = this.isPayment;
     this.Order.products = orderProducts;
 
     console.log(this.Order);

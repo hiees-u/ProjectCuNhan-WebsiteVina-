@@ -1044,6 +1044,23 @@ BEGIN
 END;
 
 --Phân quyền
-GRANT EXEC ON OBJECT::dbo.SP_DeleteOrderDetailState TO  Customer;
+GRANT EXEC ON OBJECT::dbo.SP_DeleteOrderDetailState TO Customer;
 --RUN
 EXEC SP_DeleteOrderDetailState @OrderId = 12, @PriceHistoryId = 3
+
+--#########################################################################GET ORDER#####################################################################################
+
+
+select 
+	Order_ID as N'Mã đơn hàng', 
+	Phone as N'SDT nhận hàng', 
+	Name_Recipient as N'Tên người nhận',
+	Total_Payment as N'Tổng tiền',
+	Create_At as N'Thời gian đặt'
+from [Order]
+where State = 1
+order by Create_At 
+
+select *
+from [Order]
+EXEC SP_GetOrderDetailsByState null

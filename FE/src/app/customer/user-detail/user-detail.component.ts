@@ -76,6 +76,9 @@ export class UserDetailComponent {
 
   //---
   isShowConfirmChangePass: boolean = false;
+  
+  //--
+  isShowConfirmDelete: boolean = false;
 
   constructor(
     private service: CustomerService,
@@ -84,15 +87,16 @@ export class UserDetailComponent {
     private router: Router
   ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
     this.getUserInfo();
     if (!this.userInfo.accountName) {
       console.log('del co ten dang nhap');
       this.getAccountName();
     }
     console.log(this.userInfo);
-    this.getOrder(-1);
-
+    await this.getOrder(-1);
+    console.log(this.orders);
+    
     console.log('SHow', this.isShowConfirmChangePass);
   }
 
@@ -237,22 +241,36 @@ export class UserDetailComponent {
     if (response.isSuccess) {
       this.orders = response.data;
     }
+    console.log(this.orders);
+    
   }
 
-  async deleteOrder(orderId: Number, priceHistoryId: number) {
-    console.log('OrderId: ', orderId);
-    console.log('priceHistoryId: ', priceHistoryId);
+  async deleteOrder() {
+    console.log('OrderId: ', this.selectOderId);
+    console.log('priceHistoryId: ', this.selectPriceHistoryId);
     const response: BaseResponseModel = await this.service.deleteOrder(
-      orderId,
-      priceHistoryId
+      this.selectOderId!,
+      this.selectPriceHistoryId!
     );
     this.trigger = new Date();
     this.dataNotification.messages = response.message ? response.message : '';
     if (response.isSuccess) {
       this.dataNotification.status = 'success';
+      console.log('lấy danh sách order mới!!!');
+      
       this.getOrder(undefined);
     } else {
       this.dataNotification.status = 'error';
     }
+  }
+
+  selectOderId: number | undefined;
+  selectPriceHistoryId: number | undefined;
+
+  onShowConfirmDelete(orderId: number, priceHistoryId: number) {
+    this.selectOderId = orderId;
+    this.selectPriceHistoryId = priceHistoryId;
+    this.isShowConfirmDelete = !this.isShowConfirmDelete;
+    console.log(this.isShowConfirmDelete);
   }
 }

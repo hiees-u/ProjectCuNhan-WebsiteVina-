@@ -13,8 +13,8 @@
       </span>
     </div>
     <ul>
+      <!-- data-aos="fade-right" -->
       <li
-        data-aos="fade-right"
         class="dashboard-item no-select"
         [ngClass]="{ active: isActive === 1 }"
         (click)="changeActive(1)"
@@ -22,8 +22,8 @@
         <i class="fa-solid fa-address-book"></i>
         <span>Hồ Sơ</span>
       </li>
+      <!-- data-aos="fade-right" -->
       <li
-        data-aos="fade-right"
         class="dashboard-item no-select"
         [ngClass]="{ active: isActive === 3 }"
         (click)="changeActive(3)"
@@ -31,8 +31,8 @@
         <i class="fa-solid fa-address-book"></i>
         <span>Đổi Mật Khẩu</span>
       </li>
+      <!-- data-aos="fade-right" -->
       <li
-        data-aos="fade-right"
         class="dashboard-item no-select"
         [ngClass]="{ active: isActive === 2 }"
         (click)="changeActive(2)"
@@ -40,11 +40,8 @@
         <i class="fa-solid fa-truck"></i>
         <span>Đơn Mua</span>
       </li>
-      <li
-        class="dashboard-item no-select"
-        data-aos="fade-right"
-        (click)="logOutHandler()"
-      >
+      <!-- data-aos="fade-right" -->
+      <li class="dashboard-item no-select" (click)="logOutHandler()">
         <i class="fa-solid fa-arrow-right-from-bracket"></i>
         <span>Đăng Xuất</span>
       </li>
@@ -156,11 +153,8 @@
           </div>
         </div>
 
-        <div
-          class="button-main no-select"
-          data-aos="fade-left"
-          (click)="isHandleUpdate()"
-        >
+        <!-- data-aos="fade-left" -->
+        <div class="button-main no-select" (click)="isHandleUpdate()">
           Cập Nhật
         </div>
       </div>
@@ -223,12 +217,9 @@
         </ul>
       </div>
 
-      <div
-        class="content-order"
-        *ngFor="let item of orders"
-        data-aos="fade-down-right"
-      >
-        <div class="content-order-header">
+      <!-- data-aos="fade-down-right" -->
+      <div class="content-order" *ngFor="let item of orders" data-aos="fade-right">
+        <div class="content-order-header" >
           <div class="content-order-header-header">
             <span *ngIf="item.paymentStatus">Đã thanh toán</span>
             <span *ngIf="!item.paymentStatus">Thanh toán khi nhận hàng</span>
@@ -259,15 +250,38 @@
           <!-- <span class="deleteBy">Đã hủy bởi bạn</span> -->
           <button
             class="deleteOrder"
-            *ngIf="item.state === 1"
-            (click)="deleteOrder(item.orderid, item.pricehistoryid)"
+            *ngIf="item.state === 1 && !item.paymentStatus"
+            (click)="onShowConfirmDelete(item.orderid, item.pricehistoryid)"
           >
+            <!-- (click)="deleteOrder(item.orderid, item.pricehistoryid)" -->
             Hủy đơn
           </button>
           <span class="total-price"
             >Thành tiền
             <span>{{ item.totalprice | customCurrency }}</span></span
           >
+        </div>
+      </div>
+      <div
+        *ngIf="isShowConfirmDelete"
+        class="confirmDelete"
+        [ngClass]="{
+          show: isShowConfirmDelete,
+          hiden: !isShowConfirmDelete
+        }"
+      >
+        <div class="confirmDelete-content">
+          <div>
+            <p class="text-main">Xác nhận xóa sản phẩm khỏi đơn hàng</p>
+          </div>
+          <div>
+            <button class="close-btn" (click)="onShowConfirmDelete(0, 0)">
+              Đóng
+            </button>
+            <button class="confirm-btn" (click)="deleteOrder()">
+              Xác nhận
+            </button>
+          </div>
         </div>
       </div>
     </div>
