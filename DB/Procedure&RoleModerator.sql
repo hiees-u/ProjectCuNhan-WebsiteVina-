@@ -1346,6 +1346,7 @@ BEGIN
 END
 GO--GÁN QUYỀN
 GRANT EXECUTE ON OBJECT::GetUserAccountName TO Moderator;
+GRANT EXECUTE ON OBJECT::GetUserAccountName TO OrderApprover;
 GRANT EXECUTE ON OBJECT::GetUserAccountName TO Customer;
 GO--RUN
 EXEC GetUserAccountName

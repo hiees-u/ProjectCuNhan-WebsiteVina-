@@ -1,0 +1,82 @@
+.container {
+  height: 650px;
+  min-width: 650px;
+  width: 65vw;
+  background-color: #fff;
+  position: relative;
+  border-radius: 15px;
+}
+
+.close {
+  position: absolute;
+  top: 12px;
+  border-radius: 5px;
+  right: 12px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background-color: transparent;
+  color: var(--secon-text-color);
+  font-size: 1.5em;
+  padding: 5px 10px;
+  transition: all 0.5s ease-in-out;
+}
+
+.close:hover {
+  background-color: #eab35a;
+}
+
+.header {
+  font-size: 1.6em;
+  font-style: italic;
+  color: var(--main-color);
+  box-shadow: 0px 1px 0px 0px #eab35a;
+  padding: 15px;
+}
+
+.content {
+  width: calc(100% - 40px);
+  height: calc(100% -40px);
+  padding: 20px;
+}
+
+.mini-content {
+  padding: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  border-radius: 10px;
+}
+
+.mini-content-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mini-content-header p:nth-child(1), .mini-content p:nth-child(1) {
+  padding-left: 10px;
+  width: 30%;
+  text-align: left;
+}
+.mini-content-header p:nth-child(2), .mini-content p:nth-child(2) {
+  width: 20%;
+}
+.mini-content-header p:nth-child(3), .mini-content p:nth-child(3) {
+  width: 20%;
+}
+.mini-content-header p:nth-child(4), .mini-content p:nth-child(4) {
+  width: 10%;
+}
+.mini-content-header p:nth-child(5), .mini-content p:nth-child(5) {
+  width: 10%;
+}
+
+
+p {
+  text-align: center;
+}
+
+.error {
+  background-color: rgba(247, 121, 121, 0.24);
+  color: red;
+}

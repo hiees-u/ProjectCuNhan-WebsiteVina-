@@ -3,7 +3,8 @@ import { Routes } from '@angular/router';
 import { LoginComponent } from './auth/login/login.component';
 import { RegistreComponent } from './auth/registre/registre.component';
 import CustomerRoutingModule from './customer/customer-routing.module';
-import { OrderApproverComponent } from './order-approver/order-approver.component';
+import { OrderApproverDashboardComponent } from './order-approver/order-approver-dashboard/order-approver-dashboard.component';
+// import { OrderApproverComponent } from './order-approver/order-approver-dashboard.component';
 import { WarehouseEmployeeComponent } from './warehouse-employee/warehouse-employee.component';
 import { ModeratorDashboardComponent } from './moderator/moderator-dashboard/moderator-dashboard.component';
 import { ProductModeratorComponent } from './moderator/product-moderator/product-moderator.component';
@@ -47,7 +48,7 @@ export const routes: Routes = [
   },
   {
     path: 'order-approver',
-    component: OrderApproverComponent,
+    component: OrderApproverDashboardComponent,
   },
   {
     path: 'warehouse-employee',
