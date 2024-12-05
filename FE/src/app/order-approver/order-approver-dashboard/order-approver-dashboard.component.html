@@ -1,0 +1,34 @@
+<div class="container">
+  <div class="notification">
+    <app-notification
+      [data]="dataNotification"
+      [trigger]="trigger"
+    ></app-notification>
+  </div>
+  <div class="header">DUYỆT ĐƠN HÀNG</div>
+  <div class="r-content-header">
+    <div class="btn-content" (click)="logOutHandler()">
+      <i class="fa-solid fa-right-from-bracket"></i>
+    </div>
+  </div>
+  <div class="content">
+    <div class="content-item content-header">
+      <p class="order-id">Mã đơn hàng</p>
+      <p class="order-create-by">Người đặt</p>
+      <p class="order-name-recip">Người nhận</p>
+      <p class="order-phone-recip">SDT nhận hàng</p>
+      <p class="order-create-at">Thời gian đặt</p>
+    </div>
+    <div class="content-item success" *ngFor="let item of orders" (click)="onShowDetail(item.orderId)">
+      <p class="order-id">#{{item.orderId}}</p>
+      <p class="order-create-by">{{ item.createBy }}</p>
+      <p class="order-name-recip">{{ item.nameRecip }}</p>
+      <p class="order-phone-recip">{{ item.phone }}</p>
+      <p class="order-create-at">{{ formatDateTime(item.created) }}</p>
+    </div>
+  </div>
+  <div class="order-detail" [ngClass]="{'hide-delete': !isShowDetail && flag, 'show-delete': isShowDetail}">
+    <app-view-order-detail [OrderID]="selectedOrder!" (isClose)="onShowDetail(0)"></app-view-order-detail>
+  </div>
+
+</div>

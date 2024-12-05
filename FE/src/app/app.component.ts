@@ -18,6 +18,7 @@ export class AppComponent {
     AOS.init({
       duration: 1200,  // Thời gian hiệu ứng
       once: false,      // Chạy 1 lần duy nhất khi scroll qua
+      offset: 0
     });
     this.router.events
     .pipe(

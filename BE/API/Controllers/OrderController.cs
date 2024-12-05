@@ -43,5 +43,21 @@ namespace API.Controllers
 
             return response.IsSuccess ? Ok(response) : BadRequest(response);
         }
+
+        [HttpGet("Get by OrderApprover")]
+        public IActionResult GetbyOrderApprover()
+        {
+            BaseResponseModel res = order.GetByOrderApprover();
+
+            return res.IsSuccess ? Ok(res) : BadRequest(res);
+        }
+
+        [HttpGet("Get Order Detail by OrderApprover")]
+        public IActionResult GetOrderDetailbyOrderApprover(int Oid)
+        {
+            BaseResponseModel res = order.GetOrderDetailByOA(Oid);
+
+            return res.IsSuccess ? Ok(res) : BadRequest(res);
+        }
     }
 }

@@ -29,7 +29,12 @@
         Không có sản phẩm nào trong giỏ hàng!!
       </marquee>
     </div>
-    <div class="cart-item" *ngFor="let item of cartItems" data-aos="fade-up-left">
+    <div
+      class="cart-item"
+      *ngFor="let item of cartItems"
+      data-aos="fade-right"
+      >
+      <!-- data-aos="fade-up-left" -->
       <div class="check-all">
         <input
           type="checkbox"

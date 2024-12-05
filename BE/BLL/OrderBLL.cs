@@ -5,6 +5,7 @@ using DTO.Order;
 using DTO.Responses;
 using System.Data;
 using System.Data.SqlClient;
+using System.Security.Cryptography;
 
 namespace BLL
 {
@@ -157,7 +158,9 @@ namespace BLL
                         command.Parameters.Add(new SqlParameter("@OrderId", OrderId));
                         command.Parameters.Add(new SqlParameter("@PriceHistoryId", PriceHistory));
 
-                        command.ExecuteNonQuery();
+                        string resultMessage = (string)command.ExecuteScalar();
+
+                        //command.ExecuteNonQuery();
                     }
                 }
                 return new BaseResponseModel()
@@ -266,6 +269,105 @@ namespace BLL
             catch (Exception ex)
             {
                 return new BaseResponseModel { IsSuccess = false, Message = $"Lỗi: {ex.Message}" };
+            }
+        }
+
+        //get order warehouse employee
+        public BaseResponseModel GetByOrderApprover()        
+        {
+            try
+            {
+                List<OrderResponseModelv3> lst = new List<OrderResponseModelv3>();
+                using (var conn = new SqlConnection(ConnectionStringHelper.Get()))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SP_getOrderOrderApprover", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        conn.Open();
+
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                OrderResponseModelv3 res = new OrderResponseModelv3()
+                                {
+                                    orderId = Convert.ToInt32(reader["Mã đơn hàng"]),
+                                    phone = reader["SDT nhận hàng"].ToString()!,
+                                    nameRecip = reader["Tên người nhận"].ToString()!,
+                                    total = Convert.ToDecimal(reader["Tổng tiền"]),
+                                    created = Convert.ToDateTime(reader["Thời gian đặt"]),
+                                    createBy = reader["Người đặt"].ToString()!
+                                };
+                                lst.Add(res);
+                            }
+                        }
+                    }
+                    return new BaseResponseModel()
+                    {
+                        IsSuccess = true,
+                        Message = "Lấy danh sách đơn đặt hàng thành công..!",
+                        Data = lst
+                    };
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponseModel()
+                {
+                    IsSuccess = false,
+                    Message = "Đã xảy ra lỗi..!"
+                };
+            }
+        }
+    
+        public BaseResponseModel GetOrderDetailByOA(int oID)
+        {
+            try
+            {
+                List<OrderDetailResponseModel> lst = new List<OrderDetailResponseModel>();
+                using (var conn = new SqlConnection(ConnectionStringHelper.Get()))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SP_getOrderDetails", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add(new SqlParameter("@OrderId", oID));
+
+                        conn.Open();
+
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                OrderDetailResponseModel od = new OrderDetailResponseModel()
+                                {
+                                    Name = reader["Name"].ToString(),
+                                    Image = reader["Image"].ToString(),
+                                    Gia = Convert.ToDecimal(reader["Gia"]),
+                                    SoLuongTon = reader["SoLuongTon"] != DBNull.Value ? Convert.ToInt32(reader["SoLuongTon"]) : 0,
+                                    SoLuongMua = Convert.ToInt32(reader["SoLuongMua"])
+                                };
+                                lst.Add(od);
+                            }
+                        }
+                    }
+                    return new BaseResponseModel()
+                    {
+                        IsSuccess = true,
+                        Message = "Lấy danh sách chi tiết đơn đặt hàng thành công..!",
+                        Data = lst
+                    };
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponseModel()
+                {
+                    IsSuccess = false,
+                    Message = "Đã xảy ra lỗi..!"
+                };
             }
         }
     }

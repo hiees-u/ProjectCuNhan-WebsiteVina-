@@ -114,5 +114,73 @@
 }
 
 .no-change {
-  background-color: #e3dddd !important; 
+  background-color: #e3dddd !important;
+}
+
+.confirmDelete {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #c7c7c71a;
+}
+
+.confirmDelete {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.confirmDelete-content {
+  min-width: 280px;
+  width: fit-content;
+  background-color: #fff;
+  height: 150px;
+  border-radius: 5%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--main-style);
+  justify-content: space-between;
+}
+
+.text-main {
+  width: calc(100% - 40px);
+  padding: 10px 0;
+}
+
+
+.confirmDelete-content > div > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.confirmDelete-content > div > button {
+  border: none;
+  outline: none;
+  padding: 10px 15px;
+  margin: 0 10px;
+  border-radius: 7px;
+  cursor: pointer;
+  font-size: 1.1em;
+  transition: all .5s ease-in-out;
+}
+
+.text-main {
+  font-size: 1.3em;
+}
+
+.confirmDelete-content > div > button:hover {
+  color: #fff;
+}
+
+.confirm-btn {
+  background-color: rgb(152, 152, 255);
+  color: blue;
+}
+
+.close-btn {
+  color: #000;
+  background-color: #686868;
 }

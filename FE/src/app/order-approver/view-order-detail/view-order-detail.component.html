@@ -1,0 +1,22 @@
+<div class="container">
+  <button (click)="sendIsClose()" class="close">
+    <i class="fa-solid fa-xmark"></i>
+  </button>
+  <div class="header">Chi Tiết Đơn Hàng #{{OrderID}}</div>
+  <div class="content">
+    <div class="mini-content-header">
+      <p>Tên sản phẩm</p>
+      <p>Ảnh</p>
+      <p>Giá</p>
+      <p>Số lượng</p>
+      <p>Số lượng tồn</p>
+    </div>
+    <div class="mini-content" [ngClass]="{'error': item.soLuongMua > item.soLuongTon}" *ngFor="let item of OrderDetail">
+      <p>{{ item.name }}</p>
+      <p>Ảnh</p>
+      <p>{{ item?.gia ?? 0 | customCurrency }}</p>
+      <p>{{ item.soLuongMua }}</p>
+      <p>{{ item.soLuongTon }}</p>
+    </div>
+  </div>
+</div>
