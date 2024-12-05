@@ -5,6 +5,7 @@ using DTO.Order;
 using DTO.Responses;
 using System.Data;
 using System.Data.SqlClient;
+using System.Security.Cryptography;
 
 namespace BLL
 {
@@ -272,14 +273,14 @@ namespace BLL
         }
 
         //get order warehouse employee
-        public BaseResponseModel GetByWarehouseEmp()
+        public BaseResponseModel GetByOrderApprover()        
         {
             try
             {
                 List<OrderResponseModelv3> lst = new List<OrderResponseModelv3>();
                 using (var conn = new SqlConnection(ConnectionStringHelper.Get()))
                 {
-                    using (SqlCommand cmd = new SqlCommand("getOrderWarehouseEmp", conn))
+                    using (SqlCommand cmd = new SqlCommand("SP_getOrderOrderApprover", conn))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
 
@@ -306,6 +307,55 @@ namespace BLL
                     {
                         IsSuccess = true,
                         Message = "Lấy danh sách đơn đặt hàng thành công..!",
+                        Data = lst
+                    };
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponseModel()
+                {
+                    IsSuccess = false,
+                    Message = "Đã xảy ra lỗi..!"
+                };
+            }
+        }
+    
+        public BaseResponseModel GetOrderDetailByOA(int oID)
+        {
+            try
+            {
+                List<OrderDetailResponseModel> lst = new List<OrderDetailResponseModel>();
+                using (var conn = new SqlConnection(ConnectionStringHelper.Get()))
+                {
+                    using (SqlCommand cmd = new SqlCommand("SP_getOrderDetails", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add(new SqlParameter("@OrderId", oID));
+
+                        conn.Open();
+
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                OrderDetailResponseModel od = new OrderDetailResponseModel()
+                                {
+                                    Name = reader["Name"].ToString(),
+                                    Image = reader["Image"].ToString(),
+                                    Gia = Convert.ToDecimal(reader["Gia"]),
+                                    SoLuongTon = reader["SoLuongTon"] != DBNull.Value ? Convert.ToInt32(reader["SoLuongTon"]) : 0,
+                                    SoLuongMua = Convert.ToInt32(reader["SoLuongMua"])
+                                };
+                                lst.Add(od);
+                            }
+                        }
+                    }
+                    return new BaseResponseModel()
+                    {
+                        IsSuccess = true,
+                        Message = "Lấy danh sách chi tiết đơn đặt hàng thành công..!",
                         Data = lst
                     };
                 }

@@ -7,7 +7,9 @@ body {
 :root {
   --main-color: #ca8922;
   --secon-color: #eab35a;
-  --main-style: cursive;
+  /* --main-style: cursive; */
+  --main-style: Merriweather ;
+  /* --main-style: 'Roboto', 'Arial', sans-serif; */
   --main-width: 1080px;
   --secon-text-color: #767676;
   --secon-text-color2: #504f4f;
