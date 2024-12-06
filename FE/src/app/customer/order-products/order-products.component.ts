@@ -89,9 +89,9 @@ export class OrderProductsComponent {
   async onOrder() {
     if(this.isPayment) {
       console.log('Thanh toán QR trước');
-      // await this.goToMomoPayment();
-      // this.Order.paymentStatus = true;
-      // await this.handleOrder();
+      await this.goToMomoPayment();
+      this.Order.paymentStatus = true;
+      await this.handleOrder();
     } else {
       console.log('Thanh toán khi nhận hàng');
       this.Order.paymentStatus = false;

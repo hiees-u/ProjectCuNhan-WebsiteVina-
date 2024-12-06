@@ -80,7 +80,7 @@ namespace BLL
             })).Data!); //-- trả về  0 hoăc AddressId
 
             //--> chưa tồn tại địa chỉ --> insert mới
-            if (req.addressId <= 0 && req.commune != 0) {
+            if (req.addressId <= 0) {
                 req.addressId = (int)(this._address.Post(new DTO.Address.AddressRequestModule()
                 {
                     CommuneName = req.communeName,

@@ -229,6 +229,7 @@
   font-family: monospace;
 }
 .err-not-item marquee {
+  text-align: center;
   color: var(--main-color);
 }
 
