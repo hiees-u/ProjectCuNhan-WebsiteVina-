@@ -58,7 +58,7 @@ export class DistrictComponent {
           await this.service.GetDistrictsByProvinceId(this.selectedProvinceId);
     if (response.isSuccess) {
       this.districts = response.data;
-      console.log(this.selectedProvinceId + ' Tỉnh đang được selected');
+      // console.log(this.selectedProvinceId + ' Tỉnh đang được selected');
 
       if (this.selectedDistrictId === 0)
         this.selectedDistrictId = this.districts[0].districtId;
@@ -68,7 +68,7 @@ export class DistrictComponent {
   }
 
   async onDistrictChange() {
-    console.log(this.selectedDistrictId + ' => Ở DISTRICT ID');
+    // console.log(this.selectedDistrictId + ' => Ở DISTRICT ID');
 
     await this.selectedDistrictIdChange.emit(this.selectedDistrictId);
   }

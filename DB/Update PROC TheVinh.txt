@@ -1,50 +1,56 @@
-CREATE PROCEDURE DeleteWarehouse
-    @WarehouseID INT,
+﻿GRANT EXECUTE ON OBJECT::dbo.SP_GetCommunesByDistrictID TO  WarehouseEmployee;
+
+GRANT EXECUTE ON OBJECT::dbo.SP_GetDistrict TO  WarehouseEmployee;
+
+GRANT EXECUTE ON OBJECT::dbo.SP_GetDistrictByProvinceID TO  WarehouseEmployee;
+
+GRANT EXECUTE ON OBJECT::dbo.SP_GetAddressById TO  WarehouseEmployee;
+
+GRANT EXECUTE ON OBJECT::dbo.SP_GetProvinces TO  WarehouseEmployee;
+
+GRANT EXEC ON OBJECT::dbo.InsertCommune TO  WarehouseEmployee;
+
+GRANT EXEC ON OBJECT::dbo.InsertAddress TO  WarehouseEmployee;
+
+GRANT EXEC ON OBJECT::dbo.GetAddressID TO  WarehouseEmployee;
+
+GRANT EXECUTE ON OBJECT::dbo.SP_GetFullAddress TO  WarehouseEmployee;
+
+--Bổ sung PROC
+CREATE PROCEDURE GetWarehouseByName
+    @WarehouseName NVARCHAR(100),
     @Message NVARCHAR(100) OUTPUT
 AS
 BEGIN
-    DECLARE @count_id INT;
-    DECLARE @product_count INT;
-
-    -- Check if the warehouse exists
-    SELECT @count_id = COUNT(*) 
-    FROM Warehouse 
-    WHERE WarehouseID = @WarehouseID;
-    
-    IF @count_id = 0 
+    -- Kiểm tra xem có bất kỳ Warehouse nào phù hợp không
+    IF NOT EXISTS (SELECT 1 FROM Warehouse WHERE WarehouseName LIKE '%' + @WarehouseName + '%')
     BEGIN
-        SET @Message = N'WarehouseID không tồn tại';
+        SET @Message = N'Không tìm thấy kho với tên đã cho.';
         RETURN;
     END
 
-    -- Check if there are any products in the warehouse
-    SELECT @product_count = COUNT(*)
-    FROM Product p
-    JOIN Cells c ON p.product_id = c.product_id
-    JOIN Shelve s ON c.ShelvesID = s.ShelvesID
-    WHERE s.WarehouseID = @WarehouseID;
+    -- Truy vấn thông tin các kho phù hợp với tên
+    SELECT 
+        w.WarehouseID,
+        w.WarehouseName,
+        w.AddressID,
+        COALESCE(a.Note, '') + N', Xã ' + COALESCE(c.CommuneName, '') + N', Huyện ' + COALESCE(d.DistrictName, '') + N', Tỉnh ' + COALESCE(p.ProvinceName, '') AS FullAddress,
+        w.ModifiedBy,
+        w.CreateTime,
+        w.ModifiedTime
+    FROM 
+        Warehouse w
+    LEFT JOIN Address a ON w.AddressID = a.AddressID
+    LEFT JOIN Commune c ON a.CommuneID = c.CommuneID
+    LEFT JOIN District d ON c.DistrictID = d.DistrictID
+    LEFT JOIN Province p ON d.ProvinceID = p.ProvinceID
+    WHERE 
+        w.WarehouseName LIKE '%' + @WarehouseName + '%' AND w.DeleteTime IS NULL;
 
-    IF @product_count > 0
-    BEGIN
-        SET @Message = N'Kho còn sản phẩm, không thể xóa';
-        RETURN;
-    END
-
-    -- Update DeleteTime instead of physical deletion
-    UPDATE Warehouse 
-    SET DeleteTime = GETDATE()
-    WHERE WarehouseID = @WarehouseID;
-
-    -- Check if the warehouse was successfully deleted
-    IF @@ROWCOUNT > 0
-    BEGIN
-        SET @Message = N'Xóa thành công';
-    END
-    ELSE
-    BEGIN
-        SET @Message = N'Có lỗi xảy ra khi xóa kho';
-    END
+    -- Đặt thông báo thành công
+    SET @Message = N'Đã lấy danh sách kho thành công!';
 END;
 GO
 
-GRANT EXEC ON OBJECT::dbo.DeleteWarehouse TO WarehouseEmployee;
+--Phân quyền
+GRANT EXEC ON OBJECT::dbo.GetWarehouseByName TO  WarehouseEmployee;

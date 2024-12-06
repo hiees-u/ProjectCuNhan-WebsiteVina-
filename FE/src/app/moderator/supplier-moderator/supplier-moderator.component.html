@@ -2,8 +2,7 @@
   <div class="header">
     <span class="header-text">
       <span></span>
-      Danh Sách Nhà Cung Cấp</span
-    >
+      Danh Sách Nhà Cung Cấp</span>
   </div>
 
   <div class="header-action">
@@ -34,37 +33,23 @@
       <span>Trang {{ pageCurrent }} / {{ totalPage }}</span>
 
       <div class="f-content page">
-        <button
-          [ngClass]="{ 'no-active': pageCurrent === 1 }"
-          (click)="handlePageClick(-1)"
-        >
+        <button [ngClass]="{ 'no-active': pageCurrent === 1 }" (click)="handlePageClick(-1)">
           <i class="fa-solid fa-chevron-left"></i>
         </button>
         <button class="btn-page">{{ pageCurrent }}</button>
-        <button
-          [ngClass]="{ 'no-active': pageCurrent === totalPage }"
-          (click)="handlePageClick(1)"
-        >
+        <button [ngClass]="{ 'no-active': pageCurrent === totalPage }" (click)="handlePageClick(1)">
           <i class="fa-solid fa-chevron-right"></i>
         </button>
       </div>
     </div>
   </div>
 </div>
-<div
-  class="add-cate"
-  *ngIf="flag"
-  [ngClass]="{ hiden: !isShowAddSupplier && flag, show: isShowAddSupplier }"
->
+<div class="add-cate" *ngIf="flag" [ngClass]="{ hiden: !isShowAddSupplier && flag, show: isShowAddSupplier }">
   <div class="content-add-cate">
-     <!-- <app-add-cate (isClose)="handleClose($event)"></app-add-cate> -->
-      <app-add-supplier (isClose)="handleClose($event)"></app-add-supplier>
+    <!-- <app-add-cate (isClose)="handleClose($event)"></app-add-cate> -->
+    <app-add-supplier (isClose)="handleClose($event)"></app-add-supplier>
   </div>
 </div>
-<div
-  class="cate-detail"
-  *ngIf="flagDetail"
-  [ngClass]="{ hiden: !isShowDetail && flagDetail, show: isShowDetail }"
->
-   <app-supplier-detail (isClose)="handleClose($event)" [Supplier]="selectSupplier"></app-supplier-detail>
+<div class="cate-detail" *ngIf="flagDetail" [ngClass]="{ hiden: !isShowDetail && flagDetail, show: isShowDetail }">
+  <app-supplier-detail (isClose)="handleClose($event)" [Supplier]="selectSupplier"></app-supplier-detail>
 </div>

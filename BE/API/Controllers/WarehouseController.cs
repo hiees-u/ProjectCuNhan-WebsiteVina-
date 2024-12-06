@@ -35,6 +35,13 @@ namespace API.Controllers
             BaseResponseModel res = this.iwarehouse.GetWareHouseID(warehouseID);
             return res.IsSuccess ? Ok(res) : BadRequest(res);
         }
+        [HttpGet("GetInForWarehouseByName/{warehouseName}")]
+        [Authorize(Roles = "WarehouseEmployee")]
+        public IActionResult GetWareHouseByName(string warehouseName)
+        {
+            BaseResponseModel res = this.iwarehouse.GetWareHouseByName(warehouseName);
+            return res.IsSuccess ? Ok(res) : BadRequest(res);
+        }
         [HttpPost("PostWarehouse")]
         [Authorize(Roles = "WarehouseEmployee")]
         public IActionResult Post(WareHousePostRequestModule request)

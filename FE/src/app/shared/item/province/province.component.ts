@@ -38,7 +38,7 @@ export class ProvinceComponent {
       if(this.selectedProvinceId === 0) {
         this.selectedProvinceId = this.provinces[0].provinceId;
       }
-      console.log('đã tới đây', this.selectedProvinceId);
+      // console.log('đã tới đây', this.selectedProvinceId);
       
     }
   }

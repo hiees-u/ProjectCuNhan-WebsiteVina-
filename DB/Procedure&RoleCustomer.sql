@@ -787,6 +787,7 @@ END;
 --phân quyền
 GRANT EXECUTE ON OBJECT::dbo.SP_GetFullAddress TO  Customer;
 GRANT EXECUTE ON OBJECT::dbo.SP_GetFullAddress TO  Moderator;
+GRANT EXECUTE ON OBJECT::dbo.SP_GetFullAddress TO  WarehouseEmployee;
 
 --RUN
 EXEC SP_GetFullAddress;
@@ -804,6 +805,7 @@ END;
 
 --phân quyền
 GRANT EXECUTE ON OBJECT::dbo.SP_GetProvinces TO  Customer;
+GRANT EXECUTE ON OBJECT::dbo.SP_GetProvinces TO  WarehouseEmployee;
 --RUN
 EXEC SP_GetProvinces;
 go
@@ -834,6 +836,7 @@ BEGIN
 END;
 --phân quyền
 GRANT EXECUTE ON OBJECT::dbo.SP_GetCommunesByDistrictID TO  Customer;
+GRANT EXECUTE ON OBJECT::dbo.SP_GetCommunesByDistrictID TO  WarehouseEmployee;
 --RUN
 EXEC SP_GetCommunesByDistrictID @DistrictID = 8
 go
@@ -847,6 +850,7 @@ BEGIN
 END;
 --phân quyền
 GRANT EXECUTE ON OBJECT::dbo.SP_GetDistrict TO  Customer;
+GRANT EXECUTE ON OBJECT::dbo.SP_GetDistrict TO  WarehouseEmployee;
 --RUN
 EXEC SP_GetDistrict;
 go
@@ -861,6 +865,7 @@ BEGIN
 END;
 --phân quyền
 GRANT EXECUTE ON OBJECT::dbo.SP_GetDistrictByProvinceID TO  Customer;
+GRANT EXECUTE ON OBJECT::dbo.SP_GetDistrictByProvinceID TO  WarehouseEmployee;
 --RUN
 EXEC SP_GetDistrictByProvinceID @ProvinceID = 62
 --#########################################################################GET ADDRESS BY ID#####################################################################################
@@ -876,6 +881,7 @@ BEGIN
 END;
 
 GRANT EXECUTE ON SP_GetAddressById TO Customer;
+GRANT EXECUTE ON OBJECT::dbo.SP_GetAddressById TO  WarehouseEmployee;
 
 EXEC SP_GetAddressById @AddressId = 1;
 go

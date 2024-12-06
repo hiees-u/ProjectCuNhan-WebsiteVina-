@@ -3,21 +3,19 @@ import {
   BaseResponseModel,
   BaseResponseModule,
 } from '../shared/module/base-response/base-response.module';
-import { Warehouse } from './warehouse-employee.module';
+import { Warehouse, PostWareHouseRequestWarehouseEmployee } from './warehouse-employee.module';
+import { AddressRequest } from '../shared/module/address/address.module';
 @Injectable({
   providedIn: 'root',
 })
 export class WarehouseEmployeeService {
   private token: string = '';
   private apiUrl = 'https://localhost:7060/api/';
-  
+
   constructor() {
     if (typeof window !== 'undefined') {
       this.token = localStorage.getItem('token') || '';
     }
-
-    console.log = console.log || function (...args: any[]) { /* Do nothing */ };
-    console.error = console.error || function (...args: any[]) { /* Do nothing */ };
   }
 
   // Lấy token
@@ -26,7 +24,7 @@ export class WarehouseEmployeeService {
       this.token = localStorage.getItem('token') || '';
     }
   }
-  
+
   async getWarehouses(): Promise<BaseResponseModel> {
     const url = `${this.apiUrl}Warehouse/GetWarehouse`;
     try {
@@ -49,6 +47,7 @@ export class WarehouseEmployeeService {
         console.log('Dữ liệu lấy được:', data);
       }
 
+
       return data;
     } catch (error) {
       // Đảm bảo console.error hoạt động
@@ -64,7 +63,7 @@ export class WarehouseEmployeeService {
     try {
       const url = `https://localhost:7060/api/Warehouse/DeleteWareHouse/${warehousreId}`;
       //https://localhost:7060/api/Warehouse/DeleteWareHouse/4
-      
+
       const response = await fetch(url, {
         method: 'DELETE',
         headers: {
@@ -73,71 +72,136 @@ export class WarehouseEmployeeService {
         },
       });
       const data: BaseResponseModel = await response.json();
-      // console.log(data);
       return data;
     } catch (error) {
-      // console.log('Lỗi: ', error);
       return {
         isSuccess: false,
         message: 'Lỗi xóa Warehouse',
       };
     }
   }
+
+  //post sub cate
+  async postWarehouse(warehouse: {
+    warehouseName: string;
+    addressId: number;
+  }): Promise<BaseResponseModel> {
+    try {
+      const url = 'https://localhost:7060/api/Warehouse/PostWarehouse';
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.token}`,
+        },
+        body: JSON.stringify(warehouse),
+      });
+      const data: BaseResponseModel = await response.json();
+      return data;
+    } catch (error) {
+      return {
+        isSuccess: false,
+        message: 'Lỗi ròi mài ơi',
+      };
+    }
+  }
+
+  //post address
+  async postAddress(address: AddressRequest): Promise<BaseResponseModel> {
+    // https://localhost:7060/api/Address
+    const url = `${this.apiUrl}Address`;
+
+    return fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${this.token}`,
+      },
+      body: JSON.stringify(address),
+    }).then((response) => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json() as Promise<BaseResponseModel>;
+    });
+  }
+
+  //lấy danh sách address của khách hàng
+  async getStringAddresses(addressId: number): Promise<BaseResponseModel> {
+    //https://localhost:7060/api/Address/Get string address
+    const url = `https://localhost:7060/api/Address/Get string address?idAddress=${addressId}`;
+    const option = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${this.token}`,
+      },
+    };
+
+    try {
+      const response = await fetch(url, option);
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      return await response.json();
+    } catch (error) {
+      console.error('Error:', error);
+      throw error;
+    }
+  }
+
+  async putWarehouse(
+    warehouse: PostWareHouseRequestWarehouseEmployee
+  ): Promise<BaseResponseModel> {
+    try {
+      const url = 'https://localhost:7060/api/Warehouse/PutWarehouse';
+      const response = await fetch(url, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.token}`,
+        },
+        body: JSON.stringify(warehouse),
+      });
+      const data: BaseResponseModel = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Lỗi: ', error);
+      return {
+        isSuccess: false,
+        message: 'Lỗi ròi mài ơi',
+      };
+    }
+  }
+  async getWarehousesByName(warehouseName: string): Promise<BaseResponseModel> {
+    try {
+      const url = `https://localhost:7060/api/Warehouse/GetInForWarehouseByName/${encodeURIComponent(warehouseName)}`;
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+
+      if (!response.ok) {
+        return {
+          isSuccess: false,
+          message: `Lỗi lấy danh sách kho: ${response.statusText}`,
+        };
+      }
+
+      const data: BaseResponseModel = await response.json();
+      return data;
+    } catch (error) {
+      return {
+        isSuccess: false,
+        message: 'Lỗi kết nối đến máy chủ',
+      };
+    }
+  }
+
 }
-
-
-  // PUT Warehouse
-
-  // async putWarehouse(warehouse: Warehouse): Promise<BaseResponseModel> {
-  //   const url = `${this.apiUrl}Warehouse`;
-  //   const headers = {
-  //     'Content-Type': 'application/json',
-  //     'Authorization': `Bearer ${this.token}`,
-  //   };
-  //   const body = JSON.stringify(warehouse);
-
-  //   try {
-  //     const response = await fetch(url, {
-  //       method: 'PUT',
-  //       headers: headers,
-  //       body: body,
-  //     });
-  //     const data: BaseResponseModel = await response.json();
-  //     console.log(data);
-  //     return data;
-  //   } catch (error) {
-  //     console.log('Lỗi: ', error);
-  //     return {
-  //       isSuccess: false,
-  //       message: 'Lỗi ròi mài ơi',
-  //     };
-  //   }
-  // }
-
-  // // DELETE Warehouse
-
-  // async deleteWarehouse(warehouseId: number): Promise<BaseResponseModel> {
-  //   const url = `${this.apiUrl}Warehouse?warehouseId=${warehouseId}`;
-  //   const headers = {
-  //     'Content-Type': 'application/json',
-  //     'Authorization': `Bearer ${this.token}`,
-  //   };
-
-  //   try {
-  //     const response = await fetch(url, {
-  //       method: 'DELETE',
-  //       headers: headers,
-  //     });
-  //     const data: BaseResponseModel = await response.json();
-  //     console.log(data);
-  //     return data;
-  //   } catch (error) {
-  //     console.log('Lỗi: ', error);
-  //     return {
-  //       isSuccess: false,
-  //       message: 'Lỗi ròi mài ơi',
-  //     };
-  //   }
-  // }
-//}
 

@@ -1,5 +1,6 @@
 ﻿using BLL.Interface;
 using BLL.LoginBLL;
+using DLL.Models;
 using DTO.Responses;
 using DTO.WareHouse;
 using System.Data;
@@ -74,7 +75,7 @@ namespace BLL
                                 {
                                     WarehouseId = Convert.ToInt32(reader["WarehouseID"]),
                                     WarehouseName = reader["WarehouseName"] as string ?? string.Empty,
-                                    Address = Convert.ToInt32(reader["AddressID"]),
+                                    AddressId = Convert.ToInt32(reader["AddressID"]),
                                     FullAddress = reader["FullAddress"] as string ?? string.Empty,
                                     ModifiedBy = reader["ModifiedBy"] as string ?? string.Empty,
                                     CreateTime = (DateTime)(reader.IsDBNull(reader.GetOrdinal("CreateTime")) ? (DateTime?)null : Convert.ToDateTime(reader["CreateTime"])),
@@ -114,6 +115,90 @@ namespace BLL
             }
         }
 
+        public BaseResponseModel GetWareHouseByName(string warehouseName)
+        {
+            // Khởi tạo danh sách kho
+            List<WareHouseResponseModel> listWareHouse = new List<WareHouseResponseModel>();
+
+            // Kiểm tra đầu vào
+            if (string.IsNullOrWhiteSpace(warehouseName))
+            {
+                return new BaseResponseModel()
+                {
+                    IsSuccess = false,
+                    Message = "Tên kho không được để trống.",
+                    Data = null
+                };
+            }
+
+            try
+            {
+                using (var conn = new SqlConnection(ConnectionStringHelper.Get()))
+                {
+                    conn.Open();
+                    using (var cmd = new SqlCommand("GetWareHouseByName", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        // Thêm tham số đầu vào
+                        cmd.Parameters.AddWithValue("@WarehouseName", warehouseName);
+
+                        // Thêm tham số OUTPUT để nhận thông báo
+                        SqlParameter messageParam = new SqlParameter("@Message", SqlDbType.NVarChar, 255)
+                        {
+                            Direction = ParameterDirection.Output
+                        };
+                        cmd.Parameters.Add(messageParam);
+
+                        // Thực hiện câu lệnh và đọc kết quả
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                listWareHouse.Add(new WareHouseResponseModel()
+                                {
+                                    WarehouseId = Convert.ToInt32(reader["WarehouseID"]),
+                                    WarehouseName = reader["WarehouseName"] as string ?? string.Empty,
+                                    AddressId = Convert.ToInt32(reader["AddressID"]),
+                                    FullAddress = reader["FullAddress"] as string ?? string.Empty,
+                                    ModifiedBy = reader["ModifiedBy"] as string ?? string.Empty,
+                                    CreateTime = (DateTime)(reader.IsDBNull(reader.GetOrdinal("CreateTime")) ? (DateTime?)null : Convert.ToDateTime(reader["CreateTime"])),
+                                    ModifiedTime = reader.IsDBNull(reader.GetOrdinal("ModifiedTime")) ? (DateTime?)null : Convert.ToDateTime(reader["ModifiedTime"])
+                                });
+                            }
+                        }
+
+                        // Kiểm tra dữ liệu và trả kết quả
+                        if (listWareHouse.Count == 0)
+                        {
+                            return new BaseResponseModel()
+                            {
+                                IsSuccess = false, // Có thể giữ `true` nếu backend muốn phân biệt lỗi logic
+                                Message = "Không tìm thấy kho nào phù hợp với tên đã nhập.",
+                                Data = new List<WareHouseResponseModel>() // Trả về danh sách trống thay vì null
+                            };
+                        }
+
+                        return new BaseResponseModel()
+                        {
+                            IsSuccess = true,
+                            Message = messageParam.Value.ToString(),
+                            Data = listWareHouse
+                        };
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponseModel()
+                {
+                    IsSuccess = false,
+                    Message = $"Lỗi trong quá trình lấy thông tin kho: {ex.Message}"
+                };
+            }
+        }
+
+
         public BaseResponseModel GetWareHouseID(int warehouseID)
         {
             WareHouseResponseModel res = new WareHouseResponseModel();
@@ -145,7 +230,7 @@ namespace BLL
                                 {
                                     WarehouseId = reader.GetInt32(0),
                                     WarehouseName = reader.GetString(1),
-                                    Address = reader.GetInt32(2),
+                                    AddressId = reader.GetInt32(2),
                                     FullAddress = reader.GetString(3),
                                     ModifiedBy = reader.GetString(4),
                                     CreateTime = !reader.IsDBNull(5) ? reader.GetDateTime(5) : DateTime.MinValue,
@@ -246,7 +331,7 @@ namespace BLL
 
                         return new BaseResponseModel()
                         {
-                            IsSuccess = message.Contains("Thành công"),
+                            IsSuccess = true,
                             Message = message
                         };
                     }
