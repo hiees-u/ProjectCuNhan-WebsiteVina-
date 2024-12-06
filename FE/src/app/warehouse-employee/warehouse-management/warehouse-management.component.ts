@@ -1,13 +1,14 @@
 import { AddWarehouseComponent } from './../add-warehouse/add-warehouse.component';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterOutlet } from '@angular/router';
 import { WarehouseEmployeeService } from '../warehouse-employee.service';
 import { BaseResponseModel, BaseResponseModule } from '../../shared/module/base-response/base-response.module';
-import { Warehouse, ContructorWarehouse } from '../warehouse-employee.module';
+import { Warehouse, ContructorWarehouse, WareHouseRequestWarehouseEmployee, ContructorRequestWarehouseModule } from '../warehouse-employee.module';
 import { NotificationComponent } from "../../shared/item/notification/notification.component";
 import { ConstructerNotification, Notification } from '../../shared/module/notification/notification.module';
 import { FormsModule } from '@angular/forms';
+import { ViewWarehouseComponent } from '../view-warehouse/view-warehouse.component';
 @Component({
   selector: 'app-warehouse-management',
   // standalone: true,
@@ -15,7 +16,8 @@ import { FormsModule } from '@angular/forms';
     AddWarehouseComponent,
     RouterOutlet,
     FormsModule,
-    NotificationComponent
+    NotificationComponent,
+    ViewWarehouseComponent
   ],
   templateUrl: './warehouse-management.component.html',
   styleUrls: ['./warehouse-management.component.css'],
@@ -35,11 +37,24 @@ export class WarehouseManagementComponent {
 
   warehouses: Warehouse[] = [];
 
+  selectWarehouseUpdate: WareHouseRequestWarehouseEmployee =
+    ContructorRequestWarehouseModule();
+  isShowDetail: boolean = false;
+  flagDetail: boolean = false;
+
+  @Input() searchTextIn: string = '';
+  searchText: string = '';
+
   ngOnInit(): void {
     this.getWarehouses();
   }
 
   constructor(private router: Router, private warehouseEmployeeService: WarehouseEmployeeService) {
+  }
+
+  onShowAddWarehouse() {
+    this.flag = true;
+    this.isShowAddWarehouuse = true;
   }
 
   async getWarehouses() {
@@ -73,7 +88,6 @@ export class WarehouseManagementComponent {
       this.dataNotification = {
         messages: response.message!,
         status: 'error',
-
       };
     }
     // Kích hoạt lại giao diện nếu cần
@@ -96,29 +110,81 @@ export class WarehouseManagementComponent {
     this.getWarehouses();
   }
 
-  getWarehouse() {
-    this.warehouseEmployeeService
-      .getSupplier(this.searchText)
-      .then((data) => {
-        this.Suppliers = data.data.data;
-        this.totalPage = data.data.totalPages;
-        this.pages = Array(this.totalPage)
-          .fill(0)
-          .map((x, i) => i + 1);
-        console.log(this.Suppliers);
-        console.log(this.pages);
-        console.log(this.totalPage);
-      })
-      .catch((error) => {
-        console.error('Error fetching product', error);
-      });
+  onChangeSelectedWarehouse(selectWarehouse: WareHouseRequestWarehouseEmployee) {
+
+    // console.error('Thong tin KHO Truyen Qua',selectWarehouse);
+    this.selectWarehouseUpdate = selectWarehouse;
+    this.isShowDetail = true;
+    this.flagDetail = true;
   }
-  handleCloseWD(is: boolean) {
-    console.log('THOÁT THÊM');
-    // this.getCategorys();
-    this.isShowAddSupplier = !is;
+  handleCloseDetail(is: boolean) {
     this.isShowDetail = !is;
-    this.flag = false;
-    this.getSupplier();
+    this.flagDetail = false;
+    this.getWarehouses();
+  }
+  onChangeSearch(event: Event) {
+    this.searchText = (event.target as HTMLInputElement).value;
+  }
+  onSearch() {
+
+  }
+  // async handleSearchWarehouse() {
+  //   const searchText = this.searchTextIn?.trim();
+
+  //   if (!searchText) {
+  //     await this.getWarehouses();
+  //     return;
+  //   }
+
+  //   const result: BaseResponseModel = await this.warehouseEmployeeService.getWarehousesByName(searchText);
+  //   if (result.isSuccess) {
+  //     this.warehouses = result.data;
+  //     this.dataNotification = {
+  //       messages: result.message!,
+  //       status: 'error',
+  //     };
+  //   } else {
+  //     console.error('Không tìm thấy kho:', result.message);
+  //   }
+  // }
+  async handleSearchWarehouse() {
+    const searchText = this.searchTextIn?.trim();
+
+    if (!searchText) {
+      // Hiển thị toàn bộ kho khi không nhập gì
+      await this.getWarehouses();
+      this.dataNotification = {
+        messages: 'Đã hiển thị toàn bộ danh sách kho.',
+        status: 'success',
+      };
+      return;
+    }
+
+    const result: BaseResponseModel = await this.warehouseEmployeeService.getWarehousesByName(searchText);
+
+    if (result.isSuccess) {
+      if (result.data && result.data.length > 0) {
+        // Có dữ liệu trả về
+        this.warehouses = result.data;
+        this.dataNotification = {
+          messages: result.message!,
+          status: 'success',
+        };
+      } else {
+        // Không có dữ liệu trả về
+        this.warehouses = [];
+        this.dataNotification = {
+          messages: 'Không tìm thấy kho nào phù hợp với tên đã nhập.',
+          status: 'info',
+        };
+      }
+    } else {
+      // Xử lý khi API trả về lỗi
+      console.error('Lỗi khi tìm kiếm:', result.message);
+      this.dataNotification = {
+        messages: result.message!,
+        status: 'error',
+      };
+    }
   }
 }

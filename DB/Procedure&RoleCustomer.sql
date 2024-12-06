@@ -787,6 +787,7 @@ END;
 --phân quyền
 GRANT EXECUTE ON OBJECT::dbo.SP_GetFullAddress TO  Customer;
 GRANT EXECUTE ON OBJECT::dbo.SP_GetFullAddress TO  Moderator;
+GRANT EXECUTE ON OBJECT::dbo.SP_GetFullAddress TO  WarehouseEmployee;
 
 --RUN
 EXEC SP_GetFullAddress;

@@ -11,9 +11,17 @@
 </div>
 
 <div class="cate-detail" *ngIf="flagDetail" [ngClass]="{ hiden: !isShowDetail && flagDetail, show: isShowDetail }">
-  <app-view-warehouse (isClose)="handleCloseWD($event)" [Supplier]="selectSupplier"></app-view-warehouse>
+  <app-view-warehouse (isClose)="handleCloseDetail($event)" [Warehouse]="selectWarehouseUpdate"></app-view-warehouse>
 </div>
 
+<div class="header-action">
+  <div class="btn-search">
+    <input type="text" [(ngModel)]="searchTextIn" name="search" id="search" placeholder="Nhập từ khóa..." />
+    <button class="search" (click)="handleSearchWarehouse()">
+      <i class="fa-solid fa-magnifying-glass"></i>
+    </button>
+  </div>
+</div>
 <!-- Kho Information Section -->
 <div class="section">
   <h3 class="section-title">Danh Sách Kho</h3>
@@ -40,7 +48,7 @@
         <td class="table-cell">{{ warehouse.modifiedTime }}</td>
         <td class="table-cell">
           <!-- <button class="btn-view">Xem</button> -->
-          <button class="btn-edit">Sửa</button>
+          <button class="btn-edit" (click)="onChangeSelectedWarehouse(warehouse)">Sửa</button>
           <button
             class="btn-delete"
             (click)="onShowDeleteWareHouse(warehouse.warehouseId)"
@@ -52,6 +60,17 @@
     </tbody>
   </table>
 </div>
+
+<!-- <div *ngIf="warehouses.length === 0 && searchTextIn?.trim()">
+  <p>Không tìm thấy kho nào với từ khóa "<strong>{{ searchTextIn }}</strong>".</p>
+</div>
+<div *ngIf="warehouses.length === 0 && !searchTextIn?.trim()">
+  <p>Danh sách kho hiện đang trống.</p>
+</div>
+<div *ngIf="warehouses.length > 0"> -->
+  <!-- Hiển thị danh sách kho -->
+<!-- </div> -->
+
 
 <div class="notification">
   <app-notification [data]="dataNotification" [trigger]="trigger">

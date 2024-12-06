@@ -71,7 +71,6 @@ export class AddWarehouseComponent {
 
   checkWarehouseProperties() {
     this.isAdd = !!this.warehouse.warehouseName;
-    // this.isAdd = !!this.warehouse.addressId;
   }
 
   onDelete() {
@@ -80,7 +79,6 @@ export class AddWarehouseComponent {
   }
 
   async onPostWarehouse() {
-    // console.log(this.warehouse);
     const addressRequest: AddressRequest = {
       communeId: this.communenInsert.communeId,
       communeName: this.communenInsert.communeName,
@@ -88,18 +86,13 @@ export class AddWarehouseComponent {
       houseNumber: this.addre.houseNumber,
       note: this.addre.note,
     };
-    // console.log('đang nhập địa chỉ mới!');
-    // console.log(addressRequest);
-
     // gọi api post address trả về id address gán vào addressId
     const response: BaseResponseModel = await this.serviceCus.postAddress(
       addressRequest
     );
-    // console.log(response);
 
     if (response.isSuccess) {
       this.warehouse.addressId = response?.data;
-      // console.log(this.warehouse);
       const response1: BaseResponseModel =
         await this.warehouseEmployeeService.postWarehouse(this.warehouse);
       if (response1.isSuccess) {
@@ -124,8 +117,7 @@ export class AddWarehouseComponent {
 
   sendIsClose() {
     this.onDelete();
-    // console.log('THOÁT', new Date());
-    this.isClose.emit(true);
+    this.isClose.emit(false);
   }
 
   ngOnInit(): void {
@@ -134,7 +126,6 @@ export class AddWarehouseComponent {
   //nhận 1 addres
   getAddressChangeChildComponent(address: Address) {
     this.addre = address;
-    // console.log(address);
   }
   //nhận tỉnh id đang được selected từ component con
   getProvinceIDChangeChildComponent(provinceId: number) {

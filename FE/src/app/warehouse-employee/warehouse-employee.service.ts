@@ -16,11 +16,6 @@ export class WarehouseEmployeeService {
     if (typeof window !== 'undefined') {
       this.token = localStorage.getItem('token') || '';
     }
-
-    // console.log = console.log || function (...args: any[]) { /* Do nothing */ };
-    // console.error = console.error || function (...args: any[]) { /* Do nothing */ };
-    // console.log('aaaaaa');
-
   }
 
   // Lấy token
@@ -28,8 +23,6 @@ export class WarehouseEmployeeService {
     if (typeof window !== 'undefined') {
       this.token = localStorage.getItem('token') || '';
     }
-
-    console.log('aaaaaa');
   }
 
   async getWarehouses(): Promise<BaseResponseModel> {
@@ -79,10 +72,8 @@ export class WarehouseEmployeeService {
         },
       });
       const data: BaseResponseModel = await response.json();
-      // console.log(data);
       return data;
     } catch (error) {
-      // console.log('Lỗi: ', error);
       return {
         isSuccess: false,
         message: 'Lỗi xóa Warehouse',
@@ -106,10 +97,8 @@ export class WarehouseEmployeeService {
         body: JSON.stringify(warehouse),
       });
       const data: BaseResponseModel = await response.json();
-      // console.log(data);
       return data;
     } catch (error) {
-      // console.log('Lỗi: ', error);
       return {
         isSuccess: false,
         message: 'Lỗi ròi mài ơi',
@@ -140,7 +129,7 @@ export class WarehouseEmployeeService {
   //lấy danh sách address của khách hàng
   async getStringAddresses(addressId: number): Promise<BaseResponseModel> {
     //https://localhost:7060/api/Address/Get string address
-    const url = `${this.apiUrl}Address/Get string address`;
+    const url = `https://localhost:7060/api/Address/Get string address?idAddress=${addressId}`;
     const option = {
       method: 'GET',
       headers: {
@@ -163,8 +152,6 @@ export class WarehouseEmployeeService {
     }
   }
 
-  // PUT Warehouse
-
   async putWarehouse(
     warehouse: PostWareHouseRequestWarehouseEmployee
   ): Promise<BaseResponseModel> {
@@ -179,44 +166,42 @@ export class WarehouseEmployeeService {
         body: JSON.stringify(warehouse),
       });
       const data: BaseResponseModel = await response.json();
-      console.log(data);
       return data;
     } catch (error) {
-      console.log('Lỗi: ', error);
+      console.error('Lỗi: ', error);
       return {
         isSuccess: false,
         message: 'Lỗi ròi mài ơi',
       };
     }
   }
+  async getWarehousesByName(warehouseName: string): Promise<BaseResponseModel> {
+    try {
+      const url = `https://localhost:7060/api/Warehouse/GetInForWarehouseByName/${encodeURIComponent(warehouseName)}`;
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
 
-  // async putWarehouse(warehouse: Warehouse): Promise<BaseResponseModel> {
-  //   const input = {
-  //     warehouseId: warehouse.warehouseId,
-  //     warehousename: warehouse.warehouseName,
-  //     addressid: warehouse.addressId
-  //   }
+      if (!response.ok) {
+        return {
+          isSuccess: false,
+          message: `Lỗi lấy danh sách kho: ${response.statusText}`,
+        };
+      }
 
-  //   try {
-  //     const url = 'https://localhost:7060/api/Warehouse/PutWarehouse';
-  //     const response = await fetch(url, {
-  //       method: 'PUT',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //         Authorization: `Bearer ${this.token}`,
-  //       },
-  //       body: JSON.stringify(input),
-  //     });
-  //     const data: BaseResponseModel = await response.json();
-  //     // console.log(data);
-  //     return data;
-  //   } catch (error) {
-  //     // console.log('Lỗi: ', error);
-  //     return {
-  //       isSuccess: false,
-  //       message: 'Lỗi ròi mài ơi',
-  //     };
-  //   }
-  // }
+      const data: BaseResponseModel = await response.json();
+      return data;
+    } catch (error) {
+      return {
+        isSuccess: false,
+        message: 'Lỗi kết nối đến máy chủ',
+      };
+    }
+  }
+
 }
 

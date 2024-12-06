@@ -25,7 +25,7 @@ export class WarehouseEmployeeComponent {
     const result: BaseResponseModel = await this.WarehouseEmployeeeService.getWarehouses();
 
     if(result.isSuccess) {
-      console.log = result.data;
+      console.info = result.data;
     }
   }
 

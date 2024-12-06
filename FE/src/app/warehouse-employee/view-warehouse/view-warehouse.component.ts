@@ -42,21 +42,26 @@ export class ViewWarehouseComponent {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['Warehouse']) {
       this.getAddressString();
-    }
+    }    
   }
+  
   constructor(
     private service: WarehouseEmployeeService,
   ) { }
 
   async getAddressString() {
+    console.error('ID Address Getstring',this.Warehouse.addressId);
     const result: BaseResponseModel = await this.service.getStringAddresses(this.Warehouse.addressId);
-    if (result.isSuccess) {
+    
+    if (result.isSuccess && result.data && result.data.length > 0) {
       this.addressString = result.data[0].value;
+    } else {
+      this.addressString = 'Không tìm thấy địa chỉ';
     }
   }
+  
 
   sendIsClose() {
-    console.log('THOÁT', new Date());
     this.isClose.emit(true);
   }
 

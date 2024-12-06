@@ -1,13 +1,14 @@
 .container {
     max-width: 1400px;
-    min-height: 800px;
+    min-height: 100px;
     background-color: #fff;
     width: 1300px;
     /* width: 1400px; */
-    height: 800px;
+    height: 100px;
     position: relative;
     border-radius: 10px;
     padding: 10px;
+    margin-top: 20px;
 }
 
 .close {
@@ -120,4 +121,15 @@
 
 .action button {
     font-size: .8em;
+}
+.cate-detail-show{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: #9b9ea01c;
+        display: flex;
+        justify-content: center;
+        align-items: center;
 }

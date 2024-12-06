@@ -1,6 +1,6 @@
 .container {
   width: 830px;
-  height: 300px;
+  /* height: 100px; */
   padding: 10px;
   /* background: var(--secon-color); */
   background-color: #fff;
