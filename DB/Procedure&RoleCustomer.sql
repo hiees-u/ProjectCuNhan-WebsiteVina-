@@ -603,13 +603,14 @@ GRANT EXECUTE ON OBJECT::dbo.SP_UpdateCart TO  Customer;
 EXEC SP_UpdateCart @ProductID = 4, @Quantity = 1
 go
 --#########################################################################Create Order + Order Detail Customer#####################################################################################
+--DROP PROC SP_InsertOrderWithDetails 
 CREATE TYPE ProductQuantityType AS TABLE
 (
     PriceHistoryId INT,
     Quantity INT
 );
 GO
-CREATE PROCEDURE SP_InsertOrfaderWithDetails
+CREATE PROCEDURE SP_InsertOrderWithDetails
     @Phone NVARCHAR(11),
     @Address_ID INT,
     @Name_Recipient NVARCHAR(50),
@@ -649,6 +650,12 @@ BEGIN
         INSERT INTO OrderDetail (Order_Id, priceHistoryId, Quantity)
         SELECT @OrderID, pq.PriceHistoryId AS ProductID, pq.Quantity
         FROM @ProductQuantities pq;
+
+		UPDATE Product 
+		SET totalQuantity = totalQuantity - pq.Quantity 
+		FROM Product p 
+		JOIN PriceHistory ph ON ph.product_id = p.product_id
+		JOIN @ProductQuantities pq ON ph.priceHistoryId = pq.PriceHistoryId;
     END
     ELSE
     BEGIN
@@ -719,7 +726,7 @@ BEGIN
 	a.CommuneID AS N'Xã',
 	co.DistrictID AS N'Quận',
 	di.ProvinceID AS N'Tỉnh',
-	a.Note + N', Xã ' + co.CommuneName + N', Quận/Huyện ' + di.DistrictName + N', Tỉnh/Thành Phố ' + pr.ProvinceName as N'Địa Chỉ'
+	a.Note + N' / ' + a.HouseNumber + N', Xã ' + co.CommuneName + N', Quận/Huyện ' + di.DistrictName + N', Tỉnh/Thành Phố ' + pr.ProvinceName as N'Địa Chỉ'
 	FROM UserInfo uf
 	LEFT JOIN Customer c ON uf.customer_Id = c.customerId
 	LEFT JOIN CustomerType ct ON c.type_customer_id = ct.type_customer_id
@@ -1012,6 +1019,7 @@ END
 --Phân quyền
 GRANT EXEC ON OBJECT::dbo.SP_GetOrderDetailsByState TO  Customer;
 --#########################################################################DELETE Order DETAIL#####################################################################################
+--DROP PROC SP_DeleteOrderDetailState
 CREATE PROCEDURE SP_DeleteOrderDetailState
     @OrderId INT,
     @PriceHistoryId INT
@@ -1020,11 +1028,20 @@ BEGIN
     -- Kiểm tra xem Order_Id và PriceHistoryId có tồn tại hay không
     IF EXISTS (SELECT 1 FROM OrderDetail WHERE Order_Id = @OrderId AND priceHistoryId = @PriceHistoryId)
     BEGIN
+		DECLARE @Quantity INT;
+		SELECT @Quantity = Quantity FROM OrderDetail WHERE Order_Id = @OrderId and priceHistoryId = @PriceHistoryId;
+
         -- Cập nhật trạng thái nếu Order_Id và PriceHistoryId tồn tại
         UPDATE OrderDetail
         SET State = 0
         WHERE Order_Id = @OrderId AND priceHistoryId = @PriceHistoryId;
         
+		UPDATE Product
+		SET totalQuantity = totalQuantity + @Quantity
+		FROM Product p
+		JOIN PriceHistory ph ON ph.product_id = p.product_id
+		WHERE ph.priceHistoryId = @PriceHistoryId
+
         -- Kiểm tra nếu tất cả OrderDetail có trạng thái 0 thì cập nhật trạng thái của Order
         IF NOT EXISTS (SELECT 1 FROM OrderDetail WHERE Order_Id = @OrderId AND State <> 0)
         BEGIN

@@ -39,19 +39,19 @@ import {
 } from '../../shared/module/change-pass/change-pass.module';
 
 @Component({
-    selector: 'app-user-detail',
-    imports: [
-        CommonModule,
-        FormsModule,
-        ProvinceComponent,
-        DistrictComponent,
-        CommuneComponent,
-        AddressComponent,
-        NotificationComponent,
-        CustomCurrencyPipe,
-    ],
-    templateUrl: './user-detail.component.html',
-    styleUrls: ['./user-detail.component.css', './user-detail.component-v2.css']
+  selector: 'app-user-detail',
+  imports: [
+    CommonModule,
+    FormsModule,
+    ProvinceComponent,
+    DistrictComponent,
+    CommuneComponent,
+    AddressComponent,
+    NotificationComponent,
+    CustomCurrencyPipe,
+  ],
+  templateUrl: './user-detail.component.html',
+  styleUrls: ['./user-detail.component.css', './user-detail.component-v2.css'],
 })
 export class UserDetailComponent {
   addressString: string = '';
@@ -76,9 +76,14 @@ export class UserDetailComponent {
 
   //---
   isShowConfirmChangePass: boolean = false;
-  
+
   //--
   isShowConfirmDelete: boolean = false;
+
+  time: boolean = false;
+
+  //--
+  ischangeAddress: boolean = false;
 
   constructor(
     private service: CustomerService,
@@ -88,7 +93,9 @@ export class UserDetailComponent {
   ) {}
 
   async ngOnInit() {
-    this.getUserInfo();
+    console.log('tới đây..?');
+
+    await this.getUserInfo();
     if (!this.userInfo.accountName) {
       console.log('del co ten dang nhap');
       this.getAccountName();
@@ -96,8 +103,12 @@ export class UserDetailComponent {
     console.log(this.userInfo);
     await this.getOrder(-1);
     console.log(this.orders);
-    
+
     console.log('SHow', this.isShowConfirmChangePass);
+  }
+
+  onChangeAddress() {
+    this.ischangeAddress = !this.ischangeAddress;
   }
 
   async onChangePassword() {
@@ -110,7 +121,7 @@ export class UserDetailComponent {
       setTimeout(() => {
         this.router.navigate(['/login']);
         localStorage.removeItem('token');
-      }, 5000)
+      }, 5000);
     } else {
       this.dataNotification.messages = 'Vui lòng xử lý lại..!';
       this.dataNotification.status = 'error';
@@ -186,31 +197,41 @@ export class UserDetailComponent {
   }
 
   //nhận 1 addres
-  getAddressChangeChildComponent(address: Address) {
+  async getAddressChangeChildComponent(address: Address) {
     this.address = address;
     console.log(address);
   }
 
   //nhận huyện id đang được selected từ component con
-  getDistrictIDChangeChildComponent(districtId: number) {
-    this.userInfo.district = districtId;
+  async getDistrictIDChangeChildComponent(event: number) {
+    if (this.userInfo.district !== event) {
+      this.userInfo.district = event;
+    }
   }
 
   //nhận tỉnh id đang được selected từ component con
-  getProvinceIDChangeChildComponent(provinceId: number) {
+  async getProvinceIDChangeChildComponent(provinceId: number) {
     this.userInfo.province = provinceId;
   }
 
   //-- Gọi API lấy dữ liệu UserInfo
   async getUserInfo() {
     const response: BaseResponseModel = await this.service.getUserInfo();
+    console.log('Lấy thông tin khách hàng...');
+
     if (response.isSuccess) {
-      this.userInfo = response.data;
+      console.log(this.userInfo);
+
+      this.userInfo = await response.data;
+
       this.isShowCommune = true;
+
+      this.time = true;
+
       if (this.userInfo.addressId) {
         console.log('get address');
 
-        this.getAddressById(this.userInfo.addressId);
+        await this.getAddressById(this.userInfo.addressId);
       }
     }
   }
@@ -223,7 +244,7 @@ export class UserDetailComponent {
 
   logOutHandler() {
     // this.isActive = 3;
-    this.router.navigate(['/customer/view-product']);
+    this.router.navigate(['/customer/about-us']);
     localStorage.removeItem('token');
   }
 
@@ -242,7 +263,6 @@ export class UserDetailComponent {
       this.orders = response.data;
     }
     console.log(this.orders);
-    
   }
 
   async deleteOrder() {
@@ -257,7 +277,7 @@ export class UserDetailComponent {
     if (response.isSuccess) {
       this.dataNotification.status = 'success';
       console.log('lấy danh sách order mới!!!');
-      
+
       this.getOrder(undefined);
     } else {
       this.dataNotification.status = 'error';

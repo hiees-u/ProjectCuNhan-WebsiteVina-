@@ -93,7 +93,14 @@
         <div class="box-content no-select">
           <label>Địa chỉ:</label>
           <div class="box-input">
-            <div class="box-edit-address">
+            <input
+              *ngIf="!ischangeAddress"
+              type="text"
+              name="address"
+              id="address"
+              [value]="userInfo.address"
+            />
+            <div class="box-edit-address" *ngIf="ischangeAddress">
               <app-address
                 [address]="address"
                 (addressChange)="getAddressChangeChildComponent($event)"
@@ -117,6 +124,9 @@
                 "
               ></app-province>
             </div>
+            <button (click)="onChangeAddress()">
+              {{ischangeAddress ? 'Hủy': 'Thay đổi địa chỉ'}}
+            </button>
           </div>
         </div>
         <div class="box-content no-select">
@@ -218,8 +228,12 @@
       </div>
 
       <!-- data-aos="fade-down-right" -->
-      <div class="content-order" *ngFor="let item of orders" data-aos="fade-right">
-        <div class="content-order-header" >
+      <div
+        class="content-order"
+        *ngFor="let item of orders"
+        data-aos="fade-right"
+      >
+        <div class="content-order-header">
           <div class="content-order-header-header">
             <span *ngIf="item.paymentStatus">Đã thanh toán</span>
             <span *ngIf="!item.paymentStatus">Thanh toán khi nhận hàng</span>
