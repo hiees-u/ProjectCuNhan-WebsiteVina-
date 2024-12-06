@@ -189,6 +189,56 @@ PRINT @ResultMessage;
 --PHân quyền
 GRANT EXEC ON OBJECT::dbo.GetWarehouseByID TO  WarehouseEmployee;
 
+--############################################### GET WAREHOUSE BY NAME #####################################################################################
+go
+CREATE PROCEDURE GetWarehouseByName
+    @WarehouseName NVARCHAR(100),
+    @Message NVARCHAR(100) OUTPUT
+AS
+BEGIN
+    -- Kiểm tra xem có bất kỳ Warehouse nào phù hợp không
+    IF NOT EXISTS (SELECT 1 FROM Warehouse WHERE WarehouseName LIKE '%' + @WarehouseName + '%')
+    BEGIN
+        SET @Message = N'Không tìm thấy kho với tên đã cho.';
+        RETURN;
+    END
+
+    -- Truy vấn thông tin các kho phù hợp với tên
+    SELECT 
+        w.WarehouseID,
+        w.WarehouseName,
+        w.AddressID,
+        COALESCE(a.Note, '') + N', Xã ' + COALESCE(c.CommuneName, '') + N', Huyện ' + COALESCE(d.DistrictName, '') + N', Tỉnh ' + COALESCE(p.ProvinceName, '') AS FullAddress,
+        w.ModifiedBy,
+        w.CreateTime,
+        w.ModifiedTime
+    FROM 
+        Warehouse w
+    LEFT JOIN Address a ON w.AddressID = a.AddressID
+    LEFT JOIN Commune c ON a.CommuneID = c.CommuneID
+    LEFT JOIN District d ON c.DistrictID = d.DistrictID
+    LEFT JOIN Province p ON d.ProvinceID = p.ProvinceID
+    WHERE 
+        w.WarehouseName LIKE '%' + @WarehouseName + '%' AND w.DeleteTime IS NULL;
+
+    -- Đặt thông báo thành công
+    SET @Message = N'Đã lấy danh sách kho thành công!';
+END;
+GO
+
+--Phân quyền
+GRANT EXEC ON OBJECT::dbo.GetWarehouseByName TO  WarehouseEmployee;
+
+--Thực thi
+DECLARE @Message NVARCHAR(100);
+-- Gọi stored procedure với từ khóa tìm kiếm
+EXEC GetWarehouseByName 
+    @WarehouseName = N'Kho',
+    @Message = @Message OUTPUT;
+
+-- Xem thông báo
+PRINT @Message;
+
 --########################################## INSERT WAREHOUSE #####################################################################################
 go
 CREATE PROCEDURE AddWarehouse

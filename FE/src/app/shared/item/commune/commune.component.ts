@@ -39,11 +39,11 @@ export class CommuneComponent {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['selectedCommuneId']) {
-      console.log('Dữ liệu Xã Id được thay đổi: ', this.selectedCommuneId);
+      // console.log('Dữ liệu Xã Id được thay đổi: ', this.selectedCommuneId);
     }
 
     if (changes['selectedDistrictId']) {
-      console.log('Dữ liệu Huyện Id được thay đổi: ', this.selectedDistrictId);
+      // console.log('Dữ liệu Huyện Id được thay đổi: ', this.selectedDistrictId);
       this.getComunesByDistrict(this.selectedDistrictId);
     }
   }
@@ -51,7 +51,7 @@ export class CommuneComponent {
   //khi select commune or input commune is send data to parent
   onCommuneChange() {
     if (this.isShowInput) {
-      console.log('hiện input thêm xã');
+      // console.log('hiện input thêm xã');
       this.communeInput.communeId = 0;
     } else {
       let communeId = this.selectedCommuneId;
@@ -62,7 +62,7 @@ export class CommuneComponent {
       this.communeInput = this.commune.find(
         (com) => com.communeId === communeId
       )!;
-      console.log(this.communeInput);
+      // console.log(this.communeInput);
     }    
     // this.communeInput.communeName = '';
     this.communeOutput.emit(this.communeInput);

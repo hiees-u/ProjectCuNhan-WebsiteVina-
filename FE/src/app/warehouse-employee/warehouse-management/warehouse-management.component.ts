@@ -1,20 +1,32 @@
-import { Component } from '@angular/core';
+import { AddWarehouseComponent } from './../add-warehouse/add-warehouse.component';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { WarehouseEmployeeService } from '../warehouse-employee.service';
 import { BaseResponseModel, BaseResponseModule } from '../../shared/module/base-response/base-response.module';
-import { Warehouse, ContructorWarehouse } from '../warehouse-employee.module';
+import { Warehouse, ContructorWarehouse, WareHouseRequestWarehouseEmployee, ContructorRequestWarehouseModule } from '../warehouse-employee.module';
 import { NotificationComponent } from "../../shared/item/notification/notification.component";
 import { ConstructerNotification, Notification } from '../../shared/module/notification/notification.module';
+import { FormsModule } from '@angular/forms';
+import { ViewWarehouseComponent } from '../view-warehouse/view-warehouse.component';
 @Component({
   selector: 'app-warehouse-management',
-  standalone: true,
-  imports: [CommonModule],
+  // standalone: true,
+  imports: [CommonModule,
+    AddWarehouseComponent,
+    RouterOutlet,
+    FormsModule,
+    NotificationComponent,
+    ViewWarehouseComponent
+  ],
   templateUrl: './warehouse-management.component.html',
   styleUrls: ['./warehouse-management.component.css'],
-  
+
 })
-export class WarehouseManagementComponent{
+export class WarehouseManagementComponent {
+
+  isShowAddWarehouuse: boolean | undefined;
+  flag: boolean = false;
 
   selectWarehouse: Warehouse = ContructorWarehouse();
   isShowDelete: boolean = false;
@@ -25,15 +37,24 @@ export class WarehouseManagementComponent{
 
   warehouses: Warehouse[] = [];
 
+  selectWarehouseUpdate: WareHouseRequestWarehouseEmployee =
+    ContructorRequestWarehouseModule();
+  isShowDetail: boolean = false;
+  flagDetail: boolean = false;
+
+  @Input() searchTextIn: string = '';
+  searchText: string = '';
+
   ngOnInit(): void {
     this.getWarehouses();
   }
 
-  constructor( private routes: Router, private warehouseEmployeeService: WarehouseEmployeeService) {
-    console.log('123')
-        // Đảm bảo console.log và console.error luôn là một hàm hợp lệ
-        console.log = console.log || function (...args: any[]) { /* Do nothing */ };
-        console.error = console.error || function (...args: any[]) { /* Do nothing */ };
+  constructor(private router: Router, private warehouseEmployeeService: WarehouseEmployeeService) {
+  }
+
+  onShowAddWarehouse() {
+    this.flag = true;
+    this.isShowAddWarehouuse = true;
   }
 
   async getWarehouses() {
@@ -49,75 +70,121 @@ export class WarehouseManagementComponent{
     }
   }
 
-  // async onShowDeleteWareHouse(warehouseID: number) {
-  //   const response: BaseResponseModel = await this.warehouseEmployeeService.deleteWarehouse(warehouseID);
-    
-  //   if(response.isSuccess) {
-  //     this.dataNotification.status = 'success',
-  //     this.dataNotification.messages = response.message!;
-  //     await this.getWarehouses();
-  //   } else {
-  //     this.dataNotification.status = 'warning',
-  //     this.dataNotification.messages = response.message!;      
-  //   }
-  //   this.trigger = new Date();
-  // }
-
   async onShowDeleteWareHouse(warehouseID: number) {
-    try {
-      // Gọi API xóa kho
-      const response: BaseResponseModel = await this.warehouseEmployeeService.deleteWarehouse(warehouseID);
-  
-      // Kiểm tra trạng thái phản hồi
-      if (response.isSuccess) {
-        this.dataNotification = {
-          status: 'success',
-          messages: response.message || 'Xóa thành công!',
-        };
-        await this.getWarehouses(); // Cập nhật danh sách kho sau khi xóa
-      } else {
-        this.dataNotification = {
-          status: 'warning',
-          messages: response.message || 'Không thể xóa kho!',
-        };
-      }
-  
-      // Kích hoạt lại giao diện nếu cần
-      this.trigger = new Date();
-    } catch (error) {
-      // Xử lý lỗi nếu API thất bại
+    // try {
+    // Gọi API xóa kho
+    const response: BaseResponseModel = await this.warehouseEmployeeService.deleteWarehouse(warehouseID);
+
+    // Kiểm tra trạng thái phản hồi
+    if (response.isSuccess) {
       this.dataNotification = {
-        status: 'error',
-        messages: 'Có lỗi xảy ra khi thực hiện xóa kho!',
+        messages: response.message!,
+        status: 'success',
       };
-      console.error('Error deleting warehouse:', error);
+
+      await this.getWarehouses(); // Cập nhật danh sách kho sau khi xóa
+
+    } else {
+      this.dataNotification = {
+        messages: response.message!,
+        status: 'error',
+      };
     }
+    // Kích hoạt lại giao diện nếu cần
+    this.trigger = new Date();
   }
 
-  // async onShowDeleteWareHouse(warehouseID: number) {
-  //   try {
-  //     const response: BaseResponseModel = await this.warehouseEmployeeService.deleteWarehouse(warehouseID);
+  handleAddWareHouse() {
+    this.flag = true;
+    this.isShowAddWarehouuse = true;
+  }
 
-  //     if (response.isSuccess) {
-  //       this.dataNotification = {
-  //         status: 'success',
-  //         messages: response.message || 'Xóa kho thành công!',
-  //       };
-  //       await this.getWarehouses();
-  //     } else {
-  //       this.dataNotification = {
-  //         status: 'warning',
-  //         messages: response.message || 'Không thể xóa kho!',
-  //       };
-  //     }
-  //   } catch (error) {
+  logOutHandler() {
+    this.router.navigate(['/login']);
+    localStorage.removeItem('token');
+  }
+
+  handleCloseAdd(is: boolean) {
+    this.isShowAddWarehouuse = false;
+    this.flag = false;
+    this.getWarehouses();
+  }
+
+  onChangeSelectedWarehouse(selectWarehouse: WareHouseRequestWarehouseEmployee) {
+
+    // console.error('Thong tin KHO Truyen Qua',selectWarehouse);
+    this.selectWarehouseUpdate = selectWarehouse;
+    this.isShowDetail = true;
+    this.flagDetail = true;
+  }
+  handleCloseDetail(is: boolean) {
+    this.isShowDetail = !is;
+    this.flagDetail = false;
+    this.getWarehouses();
+  }
+  onChangeSearch(event: Event) {
+    this.searchText = (event.target as HTMLInputElement).value;
+  }
+  onSearch() {
+
+  }
+  // async handleSearchWarehouse() {
+  //   const searchText = this.searchTextIn?.trim();
+
+  //   if (!searchText) {
+  //     await this.getWarehouses();
+  //     return;
+  //   }
+
+  //   const result: BaseResponseModel = await this.warehouseEmployeeService.getWarehousesByName(searchText);
+  //   if (result.isSuccess) {
+  //     this.warehouses = result.data;
   //     this.dataNotification = {
+  //       messages: result.message!,
   //       status: 'error',
-  //       messages: 'Có lỗi xảy ra khi thực hiện xóa kho!',
   //     };
-  //     console.error(error);
+  //   } else {
+  //     console.error('Không tìm thấy kho:', result.message);
   //   }
   // }
-  
-  
+  async handleSearchWarehouse() {
+    const searchText = this.searchTextIn?.trim();
+
+    if (!searchText) {
+      // Hiển thị toàn bộ kho khi không nhập gì
+      await this.getWarehouses();
+      this.dataNotification = {
+        messages: 'Đã hiển thị toàn bộ danh sách kho.',
+        status: 'success',
+      };
+      return;
+    }
+
+    const result: BaseResponseModel = await this.warehouseEmployeeService.getWarehousesByName(searchText);
+
+    if (result.isSuccess) {
+      if (result.data && result.data.length > 0) {
+        // Có dữ liệu trả về
+        this.warehouses = result.data;
+        this.dataNotification = {
+          messages: result.message!,
+          status: 'success',
+        };
+      } else {
+        // Không có dữ liệu trả về
+        this.warehouses = [];
+        this.dataNotification = {
+          messages: 'Không tìm thấy kho nào phù hợp với tên đã nhập.',
+          status: 'info',
+        };
+      }
+    } else {
+      // Xử lý khi API trả về lỗi
+      console.error('Lỗi khi tìm kiếm:', result.message);
+      this.dataNotification = {
+        messages: result.message!,
+        status: 'error',
+      };
+    }
+  }
 }

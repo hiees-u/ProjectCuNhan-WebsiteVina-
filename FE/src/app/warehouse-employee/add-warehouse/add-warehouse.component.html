@@ -1,1 +1,60 @@
-<p>add-warehouse works!</p>
+<div class="container">
+    <button (click)="sendIsClose()" class="close">
+        <i class="fa-solid fa-xmark"></i>
+    </button>
+    <div class="header">
+        <span class="header-text no-select">
+            <span></span>
+            Thêm Kho</span>
+    </div>
+    <div class="header-action"></div>
+
+    <div class="content">
+        <div class="inp-form">
+            <label class="no-select" for="name-product">Tên kho:
+            </label>
+            <input type="text" [(ngModel)]="warehouse.warehouseName" (ngModelChange)="checkWarehouseProperties()"
+                id="name-product" placeholder="Tên kho..." />
+        </div>
+
+        <div class="inp-form">
+            <label class="no-select" for="name-product">Địa chỉ: </label>
+            <div class="box-edit-address">
+              <app-address
+                [address]="addre"
+                (addressChange)="getAddressChangeChildComponent($event)"
+              ></app-address>
+              <app-commune
+                [selectedCommuneId]="communenInsert.communeId"
+                [selectedDistrictId]="districtSelect"
+                (communeOutput)="getCommutNameChangeChildComponent($event)"
+              ></app-commune>
+              <app-district
+                [selectedProvinceId]="provinceSelect"
+                (selectedDistrictIdChange)="
+                  getDistrictIDChangeChildComponent($event)
+                "
+                [selectedDistrictId]="districtSelect"
+              ></app-district>
+              <app-province
+                [selectedProvinceId]="provinceSelect"
+                (selectedProvinceIdChange)="
+                  getProvinceIDChangeChildComponent($event)
+                "
+              ></app-province>
+            </div>
+          </div>
+
+    </div>
+
+    <button (click)="onDelete()" class="no-select del-btn">Xóa</button>
+    <button (click)="onPostWarehouse()" *ngIf="isAdd" class="no-select insert">
+        Thêm
+    </button>
+
+    <div class="notification">
+        <app-notification [data]="dataNotification" [trigger]="trigger">
+            
+        </app-notification>
+    </div>
+</div>

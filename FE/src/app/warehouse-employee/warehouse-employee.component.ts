@@ -25,13 +25,15 @@ export class WarehouseEmployeeComponent {
     const result: BaseResponseModel = await this.WarehouseEmployeeeService.getWarehouses();
 
     if(result.isSuccess) {
-      console.log = result.data;
+      console.info = result.data;
     }
   }
 
-  click_add_warehouse() {
-    // Điều hướng tới trang thêm kho
-    // console.log('add-warehouse');
+  click_warehouse_managerment() {
+    this.router.navigate(['/warehouse-employee/warehouse-management']);
+  }
+
+  click_add_Test() {
     this.router.navigate(['/warehouse-employee/add-warehouse']);
   }
   logOutHandler() {
