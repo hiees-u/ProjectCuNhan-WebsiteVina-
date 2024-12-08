@@ -20,6 +20,7 @@ export class AppComponent {
       once: false,      // Chạy 1 lần duy nhất khi scroll qua
       offset: 0
     });
+    
     this.router.events
     .pipe(
       filter(event => event instanceof NavigationEnd)  // Chỉ lọc sự kiện NavigationEnd
