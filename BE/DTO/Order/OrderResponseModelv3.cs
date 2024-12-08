@@ -8,5 +8,6 @@
         public decimal total { get; set; }
         public DateTime created { get; set; }
         public string createBy { get; set; }
+        public string address { get; set; }
     }
 }

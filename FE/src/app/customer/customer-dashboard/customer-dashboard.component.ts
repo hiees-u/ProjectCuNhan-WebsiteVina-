@@ -88,7 +88,7 @@ export class CustomerDashboardComponent {
 
   logOutHandler() {
     this.isActive = 3;
-    this.router.navigate(['/customer/view-product']);
+    this.router.navigate(['/customer/about-us']);
     this.isLogin = !this.isLogin;
     localStorage.removeItem('token');
   }

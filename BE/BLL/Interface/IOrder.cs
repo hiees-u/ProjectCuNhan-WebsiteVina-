@@ -18,5 +18,8 @@ namespace BLL.Interface
 
         //get order detail
         public BaseResponseModel GetOrderDetailByOA(int oID);
+
+        public string GenerateInvoice(Invoice invoice);
+        public BaseResponseModel UpdateStateOrderByOA(int orderID);
     }
 }

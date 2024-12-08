@@ -2,21 +2,41 @@
   <button (click)="sendIsClose()" class="close">
     <i class="fa-solid fa-xmark"></i>
   </button>
-  <div class="header">Chi Tiết Đơn Hàng #{{OrderID}}</div>
+  <div class="header">Chi Tiết Đơn Hàng #{{ OrderID }}</div>
   <div class="content">
-    <div class="mini-content-header">
-      <p>Tên sản phẩm</p>
-      <p>Ảnh</p>
-      <p>Giá</p>
-      <p>Số lượng</p>
-      <p>Số lượng tồn</p>
+    <div>
+      <div class="mini-content-header">
+        <p>Tên sản phẩm</p>
+        <p>Ảnh</p>
+        <p>Giá</p>
+        <p>Số lượng</p>
+        <p>thành tiền</p>
+        <p>Thao tác</p>
+      </div>
+      <div class="mini-content" *ngFor="let item of OrderDetail">
+        <p>{{ item.name }}</p>
+        <p>
+          <img
+            [src]="'/assets/Products/' + item?.image"
+            [alt]="item.name"
+            alt=""
+          />
+        </p>
+        <p>{{ item?.gia ?? 0 | customCurrency }}</p>
+        <p>{{ item.soLuongMua }}</p>
+        <p>{{ item.gia * item.soLuongMua | customCurrency }}</p>
+        <p><i (click)="handleDeleteOrderDetail(item.priceHistory)" class="fa-regular fa-trash-can"></i></p>
+      </div>
     </div>
-    <div class="mini-content" [ngClass]="{'error': item.soLuongMua > item.soLuongTon}" *ngFor="let item of OrderDetail">
-      <p>{{ item.name }}</p>
-      <p>Ảnh</p>
-      <p>{{ item?.gia ?? 0 | customCurrency }}</p>
-      <p>{{ item.soLuongMua }}</p>
-      <p>{{ item.soLuongTon }}</p>
+    <div class="footer">
+      <p>Tổng tiền hóa đơn: <span>{{ total | customCurrency }}</span></p>
+      <button (click)="handleGenerateInvoice()">Xuất hóa đơn</button>
     </div>
   </div>
+</div>
+<div class="notification">
+  <app-notification
+    [data]="dataNotification"
+    [trigger]="trigger"
+  ></app-notification>
 </div>

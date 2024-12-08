@@ -1,4 +1,5 @@
-﻿using BLL.Interface;
+﻿using Azure.Core;
+using BLL.Interface;
 using DTO.Order;
 using DTO.Responses;
 using Microsoft.AspNetCore.Authorization;
@@ -36,7 +37,7 @@ namespace API.Controllers
         }
 
         [HttpDelete]
-        [Authorize(Roles = "Customer")]
+        [Authorize(Roles = "Customer,OrderApprover")]
         public IActionResult Delete(int OrderId, int PriceHistory)
         {
             BaseResponseModel response = order.Delete(OrderId, PriceHistory);
@@ -59,5 +60,36 @@ namespace API.Controllers
 
             return res.IsSuccess ? Ok(res) : BadRequest(res);
         }
+
+        [HttpPost("GenerateInvoice")]
+        [Authorize(Roles = "OrderApprover")]
+        public IActionResult GenerateInvoice([FromBody] Invoice invoice)
+        {
+            try
+            {
+                BaseResponseModel res = order.UpdateStateOrderByOA(invoice.OrderId);
+
+                if (res.IsSuccess)
+                {
+                    string filePath = order.GenerateInvoice(invoice);
+
+                    string customerName = invoice.customerName.Replace(" ", "_"); // Thay khoảng trắng thành _
+                    customerName = string.Join("", customerName.Split(Path.GetInvalidFileNameChars())); // Loại bỏ ký tự không hợp lệ
+                    string uniqueFileName = $"{customerName}_{Guid.NewGuid()}.pdf";
+
+                    byte[] fileBytes = System.IO.File.ReadAllBytes(filePath);
+
+                    return File(fileBytes, "application/pdf", uniqueFileName);
+                }
+                return BadRequest(res);
+            }
+            catch (Exception ex)
+            {
+                // Log lỗi
+                Console.Error.WriteLine("Error generating invoice: " + ex.Message);
+                return StatusCode(500, new { Message = "An error occurred while generating the invoice", Error = ex.Message });
+            }
+        }
+
     }
 }

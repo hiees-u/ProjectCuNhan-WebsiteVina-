@@ -20,6 +20,34 @@ export class OrderApproverService {
     }
   }
 
+  async GenerateInvoice(order: any) : Promise<any> {
+    try {
+      const url = `https://localhost:7060/api/Order/GenerateInvoice`;
+
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.token}`,
+        },
+        body: JSON.stringify(order)
+      });
+
+      if(!response.ok) {
+        throw new Error('LỖI ở xuất hóa đơn');
+      }
+
+      return response;
+
+    } catch(error) {
+      console.log(error);
+      return {
+        isSuccess: false,
+        message: 'Lỗi..!'
+      }
+    }
+  }
+
   async getOrderDetailApprover(Oid: number): Promise<BaseResponseModel> {
     try {
       const url = `https://localhost:7060/api/Order/Get Order Detail by OrderApprover?Oid=${Oid}`;

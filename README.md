@@ -22,11 +22,12 @@ Thành Viên Nhóm:
 	+ Loai khách hàng,
 	+ Nhân viên,
 	+ phòng ban
+ - Nhân viên: 
+      + Xử lý đơn hàng, xuất hóa đơn
  - Thiết kế, cài đặt cơ sở dữ liệu.
    
 .......... - Mai Thế Vinh
  - Nhân viên: 
-      + Xử lý đơn hàng, xuất hóa đơn
       + Nhập kho, 
       + Xuất kho
  - Chức năng chatbox giao tiếp với khách hàng.
