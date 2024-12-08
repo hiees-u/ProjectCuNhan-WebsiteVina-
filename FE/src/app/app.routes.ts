@@ -16,6 +16,7 @@ import { EmployeeModeratorComponent } from './moderator/employee-moderator/emplo
 import { SupplierModeratorComponent } from './moderator/supplier-moderator/supplier-moderator.component';
 import { WarehouseManagementComponent } from './warehouse-employee/warehouse-management/warehouse-management.component';
 import { AddWarehouseComponent } from './warehouse-employee/add-warehouse/add-warehouse.component';
+import { OutWarehouseComponent } from './warehouse-employee/out-warehouse/out-warehouse.component';
 
 export const routes: Routes = [
   ...CustomerRoutingModule,
@@ -56,6 +57,7 @@ export const routes: Routes = [
     children: [
       { path: 'warehouse-management', component: WarehouseManagementComponent },
       { path: 'add-warehouse', component: AddWarehouseComponent },
+      { path: 'out-warehouse', component: OutWarehouseComponent },
       { path: '', redirectTo: 'warehouse-management', pathMatch: 'full' }
     ]
   },

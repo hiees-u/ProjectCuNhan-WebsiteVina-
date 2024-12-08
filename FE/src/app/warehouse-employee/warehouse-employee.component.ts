@@ -33,8 +33,8 @@ export class WarehouseEmployeeComponent {
     this.router.navigate(['/warehouse-employee/warehouse-management']);
   }
 
-  click_add_Test() {
-    this.router.navigate(['/warehouse-employee/add-warehouse']);
+  click_out_warehouse() {
+    this.router.navigate(['/warehouse-employee/out-warehouse']);
   }
   logOutHandler() {
     this.router.navigate(['/login']);

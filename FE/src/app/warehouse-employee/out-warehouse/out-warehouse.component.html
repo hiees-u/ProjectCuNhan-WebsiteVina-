@@ -1,0 +1,110 @@
+<div class="container">
+    <header class="top-bar">
+        <h2 class="top-bar-title">Quản Lý Kho</h2>
+    </header>
+    <form id="deliveryForm">
+        <div class="grid grid-cols-2">
+            <!-- Select Warehouse -->
+            <div class="form-group">
+                <label for="warehouse">Kho</label>
+                <select id="warehouse">
+                    <option value="">-- Chọn kho --</option>
+                    <option value="WH001">Kho A</option>
+                    <option value="WH002">Kho B</option>
+                </select>
+            </div>
+
+            <!-- Select Sales Order -->
+            <div class="form-group">
+                <label for="salesOrder">Chọn đơn hàng cần xuất</label>
+                <select id="salesOrder">
+                    <option value="">-- Chọn đơn hàng --</option>
+                    <option value="SO001">SO001</option>
+                    <option value="SO002">SO002</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="note">Ghi chú</label>
+            <input type="text" id="note" placeholder="Nhập ghi chú">
+        </div>
+
+        <!-- Product List Section -->
+        <h3>Danh sách sản phẩm</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Mã sản phẩm</th>
+                    <th>Tên sản phẩm</th>
+                    <th>Số lượng cần xuất</th>
+                    <th>Số lượng xuất</th>
+                    <th>Ô lưu trữ</th>
+                </tr>
+            </thead>
+            <tbody id="productList">
+                <tr>
+                    <td>P01</td>
+                    <td>Sản phẩm 1</td>
+                    <td>10</td>
+                    <td>
+                        <input type="number" min="0" placeholder="Số lượng">
+                    </td>
+                    <td>
+                        <select>
+                            <option value="">Chọn ô</option>
+                            <option value="Cell001">Cell001</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>P02</td>
+                    <td>Sản phẩm 2</td>
+                    <td>5</td>
+                    <td>
+                        <input type="number" min="0" placeholder="Số lượng">
+                    </td>
+                    <td>
+                        <select>
+                            <option value="">Chọn ô</option>
+                            <option value="Cell002">Cell002</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>P02</td>
+                    <td>Sản phẩm 2</td>
+                    <td>5</td>
+                    <td>
+                        <input type="number" min="0" placeholder="Số lượng">
+                    </td>
+                    <td>
+                        <select>
+                            <option value="">Chọn ô</option>
+                            <option value="Cell002">Cell002</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>P02</td>
+                    <td>Sản phẩm 2</td>
+                    <td>5</td>
+                    <td>
+                        <input type="number" min="0" placeholder="Số lượng">
+                    </td>
+                    <td>
+                        <select>
+                            <option value="">Chọn ô</option>
+                            <option value="Cell002">Cell002</option>
+                        </select>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Submit Button -->
+        <div style="margin-top: 20px; text-align: right;">
+            <button type="button" onclick="submitForm()">Lưu phiếu xuất kho</button>
+        </div>
+    </form>
+</div>

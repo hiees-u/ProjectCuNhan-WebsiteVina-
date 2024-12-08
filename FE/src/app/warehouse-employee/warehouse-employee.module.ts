@@ -56,3 +56,37 @@ export function ContructorRequestWarehouseModule(): WareHouseRequestWarehouseEmp
   imports: [],
 })
 export class WarehouseEmployeeModule {}
+
+
+///===========Export Warehouse=============================
+export interface DeliveryOrderDetail {
+  orderId: number;
+  priceHistoryId: number;
+  quantity: number;
+  cellId: number;
+}
+
+export function ContructorRequestDeliveryOrderDetailModule(): DeliveryOrderDetail {
+  return {
+    orderId: 0,
+    priceHistoryId: 0,
+    quantity: 0,
+    cellId: 0
+  };
+}
+
+export interface ExportWarehouseRequest {
+  warehouseId: number;
+  note: string;
+  orderDetails: DeliveryOrderDetail[];
+}
+
+export function ContructorRequestExportWarehouseModule(): ExportWarehouseRequest {
+  return {
+    warehouseId: 0,
+    note: '',
+    orderDetails: []
+  };
+}
+
+

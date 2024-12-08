@@ -3,7 +3,7 @@ import {
   BaseResponseModel,
   BaseResponseModule,
 } from '../shared/module/base-response/base-response.module';
-import { Warehouse, PostWareHouseRequestWarehouseEmployee } from './warehouse-employee.module';
+import { Warehouse, PostWareHouseRequestWarehouseEmployee, ExportWarehouseRequest } from './warehouse-employee.module';
 import { AddressRequest } from '../shared/module/address/address.module';
 @Injectable({
   providedIn: 'root',
@@ -199,6 +199,30 @@ export class WarehouseEmployeeService {
       return {
         isSuccess: false,
         message: 'Lỗi kết nối đến máy chủ',
+      };
+    }
+  }
+
+  //===========Export Warehouse=============================
+  async exportGoodsByOrder(request: ExportWarehouseRequest): Promise<BaseResponseModel> {
+    const url = `${this.baseUrl}/ExportWarehouseGoodsByOrder`;
+
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.token}`,
+        },
+        body: JSON.stringify(request),
+      });
+
+      const data: BaseResponseModel = await response.json();
+      return data;
+    } catch (error) {
+      return {
+        isSuccess: false,
+        message: 'Có lỗi xảy ra trong quá trình xuất kho.',
       };
     }
   }
