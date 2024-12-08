@@ -1,16 +1,29 @@
 ﻿using BLL.Interface;
 using BLL.LoginBLL;
 using DLL.Models;
+using DTO;
 using DTO.Order;
 using DTO.Responses;
+using iText.IO.Font;
+using iText.Kernel.Font;
+using iText.Kernel.Pdf;
+using iText.Layout.Borders;
+using iText.Layout.Element;
+using iText.Layout.Properties;
+using Microsoft.IdentityModel.Tokens;
 using System.Data;
 using System.Data.SqlClient;
-using System.Security.Cryptography;
+
 
 namespace BLL
 {
     public class OrderBLL : IOrder
     {
+        private readonly IUser iUser;
+
+        public OrderBLL(IUser user) {
+            this.iUser = user;
+        }
         public BaseResponseModel Post(OrderRequestModule request)
         {
             try
@@ -166,7 +179,7 @@ namespace BLL
                 return new BaseResponseModel()
                 {
                     IsSuccess = true,
-                    Message = "Xóa Đơn Hàng Thành Công!"
+                    Message = "Xóa Chi Tiết Đơn Hàng Thành Công!"
                 };
             }
             catch (Exception ex)
@@ -273,7 +286,7 @@ namespace BLL
         }
 
         //get order warehouse employee
-        public BaseResponseModel GetByOrderApprover()        
+        public BaseResponseModel GetByOrderApprover()
         {
             try
             {
@@ -297,7 +310,8 @@ namespace BLL
                                     nameRecip = reader["Tên người nhận"].ToString()!,
                                     total = Convert.ToDecimal(reader["Tổng tiền"]),
                                     created = Convert.ToDateTime(reader["Thời gian đặt"]),
-                                    createBy = reader["Người đặt"].ToString()!
+                                    createBy = reader["Người đặt"].ToString()!,
+                                    address = reader["Address"].ToString()!
                                 };
                                 lst.Add(res);
                             }
@@ -321,7 +335,7 @@ namespace BLL
                 };
             }
         }
-    
+
         public BaseResponseModel GetOrderDetailByOA(int oID)
         {
             try
@@ -342,6 +356,7 @@ namespace BLL
                             {
                                 OrderDetailResponseModel od = new OrderDetailResponseModel()
                                 {
+                                    priceHistory = Convert.ToInt32(reader["PriceHistory"]),
                                     Name = reader["Name"].ToString(),
                                     Image = reader["Image"].ToString(),
                                     Gia = Convert.ToDecimal(reader["Gia"]),
@@ -370,5 +385,267 @@ namespace BLL
                 };
             }
         }
+
+        public string GenerateInvoice(Invoice invoice)
+        {
+            try
+            {
+                string projectDirectory = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), @"..\..\BE"));
+                string filePath = Path.Combine(projectDirectory, "Invoices", $"{invoice.customerName}_{Guid.NewGuid()}.pdf");
+
+                Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+
+                using (FileStream fs = new FileStream(filePath, FileMode.Create))
+                {
+                    using (PdfWriter writer = new PdfWriter(fs))
+                    {
+                        using (PdfDocument pdf = new PdfDocument(writer))
+                        {
+                            var document = new iText.Layout.Document(pdf);
+
+                            string boldFontPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "timesbd.ttf");
+                            PdfFont boldFont = PdfFontFactory.CreateFont(boldFontPath, PdfEncodings.IDENTITY_H);
+                            string fontPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "times.ttf");
+                            PdfFont font = PdfFontFactory.CreateFont(fontPath, PdfEncodings.IDENTITY_H);
+
+                            // Bảng 2 cột
+                            var headerTable = new iText.Layout.Element.Table(new float[] { 1, 1 });
+                            headerTable.SetWidth(UnitValue.CreatePercentValue(100));
+
+                            // Cột trái: Tiêu đề căn giữa + thông tin công ty căn trái
+                            var leftCell = new iText.Layout.Element.Cell()
+                                .Add(new Paragraph("CÔNG TY CÀ PHÊ VINA")
+                                    .SetFont(boldFont)
+                                    .SetFontSize(16)
+                                    //.SetBold()
+                                    .SetTextAlignment(TextAlignment.CENTER))
+                                .Add(new Paragraph("Địa chỉ: 140 Lê Trọng Tấn, Phường Tây Thạnh, Quận Tân Phú, TP.HCM")
+                                    .SetFont(font)
+                                    .SetFontSize(12)
+                                    .SetMaxWidth(UnitValue.CreatePercentValue(100))
+                                    .SetTextAlignment(TextAlignment.LEFT))
+                                .Add(new Paragraph("ĐT: 0283 8163 318")
+                                    .SetFont(font)
+                                    .SetFontSize(12)
+                                    .SetTextAlignment(TextAlignment.LEFT));
+                            leftCell.SetBorder(Border.NO_BORDER);
+
+                            // Cột phải: Tiêu đề căn giữa + nội dung hóa đơn căn trái
+                            var rightCell = new iText.Layout.Element.Cell()
+                                .Add(new Paragraph("HÓA ĐƠN BÁN HÀNG")
+                                    .SetFont(boldFont)
+                                    .SetFontSize(16)
+                                    //.SetBold()
+                                    .SetTextAlignment(TextAlignment.CENTER))
+                                .Add(new Paragraph("Kinh doanh cà phê đóng hộp")
+                                    .SetFont(font)
+                                    .SetFontSize(12)
+                                    .SetTextAlignment(TextAlignment.LEFT));
+                            rightCell.SetBorder(Border.NO_BORDER);
+
+                            headerTable.AddCell(leftCell);
+                            headerTable.AddCell(rightCell);
+
+                            // Thêm bảng header vào tài liệu
+                            document.Add(headerTable);
+
+                            // Thông tin khách hàng
+                            document.Add(new Paragraph($"Tên khách hàng: {invoice.customerName}")
+                                .SetFont(font)
+                                .SetFontSize(12));
+
+                            document.Add(new Paragraph($"Địa chỉ: {invoice.customerAddress}")
+                                .SetFont(font)
+                                .SetFontSize(12));
+
+                            // Bảng chi tiết
+                            var table = new iText.Layout.Element.Table(new float[] { 1, 4, 2, 2, 2 });
+                            table.SetWidth(UnitValue.CreatePercentValue(100));
+
+                            table.AddHeaderCell(new Paragraph("TT").SetFont(font));
+                            table.AddHeaderCell(new Paragraph("TÊN HÀNG").SetFont(font));
+                            table.AddHeaderCell(new Paragraph("SỐ LƯỢNG").SetFont(font));
+                            table.AddHeaderCell(new Paragraph("ĐƠN GIÁ").SetFont(font));
+                            table.AddHeaderCell(new Paragraph("THÀNH TIỀN").SetFont(font));
+
+                            BaseResponseModel model = GetOrderDetailByOA(invoice.OrderId);
+
+                            List<OrderDetailResponseModel> items =
+                                model.Data as List<OrderDetailResponseModel> ?? new List<OrderDetailResponseModel>();
+
+                            for (int i = 0; i < items.Count; i++) // Tạo 15 dòng để giống mẫu
+                            {
+                                var item = items[i];
+                                table.AddCell(new Paragraph((i + 1).ToString()).SetFont(font));
+                                table.AddCell(new Paragraph(item.Name).SetFont(font));
+                                table.AddCell(new Paragraph(item.SoLuongMua.ToString()).SetFont(font));
+                                table.AddCell(new Paragraph(FormatCurrency.formatCurrency(item.Gia)).SetFont(font));
+                                table.AddCell(new Paragraph(FormatCurrency.formatCurrency(item.SoLuongMua * item.Gia)).SetFont(font));
+                            }
+
+                            // Thêm dòng Tổng Cộng
+                            var totalRow = new iText.Layout.Element.Cell(1, 2)
+                                .Add(new Paragraph("TỔNG CỘNG")
+                                .SetFont(boldFont)
+                                .SetTextAlignment(TextAlignment.CENTER));
+                            //totalRow.SetBorderTop(new SolidBorder(1));
+                            table.AddCell(totalRow);
+
+                            int totalQuantity = items.Sum(x => x.SoLuongMua);
+
+                            table.AddCell(new Paragraph(totalQuantity.ToString())
+                                .SetFont(boldFont)
+                                .SetTextAlignment(TextAlignment.CENTER));
+                            //.SetBorderTop(new SolidBorder(1)))
+
+                            table.AddCell(new Paragraph("")
+                                .SetFont(boldFont)
+                                .SetTextAlignment(TextAlignment.CENTER));
+                                //.SetBorderTop(new SolidBorder(1)))
+
+                            decimal totalAmount = items.Sum(x => x.SoLuongMua * x.Gia);
+
+                            table.AddCell(new Paragraph(FormatCurrency.formatCurrency(totalAmount))
+                                .SetFont(boldFont)
+                                .SetTextAlignment(TextAlignment.CENTER));
+                                //.SetBorderTop(new SolidBorder(1)));
+
+                            document.Add(table);
+
+                            // Chuyển số thành chữ
+                            string amountInWords = FormatCurrency.NumberToWords(totalAmount);
+
+                            // Dòng ghi chú "Thành tiền (viết bằng chữ)"
+                            document.Add(new Paragraph($"Thành tiền (viết bằng chữ): {amountInWords}")
+                                .SetFont(font)
+                                .SetFontSize(12));
+
+                            // Tạo bảng 2 cột cho Ngày tháng và chữ ký
+                            iText.Layout.Element.Table footerTable = new iText.Layout.Element.Table(new float[] { 1, 1 });  
+                            // 1 cột cho KHÁCH HÀNG, 1 cột cho ngày tháng và người bán
+                            footerTable.SetWidth(UnitValue.CreatePercentValue(100));
+
+                            // Cột bên trái: Dòng trống và KHÁCH HÀNG căn giữa
+                            footerTable.AddCell(new iText.Layout.Element.Cell()
+                                .Add(new Paragraph("")  // Dòng trống
+                                .SetFont(font)
+                                .SetFontSize(12)
+                                .SetTextAlignment(TextAlignment.CENTER))
+                                .SetBorder(iText.Layout.Borders.Border.NO_BORDER));  // Không viền
+
+                            // Cột bên phải: Ngày tháng và tên người bán căn giữa
+                            footerTable.AddCell(new iText.Layout.Element.Cell()
+                                .Add(new Paragraph($"Hồ Chí Minh, Ngày {DateTime.Now.Day} tháng {DateTime.Now.Month} năm {DateTime.Now.Year}")
+                                .SetFont(font)
+                                .SetFontSize(12)
+                                .SetTextAlignment(TextAlignment.CENTER))
+                                .SetBorder(iText.Layout.Borders.Border.NO_BORDER));  // Không viền
+
+                            footerTable.AddCell(new iText.Layout.Element.Cell()
+                                .Add(new Paragraph("KHÁCH HÀNG")
+                                .SetFont(font)
+                                .SetFontSize(12)
+                                .SetTextAlignment(TextAlignment.CENTER))
+                                .SetBorder(iText.Layout.Borders.Border.NO_BORDER));  // Không viền
+
+
+                            footerTable.AddCell(new iText.Layout.Element.Cell()
+                                .Add(new Paragraph("NGƯỜI BÁN HÀNG")
+                                .SetFont(font)
+                                .SetFontSize(12)
+                                .SetTextAlignment(TextAlignment.CENTER))
+                                .SetBorder(iText.Layout.Borders.Border.NO_BORDER));  // Không viền
+
+                            footerTable.AddCell(new iText.Layout.Element.Cell()
+                                .Add(new Paragraph("")  // Dòng trống
+                                .SetFont(font)
+                                .SetFontSize(30)
+                                .SetTextAlignment(TextAlignment.CENTER))
+                                .SetBorder(iText.Layout.Borders.Border.NO_BORDER));  //
+
+                            footerTable.AddCell(new iText.Layout.Element.Cell()
+                                .Add(new Paragraph("")  // Dòng trống
+                                .SetFont(font)
+                                .SetFontSize(30)
+                                .SetTextAlignment(TextAlignment.CENTER))
+                                .SetBorder(iText.Layout.Borders.Border.NO_BORDER));  //
+
+                            footerTable.AddCell(new iText.Layout.Element.Cell()
+                                .Add(new Paragraph("")  // Dòng trống
+                                .SetFont(font)
+                                .SetFontSize(20)
+                                .SetTextAlignment(TextAlignment.CENTER))
+                                .SetBorder(iText.Layout.Borders.Border.NO_BORDER));  //
+
+                            BaseResponseModel rs = iUser.GetFullName();
+                            string sellerName = string.Empty;
+
+                            if (rs.IsSuccess)
+                            {
+                                if (rs.Data != null) { sellerName = Convert.ToString(rs.Data); }
+                            }
+
+
+                            footerTable.AddCell(new iText.Layout.Element.Cell()
+                            .Add(new Paragraph(sellerName)  // Tên người bán
+                            .SetFont(font)
+                            .SetFontSize(12)
+                            .SetTextAlignment(TextAlignment.CENTER))
+                            .SetBorder(iText.Layout.Borders.Border.NO_BORDER));  // Không viền
+
+                            document.Add(footerTable);
+                        }
+                    }
+                }
+                return filePath;
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine("Error generating PDF: " + ex.Message);
+                throw;
+            }
+        }
+
+        //cập nhật trạng thái thành 2 chuyển sang bên kho đóng gói
+        public BaseResponseModel UpdateStateOrderByOA(int orderID)
+        {
+            try
+            {
+                using (var conn = new SqlConnection(ConnectionStringHelper.Get()))
+                {
+                    conn.Open();
+                    using (SqlCommand command = new SqlCommand("SP_updateStateOrder2", conn))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.Add(new SqlParameter("@OrderId", orderID));
+                        try
+                        {
+                            command.ExecuteNonQuery();
+
+                            return new BaseResponseModel()
+                            {
+                                IsSuccess = true,
+                                Message = "Đổi trạng thái đơn hàng thành công.!"
+                            };
+                        }
+                        catch (Exception ex)
+                        {
+                            return new BaseResponseModel()
+                            {
+                                IsSuccess = false,
+                                Message = $"Lỗi khi cập nhật đơn hàng",
+                                Data = ex.Message
+                            };
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponseModel { IsSuccess = false, Message = $"Lỗi khi cập nhật đơn hàng", Data = ex.Message };
+            }
+        }
+
     }
 }
+

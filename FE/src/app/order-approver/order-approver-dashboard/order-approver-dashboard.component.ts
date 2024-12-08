@@ -19,6 +19,8 @@ export class OrderApproverDashboardComponent {
   orders: viewOrderApprover[] = [];
 
   selectedOrder: number | undefined;
+  selectNameCustomer: string = '';
+  selectAddress: string = ''; 
 
   //-------------
   trigger: any;
@@ -41,11 +43,14 @@ export class OrderApproverDashboardComponent {
     this.getOrder();
   }
 
-  onShowDetail(OrderId: number) {
+  onShowDetail(OrderId: number, name: string, address: string) {
     console.log(OrderId);
     this.selectedOrder = OrderId;
+    this.selectAddress = address;
+    this.selectNameCustomer = name;
     this.isShowDetail = !this.isShowDetail;
     this.flag = true;
+    this.getOrder();
   }
 
   async getAccountName() {

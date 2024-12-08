@@ -38,6 +38,10 @@
   width: calc(100% - 40px);
   height: calc(100% -40px);
   padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  height: calc(100% - 100px);
+  flex-direction: column;
 }
 
 .mini-content {
@@ -45,6 +49,7 @@
   display: flex;
   justify-content: space-between;
   border-radius: 10px;
+  align-items: center;
 }
 
 .mini-content-header {
@@ -53,30 +58,99 @@
   align-items: center;
 }
 
-.mini-content-header p:nth-child(1), .mini-content p:nth-child(1) {
+.mini-content-header p:nth-child(1),
+.mini-content p:nth-child(1) {
   padding-left: 10px;
   width: 30%;
   text-align: left;
 }
-.mini-content-header p:nth-child(2), .mini-content p:nth-child(2) {
-  width: 20%;
-}
-.mini-content-header p:nth-child(3), .mini-content p:nth-child(3) {
-  width: 20%;
-}
-.mini-content-header p:nth-child(4), .mini-content p:nth-child(4) {
+.mini-content-header p:nth-child(2),
+.mini-content p:nth-child(2) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 10%;
 }
-.mini-content-header p:nth-child(5), .mini-content p:nth-child(5) {
+.mini-content-header p:nth-child(3),
+.mini-content p:nth-child(3) {
+  width: 15%;
+}
+.mini-content-header p:nth-child(4),
+.mini-content p:nth-child(4) {
+  width: 10%;
+}
+.mini-content-header p:nth-child(5),
+.mini-content p:nth-child(5) {
   width: 10%;
 }
 
+.mini-content-header p:nth-child(6),
+.mini-content p:nth-child(6) {
+  width: 15%;
+}
+
+img {
+  width: 80%;
+}
 
 p {
   text-align: center;
 }
 
+p>i {
+  padding: 10px;
+  color: red;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: all .7s ease-in-out;
+}
+
+p>i:hover {
+  background-color: rgba(255, 0, 0, 0.233);
+  animation: jumpLeft .5s ease-in-out infinite;
+}
+
 .error {
   background-color: rgba(247, 121, 121, 0.24);
   color: red;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 35px;
+  width: calc(100% - 30px);
+  padding: 15px;
+  border-radius: 15px;
+  background-color: transparent;
+  font-size: 1.1em;
+  font-family: var(--main-style);
+}
+
+.footer p {
+  color: var(--secon-text-color);
+  font-size: 1em;
+}
+
+.footer p span {
+  font-size: 1.2em;
+  color: var(--main-color);
+}
+
+.footer button {
+  padding: 10px 15px;
+  font-size: .9em;
+  background-color: var(--main-color);
+  border: none;
+  outline: none;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.notification {
+  position: absolute;
+  top: 80px;
+  right: 0;
 }
