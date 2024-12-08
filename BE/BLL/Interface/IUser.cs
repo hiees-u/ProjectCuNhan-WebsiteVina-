@@ -15,5 +15,6 @@ namespace BLL.Interface
         public BaseResponseModel LogOut();
 
         public BaseResponseModel GetRole(string token);
+        public BaseResponseModel GetFullName();
     }
 }

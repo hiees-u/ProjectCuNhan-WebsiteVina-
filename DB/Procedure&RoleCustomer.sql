@@ -1068,6 +1068,7 @@ END;
 
 --Phân quyền
 GRANT EXEC ON OBJECT::dbo.SP_DeleteOrderDetailState TO Customer;
+GRANT EXEC ON OBJECT::dbo.SP_DeleteOrderDetailState TO OrderApprover;
 --RUN
 EXEC SP_DeleteOrderDetailState @OrderId = 12, @PriceHistoryId = 3
 

@@ -197,5 +197,56 @@ namespace BLL
                 Data = role,
             };
         }
+
+        //GET FULL NAME
+        public BaseResponseModel GetFullName()
+        {
+            try
+            {
+                string fullName = string.Empty;
+                using (var conn = new SqlConnection(ConnectionStringHelper.Get()))
+                {
+                    using (SqlCommand command = new SqlCommand("SP_getFullName", conn))
+                    {
+                        command.CommandType = System.Data.CommandType.StoredProcedure;
+                        try
+                        {
+                            conn.Open();
+                            using (SqlDataReader reader = command.ExecuteReader())
+                            {
+                                if (reader.Read())
+                                {
+                                    fullName = reader.GetString(0);
+                                }
+                            }
+                            return new BaseResponseModel
+                            {
+                                IsSuccess = true,
+                                Message = "Lấy họ và tên thành công..!",
+                                Data = fullName
+                            };
+                        }
+                        catch (Exception ex)
+                        {
+                            return new BaseResponseModel()
+                            {
+                                IsSuccess = false,
+                                Message = "Đã có lỗi xảy ra..",
+                                Data = ex.Message
+                            };
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponseModel()
+                {
+                    IsSuccess = false,
+                    Message = "Đã có lỗi xảy ra..",
+                    Data = ex.Message
+                };
+            }
+        }
     }
 }

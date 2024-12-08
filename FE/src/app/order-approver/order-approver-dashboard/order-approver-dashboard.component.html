@@ -19,16 +19,30 @@
       <p class="order-phone-recip">SDT nhận hàng</p>
       <p class="order-create-at">Thời gian đặt</p>
     </div>
-    <div class="content-item success" *ngFor="let item of orders" (click)="onShowDetail(item.orderId)">
-      <p class="order-id">#{{item.orderId}}</p>
+    <div
+      class="content-item success"
+      *ngFor="let item of orders"
+      (click)="onShowDetail(item.orderId, item.nameRecip, item.address)"
+    >
+      <p class="order-id">#{{ item.orderId }}</p>
       <p class="order-create-by">{{ item.createBy }}</p>
       <p class="order-name-recip">{{ item.nameRecip }}</p>
       <p class="order-phone-recip">{{ item.phone }}</p>
       <p class="order-create-at">{{ formatDateTime(item.created) }}</p>
     </div>
   </div>
-  <div class="order-detail" [ngClass]="{'hide-delete': !isShowDetail && flag, 'show-delete': isShowDetail}">
-    <app-view-order-detail [OrderID]="selectedOrder!" (isClose)="onShowDetail(0)"></app-view-order-detail>
+  <div
+    class="order-detail"
+    [ngClass]="{
+      'hide-delete': !isShowDetail && flag,
+      'show-delete': isShowDetail
+    }"
+  >
+    <app-view-order-detail
+      [Address]="selectAddress"
+      [Name]="selectNameCustomer"
+      [OrderID]="selectedOrder!"
+      (isClose)="onShowDetail(0, '', '')"
+    ></app-view-order-detail>
   </div>
-
 </div>
