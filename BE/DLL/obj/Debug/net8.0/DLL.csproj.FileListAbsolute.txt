@@ -11,3 +11,6 @@ C:\Users\ADMIN\Desktop\ProjectCuNhan-WebsiteVina-\BE\DLL\obj\Debug\net8.0\DLL.dl
 C:\Users\ADMIN\Desktop\ProjectCuNhan-WebsiteVina-\BE\DLL\obj\Debug\net8.0\refint\DLL.dll
 C:\Users\ADMIN\Desktop\ProjectCuNhan-WebsiteVina-\BE\DLL\obj\Debug\net8.0\DLL.pdb
 C:\Users\ADMIN\Desktop\ProjectCuNhan-WebsiteVina-\BE\DLL\obj\Debug\net8.0\ref\DLL.dll
+D:\HOC\Do An\doan 0312\ProjectCuNhan-WebsiteVina-\BE\DLL\obj\Debug\net8.0\DLL.dll
+D:\HOC\Do An\doan 0312\ProjectCuNhan-WebsiteVina-\BE\DLL\obj\Debug\net8.0\refint\DLL.dll
+D:\HOC\Do An\doan 0312\ProjectCuNhan-WebsiteVina-\BE\DLL\obj\Debug\net8.0\DLL.pdb

@@ -204,28 +204,6 @@ export class WarehouseEmployeeService {
   }
 
   //===========Export Warehouse=============================
-  async exportGoodsByOrder(request: ExportWarehouseRequest): Promise<BaseResponseModel> {
-    const url = `${this.baseUrl}/ExportWarehouseGoodsByOrder`;
-
-    try {
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${this.token}`,
-        },
-        body: JSON.stringify(request),
-      });
-
-      const data: BaseResponseModel = await response.json();
-      return data;
-    } catch (error) {
-      return {
-        isSuccess: false,
-        message: 'Có lỗi xảy ra trong quá trình xuất kho.',
-      };
-    }
-  }
-
+  
 }
 

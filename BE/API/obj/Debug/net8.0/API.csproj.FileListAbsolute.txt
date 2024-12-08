@@ -1,0 +1,11 @@
+D:\HOC\Do An\doan 0312\ProjectCuNhan-WebsiteVina-\BE\API\obj\Debug\net8.0\API.csproj.AssemblyReference.cache
+D:\HOC\Do An\doan 0312\ProjectCuNhan-WebsiteVina-\BE\API\obj\Debug\net8.0\API.GeneratedMSBuildEditorConfig.editorconfig
+D:\HOC\Do An\doan 0312\ProjectCuNhan-WebsiteVina-\BE\API\obj\Debug\net8.0\API.AssemblyInfoInputs.cache
+D:\HOC\Do An\doan 0312\ProjectCuNhan-WebsiteVina-\BE\API\obj\Debug\net8.0\API.AssemblyInfo.cs
+D:\HOC\Do An\doan 0312\ProjectCuNhan-WebsiteVina-\BE\API\obj\Debug\net8.0\API.csproj.CoreCompileInputs.cache
+D:\HOC\Do An\doan 0312\ProjectCuNhan-WebsiteVina-\BE\API\obj\Debug\net8.0\API.MvcApplicationPartsAssemblyInfo.cs
+D:\HOC\Do An\doan 0312\ProjectCuNhan-WebsiteVina-\BE\API\obj\Debug\net8.0\API.MvcApplicationPartsAssemblyInfo.cache
+D:\HOC\Do An\doan 0312\ProjectCuNhan-WebsiteVina-\BE\API\obj\Debug\net8.0\API.sourcelink.json
+D:\HOC\Do An\doan 0312\ProjectCuNhan-WebsiteVina-\BE\API\obj\Debug\net8.0\API.dll
+D:\HOC\Do An\doan 0312\ProjectCuNhan-WebsiteVina-\BE\API\obj\Debug\net8.0\refint\API.dll
+D:\HOC\Do An\doan 0312\ProjectCuNhan-WebsiteVina-\BE\API\obj\Debug\net8.0\API.pdb
