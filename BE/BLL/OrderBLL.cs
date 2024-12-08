@@ -10,7 +10,6 @@ using iText.Kernel.Pdf;
 using iText.Layout.Borders;
 using iText.Layout.Element;
 using iText.Layout.Properties;
-using Microsoft.IdentityModel.Tokens;
 using System.Data;
 using System.Data.SqlClient;
 
