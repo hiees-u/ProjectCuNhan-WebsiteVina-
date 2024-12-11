@@ -759,3 +759,31 @@ begin
     INNER JOIN inserted i ON pod.PurchaseOrderID = i.PurchaseOrderID;
 
 end
+
+
+--################# cập nhật loại khách hàng thân thuộc nếu tổng giá trị đơn hàng >= 10000000
+--DROP TRIGGER trg_UpdateCustomerType
+CREATE TRIGGER trg_UpdateCustomerType
+ON [Order]
+AFTER INSERT, UPDATE
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DECLARE @CustomerId INT;
+
+    -- Get the CustomerId from the inserted or updated orders
+    SELECT @CustomerId = CreateBy
+    FROM inserted;
+
+    IF (
+        SELECT SUM(Total_Payment)
+        FROM [Order]
+        WHERE CreateBy = @CustomerId
+    ) >= 10000000
+    BEGIN
+        UPDATE Customer
+        SET type_customer_id = 2
+        WHERE customerId = @CustomerId;
+    END
+END;

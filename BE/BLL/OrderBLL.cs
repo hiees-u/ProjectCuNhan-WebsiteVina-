@@ -568,11 +568,51 @@ namespace BLL
                                 .SetFontSize(30)
                                 .SetTextAlignment(TextAlignment.CENTER))
                                 .SetBorder(iText.Layout.Borders.Border.NO_BORDER));  //
+                            footerTable.AddCell(new iText.Layout.Element.Cell()
+                                .Add(new Paragraph("")  // Dòng trống
+                                .SetFont(font)
+                                .SetFontSize(30)
+                                .SetTextAlignment(TextAlignment.CENTER))
+                                .SetBorder(iText.Layout.Borders.Border.NO_BORDER));  //
 
                             footerTable.AddCell(new iText.Layout.Element.Cell()
                                 .Add(new Paragraph("")  // Dòng trống
                                 .SetFont(font)
-                                .SetFontSize(20)
+                                .SetFontSize(30)
+                                .SetTextAlignment(TextAlignment.CENTER))
+                                .SetBorder(iText.Layout.Borders.Border.NO_BORDER));  //
+                            footerTable.AddCell(new iText.Layout.Element.Cell()
+                                .Add(new Paragraph("")  // Dòng trống
+                                .SetFont(font)
+                                .SetFontSize(30)
+                                .SetTextAlignment(TextAlignment.CENTER))
+                                .SetBorder(iText.Layout.Borders.Border.NO_BORDER));  //
+
+                            footerTable.AddCell(new iText.Layout.Element.Cell()
+                                .Add(new Paragraph("")  // Dòng trống
+                                .SetFont(font)
+                                .SetFontSize(30)
+                                .SetTextAlignment(TextAlignment.CENTER))
+                                .SetBorder(iText.Layout.Borders.Border.NO_BORDER));  //
+                            footerTable.AddCell(new iText.Layout.Element.Cell()
+                                .Add(new Paragraph("")  // Dòng trống
+                                .SetFont(font)
+                                .SetFontSize(30)
+                                .SetTextAlignment(TextAlignment.CENTER))
+                                .SetBorder(iText.Layout.Borders.Border.NO_BORDER));  //
+
+                            footerTable.AddCell(new iText.Layout.Element.Cell()
+                                .Add(new Paragraph("")  // Dòng trống
+                                .SetFont(font)
+                                .SetFontSize(30)
+                                .SetTextAlignment(TextAlignment.CENTER))
+                                .SetBorder(iText.Layout.Borders.Border.NO_BORDER));  //
+
+                            //ten khach
+                            footerTable.AddCell(new iText.Layout.Element.Cell()
+                                .Add(new Paragraph(invoice.customerName)
+                                .SetFont(font)
+                                .SetFontSize(12)
                                 .SetTextAlignment(TextAlignment.CENTER))
                                 .SetBorder(iText.Layout.Borders.Border.NO_BORDER));  //
 
