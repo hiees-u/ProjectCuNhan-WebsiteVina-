@@ -13,19 +13,19 @@ import {
   Notification,
 } from '../../shared/module/notification/notification.module';
 import { NotificationComponent } from '../../shared/item/notification/notification.component';
-import { ProductDetailComponent } from "../product-detail/product-detail.component";
+import { ProductDetailComponent } from '../product-detail/product-detail.component';
 
 @Component({
-    selector: 'app-view-products',
-    imports: [
-        CommonModule,
-        CustomCurrencyPipe,
-        FormsModule,
-        NotificationComponent,
-        ProductDetailComponent
-    ],
-    templateUrl: './view-products.component.html',
-    styleUrl: './view-products.component.css'
+  selector: 'app-view-products',
+  imports: [
+    CommonModule,
+    CustomCurrencyPipe,
+    FormsModule,
+    NotificationComponent,
+    ProductDetailComponent,
+  ],
+  templateUrl: './view-products.component.html',
+  styleUrl: './view-products.component.css',
 })
 export class ViewProductsComponent {
   constructor(
@@ -38,6 +38,8 @@ export class ViewProductsComponent {
   @Input() cateId: number | null = null;
   @Input() subCateId: number | null = null;
   @Input() supplierId: number | null = null;
+
+  toDay: Date = new Date();
 
   totalPage: number = 1;
   pages: number[] = [];
@@ -74,6 +76,12 @@ export class ViewProductsComponent {
     this.products.forEach((item, index) => {
       this.checkImageExistence(`/assets/Products/${item.image}`, index);
     });
+  }
+
+  isExpired(expriryDate: string): boolean {
+    //true => hết hạn
+    const _expriryDate = new Date(expriryDate);
+    return _expriryDate < this.toDay;
   }
 
   ngOnChanges(changes: SimpleChanges): void {

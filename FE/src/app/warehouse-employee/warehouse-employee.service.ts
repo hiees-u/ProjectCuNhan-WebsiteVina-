@@ -223,7 +223,7 @@ export class WarehouseEmployeeService {
     } catch (error) {
       return {
         isSuccess: false,
-        message: 'Có lỗi xảy ra trong quá trình xuất kho.',
+        message: 'Có lỗi xảy ra trong quá trình xuất phiếu nhập kho',
       };
     }
   }
@@ -271,11 +271,11 @@ export class WarehouseEmployeeService {
           Authorization: `Bearer ${this.token}`,
         },
       });
-  
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-  
+
       const data: BaseResponseModel = await response.json();
       console.error('Data OrderDetail', data);
       return data;
@@ -284,6 +284,6 @@ export class WarehouseEmployeeService {
       throw error;
     }
   }
-  
+
 }
 

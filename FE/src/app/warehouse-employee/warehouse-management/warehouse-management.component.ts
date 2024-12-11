@@ -12,9 +12,9 @@ import { ViewWarehouseComponent } from '../view-warehouse/view-warehouse.compone
 @Component({
   selector: 'app-warehouse-management',
   // standalone: true,
+  // RouterOutlet,
   imports: [CommonModule,
     AddWarehouseComponent,
-    RouterOutlet,
     FormsModule,
     NotificationComponent,
     ViewWarehouseComponent

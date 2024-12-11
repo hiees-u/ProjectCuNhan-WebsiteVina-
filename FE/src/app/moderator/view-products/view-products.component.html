@@ -41,7 +41,7 @@
               >{{ item.subCategoryName }}</span
             >
           </td>
-          <td class="text-center min-text">
+          <!-- <td class="text-center min-text">
             <span *ngIf="item.totalQuantity > 5; else lowStock">
               <span class="bg-green">Còn hàng</span>
             </span>
@@ -53,7 +53,27 @@
             <ng-template #outOfStock>
               <span class="bg-red">Hết hàng</span>
             </ng-template>
+          </td> -->
+
+          <td class="text-center min-text">
+            <span *ngIf="isExpired(item.expriryDate); else inStock">
+              <span class="bg-red">Hết hạn</span>
+            </span>
+            <ng-template #inStock>
+              <span *ngIf="item.totalQuantity > 5; else lowStock">
+                <span class="bg-green">Còn hàng</span>
+              </span>
+              <ng-template #lowStock>
+                <span *ngIf="item.totalQuantity > 0; else outOfStock">
+                  <span class="bg-orange">Sắp hết hàng</span>
+                </span>
+              </ng-template>
+              <ng-template #outOfStock>
+                <span class="bg-red">Hết hàng</span>
+              </ng-template>
+            </ng-template>
           </td>
+
           <td class="td-operation">
             <button class="btn-del" (click)="onShowDelete(item)">
               <i class="fa-regular fa-trash-can"></i>
@@ -95,15 +115,26 @@
       'hide-delete': !isShowDelete && flagDelete
     }"
   >
-    <span *ngIf="selectProduct.totalQuantity != 0">
+    <span
+      *ngIf="
+        selectProduct.totalQuantity >= 0 &&
+        !isExpired(selectProduct.expriryDate)
+      "
+    >
       <p>Không thể xóa. Sản phẩm còn tồn kho...!</p>
     </span>
-    <p *ngIf="selectProduct.totalQuantity == 0">
+    <p
+      *ngIf="
+        selectProduct.totalQuantity == 0 || isExpired(selectProduct.expriryDate)
+      "
+    >
       Xóa sản phẩm: {{ selectProduct.productName }}
     </p>
     <button (click)="onHidenDelete()">Đóng</button>
     <button
-      *ngIf="selectProduct.totalQuantity == 0"
+      *ngIf="
+        selectProduct.totalQuantity == 0 || isExpired(selectProduct.expriryDate)
+      "
       class="btn-del"
       (click)="deleteProduct()"
     >
