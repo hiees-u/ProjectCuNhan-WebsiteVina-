@@ -54,3 +54,54 @@ GO
 
 --Phân quyền
 GRANT EXEC ON OBJECT::dbo.GetWarehouseByName TO  WarehouseEmployee;
+
+
+--========Get ORDER IDs==================
+CREATE PROCEDURE SP_GetOrderIDs
+AS
+BEGIN
+    SELECT Order_ID
+    FROM [Order]
+	WHERE State = 2;
+END
+
+GRANT EXEC ON OBJECT::dbo.SP_GetOrderIDs TO  WarehouseEmployee;
+
+
+--GET DETAIL ORDER BY DELIVERY NOTE
+GO
+CREATE PROCEDURE SP_GetOrderDetails
+    @OrderID INT
+AS
+BEGIN
+    SELECT 
+        p.product_id,
+        p.product_name,
+        od.Quantity AS order_quantity,
+        c.CellID,
+        c.CellName,
+        w.WarehouseID,
+        w.WarehouseName,
+        od.priceHistoryId
+    FROM 
+        OrderDetail od
+    JOIN 
+        PriceHistory ph ON od.priceHistoryId = ph.priceHistoryId
+    JOIN 
+        Product p ON ph.product_id = p.product_id
+    JOIN 
+        Cells c ON p.product_id = c.product_id
+    JOIN 
+        Shelve s ON c.ShelvesID = s.ShelvesID
+    JOIN 
+        Warehouse w ON s.WarehouseID = w.WarehouseID
+    WHERE 
+        od.Order_Id = @OrderID
+        AND c.Quantity >= od.Quantity
+END
+
+
+
+GRANT EXEC ON OBJECT::dbo.SP_GetOrderDetails TO  WarehouseEmployee;
+
+EXEC SP_GetOrderDetails @OrderID = 26;
