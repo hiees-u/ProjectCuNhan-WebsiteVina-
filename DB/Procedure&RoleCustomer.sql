@@ -337,7 +337,7 @@ EXEC CreateOrderApprover 'HiusOrderApprover', '123@@';
 
 --#########################################################################PROCEDURE GET ALL PRODUCT DELETIME IS NULL#####################################################################################
 go
-drop proc SP_GetAllProducts
+--drop proc SP_GetAllProducts
 go
 CREATE PROCEDURE SP_GetAllProducts
 AS
@@ -352,6 +352,7 @@ BEGIN
 	  AND p.DeleteTime IS NULL
 	  AND sc.DeleteTime IS NULL
 	  AND c.DeleteTime IS NULL
+	  AND p.ExpriryDate > GETDATE()
 	ORDER BY p.CreateTime DESC;
 END;
 
