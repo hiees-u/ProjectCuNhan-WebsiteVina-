@@ -45,6 +45,9 @@ label {
     color: #4b5563;
 }
 
+.input-w{
+    width: 100px;
+}
 input,
 select {
     width: 100%;

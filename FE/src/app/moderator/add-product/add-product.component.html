@@ -5,8 +5,7 @@
   <div class="header">
     <span class="header-text">
       <span></span>
-      Thêm Sản Phẩm</span
-    >
+      Thêm Sản Phẩm</span>
   </div>
   <div class="header-action">
     <div class="btn-add-product btn" (click)="isShowContenSecond(1)">
@@ -26,32 +25,17 @@
   <div class="content">
     <div class="inp-form">
       <label for="name-product">Tên sản phẩm: </label>
-      <input
-        type="text"
-        [(ngModel)]="product.productName"
-        (ngModelChange)="onProductChange()"
-        id="name-product"
-        placeholder="Tên sản phẩm..."
-      />
+      <input type="text" [(ngModel)]="product.productName" (ngModelChange)="onProductChange()" id="name-product"
+        placeholder="Tên sản phẩm..." />
     </div>
     <div class="inp-form">
       <label for="img-product">Ảnh: </label>
       <!-- [(ngModel)]="product.image" -->
-      <input
-        type="file"
-        (change)="onProductImageChange($event)"
-        id="img-product"
-        placeholder="Ảnh sản phẩm..."
-      />
+      <input type="file" (change)="onProductImageChange($event)" id="img-product" placeholder="Ảnh sản phẩm..." />
     </div>
     <div class="inp-form">
       <label for="loai-product">Loại sản phẩm: </label>
-      <select
-        id="loai-product"
-        [(ngModel)]="product.categoryId"
-        name="cate"
-        required
-      >
+      <select id="loai-product" [(ngModel)]="product.categoryId" name="cate" required>
         <option *ngFor="let item of categorys" [value]="item.categoryId">
           {{ item.categoryName }}
         </option>
@@ -59,12 +43,7 @@
     </div>
     <div class="inp-form">
       <label for="sub-ca-product">Loại sản phẩm phụ: </label>
-      <select
-        id="sub-ca-product"
-        [(ngModel)]="product.subCategoryId"
-        name="cate"
-        required
-      >
+      <select id="sub-ca-product" [(ngModel)]="product.subCategoryId" name="cate" required>
         <option *ngFor="let item of subCategorys" [value]="item.subCategoryId">
           {{ item.subCategoryName }}
         </option>
@@ -80,33 +59,18 @@
     </div>
     <div class="inp-form">
       <label for="date-expi">Ngày hết hạn: </label>
-      <input
-        type="datetime-local"
-        [(ngModel)]="product.expiryDate"
-        (ngModelChange)="onProductChange()"
-        id="date-expi"
-        placeholder="Ngày hết hạn..."
-      />
+      <input type="datetime-local" [(ngModel)]="product.expiryDate" (ngModelChange)="onProductChange()" id="date-expi"
+        placeholder="Ngày hết hạn..." />
     </div>
     <div class="inp-form">
       <label for="des">Mô tả: </label>
-      <textarea
-        type="text"
-        [(ngModel)]="product.description"
-        (ngModelChange)="onProductChange()"
-        id="des"
-        placeholder="Mô tả..."
-      ></textarea>
+      <textarea type="text" [(ngModel)]="product.description" (ngModelChange)="onProductChange()" id="des"
+        placeholder="Mô tả..."></textarea>
     </div>
     <div class="inp-form">
       <label for="price">Giá: </label>
-      <input
-        type="text"
-        [(ngModel)]="product.price"
-        (ngModelChange)="onProductChange()"
-        id="price"
-        placeholder="Giá..."
-      />
+      <input type="text" [(ngModel)]="product.price" (ngModelChange)="onProductChange()" id="price"
+        placeholder="Giá..." />
     </div>
   </div>
 
@@ -114,22 +78,9 @@
   <button (click)="onUpdate()" *ngIf="isAdd" class="insert">Thêm</button>
 </div>
 
-<div
-  class="content-second"
-  [ngClass]="{ hiden: !isShow && flag, show: isShow }"
-  [ngSwitch]="isShowBy"
->
-  <app-add-cate
-    *ngSwitchCase="1"
-    (isClose)="handleClose($event)"
-  ></app-add-cate>
-  <app-add-sub-cate
-    *ngSwitchCase="2"
-    (isClose)="handleClose($event)"
-  ></app-add-sub-cate>
-  <app-add-supplier
-    *ngSwitchCase="3"
-    (isClose)="handleClose($event)"
-  ></app-add-supplier>
+<div class="content-second" [ngClass]="{ hiden: !isShow && flag, show: isShow }" [ngSwitch]="isShowBy">
+  <app-add-cate *ngSwitchCase="1" (isClose)="handleClose($event)"></app-add-cate>
+  <app-add-sub-cate *ngSwitchCase="2" (isClose)="handleClose($event)"></app-add-sub-cate>
+  <app-add-supplier *ngSwitchCase="3" (isClose)="handleClose($event)"></app-add-supplier>
   <div *ngSwitchDefault>Không có component nào phù hợp.</div>
 </div>

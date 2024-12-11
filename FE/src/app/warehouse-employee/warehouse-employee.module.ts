@@ -51,42 +51,78 @@ export function ContructorRequestWarehouseModule(): WareHouseRequestWarehouseEmp
   };
 }
 
-@NgModule({
-  declarations: [],
-  imports: [],
-})
-export class WarehouseEmployeeModule {}
-
-
 ///===========Export Warehouse=============================
 export interface DeliveryOrderDetail {
-  orderId: number;
+  orderID: number;
   priceHistoryId: number;
   quantity: number;
-  cellId: number;
+  cellID: number;
 }
 
 export function ContructorRequestDeliveryOrderDetailModule(): DeliveryOrderDetail {
   return {
-    orderId: 0,
+    orderID: 0,
     priceHistoryId: 0,
     quantity: 0,
-    cellId: 0
+    cellID: 0
   };
 }
 
 export interface ExportWarehouseRequest {
   warehouseId: number;
   note: string;
-  orderDetails: DeliveryOrderDetail[];
+  deliveryNoteDetail: DeliveryOrderDetail[];
 }
 
 export function ContructorRequestExportWarehouseModule(): ExportWarehouseRequest {
   return {
     warehouseId: 0,
     note: '',
-    orderDetails: []
+    deliveryNoteDetail: []
   };
 }
+
+// Get Order IDs
+export interface OrderIDsResponse {
+  orderId: number;
+}
+
+export function ContructorOrderIDsResponseModule(): OrderIDsResponse {
+  return {
+    orderId: 0
+  };
+}
+
+//GET OrderDetail
+export interface OrderDetailResponse {
+  productId: number;
+  productName: string;
+  quantity: number;
+  cellId: number;
+  cellName: string;
+  warehouseId: number;
+  warehouseName: string;
+  priceHistoryId: number;
+}
+
+export function ContructorOrderDetailResponseModule(): OrderDetailResponse {
+  return {
+    productId: 0,
+    productName: '',
+    quantity: 0,
+    cellId: 0,
+    cellName: '',
+    warehouseId: 0,
+    warehouseName: '',
+    priceHistoryId: 0
+  };
+}
+
+
+@NgModule({
+  declarations: [],
+  imports: [],
+})
+export class WarehouseEmployeeModule { }
 
 

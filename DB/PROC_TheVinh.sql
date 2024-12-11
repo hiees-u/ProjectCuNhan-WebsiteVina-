@@ -1273,37 +1273,111 @@ EXEC sp_ExportWarehouseGoodsByOrder
     @Note = N'Xuất hàng theo đơn hàng',
     @OrderDetails = @OrderDetails;
 --====================================================================================
-select * from [Order]
-select * from OrderDetail
+GRANT EXECUTE ON OBJECT::dbo.SP_GetCommunesByDistrictID TO  WarehouseEmployee;
 
-select * from Warehouse
+GRANT EXECUTE ON OBJECT::dbo.SP_GetDistrict TO  WarehouseEmployee;
 
-select * from DeliveryNote
-select * from DeliveryNoteDetail
+GRANT EXECUTE ON OBJECT::dbo.SP_GetDistrictByProvinceID TO  WarehouseEmployee;
 
-select * from PriceHistory
-select * from Cells
-select * from Product
-select * from PurchaseOrder
-select * from PurchaseOrderDetail
-select * from
+GRANT EXECUTE ON OBJECT::dbo.SP_GetAddressById TO  WarehouseEmployee;
+
+GRANT EXECUTE ON OBJECT::dbo.SP_GetProvinces TO  WarehouseEmployee;
+
+GRANT EXEC ON OBJECT::dbo.InsertCommune TO  WarehouseEmployee;
+
+GRANT EXEC ON OBJECT::dbo.InsertAddress TO  WarehouseEmployee;
+
+GRANT EXEC ON OBJECT::dbo.GetAddressID TO  WarehouseEmployee;
+
+GRANT EXECUTE ON OBJECT::dbo.SP_GetFullAddress TO  WarehouseEmployee;
+
+--Bổ sung PROC
+CREATE PROCEDURE GetWarehouseByName
+    @WarehouseName NVARCHAR(100),
+    @Message NVARCHAR(100) OUTPUT
+AS
+BEGIN
+    -- Kiểm tra xem có bất kỳ Warehouse nào phù hợp không
+    IF NOT EXISTS (SELECT 1 FROM Warehouse WHERE WarehouseName LIKE '%' + @WarehouseName + '%')
+    BEGIN
+        SET @Message = N'Không tìm thấy kho với tên đã cho.';
+        RETURN;
+    END
+
+    -- Truy vấn thông tin các kho phù hợp với tên
+    SELECT 
+        w.WarehouseID,
+        w.WarehouseName,
+        w.AddressID,
+        COALESCE(a.Note, '') + N', Xã ' + COALESCE(c.CommuneName, '') + N', Huyện ' + COALESCE(d.DistrictName, '') + N', Tỉnh ' + COALESCE(p.ProvinceName, '') AS FullAddress,
+        w.ModifiedBy,
+        w.CreateTime,
+        w.ModifiedTime
+    FROM 
+        Warehouse w
+    LEFT JOIN Address a ON w.AddressID = a.AddressID
+    LEFT JOIN Commune c ON a.CommuneID = c.CommuneID
+    LEFT JOIN District d ON c.DistrictID = d.DistrictID
+    LEFT JOIN Province p ON d.ProvinceID = p.ProvinceID
+    WHERE 
+        w.WarehouseName LIKE '%' + @WarehouseName + '%' AND w.DeleteTime IS NULL;
+
+    -- Đặt thông báo thành công
+    SET @Message = N'Đã lấy danh sách kho thành công!';
+END;
 GO
 
-UPDATE Cells
-SET product_id = 1 WHERE CellID = 10
+--Phân quyền
+GRANT EXEC ON OBJECT::dbo.GetWarehouseByName TO  WarehouseEmployee;
 
--- Lệnh chèn vào bảng Order
-INSERT INTO [Order] (Phone, Adress_ID, Name_Recipient, CreateBy, Total_Payment, Create_At, State, paymentStatus)
-VALUES 
-('0123456789', 24, 'Nguyen Van A', 1, 500000, GETDATE(), 0, NULL);
 
--- Lấy ID của đơn hàng vừa được chèn
-DECLARE @OrderID INT;
-SET @OrderID = SCOPE_IDENTITY();
+--========Get ORDER IDs==================
+CREATE PROCEDURE SP_GetOrderIDs
+AS
+BEGIN
+    SELECT Order_ID
+    FROM [Order]
+	WHERE State = 2;
+END
 
--- Lệnh chèn vào bảng OrderDetail
-INSERT INTO OrderDetail (Order_Id, priceHistoryId, Quantity, State)
-VALUES
-(@OrderID, 1, 1, 0),
-(@OrderID, 2, 2, 0),
-(@OrderID, 3, 2, 0);
+GRANT EXEC ON OBJECT::dbo.SP_GetOrderIDs TO  WarehouseEmployee;
+
+
+--GET DETAIL ORDER BY DELIVERY NOTE
+GO
+
+CREATE PROCEDURE SP_GetOrderDetailsWE
+    @OrderID INT
+AS
+BEGIN
+    SELECT 
+        p.product_id,
+        p.product_name,
+        od.Quantity AS order_quantity,
+        c.CellID,
+        c.CellName,
+        w.WarehouseID,
+        w.WarehouseName,
+        od.priceHistoryId
+    FROM 
+        OrderDetail od
+    JOIN 
+        PriceHistory ph ON od.priceHistoryId = ph.priceHistoryId
+    JOIN 
+        Product p ON ph.product_id = p.product_id
+    JOIN 
+        Cells c ON p.product_id = c.product_id
+    JOIN 
+        Shelve s ON c.ShelvesID = s.ShelvesID
+    JOIN 
+        Warehouse w ON s.WarehouseID = w.WarehouseID
+    WHERE 
+        od.Order_Id = @OrderID
+        AND c.Quantity >= od.Quantity
+END
+
+
+
+GRANT EXEC ON OBJECT::dbo.SP_GetOrderDetailsWE TO  WarehouseEmployee;
+
+EXEC SP_GetOrderDetailsWE @OrderID = 26;
