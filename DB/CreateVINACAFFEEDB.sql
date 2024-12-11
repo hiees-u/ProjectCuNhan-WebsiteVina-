@@ -348,25 +348,6 @@ begin
 	);
 end;
 go
---2.	Update Cells When WarehouseReceiptDetail Insert
-CREATE TRIGGER trg_UpdateCellOnWarehouseReceiptInsert
-ON WarehouseReceiptDetail
-AFTER INSERT 
-AS 
-BEGIN
-	Update c
-	Set c.Quantity = c.quantity + i.quantity 
-	From Cells c
-	Inner JOIN Inserted i on c.CellID = i.CellID
-	where c.product_id = i.product_id;
-
-	Update c
-	Set c.product_id = i.product_id,
-		c.Quantity = i.quantity
-	From Cells c
-	Inner Join inserted i on c.CellID = i.CellID
-	where c.product_id Is NULL;
-END;
 go
 --3.	trg_CheckAddressID
 CREATE TRIGGER trg_CheckAddressID
