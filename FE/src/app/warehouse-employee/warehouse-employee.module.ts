@@ -118,6 +118,73 @@ export function ContructorOrderDetailResponseModule(): OrderDetailResponse {
   };
 }
 
+//===========Import Warehouse=============================
+
+
+export interface ReceiptDetailType {
+  productID: number;
+  cellID: number;
+  quantity: number;
+  purchaseOrderID: number;
+}
+
+export function ContructorRequestReceiptDetailTypeModule(): ReceiptDetailType {
+  return {
+    productID: 0,
+    cellID: 0,
+    quantity: 0,
+    purchaseOrderID: 0
+  };
+}
+
+export interface ImportWarehouseRequest {
+  warehouseID: number;
+  receiptDetails: ReceiptDetailType[];
+}
+
+export function ContructorRequestImportWarehouseModule(): ImportWarehouseRequest {
+  return {
+    warehouseID: 0,
+    receiptDetails: []
+  };
+}
+
+//Get purchaseOrderIds
+export interface purchaseOrderIdsResponse {
+  purchaseOrderId: number;
+}
+
+export function ContructorPurchaseOrderIdsResponseModule(): purchaseOrderIdsResponse {
+  return {
+    purchaseOrderId: 0
+  };
+}
+
+//Get purchaseOrderDetail
+export interface PurchaseOrderDetailResponse {
+  productId: number;
+  productName: string;
+  quantityOrdered: number;
+  quantityDelivered: number;
+  cellId: number;
+  cellName: string;
+  priceHistoryId: number;
+  price: number;
+  quantityToImport: number;
+}
+export function ContructorPurchaseOrderDetailResponseModule(): PurchaseOrderDetailResponse {
+  return {
+    productId: 0,
+    productName: '',
+    quantityOrdered: 0,
+    quantityDelivered: 0,
+    cellId: 0,
+    cellName: '',
+    priceHistoryId: 0,
+    price: 0,
+    quantityToImport: 1
+  };
+}
 
 @NgModule({
   declarations: [],

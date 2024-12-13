@@ -1,4 +1,6 @@
 ﻿using BLL.Interface;
+using DLL.Models;
+using DTO.Responses;
 using DTO.WarehouseReceipt;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -47,6 +49,29 @@ namespace API.Controllers
         {
             var result = iwarehouseReceipt.GetWarehouseReceiptsByWarehouse(warehouseID);
             return result.IsSuccess ? Ok(result) : BadRequest(result);
+        }
+
+        [HttpGet("GetUndeliveredPurchaseOrders")]
+        [Authorize(Roles = "WarehouseEmployee")]
+        public IActionResult GetUndeliveredPurchaseOrders()
+        {
+            BaseResponseModel response = iwarehouseReceipt.GetUndeliveredPurchaseOrders();
+            if (response.IsSuccess)
+            {
+                return Ok(response);
+            }
+            return BadRequest(response);
+        }
+        [HttpGet("GetPurchaseOrderDetails")]
+        [Authorize(Roles = "WarehouseEmployee")]
+        public IActionResult GetPurchaseOrderDetails(int purchaseOrderID)
+        {
+            BaseResponseModel response = iwarehouseReceipt.GetPurchaseOrderDetails(purchaseOrderID);
+            if (response.IsSuccess)
+            {
+                return Ok(response);
+            }
+            return BadRequest(response);
         }
     }
 }
