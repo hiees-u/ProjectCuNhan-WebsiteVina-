@@ -1,0 +1,149 @@
+<!-- 
+<div class="container">
+    <header class="top-bar">
+      <h2 class="top-bar-title">Nhập Kho</h2>
+    </header>
+    <form id="deliveryForm">
+      <div class="grid grid-cols-2">
+        <div class="form-group">
+          <label for="warehouse">Chọn Kho</label>
+          <select
+            id="warehouse"
+            [(ngModel)]="importWarehouse.warehouseID"
+            name="warehouse"
+          >          
+            <option
+              *ngFor="let warehouse of warehouses"
+              [value]="warehouse.warehouseId"
+            >
+              {{ warehouse.warehouseName }}
+            </option>
+          </select>
+        </div>
+  
+        <div class="form-group">
+          <label for="salesOrder">Chọn đơn hàng cần nhập</label>
+          <select
+            id="salesOrder"
+            [(ngModel)]="selectedOrderId"
+            name="PurchaseOrderId"
+            (change)="onPurchaseOrderChange($event)"
+          >
+            <option *ngFor="let purchaseOrder of purchaseOrderIds" [value]="purchaseOrder.purchaseOrderId">
+              {{ purchaseOrder.purchaseOrderId }}
+            </option>
+          </select>
+        </div>
+      </div>
+  
+      <h3>Danh sách sản phẩm</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Mã sản phẩm</th>
+            <th>Tên sản phẩm</th>
+            <th>Số lượng đặt</th>
+            <th>Số lượng đã giao</th>
+            <th>Số lượng nhận</th>
+            <th>Ô lưu trữ</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of products">
+            <td>{{ product.productId }}</td>
+            <td>{{ product.productName }}</td>
+            <td>{{ product.quantityOrdered }}</td>
+            <td>{{ product.quantityDelivered }}</td>            
+            <td>
+              <input class="input-w"
+                type="number"
+                [(ngModel)]=""
+                [max]="product.quantityOrdered - products.quantityDelivered"
+              />
+            </td>
+            <td>{{ product.warehouseName }}</td>
+            <td>
+              <select>
+                [(ngModel)]="product.cellId"
+                <option [value]="product.cellId">{{ product.cellName }}</option>
+              </select>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+  
+      <div style="margin-top: 20px; text-align: right">
+        <button type="button" >Lưu phiếu nhập kho</button>
+         (click)="submitForm()"
+      </div>
+    </form>
+  </div>
+   -->
+<div class="container">
+  <header class="top-bar">
+    <h2 class="top-bar-title">Nhập Kho</h2>
+  </header>
+  <form id="deliveryForm">
+    <div class="grid grid-cols-2">
+      <div class="form-group">
+        <label for="warehouse">Chọn Kho</label>
+        <select id="warehouse" [(ngModel)]="importWarehouse.warehouseID" name="warehouse">
+          <option *ngFor="let warehouse of warehouses" [value]="warehouse.warehouseId">
+            {{ warehouse.warehouseName }}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="salesOrder">Chọn đơn hàng cần nhập</label>
+        <select id="salesOrder" [(ngModel)]="selectedpurchaseOrderId" name="PurchaseOrderId"
+          (change)="onPurchaseOrderChange($event)">
+          <option *ngFor="let purchaseOrder of purchaseOrderIds" [value]="purchaseOrder.purchaseOrderId">
+            {{ purchaseOrder.purchaseOrderId }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <h3>Danh sách sản phẩm</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Mã sản phẩm</th>
+          <th>Tên sản phẩm</th>
+          <th>Số lượng đặt</th>
+          <th>Số lượng đã giao</th>
+          <th>Số lượng nhận</th>
+          <th>Ô lưu trữ</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of products">
+          <td>{{ product.productId }}</td>
+          <td>{{ product.productName }}</td>
+          <td>{{ product.quantityOrdered }}</td>
+          <td>{{ product.quantityDelivered }}</td>
+          <td>
+              <input 
+              class="input-w" 
+              type="number" 
+              [(ngModel)]="product.quantityToImport" 
+              [max]="product.quantityOrdered - product.quantityDelivered" 
+              (change)="updateQuantityToImport($event, product)" 
+              min="0" 
+            />
+          </td>
+          <td>
+            <select [(ngModel)]="product.cellId">
+              <option [value]="product.cellId">{{ product.cellName }}</option>
+            </select>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div style="margin-top: 20px; text-align: right">
+      <button type="button" (click)="submitForm()">Lưu phiếu nhập kho</button>
+    </div>
+  </form>
+</div>
