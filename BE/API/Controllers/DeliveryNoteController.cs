@@ -42,6 +42,7 @@ namespace API.Controllers
             }
             return BadRequest(response);
         }
+
         [HttpGet("GetOrderDetail")]
         [Authorize(Roles = "WarehouseEmployee")]
         public IActionResult GetOrderDetail(int orderID)

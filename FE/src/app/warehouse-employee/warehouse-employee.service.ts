@@ -3,7 +3,7 @@ import {
   BaseResponseModel,
   BaseResponseModule,
 } from '../shared/module/base-response/base-response.module';
-import { Warehouse, PostWareHouseRequestWarehouseEmployee, ExportWarehouseRequest } from './warehouse-employee.module';
+import { Warehouse, PostWareHouseRequestWarehouseEmployee, ExportWarehouseRequest, ImportWarehouseRequest } from './warehouse-employee.module';
 import { AddressRequest } from '../shared/module/address/address.module';
 @Injectable({
   providedIn: 'root',
@@ -285,5 +285,85 @@ export class WarehouseEmployeeService {
     }
   }
 
+  //===========Import Warehouse=============================
+  async importWarehouseByPurchaseOrder(request: ImportWarehouseRequest): Promise<BaseResponseModel> {
+    const url = `https://localhost:7060/api/WarehouseReceipt/InsertWarehouseReceipt`;
+
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.token}`,
+        },
+        body: JSON.stringify(request),
+      });
+
+      const data: BaseResponseModel = await response.json();
+      return data;
+    } catch (error) {
+      return {
+        isSuccess: false,
+        message: 'Có lỗi xảy ra trong quá trình xuất phiếu nhập kho',
+      };
+    }
+  }
+
+  async GetUndeliveredPurchaseOrders(): Promise<BaseResponseModel> {
+    const url = `https://localhost:7060/api/WarehouseReceipt/GetUndeliveredPurchaseOrders`;
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data: BaseResponseModel = await response.json();
+
+      // Đảm bảo console hoạt động trước khi log
+      if (console && typeof console.log === 'function') {
+        console.log('Dữ liệu lấy được service(API) GetUndeliveredPurchaseOrders :', data);
+      }
+      return data;
+
+    } catch (error) {
+      // Đảm bảo console.error hoạt động
+      if (console && typeof console.error === 'function') {
+        console.error('Lỗi khi gọi API:', error);
+      }
+
+      throw error; // Tiếp tục ném lỗi để xử lý tại thành phần gọi hàm
+    }
+  }
+
+  async GetPurchaseOrderDetails(purchaseOrderID: number): Promise<BaseResponseModel> {
+    const url = `${this.apiUrl}WarehouseReceipt/GetPurchaseOrderDetails?purchaseOrderID=${purchaseOrderID}`;
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data: BaseResponseModel = await response.json();
+      console.error('Data GetPurchaseOrderDetails', data);
+      return data;
+    } catch (error) {
+      console.error('Error fetching order details:', error);
+      throw error;
+    }
+  }
 }
 

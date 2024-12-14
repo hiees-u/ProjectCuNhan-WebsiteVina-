@@ -14,5 +14,7 @@ namespace BLL.Interface
         BaseResponseModel Delete(int WarehouseReceiptID);
         BaseResponseModel GetWarehouseReceiptInfo(int WarehouseReceiptID);
         BaseResponseModel GetWarehouseReceiptsByWarehouse(int warehouseID);
+        BaseResponseModel GetUndeliveredPurchaseOrders();
+        BaseResponseModel GetPurchaseOrderDetails(int PurchaseOrderID);
     }
 }

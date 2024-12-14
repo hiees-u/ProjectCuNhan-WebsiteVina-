@@ -1,6 +1,7 @@
 ﻿using BLL.Interface;
 using BLL.LoginBLL;
 using DLL.Models;
+using DTO.DeliveryNote;
 using DTO.Responses;
 using DTO.WarehouseReceipt;
 using System;
@@ -42,6 +43,118 @@ namespace BLL
                 response.IsSuccess = false; response.Message = $"Lỗi trong quá trình xóa kho: {ex.Message}"; 
             }
             return response;
+        }
+
+        public BaseResponseModel GetPurchaseOrderDetails(int PurchaseOrderID)
+        {
+            List<PurchaseOrderDetailsResponeModel> listPurchaseOrderDetails = new List<PurchaseOrderDetailsResponeModel>();
+            try
+            {
+                using (var conn = new SqlConnection(ConnectionStringHelper.Get()))
+                {
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand("sp_GetPurchaseOrderDetails", conn))
+                    {
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@PurchaseOrderID", PurchaseOrderID);
+
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                PurchaseOrderDetailsResponeModel purchaseOrderDetail = new PurchaseOrderDetailsResponeModel()
+                                {
+                                    ProductId = Convert.ToInt32(reader["product_id"]),
+                                    ProductName = reader["product_name"] as string ?? string.Empty,
+                                    QuantityOrdered = reader["QuantityOrdered"] as int?,
+                                    QuantityDelivered = reader["QuantityDelivered"] as int?,
+                                    CellId = Convert.ToInt32(reader["CellID"]),
+                                    CellName = reader["CellName"] as string ?? string.Empty,
+                                    PriceHistoryId = Convert.ToInt32(reader["priceHistoryId"]),
+                                    Price = Convert.ToDecimal(reader["price"]),
+                                    QuantityToImport = 0
+                                };
+                                listPurchaseOrderDetails.Add(purchaseOrderDetail);
+                            }
+                        }
+                    }
+                }
+
+                BaseResponseModel response = new BaseResponseModel()
+                {
+                    IsSuccess = true,
+                    Message = "Success!",
+                    Data = listPurchaseOrderDetails
+                };
+
+                if (listPurchaseOrderDetails.Count == 0)
+                {
+                    response.IsSuccess = true;
+                    response.Message = "Không có chi tiết đơn đặt hàng!";
+                }
+
+                return response;
+
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponseModel()
+                {
+                    IsSuccess = false,
+                    Message = $"Lỗi trong quá trình lấy thông tin chi tiết đơn đặt hàng: {ex.Message}"
+                };
+            }
+        }
+
+        public BaseResponseModel GetUndeliveredPurchaseOrders()
+        {
+            List<PurchaseOrdersResponeModel> listPurchaseOrderID = new List<PurchaseOrdersResponeModel>();
+            try
+            {
+                using (var conn = new SqlConnection(ConnectionStringHelper.Get()))
+                {
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand("sp_GetUndeliveredPurchaseOrders", conn))
+                    {
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                PurchaseOrdersResponeModel PurchaseOrderID = new PurchaseOrdersResponeModel()
+                                {
+                                    PurchaseOrderId = Convert.ToInt32(reader["PurchaseOrderID"]),
+                                };
+                                listPurchaseOrderID.Add(PurchaseOrderID);
+                            }
+                        }
+                    }
+                }
+
+                BaseResponseModel response = new BaseResponseModel()
+                {
+                    IsSuccess = true,
+                    Message = "Success!",
+                    Data = listPurchaseOrderID
+                };
+
+                if (listPurchaseOrderID.Count < 0)
+                {
+                    response.IsSuccess = true;
+                    response.Message = "Mã đơn đặt hàng chưa được tạo!!";
+                }
+
+                return response;
+
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponseModel()
+                {
+                    IsSuccess = false,
+                    Message = $"Lỗi trong quá trình lấy thông tin mã đơn đợt hàng: {ex}"
+                };
+            }
         }
 
         public BaseResponseModel GetWarehouseReceiptInfo(int WarehouseReceiptID)
@@ -95,7 +208,7 @@ namespace BLL
                                         ProductID = reader.GetInt32(reader.GetOrdinal("product_id")),
                                         Quantity = reader.GetInt32(reader.GetOrdinal("quantity")),
                                         CellID = reader.GetInt32(reader.GetOrdinal("CellID")),
-                                        PurchaseOrderId = reader.GetInt32(reader.GetOrdinal("PurchaseOrderID")),
+                                        PurchaseOrderID = reader.GetInt32(reader.GetOrdinal("PurchaseOrderID")),
                                     };
                                     warehouseReceipt.Details.Add(detail);
                                 }
@@ -188,13 +301,13 @@ namespace BLL
                         // Create the table-valued parameter for receipt details
                         DataTable receiptDetailsTable = new DataTable();
                         receiptDetailsTable.Columns.Add("ProductID", typeof(int));
-                        receiptDetailsTable.Columns.Add("Quantity", typeof(int));
                         receiptDetailsTable.Columns.Add("CellID", typeof(int));
+                        receiptDetailsTable.Columns.Add("Quantity", typeof(int));                        
                         receiptDetailsTable.Columns.Add("PurchaseOrderID", typeof(int));
 
                         foreach (var detail in receiptDetails)
                         {
-                            receiptDetailsTable.Rows.Add(detail.ProductID, detail.Quantity, detail.CellID, detail.PurchaseOrderId);
+                            receiptDetailsTable.Rows.Add(detail.ProductID, detail.CellID, detail.Quantity, detail.PurchaseOrderID);
                         }
 
                         SqlParameter receiptDetailsParam = new SqlParameter("@ReceiptDetails", SqlDbType.Structured)

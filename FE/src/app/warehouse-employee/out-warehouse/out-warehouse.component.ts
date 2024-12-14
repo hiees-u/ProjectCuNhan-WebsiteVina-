@@ -56,8 +56,6 @@ export class OutWarehouseComponent {
     const target = event.target as HTMLSelectElement;
     if (target) {
       const orderId = Number(target.value); // Chuyển đổi giá trị thành số
-      // this.selectedOrderId = orderId;
-
       this.selectedOrderId = orderId; // Lưu ID đơn hàng được chọn
 
       if (orderId > 0) {

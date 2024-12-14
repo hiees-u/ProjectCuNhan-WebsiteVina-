@@ -950,15 +950,16 @@ GO
 
 --===============Thêm Phiếu Nhập========================
 -- Bảng tạm để truyền danh sách chi tiết nhập kho
+go
 CREATE TYPE dbo.ReceiptDetailType AS TABLE (
     ProductID INT,
-    Quantity INT,
     CellID INT,
-	PurchaseOrderID INT
+    Quantity INT,
+    PurchaseOrderID INT
 );
 GO
-go
-CREATE PROCEDURE sp_InsertWarehouseReceipt
+
+CREATE PROCEDURE sp_InsertWarehouseReceipt 
     @WarehouseID INT,
     @ReceiptDetails dbo.ReceiptDetailType READONLY
 AS
@@ -968,33 +969,50 @@ BEGIN
     BEGIN TRY
         -- Step 1: Add WarehouseReceipt
         DECLARE @WarehouseReceiptID INT;
+        DECLARE @EmployeeID INT;
 
-		DECLARE @EmployeeID INT;
-
-		SELECT @EmployeeID = UF.Employ_ID 
-		FROM UserInfo UF 
-		WHERE UF.AccountName = SUSER_NAME();
+        SELECT @EmployeeID = UF.Employ_ID 
+        FROM UserInfo UF 
+        WHERE UF.AccountName = SUSER_NAME();
 
         INSERT INTO WarehouseReceipt (EmployeeID, CreateAt, WarehouseID)
         VALUES (@EmployeeID, GETDATE(), @WarehouseID);
 
         -- Get ID WarehouseReceipt
         SET @WarehouseReceiptID = SCOPE_IDENTITY();
-		print @WarehouseReceiptID
 
         -- Step 2: Add WarehouseReceiptDetail
-        INSERT INTO WarehouseReceiptDetail (WarehouseReceiptID, CellID, product_id, quantity, PurchaseOrderID, UpdateTime, UpdateBy)
-        SELECT @WarehouseReceiptID, CellID, ProductID, Quantity, PurchaseOrderID, GETDATE(), @EmployeeID
-        FROM @ReceiptDetails;
+        INSERT INTO WarehouseReceiptDetail (WarehouseReceiptID, CellID, quantity, PurchaseOrderID, UpdateTime, UpdateBy, priceHistoryId)
+        SELECT @WarehouseReceiptID, RD.CellID, RD.Quantity, RD.PurchaseOrderID, GETDATE(), @EmployeeID, PH.priceHistoryId
+        FROM @ReceiptDetails RD
+        INNER JOIN PriceHistory PH ON PH.product_id = RD.ProductID;
 
-        -- Step 3: Update QuantityDelivered of PurchaseOrderDetail
-        UPDATE POD 
-		SET POD.QuantityDelivered = POD.QuantityDelivered + RD.Quantity 
-		FROM PurchaseOrderDetail POD 
-		INNER JOIN PriceHistory PH ON POD.priceHistoryId = PH.priceHistoryId
-		INNER JOIN @ReceiptDetails RD ON PH.product_id = RD.ProductID
-		AND POD.PurchaseOrderID = RD.PurchaseOrderID
-		WHERE POD.QuantityDelivered + RD.Quantity <= POD.quantity;
+		-- Step 3: Update QuantityDelivered of PurchaseOrderDetail
+		UPDATE POD
+		SET POD.QuantityDelivered = 
+			CASE 
+				-- Nếu chưa nhập kho (QuantityDelivered là NULL hoặc 0), cập nhật số lượng nhập kho
+				WHEN POD.QuantityDelivered IS NULL OR POD.QuantityDelivered = 0 THEN RD.Quantity
+				-- Nếu số lượng đã giao hiện tại cộng thêm số lượng nhập kho không vượt quá số lượng đã đặt
+				WHEN POD.QuantityDelivered + RD.Quantity <= POD.quantity THEN POD.QuantityDelivered + RD.Quantity
+				-- Nếu số lượng đã giao cộng thêm số lượng nhập kho vượt quá số lượng đã đặt, chỉ cập nhật bằng số lượng đã đặt
+				ELSE POD.quantity
+			END
+		FROM PurchaseOrderDetail POD
+		INNER JOIN PriceHistory PH 
+			ON POD.priceHistoryId = PH.priceHistoryId
+		INNER JOIN @ReceiptDetails RD 
+			ON PH.product_id = RD.ProductID
+			AND POD.PurchaseOrderID = RD.PurchaseOrderID
+		WHERE POD.PurchaseOrderID = RD.PurchaseOrderID
+			AND PH.product_id = RD.ProductID; -- Điều kiện này đảm bảo chỉ cập nhật đúng sản phẩm
+
+
+        -- Step 4: Update Quantity in Cells
+        UPDATE C 
+        SET C.Quantity = C.Quantity + RD.Quantity
+        FROM Cells C
+        INNER JOIN @ReceiptDetails RD ON C.CellID = RD.CellID;
 
         COMMIT TRANSACTION;
     END TRY
@@ -1005,23 +1023,66 @@ BEGIN
 END;
 GO
 
---Phân quyền
 GRANT EXECUTE ON TYPE::dbo.ReceiptDetailType TO WarehouseEmployee;
 GRANT EXEC ON OBJECT::dbo.sp_InsertWarehouseReceipt TO  WarehouseEmployee;
 
---===============Thực thi
 DECLARE @ReceiptDetails dbo.ReceiptDetailType;
-INSERT INTO @ReceiptDetails (ProductID, Quantity, CellID, PurchaseOrderID)
+INSERT INTO @ReceiptDetails (ProductID, CellID, Quantity, PurchaseOrderID)
 VALUES
-	(3, 1, 10, 1),
-    (5, 2, 11, 1),
-    (4, 5, 12, 1);
+	(3, 10, 1, 1),
+    (4, 12, 1, 1),
+    (5, 11, 1, 1);
 SELECT * FROM @ReceiptDetails
 DECLARE @WarehouseID INT = 2;
-EXEC sp_InsertWarehouseReceipt 
+EXEC sp_InsertWarehouseReceipt
     @WarehouseID = @WarehouseID,
     @ReceiptDetails = @ReceiptDetails;
 go
+--======================================================================
+go
+CREATE PROCEDURE sp_GetUndeliveredPurchaseOrders
+AS
+BEGIN
+    SELECT DISTINCT POD.PurchaseOrderID
+    FROM PurchaseOrderDetail POD
+    WHERE POD.QuantityDelivered < POD.Quantity;
+END;
+GO
+
+GRANT EXEC ON OBJECT::dbo.sp_GetUndeliveredPurchaseOrders TO  WarehouseEmployee;
+
+exec sp_GetUndeliveredPurchaseOrders
+
+--=========================================
+CREATE PROCEDURE sp_GetPurchaseOrderDetails
+    @PurchaseOrderID INT
+AS
+BEGIN
+    SELECT 
+        P.product_id,
+        P.product_name,
+        POD.quantity AS QuantityOrdered,
+        POD.QuantityDelivered,
+        C.CellID,
+        C.CellName,
+        POD.priceHistoryId,
+        PH.price
+    FROM PurchaseOrderDetail POD
+    INNER JOIN PriceHistory PH 
+        ON POD.priceHistoryId = PH.priceHistoryId
+    INNER JOIN Product P 
+        ON PH.product_id = P.product_id
+    LEFT JOIN Cells C 
+        ON C.product_id = P.product_id
+    WHERE POD.PurchaseOrderID = @PurchaseOrderID
+      AND POD.QuantityDelivered < POD.quantity;
+END;
+GO
+
+EXEC sp_GetPurchaseOrderDetails @PurchaseOrderID = 1;
+
+GRANT EXEC ON OBJECT::dbo.sp_GetPurchaseOrderDetails TO  WarehouseEmployee;
+
 --===============Xóa Phiếu Nhập========================
 CREATE PROCEDURE sp_DeleteWarehouseReceipt
     @WarehouseReceiptID INT,
@@ -1244,6 +1305,11 @@ BEGIN
             RETURN;
         END
 
+		-- Step 4: Update the state of the order to 3 (Completed)
+        UPDATE [Order]
+        SET State = 3
+        WHERE Order_ID = @OrderID;
+
         COMMIT TRANSACTION;
     END TRY
     BEGIN CATCH
@@ -1272,6 +1338,60 @@ EXEC sp_ExportWarehouseGoodsByOrder
     @WarehouseID = 2,
     @Note = N'Xuất hàng theo đơn hàng',
     @OrderDetails = @OrderDetails;
+
+--=======================XUẤT KHO======================================
+--========Get ORDER IDs==================
+CREATE PROCEDURE SP_GetOrderIDs
+AS
+BEGIN
+    SELECT Order_ID
+    FROM [Order]
+	WHERE State = 2;
+END
+
+GRANT EXEC ON OBJECT::dbo.SP_GetOrderIDs TO  WarehouseEmployee;
+
+
+--GET DETAIL ORDER BY DELIVERY NOTE
+GO
+
+CREATE PROCEDURE SP_GetOrderDetailsWE
+    @OrderID INT
+AS
+BEGIN
+    SELECT 
+        p.product_id,
+        p.product_name,
+        od.Quantity AS order_quantity,
+        c.CellID,
+        c.CellName,
+        w.WarehouseID,
+        w.WarehouseName,
+        od.priceHistoryId
+    FROM 
+        OrderDetail od
+    JOIN 
+        PriceHistory ph ON od.priceHistoryId = ph.priceHistoryId
+    JOIN 
+        Product p ON ph.product_id = p.product_id
+    JOIN 
+        Cells c ON p.product_id = c.product_id
+    JOIN 
+        Shelve s ON c.ShelvesID = s.ShelvesID
+    JOIN 
+        Warehouse w ON s.WarehouseID = w.WarehouseID
+    WHERE 
+        od.Order_Id = @OrderID
+        AND c.Quantity >= od.Quantity
+END
+
+
+GRANT EXEC ON OBJECT::dbo.SP_GetOrderDetailsWE TO  WarehouseEmployee;
+
+EXEC SP_GetOrderDetailsWE @OrderID = 26;
+
+
+--================GÁN QUYỀN==========================================================
 --====================================================================================
 GRANT EXECUTE ON OBJECT::dbo.SP_GetCommunesByDistrictID TO  WarehouseEmployee;
 
@@ -1329,55 +1449,3 @@ GO
 
 --Phân quyền
 GRANT EXEC ON OBJECT::dbo.GetWarehouseByName TO  WarehouseEmployee;
-
-
---========Get ORDER IDs==================
-CREATE PROCEDURE SP_GetOrderIDs
-AS
-BEGIN
-    SELECT Order_ID
-    FROM [Order]
-	WHERE State = 2;
-END
-
-GRANT EXEC ON OBJECT::dbo.SP_GetOrderIDs TO  WarehouseEmployee;
-
-
---GET DETAIL ORDER BY DELIVERY NOTE
-GO
-
-CREATE PROCEDURE SP_GetOrderDetailsWE
-    @OrderID INT
-AS
-BEGIN
-    SELECT 
-        p.product_id,
-        p.product_name,
-        od.Quantity AS order_quantity,
-        c.CellID,
-        c.CellName,
-        w.WarehouseID,
-        w.WarehouseName,
-        od.priceHistoryId
-    FROM 
-        OrderDetail od
-    JOIN 
-        PriceHistory ph ON od.priceHistoryId = ph.priceHistoryId
-    JOIN 
-        Product p ON ph.product_id = p.product_id
-    JOIN 
-        Cells c ON p.product_id = c.product_id
-    JOIN 
-        Shelve s ON c.ShelvesID = s.ShelvesID
-    JOIN 
-        Warehouse w ON s.WarehouseID = w.WarehouseID
-    WHERE 
-        od.Order_Id = @OrderID
-        AND c.Quantity >= od.Quantity
-END
-
-
-
-GRANT EXEC ON OBJECT::dbo.SP_GetOrderDetailsWE TO  WarehouseEmployee;
-
-EXEC SP_GetOrderDetailsWE @OrderID = 26;
