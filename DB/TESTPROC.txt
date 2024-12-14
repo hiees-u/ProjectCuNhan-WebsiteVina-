@@ -1,0 +1,89 @@
+DECLARE @ReceiptDetails dbo.ReceiptDetailType;
+Insert into @ReceiptDetails (ProductID, CellID, Quantity, PurchaseOrderID)
+Values
+	(3, 10, 1, 1),
+	(4, 12, 1, 1),
+	(5, 11, 1, 1)
+
+DECLARE @Warehouse INT = 2
+EXEC sp_InsertWarehouseReceipt
+	@WarehouseID = @Warehouse,
+	@ReceiptDetails = @ReceiptDetails;
+
+Select * from WarehouseReceiptDetail
+Select * From PurchaseOrder
+Select * From PurchaseOrderDetail
+
+
+DROP PROC sp_InsertWarehouseReceipt
+
+GO
+
+
+CREATE PROCEDURE sp_InsertWarehouseReceipt 
+    @WarehouseID INT,
+    @ReceiptDetails dbo.ReceiptDetailType READONLY
+AS
+BEGIN
+    BEGIN TRANSACTION;
+
+    BEGIN TRY
+        -- Step 1: Add WarehouseReceipt
+        DECLARE @WarehouseReceiptID INT;
+        DECLARE @EmployeeID INT;
+
+        SELECT @EmployeeID = UF.Employ_ID 
+        FROM UserInfo UF 
+        WHERE UF.AccountName = SUSER_NAME();
+
+        INSERT INTO WarehouseReceipt (EmployeeID, CreateAt, WarehouseID)
+        VALUES (@EmployeeID, GETDATE(), @WarehouseID);
+
+        -- Get ID WarehouseReceipt
+        SET @WarehouseReceiptID = SCOPE_IDENTITY();
+
+        -- Step 2: Add WarehouseReceiptDetail
+        INSERT INTO WarehouseReceiptDetail (WarehouseReceiptID, CellID, quantity, PurchaseOrderID, UpdateTime, UpdateBy, priceHistoryId)
+        SELECT @WarehouseReceiptID, RD.CellID, RD.Quantity, RD.PurchaseOrderID, GETDATE(), @EmployeeID, PH.priceHistoryId
+        FROM @ReceiptDetails RD
+        INNER JOIN PriceHistory PH ON PH.product_id = RD.ProductID;
+
+		-- Step 3: Update QuantityDelivered of PurchaseOrderDetail
+		UPDATE POD
+		SET POD.QuantityDelivered = 
+			CASE 
+				-- Nếu chưa nhập kho (QuantityDelivered là NULL hoặc 0), cập nhật số lượng nhập kho
+				WHEN POD.QuantityDelivered IS NULL OR POD.QuantityDelivered = 0 THEN RD.Quantity
+				-- Nếu số lượng đã giao hiện tại cộng thêm số lượng nhập kho không vượt quá số lượng đã đặt
+				WHEN POD.QuantityDelivered + RD.Quantity <= POD.quantity THEN POD.QuantityDelivered + RD.Quantity
+				-- Nếu số lượng đã giao cộng thêm số lượng nhập kho vượt quá số lượng đã đặt, chỉ cập nhật bằng số lượng đã đặt
+				ELSE POD.quantity
+			END
+		FROM PurchaseOrderDetail POD
+		INNER JOIN PriceHistory PH 
+			ON POD.priceHistoryId = PH.priceHistoryId
+		INNER JOIN @ReceiptDetails RD 
+			ON PH.product_id = RD.ProductID
+			AND POD.PurchaseOrderID = RD.PurchaseOrderID
+		WHERE POD.PurchaseOrderID = RD.PurchaseOrderID
+			AND PH.product_id = RD.ProductID; -- Điều kiện này đảm bảo chỉ cập nhật đúng sản phẩm
+
+
+        -- Step 4: Update Quantity in Cells
+        UPDATE C 
+        SET C.Quantity = C.Quantity + RD.Quantity
+        FROM Cells C
+        INNER JOIN @ReceiptDetails RD ON C.CellID = RD.CellID;
+
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        ROLLBACK TRANSACTION;
+        THROW;
+    END CATCH;
+END;
+GO
+
+GRANT EXECUTE ON TYPE::dbo.ReceiptDetailType TO WarehouseEmployee;
+GRANT EXEC ON OBJECT::dbo.sp_InsertWarehouseReceipt TO  WarehouseEmployee;
+

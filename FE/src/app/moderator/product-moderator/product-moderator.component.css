@@ -268,7 +268,7 @@ td span {
 
 .add-product {
   width: 100%;
-  background: rgba(190, 193, 193, 0.532);
+  background: rgb(190 193 193 / 82%);
   height: 100%;
   position: absolute;
   top: 0;  

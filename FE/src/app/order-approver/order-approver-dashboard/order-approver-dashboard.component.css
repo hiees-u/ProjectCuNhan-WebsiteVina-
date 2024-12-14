@@ -44,7 +44,7 @@
   padding: 5px;
   font-family: var(--main-style);
   border-radius: 10px;
-  transition: all .5s ease-in-out;
+  transition: all 0.5s ease-in-out;
   margin: auto;
 }
 
@@ -87,7 +87,7 @@
 .content-item p {
   text-align: center;
   color: var(--secon-text-color2);
-  transition: all .6s ease-in-out;
+  transition: all 0.6s ease-in-out;
 }
 
 .content-header p {
@@ -135,9 +135,8 @@
   align-items: center;
 }
 
-
 .show-delete {
-  animation: showDelete .85s ease-in-out forwards;
+  animation: showDelete 0.85s ease-in-out forwards;
 }
 
 @keyframes showDelete {
@@ -168,4 +167,17 @@
     opacity: 0;
     /* transform: translateY(-50%) scale(0.9); */
   }
+}
+
+.mess {
+  background-color: rgba(255, 0, 0, 0.254);
+  color: red;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 30px;
+  border-radius: 10px;
+  font-family: var(--main-style);
+  font-size: 1.5em;
 }

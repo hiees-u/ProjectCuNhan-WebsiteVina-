@@ -9,16 +9,14 @@
 	- Mặt hàng, ✓
 	- Khách hàng, ✓
 	- Nhà Sản xuất, ✓
-	- Loai khách hàng, ✓
 	- Nhân viên, ✓
 	- phòng ban ✓
  - Nhân viên: 
       + Xử lý đơn hàng ✓
  - Thiết kế, cài đặt cơ sở dữ liệu.  ✓
-
+ - Chức năng chatbox giao tiếp với khách hàng.
 
 Vinh:
- - Chức năng chatbox giao tiếp với khách hàng.
  - Quản lý kho:
 		+ Nhập kho, 
 		+ Xuất kho 
@@ -28,7 +26,7 @@ Vinh:
 
 Thịnh:
  - Quản trị người dùng
- - thanh toán ✓
+ - thanh toán online ✓
  - Giao hàng (Tìm hiểu API giao hàng..)
  - Thống kê số lượng bán theo ngày, tuần của từng loại
 mặt hàng

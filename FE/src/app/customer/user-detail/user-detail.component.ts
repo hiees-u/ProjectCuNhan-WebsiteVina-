@@ -277,8 +277,10 @@ export class UserDetailComponent {
     if (response.isSuccess) {
       this.dataNotification.status = 'success';
       console.log('lấy danh sách order mới!!!');
-
       this.getOrder(undefined);
+      setTimeout(() => {
+        this.onShowConfirmDelete(0,0);
+      },3000);
     } else {
       this.dataNotification.status = 'error';
     }
