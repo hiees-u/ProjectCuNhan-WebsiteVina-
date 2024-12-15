@@ -52,20 +52,20 @@ builder.Services.Configure<MomoOptionModel>(builder.Configuration.GetSection("Mo
 builder.Services.AddScoped<IMomoService, MomoService>();
 
 // Thêm dịch vụ CORS
-//builder.Services.AddCors(options =>
-//{
-//    options.AddPolicy("AllowSpecificOrigin",
-//        builder => builder.WithOrigins("http://localhost:4200") // Your Angular app URL
-//            .AllowAnyMethod()
-//            .AllowAnyHeader());
-//});
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAllOrigins",
-        builder => builder.AllowAnyOrigin()
+    options.AddPolicy("AllowSpecificOrigin",
+        builder => builder.WithOrigins("http://localhost:4200") // Your Angular app URL
             .AllowAnyMethod()
             .AllowAnyHeader());
 });
+//builder.Services.AddCors(options =>
+//{
+//    options.AddPolicy("AllowAllOrigins",
+//        builder => builder.AllowAnyOrigin()
+//            .AllowAnyMethod()
+//            .AllowAnyHeader());
+//});
 
 
 // Cấu hình JWT với Issuer và Audience

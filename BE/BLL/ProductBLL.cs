@@ -282,7 +282,7 @@ namespace BLL
                                     ProductId = Convert.ToInt32(reader["product_id"]),
                                     ProductName = reader["product_name"] as string ?? string.Empty,
                                     Image = Convert.ToString(reader["image"]),
-                                    TotalQuantity = Convert.ToInt32(reader["totalQuantity"]),
+                                    TotalQuantity = reader["totalQuantity"] != DBNull.Value ? Convert.ToInt32(reader["totalQuantity"]) : 0,
                                     CategoryId = Convert.ToInt32(reader["Category_id"]),
                                     Supplier = Convert.ToInt32(reader["Supplier"]),
                                     SubCategoryId = Convert.ToInt32(reader["SubCategoryID"]),
