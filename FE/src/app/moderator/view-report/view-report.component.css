@@ -1,0 +1,70 @@
+.view-report {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Căn giữa các phần tử */
+  justify-content: center;
+  width: 100%;
+}
+
+h2 {
+  text-align: center;
+  color: #333;
+}
+
+.report-filters {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.report-filters label {
+  margin: 0 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+input[type="date"],
+input[type="number"],
+select {
+  margin: 10px 0;
+  padding: 5px;
+  font-size: 16px;
+  width: 100%;
+  max-width: 300px;
+}
+
+button {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Điều chỉnh canvas với tỷ lệ chính xác */
+canvas {
+  margin: 20px auto;
+  display: block;
+  max-width: 100%;
+  height: auto; /* Để chiều cao tự động thay đổi theo chiều rộng */
+  width: 100%; /* Đảm bảo chiếm toàn bộ chiều rộng của container */
+}
+
+/* Giới hạn chiều cao của canvas trên màn hình nhỏ */
+@media (max-width: 768px) {
+  .view-report canvas {
+    width: 100%;
+    height: auto; /* Để chiều cao tự động điều chỉnh */
+    max-height: 300px; /* Giới hạn chiều cao tối đa cho màn hình nhỏ */
+  }
+}

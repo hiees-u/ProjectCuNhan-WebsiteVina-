@@ -1,0 +1,66 @@
+<div class="view-report">
+    <h2>Thống Kê Doanh Thu</h2>
+  
+    <!-- Bộ chọn loại thống kê -->
+    <div class="report-filters">
+      <label>
+        <input type="radio" name="reportType" [(ngModel)]="reportType" value="daily" />
+        Theo Ngày
+      </label>
+      <label>
+        <input type="radio" name="reportType" [(ngModel)]="reportType" value="weekly" />
+        Theo Tuần
+      </label>
+      <label>
+        <input type="radio" name="reportType" [(ngModel)]="reportType" value="monthly" />
+        Theo Tháng
+      </label>
+      <label>
+        <input type="radio" name="reportType" [(ngModel)]="reportType" value="yearly" />
+        Theo Năm
+      </label>
+    </div>
+  
+    <!-- Chọn ngày -->
+    <div *ngIf="reportType === 'daily'">
+      <label>Chọn ngày:</label>
+      <input type="date" [(ngModel)]="selectedDate" />
+    </div>
+  
+    <!-- Chọn tuần -->
+    <div *ngIf="reportType === 'weekly'">
+      <label>Ngày bắt đầu:</label>
+      <input type="date" [(ngModel)]="startDate" />
+      <label>Ngày kết thúc:</label>
+      <input type="date" [(ngModel)]="endDate" />
+    </div>
+  
+    <!-- Chọn tháng -->
+    <div *ngIf="reportType === 'monthly'">
+      <label>Tháng:</label>
+      <select [(ngModel)]="selectedMonth">
+        <option *ngFor="let month of months" [value]="month">{{ month }}</option>
+      </select>
+      <label>Năm:</label>
+      <input type="number" [(ngModel)]="selectedYear" placeholder="Nhập năm" />
+    </div>
+  
+    <!-- Chọn năm -->
+    <div *ngIf="reportType === 'yearly'">
+      <label>Năm:</label>
+      <input type="number" [(ngModel)]="selectedYear" placeholder="Nhập năm" />
+    </div>
+  
+    <!-- Nút thống kê -->
+    <button (click)="generateReport()">Thống Kê</button>
+  
+    <!-- Hiển thị biểu đồ -->
+    <div *ngIf="chartData">
+      <canvas baseChart
+        [data]="chartData"
+        [type]="chartType"
+        [options]="chartOptions">
+      </canvas>
+    </div>
+  </div>
+  

@@ -869,4 +869,54 @@ export class ModeratorService {
       throw error;
     }
   }
+
+  // Thêm các hàm gọi API cho thống kê
+  async getDailySalesReport(date: Date): Promise<any> {
+    try {
+      if (!(date instanceof Date) || isNaN(date.getTime())) {
+        throw new Error('Giá trị ngày không hợp lệ.');
+      }
+      const url = `${this.apiUrl}Report/Daily?InputDate=${date.toISOString()}`;
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+      return await response.json();
+    } catch (error) {
+      console.error('Error fetching daily sales report:', error);
+      throw error;
+    }
+  }
+  async getWeeklySalesReport(startDate: Date, endDate: Date): Promise<any> {
+    // Đảm bảo API trả về dữ liệu theo tuần
+    const url = `${this.apiUrl}Report/Weekly?StartDate=${startDate.toISOString()}&EndDate=${endDate.toISOString()}`;
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${this.token}` },
+    });
+    return await response.json();
+  }
+  
+  async getMonthlySalesReport(month: number, year: number): Promise<any> {
+    const url = `${this.apiUrl}Report/Monthly?Month=${month}&Year=${year}`;
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${this.token}` },
+    });
+    return await response.json();
+  }
+  
+  async getYearlySalesReport(year: number): Promise<any> {
+    const url = `${this.apiUrl}Report/Yearly?Year=${year}`;
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${this.token}` },
+    });
+    return await response.json();
+  }
+  
+
 }
