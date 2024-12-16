@@ -365,5 +365,39 @@ export class WarehouseEmployeeService {
       throw error;
     }
   }
+
+  async getProductsExpriryDate(): Promise<BaseResponseModel> {
+    const url = `https://localhost:7060/api/Cell/GetProductsExpriryDate`;
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data: BaseResponseModel = await response.json();
+
+      // Đảm bảo console hoạt động trước khi log
+      if (console && typeof console.log === 'function') {
+        console.log('Dữ liệu lấy được từ service(API):', data);
+      }
+
+
+      return data;
+    } catch (error) {
+      // Đảm bảo console.error hoạt động
+      if (console && typeof console.error === 'function') {
+        console.error('Lỗi khi gọi API:', error);
+      }
+
+      throw error; // Tiếp tục ném lỗi để xử lý tại thành phần gọi hàm
+    }
+  }
 }
 

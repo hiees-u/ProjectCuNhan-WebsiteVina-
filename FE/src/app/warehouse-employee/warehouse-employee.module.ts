@@ -186,6 +186,27 @@ export function ContructorPurchaseOrderDetailResponseModule(): PurchaseOrderDeta
   };
 }
 
+export interface ProductsExpriryDate {
+  productId: number;
+  productName: string;
+  image: string;
+  modifiedBy: string;
+  expriryDate: Date;
+  createTime: string;
+  modifiedTime: string;
+}
+export function ContructorProductsExpriryDateResponseModule(): ProductsExpriryDate {
+  return {
+    productId: 0,
+    productName: '',
+    image: '',
+    modifiedBy: '',
+    expriryDate: new Date(),
+    createTime: '',
+    modifiedTime: '',
+  };
+}
+
 @NgModule({
   declarations: [],
   imports: [],

@@ -5,6 +5,8 @@ namespace BLL.Interface
 {
     public interface ICell
     {
+        public BaseResponseModel GetProductsExpriryDate();
+
         public BaseResponseModel GetCellByShelve(int shelveID);
         public BaseResponseModel GetProductsByWarehouseID(int warehouseID);
         public BaseResponseModel Post(DTO.Cells.CellPostRequestModule request);

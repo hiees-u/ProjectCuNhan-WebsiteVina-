@@ -1,7 +1,9 @@
 ﻿using BLL.Interface;
 using BLL.LoginBLL;
 using DTO.Cells;
+using DTO.Product;
 using DTO.Responses;
+using DTO.WareHouse;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -183,6 +185,63 @@ namespace BLL
                 {
                     IsSuccess = false,
                     Message = $"Lỗi trong quá trình lấy thông tin sản phẩm trong kho: {ex.Message}"
+                };
+            }
+        }
+
+        public BaseResponseModel GetProductsExpriryDate()
+        {
+            List<ProductViewUserResponseModel> listProductsExpriryDate = new List<ProductViewUserResponseModel>();
+            try
+            {
+                using (var conn = new SqlConnection(ConnectionStringHelper.Get()))
+                {
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand("GetProductsExpiringInNextMonth", conn))
+                    {
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                ProductViewUserResponseModel productsExpriryDateResponseModel = new ProductViewUserResponseModel()
+                                {
+                                    ProductId = Convert.ToInt32(reader["product_id"]),
+                                    ProductName = reader["product_name"] as string ?? string.Empty,
+                                    Image = reader["image"] as string ?? string.Empty,
+                                    ModifiedBy = reader["ModifiedBy"] as string ?? string.Empty,
+                                    ExpriryDate = reader.IsDBNull(reader.GetOrdinal("ExpriryDate")) ? (DateTime?)null : Convert.ToDateTime(reader["ExpriryDate"]),
+                                    CreateTime = (DateTime)reader["CreateTime"],
+                                    ModifiedTime = reader.IsDBNull(reader.GetOrdinal("ModifiedTime")) ? (DateTime?)null : Convert.ToDateTime(reader["ModifiedTime"])
+                                };
+                                listProductsExpriryDate.Add(productsExpriryDateResponseModel);
+                            }
+                        }
+                    }
+                }
+
+                BaseResponseModel response = new BaseResponseModel()
+                {
+                    IsSuccess = true,
+                    Message = "Success!",
+                    Data = listProductsExpriryDate
+                };
+
+                if (listProductsExpriryDate.Count < 0)
+                {
+                    response.IsSuccess = true;
+                    response.Message = "Không có sản phẩm nào hết hạn!!!";
+                }
+
+                return response;
+
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponseModel()
+                {
+                    IsSuccess = false,
+                    Message = $"Lỗi trong quá trình lấy thông tin sản phẩm hết hạn!!!: {ex}"
                 };
             }
         }

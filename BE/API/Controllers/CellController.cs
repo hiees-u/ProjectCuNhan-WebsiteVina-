@@ -56,5 +56,12 @@ namespace API.Controllers
             var result = this.i_cell.Delete(cellID);
             return result.IsSuccess ? Ok(result) : BadRequest(result);
         }
+        [HttpGet("GetProductsExpriryDate")]
+        [Authorize(Roles = "WarehouseEmployee")]
+        public IActionResult GetProductsExpriryDate()
+        {
+            BaseResponseModel res = this.i_cell.GetProductsExpriryDate();
+            return res.IsSuccess ? Ok(res) : BadRequest(res);
+        }
     }
 }
