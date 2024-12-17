@@ -3,24 +3,32 @@
   font-family: var(--main-style);
   display: flex;
   flex-direction: column;
-  align-items: center; /* Căn giữa các phần tử */
+  align-items: center;
   justify-content: center;
   width: 100%;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  
 }
 
 h2 {
   text-align: center;
   color: #333;
+  margin-bottom: 20px;
+  font-size: 24px;
 }
 
 .report-filters {
   display: flex;
   justify-content: center;
   margin-bottom: 20px;
+  flex-wrap: wrap; /* Cho phép xếp xuống hàng nếu không đủ chỗ */
+  gap: 10px; /* Khoảng cách giữa các bộ lọc */
 }
 
 .report-filters label {
-  margin: 0 10px;
+  margin: 0 5px;
   font-size: 16px;
   cursor: pointer;
 }
@@ -29,22 +37,28 @@ input[type="date"],
 input[type="number"],
 select {
   margin: 10px 0;
-  padding: 5px;
-  font-size: 16px;
+  padding: 8px;
+  font-size: 14px;
   width: 100%;
   max-width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 button {
   display: block;
   margin: 20px auto;
-  padding: 10px 20px;
+  padding: 12px 24px;
   font-size: 16px;
+  font-weight: bold;
   background-color: #007bff;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-family: var(--main-style);
 }
 
 button:hover {
@@ -52,17 +66,76 @@ button:hover {
 }
 
 canvas {
-  margin: 20px auto;
   display: block;
-  max-width: 100%;
-  height: 150px; 
-  width: 100%; 
+  height: 100%; /* Đảm bảo canvas sử dụng đủ chiều cao của container */
+  width: 100%;
+  margin-right: 10px;
 }
 
 @media (max-width: 768px) {
   .view-report canvas {
     width: 100%;
-    height: auto; 
-    max-height: 300px; 
+    height: auto;
+    max-height: 400px; /* Đảm bảo biểu đồ không bị quá nhỏ */
   }
+}
+
+.report-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 14px;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  overflow: hidden;
+  margin-top: 20px;
+}
+
+.report-table th,
+.report-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+  white-space: nowrap; /* Ngăn việc ngắt dòng */
+  overflow: hidden;
+  text-overflow: ellipsis; /* Thêm ... nếu nội dung quá dài */
+}
+
+.report-table th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+  color: #333;
+}
+
+.report-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9; /* Tô màu xen kẽ cho bảng */
+}
+
+.report-table tbody tr:hover {
+  background-color: #f1f1f1; /* Highlight dòng khi hover */
+}
+
+.report-table td {
+  color: #555;
+}
+
+.scrollable-table {
+  max-height: 400px; /* Đặt chiều cao tối đa cho bảng */
+  overflow-y:auto; /* Thêm thanh cuộn nếu dữ liệu quá dài */
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.chart-container {
+  width: 100%;
+  height: 75%; /* Chiều cao tối thiểu cho biểu đồ */
+  overflow: hidden; /* Ẩn phần tràn ra ngoài */
+
+}
+.page-report{
+    max-height: 100vh; /* Chiều cao tối đa cho trang */
+    overflow-y: scroll; /* Thêm thanh cuộn dọc cho toàn bộ trang */ /* Bỏ margin để tận dụng toàn bộ chiều cao */
+    padding: 20px; /* Khoảng cách bên trong */
+    box-sizing: border-box; /* Đảm bảo padding không làm tăng chiều cao */
 }

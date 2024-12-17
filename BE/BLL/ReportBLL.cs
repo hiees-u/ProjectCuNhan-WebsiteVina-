@@ -1,7 +1,5 @@
 ﻿using BLL.Interface;
 using BLL.LoginBLL;
-using DTO.Address;
-using DTO.Order;
 using DTO.Report;
 using DTO.Responses;
 using System.Data;
@@ -74,6 +72,7 @@ namespace BLL
         {
             try
             {
+                Console.WriteLine($"Month: {Month}, Year: {Year}"); // Log kiểm tra tham số
                 List<MonthlyReportResponseModel> resultList = new List<MonthlyReportResponseModel>();
 
                 using (var conn = new SqlConnection(ConnectionStringHelper.Get()))
@@ -91,8 +90,7 @@ namespace BLL
                             {
                                 resultList.Add(new MonthlyReportResponseModel()
                                 {
-                                    Month = Convert.ToInt32(reader["Thang"]),
-                                    Year = Convert.ToInt32(reader["Nam"]),
+                                    Day = Convert.ToInt32(reader["Day"]),
                                     ProductId = reader["MaSanPham"].ToString(),
                                     ProductName = reader["TenSanPham"].ToString(),
                                     TotalSales = Convert.ToInt32(reader["TongSoLuongBanRa"]),
@@ -212,9 +210,7 @@ namespace BLL
                             {
                                 resultList.Add(new YearlyReportResponseModel()
                                 {
-                                    Year = Convert.ToInt32(reader["Nam"]),
-                                    ProductId = reader["MaSanPham"].ToString(),
-                                    ProductName = reader["TenSanPham"].ToString(),
+                                    Month = Convert.ToInt32(reader["Month"]),
                                     TotalSales = Convert.ToInt32(reader["TongSoLuongBanRa"]),
                                     TotalRevenue = Convert.ToDecimal(reader["TongDoanhThu"])
                                 });
@@ -249,6 +245,78 @@ namespace BLL
                     Data = null
                 };
             }
+        }
+
+        public BaseResponseModel GetDailySalesReportByCustomerTye(DateTime InputDate)
+        {
+            try
+            {
+                List<DailyReportCustomerTypeResponseModel> resultList = new List<DailyReportCustomerTypeResponseModel>();
+
+                using (var conn = new SqlConnection(ConnectionStringHelper.Get()))
+                {
+                    conn.Open();
+                    using (var cmd = new SqlCommand("GetRevenueByCustomerTypeInDay", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@Date", InputDate);
+
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                resultList.Add(new DailyReportCustomerTypeResponseModel()
+                                {
+                                    InputDate = InputDate,
+                                    CustomerType = reader["CustomerType"].ToString(),
+                                    Revenue = Convert.ToDecimal(reader["Revenue"])
+                                });
+                            }
+                        }
+                    }
+                }
+
+                if (resultList.Count == 0)
+                {
+                    return new BaseResponseModel()
+                    {
+                        IsSuccess = false,
+                        Message = "Không có dữ liệu!",
+                        Data = null
+                    };
+                }
+
+                return new BaseResponseModel()
+                {
+                    IsSuccess = true,
+                    Message = "Thành Công!",
+                    Data = resultList
+                };
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponseModel()
+                {
+                    IsSuccess = false,
+                    Message = $"Lỗi trong quá trình: {ex.Message}",
+                    Data = null
+                };
+            }
+        }
+
+        public BaseResponseModel GetRangeSalesReportByCustomerTye(DateTime StartDate, DateTime EndDate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public BaseResponseModel GetMonthSalesReportByCustomerTye(int Month, int Year)
+        {
+            throw new NotImplementedException();
+        }
+
+        public BaseResponseModel GetYearSalesReportByCustomerTye(int Year)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -37,10 +37,16 @@ namespace API.Controllers
         }
 
         [HttpGet("Yearly")]
-
         public IActionResult GetYearlySalesReport(int Year)
         {
             var res = this.report.GetYearlySalesReport(Year);
+            return res.IsSuccess ? Ok(res) : BadRequest(res);
+        }
+
+        [HttpGet("DailyByCumtomerType")]
+        public IActionResult GetDailySalesReportByCustomerTye(DateTime InputDate)
+        {
+            BaseResponseModel res = this.report.GetDailySalesReportByCustomerTye(InputDate);
             return res.IsSuccess ? Ok(res) : BadRequest(res);
         }
     }
