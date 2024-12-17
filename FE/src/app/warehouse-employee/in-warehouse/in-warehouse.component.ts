@@ -106,10 +106,6 @@ export class InWarehouseComponent {
             return;
         }
 
-        // const invalidProducts = this.products.filter(
-        //     product => product.quantityToImport <= 0 || !product.cellId
-        // );
-
         // Kiểm tra các sản phẩm không hợp lệ
         const invalidProducts = this.products.filter(product => {
             const maxQuantity = product.quantityOrdered - product.quantityDelivered;

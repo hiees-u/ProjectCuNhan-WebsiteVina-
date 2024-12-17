@@ -39,6 +39,12 @@ export class WarehouseEmployeeComponent {
   click_in_warehouse() {
     this.router.navigate(['/warehouse-employee/in-warehouse']);
   }
+  click_products_expriry() {
+    this.router.navigate(['/warehouse-employee/products-expriry']);
+  }
+  click_product_warehouse() {
+    this.router.navigate(['/warehouse-employee/product-warehouse']);
+  }
   logOutHandler() {
     this.router.navigate(['/login']);
     localStorage.removeItem('token');

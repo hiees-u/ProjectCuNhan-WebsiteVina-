@@ -18,6 +18,8 @@ import { WarehouseManagementComponent } from './warehouse-employee/warehouse-man
 import { AddWarehouseComponent } from './warehouse-employee/add-warehouse/add-warehouse.component';
 import { OutWarehouseComponent } from './warehouse-employee/out-warehouse/out-warehouse.component';
 import { InWarehouseComponent } from './warehouse-employee/in-warehouse/in-warehouse.component';
+import { ProductsExpriryComponent } from './warehouse-employee/products-expriry/products-expriry.component';
+import { ProductWarehouseComponent } from './warehouse-employee/product-warehouse/product-warehouse.component';
 
 export const routes: Routes = [
   ...CustomerRoutingModule,
@@ -60,6 +62,8 @@ export const routes: Routes = [
       { path: 'add-warehouse', component: AddWarehouseComponent },
       { path: 'out-warehouse', component: OutWarehouseComponent },
       { path: 'in-warehouse', component: InWarehouseComponent},
+      { path: 'products-expriry', component: ProductsExpriryComponent},
+      { path: 'product-warehouse', component: ProductWarehouseComponent},
       { path: '', redirectTo: 'warehouse-management', pathMatch: 'full' }
     ]
   },

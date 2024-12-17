@@ -1,0 +1,47 @@
+
+   <div class="container">
+    <header class="top-bar">
+      <h2 class="top-bar-title">Thông Tin Vị Trí Sản Phẩm</h2>
+    </header>
+    <form id="deliveryForm">
+      <div class="grid grid-cols-2">
+        <div class="form-group">
+          <label for="salesOrder">Chọn sản phẩm</label>
+          <select id="salesOrder" name="PurchaseOrderId" 
+          [(ngModel)]="selectedProduct"
+          (change)="onProductChange($event)"
+          >
+            <option *ngFor="let product of products" [value]="product.productId">
+              {{ product.productName }}
+            </option>
+          </select>
+        </div>
+      </div>
+  
+      <h3>Thông tin sản phẩm</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Tên sản phẩm</th>
+            <!-- <th>Ảnht</th> -->
+            <th>Kho</th>
+            <th>Kệ</th>
+            <th>Ô</th>
+            <th>Số Lượng</th>
+            <th>Ngày Hết Hạn</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of inFoProducts">
+            <td>{{ product.productName }}</td>
+            <!-- <td>{{ product.productName }}</td> -->
+            <td>{{ product.warehouseName }}</td>
+            <td>{{ product.shelvesName }}</td>   
+            <td>{{ product.cellName }}</td>
+            <td>{{ product.totalQuantity }}</td>
+            <td>{{ product.expriryDate }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
+  </div>
