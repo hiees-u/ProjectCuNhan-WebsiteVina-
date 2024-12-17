@@ -41,6 +41,7 @@ export class ViewEmployeeComponent {
     { id: 4, name: 'Quản trị kho' },
     { id: 5, name: 'Duyệt đơn' },
     { id: 6, name: 'Quản lý' },
+    { id: 7, name: 'Vận Chuyển' },
   ];
 
   genders = [
