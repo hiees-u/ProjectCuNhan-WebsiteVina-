@@ -16,7 +16,7 @@
       Không có đơn hàng nào...!
     </p>
 
-    <table>
+    <table *ngIf="orders.length > 0">
       <thead>
         <tr>
           <th>Mã đơn hàng</th>
