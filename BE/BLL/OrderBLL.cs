@@ -708,6 +708,7 @@ namespace BLL
                                 OrderResponseModelv4 res = new OrderResponseModelv4
                                 {
                                     OrderId = reader["ID"] != DBNull.Value ? Convert.ToInt32(reader["ID"]) : 0,
+                                    name = reader["NAME"].ToString() ?? string.Empty,
                                     Phone = reader["Phone"].ToString() ?? string.Empty,
                                     Addres = reader["Addres"].ToString() ?? string.Empty,
                                     TotalPayment = reader["Totalpayment"] != DBNull.Value ? Convert.ToDecimal(reader["Totalpayment"]) : 0,
@@ -724,6 +725,48 @@ namespace BLL
                             Message = "Lấy danh sách đơn đặt hàng thành công..!",
                             Data = lst
                         };
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponseModel()
+                {
+                    IsSuccess = false,
+                    Message = "Đã xảy ra lỗi..!"
+                };
+            }
+        }
+
+        public BaseResponseModel Delivery(int orderID)
+        {
+            try
+            {
+                using (var conn = new SqlConnection(ConnectionStringHelper.Get()))
+                {
+                    using (SqlCommand command = new SqlCommand("UpdateOrderState", conn))
+                    {
+                        command.CommandType = CommandType.StoredProcedure; 
+                        command.Parameters.AddWithValue("@OrderID", orderID);
+
+                        try
+                        {
+                            conn.Open();
+                            command.ExecuteNonQuery();
+                            return new BaseResponseModel()
+                            {
+                                IsSuccess = true,
+                                Message = "Xác nhận đơn đã vận chuyển thành công."
+                            };
+                        }
+                        catch (Exception ex)
+                        {
+                            return new BaseResponseModel()
+                            {
+                                IsSuccess = false,
+                                Message = "Đã xảy ra lỗi..!" + ex.Message
+                            };
+                        }
                     }
                 }
             }

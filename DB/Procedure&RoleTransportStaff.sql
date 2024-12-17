@@ -2,7 +2,7 @@
 Create ROLE TransportStaff;
 
 go-- P -- R -- O -- C -- E -- D -- U -- R -- E -- 
-
+DROP PROC UpdateOrderState
 CREATE PROCEDURE UpdateOrderState
     @OrderID INT
 AS
@@ -33,7 +33,7 @@ go
 GRANT EXECUTE ON OBJECT::dbo.UpdateOrderState TO TransportStaff;
 
 GO--###########
---DROP PROC sp_GetOrders
+--DROP PROC sp_GetOrderTS
 CREATE PROCEDURE sp_GetOrderTS
     @PageNumber INT,
     @PageSize INT
@@ -46,7 +46,8 @@ BEGIN
     SET @Offset = (@PageNumber - 1) * @PageSize;
 
     SELECT 
-        O.Order_ID AS ID, 
+        O.Order_ID AS ID,
+		O.Name_Recipient AS NAME,
         O.Phone AS Phone, 
         A.Note + '/' + A.HouseNumber + ', ' + C.CommuneName + ', ' + D.DistrictName + ', ' + P.ProvinceName AS Addres, 
         O.Total_Payment AS Totalpayment, 
@@ -57,6 +58,7 @@ BEGIN
     JOIN Commune C ON A.CommuneID = C.CommuneID
     JOIN District D ON C.DistrictID = D.DistrictID
     JOIN Province P ON D.ProvinceID = P.ProvinceID
+	WHERE State = 3
     ORDER BY O.Create_At
     OFFSET @Offset ROWS FETCH NEXT @PageSize ROWS ONLY;
 END;

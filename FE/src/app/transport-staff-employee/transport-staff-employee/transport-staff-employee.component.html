@@ -1,9 +1,48 @@
 <div class="container">
-    <div class="header">
-        VINA CÀ PHÊ
-        <div class="btn-content" (click)="logOutHandler()">
-            <i class="fa-solid fa-right-from-bracket"></i>
-          </div>
+    <div class="notification">
+        <app-notification
+          [data]="dataNotification"
+          [trigger]="trigger"
+        ></app-notification>
+      </div>
+  <div class="header">
+    VINA CÀ PHÊ
+    <div class="btn-content" (click)="logOutHandler()">
+      <i class="fa-solid fa-right-from-bracket"></i>
     </div>
-    
+  </div>
+  <div class="body">
+    <p class="text-error" *ngIf="orders.length <= 0">
+      Không có đơn hàng nào...!
+    </p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Mã đơn hàng</th>
+          <th>Tên người nhận</th>
+          <th>SDT người nhận</th>
+          <th>Giá trị đơn</th>
+          <th>Địa chỉ</th>
+          <th>Thời gian đặt</th>
+          <th>Thanh toán</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of orders">
+          <td>#{{ item.orderId }}</td>
+          <td>{{ item.name }}</td>
+          <td>{{ item.phone }}</td>
+          <td>{{ item.totalPayment | customCurrency }}</td>
+          <td>{{ item.addres }}</td>
+          <td>{{ formatDate(item.createAt) }}</td>
+          <td *ngIf="!item.paymentStatus">Chưa thanh toán</td>
+          <td *ngIf="item.paymentStatus">Đã thanh toán</td>
+          <td (click)="Success(item.orderId)">
+            <span class="button">Giao</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
