@@ -160,3 +160,6 @@ button:focus {
     text-align: center;
     font-size: 5px;
 }
+.txt_left{
+    text-align: left;
+}

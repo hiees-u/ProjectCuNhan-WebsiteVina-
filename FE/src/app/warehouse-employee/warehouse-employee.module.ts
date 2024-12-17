@@ -190,20 +190,24 @@ export interface ProductsExpriryDate {
   productId: number;
   productName: string;
   image: string;
+  totalQuantity: number;
   modifiedBy: string;
   expriryDate: Date;
   createTime: string;
   modifiedTime: string;
+  status: string;
 }
 export function ContructorProductsExpriryDateResponseModule(): ProductsExpriryDate {
   return {
     productId: 0,
     productName: '',
     image: '',
+    totalQuantity: 0,
     modifiedBy: '',
     expriryDate: new Date(),
     createTime: '',
     modifiedTime: '',
+    status: ''
   };
 }
 

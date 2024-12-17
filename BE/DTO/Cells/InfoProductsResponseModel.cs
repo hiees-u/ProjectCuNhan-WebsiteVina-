@@ -8,6 +8,7 @@ namespace DTO.Cells
 {
     public class InfoProductsResponseModel
     {
+        public int ProductID { get; set; }
         public string ProductName { get; set; } = null!;
         public string? Image { get; set; }
         public string WarehouseName { get; set; } = null!;

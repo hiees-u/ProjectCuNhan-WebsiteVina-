@@ -177,7 +177,7 @@ namespace BLL
             }
         }
 
-        public BaseResponseModel GetInfoProductsByProductID(int productId)
+        public BaseResponseModel GetInfoProducts()
         {
             List<InfoProductsResponseModel> productOfWarehouseList = new List<InfoProductsResponseModel>();
             try
@@ -185,19 +185,9 @@ namespace BLL
                 using (var conn = new SqlConnection(ConnectionStringHelper.Get()))
                 {
                     conn.Open();
-                    using (var cmd = new SqlCommand("GetInfoProductsByProductID", conn))
+                    using (var cmd = new SqlCommand("GetAllProductsInfo", conn))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
-
-                        // Add the input parameter for warehouseID
-                        cmd.Parameters.AddWithValue("@product_id", productId);
-
-                        // Add parameter OUTPUT to receive notifications from the procedure
-                        SqlParameter messageParam = new SqlParameter("@Message", SqlDbType.NVarChar, 100)
-                        {
-                            Direction = ParameterDirection.Output
-                        };
-                        cmd.Parameters.Add(messageParam);
 
                         // Execute the command and read the result
                         using (SqlDataReader reader = cmd.ExecuteReader())
@@ -207,13 +197,14 @@ namespace BLL
                                 // Add each shelf to the list
                                 productOfWarehouseList.Add(new InfoProductsResponseModel()
                                 {
-                                    ProductName = reader.GetString(reader.GetOrdinal("product_name")),
-                                    Image = reader.IsDBNull(reader.GetOrdinal("image")) ? null : reader.GetString(reader.GetOrdinal("image")),
+                                    ProductID = Convert.ToInt32(reader["ProductId"]),
+                                    ProductName = reader.GetString(reader.GetOrdinal("ProductName")),
+                                    Image = reader.IsDBNull(reader.GetOrdinal("Image")) ? null : reader.GetString(reader.GetOrdinal("Image")),
                                     WarehouseName = reader.GetString(reader.GetOrdinal("WarehouseName")),
                                     CellName = reader.GetString(reader.GetOrdinal("CellName")),
                                     ShelvesName = reader.GetString(reader.GetOrdinal("ShelvesName")),
-                                    TotalQuantity = reader.IsDBNull(reader.GetOrdinal("totalQuantity")) ? (int?)null : reader.GetInt32(reader.GetOrdinal("TotalQuantity")),
-                                    ExpriryDate = reader.IsDBNull(reader.GetOrdinal("ExpriryDate")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("ExpriryDate"))
+                                    TotalQuantity = reader.IsDBNull(reader.GetOrdinal("TotalQuantity")) ? (int?)null : reader.GetInt32(reader.GetOrdinal("TotalQuantity")),
+                                    ExpriryDate = reader.IsDBNull(reader.GetOrdinal("ExpiryDate")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("ExpiryDate"))
                                 });
                             }
                         }
@@ -222,7 +213,7 @@ namespace BLL
                         return new BaseResponseModel()
                         {
                             IsSuccess = true,
-                            Message = messageParam.Value.ToString(),
+                            Message = "Lấy thông tin sản phẩm trong kho thành công",
                             Data = productOfWarehouseList // Return the list  product in warehouse
                         };
                     }
@@ -324,8 +315,10 @@ namespace BLL
                                     ProductId = Convert.ToInt32(reader["product_id"]),
                                     ProductName = reader["product_name"] as string ?? string.Empty,
                                     Image = reader["image"] as string ?? string.Empty,
+                                    TotalQuantity = Convert.ToInt32(reader["totalQuantity"]),                                    
                                     ModifiedBy = reader["ModifiedBy"] as string ?? string.Empty,
                                     ExpriryDate = reader.IsDBNull(reader.GetOrdinal("ExpriryDate")) ? (DateTime?)null : Convert.ToDateTime(reader["ExpriryDate"]),
+                                    Status = reader["Status"] as string ?? string.Empty,
                                     CreateTime = (DateTime)reader["CreateTime"],
                                     ModifiedTime = reader.IsDBNull(reader.GetOrdinal("ModifiedTime")) ? (DateTime?)null : Convert.ToDateTime(reader["ModifiedTime"])
                                 };

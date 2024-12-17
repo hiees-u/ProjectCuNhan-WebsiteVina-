@@ -7,7 +7,7 @@ namespace BLL.Interface
     {
         public BaseResponseModel GetAllProducts();
         public BaseResponseModel GetProductsExpriryDate();
-        public BaseResponseModel GetInfoProductsByProductID(int productId);
+        public BaseResponseModel GetInfoProducts();
         public BaseResponseModel GetCellByShelve(int shelveID);
         public BaseResponseModel GetProductsByWarehouseID(int warehouseID);
         public BaseResponseModel Post(DTO.Cells.CellPostRequestModule request);

@@ -63,11 +63,11 @@ namespace API.Controllers
             BaseResponseModel res = this.i_cell.GetProductsExpriryDate();
             return res.IsSuccess ? Ok(res) : BadRequest(res);
         }
-        [HttpGet("GetInfoProductsByProductID")]
+        [HttpGet("GetInfoProducts")]
         [Authorize(Roles = "WarehouseEmployee")]
-        public IActionResult GetInfoProductsByProductID(int productId)
+        public IActionResult GetInfoProducts()
         {
-            BaseResponseModel res = this.i_cell.GetInfoProductsByProductID(productId);
+            BaseResponseModel res = this.i_cell.GetInfoProducts();
             return res.IsSuccess ? Ok(res) : BadRequest(res);
         }
         [HttpGet("GetAllProducts")]
