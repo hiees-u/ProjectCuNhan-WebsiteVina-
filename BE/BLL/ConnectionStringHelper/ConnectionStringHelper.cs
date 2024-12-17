@@ -4,11 +4,11 @@ namespace BLL.LoginBLL
 {
     public static class ConnectionStringHelper
     {
-        private static string defaultConnectionString = "Data Source=DESKTOP-L6DVGTI;Initial Catalog=CAFFEE_VINA_DBv1;User ID=sa;Password=123;Encrypt=False";
+        //private static string defaultConnectionString = "Data Source=DESKTOP-L6DVGTI;Initial Catalog=CAFFEE_VINA_DBv1;User ID=sa;Password=123;Encrypt=False";
         //private static string defaultConnectionString = "Data Source=DESKTOP-F0S1C36\\SQLEXPRESS;Initial Catalog=CAFFEE_VINA_DBv1;User ID=sa;Password=12345;Encrypt=False";
         //private static string defaultConnectionString = "Data Source=DESKTOP-F0S1C36\\SQLEXPRESS;Initial Catalog=CAFFEE_VINA_DBv1;User ID=sa;Password=12345;Encrypt=False;";
         //private static string defaultConnectionString = "Data Source=DESKTOP-F0S1C36\\SQLEXPRESS;Initial Catalog=CAFFEE_VINA_DBv1;User ID=sa;Password=12345;Encrypt=False;";
-        //private static string defaultConnectionString = "Data Source=THEVINH;Initial Catalog=CAFFEE_VINA_DBv1;User ID=HiuModerator; Password=123; Encrypt=False";
+        private static string defaultConnectionString = "Data Source=THEVINH;Initial Catalog=CAFFEE_VINA_DBv1;User ID=HiuModerator; Password=123; Encrypt=False";
         //Data Source=DESKTOP-L6DVGTI;Initial Catalog=CAFFEE_VINA_DBv1;User ID=sa;Encrypt=False
         //Data Source=DESKTOP-L6DVGTI;Initial Catalog=CAFFEE_VINA_DBv1;User ID=sa;Encrypt=False;Trust Server Certificate=True
 
@@ -20,8 +20,8 @@ namespace BLL.LoginBLL
         }
 
         public static string Set(LoginRequestModule module) {
-            connectionString = $"Data Source=DESKTOP-L6DVGTI;Initial Catalog=CAFFEE_VINA_DBv1;User ID={module.AccountName};Password={module.Password};Encrypt=False;";
-            //connectionString = $"Data Source=THEVINH;Initial Catalog=CAFFEE_VINA_DBv1;User ID={module.AccountName};Password={module.Password};Encrypt=False;";
+            //connectionString = $"Data Source=DESKTOP-L6DVGTI;Initial Catalog=CAFFEE_VINA_DBv1;User ID={module.AccountName};Password={module.Password};Encrypt=False;";
+            connectionString = $"Data Source=THEVINH;Initial Catalog=CAFFEE_VINA_DBv1;User ID={module.AccountName};Password={module.Password};Encrypt=False;";
             //connectionString = $"Data Source=DESKTOP-F0S1C36\\SQLEXPRESS;Initial Catalog=CAFFEE_VINA_DBv1;User ID={module.AccountName};Password={module.Password};Encrypt=False;";
             return connectionString;
         }
