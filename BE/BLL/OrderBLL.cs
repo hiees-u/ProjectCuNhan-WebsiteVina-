@@ -12,7 +12,7 @@ using iText.Layout.Element;
 using iText.Layout.Properties;
 using System.Data;
 using System.Data.SqlClient;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+//using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 
 namespace BLL
