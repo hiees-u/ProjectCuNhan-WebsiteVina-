@@ -21,5 +21,7 @@ namespace BLL.Interface
 
         public string GenerateInvoice(Invoice invoice);
         public BaseResponseModel UpdateStateOrderByOA(int orderID);
+
+        public BaseResponseModel getOrdersByTS(int pageNumber = 1, int pageSize = 8);
     }
 }

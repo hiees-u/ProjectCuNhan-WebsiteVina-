@@ -47,6 +47,9 @@ export class LoginComponent {
           if ((await this.authService.getRole()).data == 4) {
             this.router.navigate(['/warehouse-employee']);
           } 
+          if ((await this.authService.getRole()).data == 5) {
+            this.router.navigate(['/transportstaff']);
+          } 
           else {
             console.log('lỗi role=>', await this.authService.getRole());
           }
