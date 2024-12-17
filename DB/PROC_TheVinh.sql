@@ -1052,36 +1052,100 @@ GO
 GRANT EXEC ON OBJECT::dbo.sp_GetUndeliveredPurchaseOrders TO  WarehouseEmployee;
 
 exec sp_GetUndeliveredPurchaseOrders
-
+go
 --=========================================
+--CREATE PROCEDURE sp_GetPurchaseOrderDetails
+--    @PurchaseOrderID INT
+--AS
+--BEGIN
+--    SELECT 
+--        P.product_id,
+--        P.product_name,
+--        POD.quantity AS QuantityOrdered,
+--        POD.QuantityDelivered,
+--        C.CellID,
+--        C.CellName,
+--        POD.priceHistoryId,
+--        PH.price
+--    FROM PurchaseOrderDetail POD
+--    INNER JOIN PriceHistory PH 
+--        ON POD.priceHistoryId = PH.priceHistoryId
+--    INNER JOIN Product P 
+--        ON PH.product_id = P.product_id
+--    LEFT JOIN Cells C 
+--        ON C.product_id = P.product_id
+--    WHERE POD.PurchaseOrderID = @PurchaseOrderID
+--      AND POD.QuantityDelivered < POD.quantity;
+--END;
 CREATE PROCEDURE sp_GetPurchaseOrderDetails
     @PurchaseOrderID INT
 AS
 BEGIN
-    SELECT 
-        P.product_id,
-        P.product_name,
-        POD.quantity AS QuantityOrdered,
-        POD.QuantityDelivered,
-        C.CellID,
-        C.CellName,
-        POD.priceHistoryId,
-        PH.price
+    -- Tạo bảng tạm để lưu trữ kết quả
+    CREATE TABLE #TempOrderDetails (
+        product_id INT,
+        product_name NVARCHAR(255),
+        QuantityOrdered INT,
+        QuantityDelivered INT,
+        CellID INT,
+        CellName NVARCHAR(255),
+        priceHistoryId INT,
+        price DECIMAL(18, 2)
+    )
+
+    -- Duyệt qua từng sản phẩm trong đơn đặt hàng
+    DECLARE @current_product_id INT
+    DECLARE product_cursor CURSOR FOR
+    SELECT DISTINCT PH.product_id
     FROM PurchaseOrderDetail POD
-    INNER JOIN PriceHistory PH 
-        ON POD.priceHistoryId = PH.priceHistoryId
-    INNER JOIN Product P 
-        ON PH.product_id = P.product_id
-    LEFT JOIN Cells C 
-        ON C.product_id = P.product_id
+    JOIN PriceHistory PH ON POD.priceHistoryId = PH.priceHistoryId
     WHERE POD.PurchaseOrderID = @PurchaseOrderID
-      AND POD.QuantityDelivered < POD.quantity;
+
+    OPEN product_cursor
+    FETCH NEXT FROM product_cursor INTO @current_product_id
+
+    WHILE @@FETCH_STATUS = 0
+    BEGIN
+        -- Chèn thông tin chi tiết sản phẩm vào bảng tạm từ ô đầu tiên có đủ số lượng yêu cầu
+        INSERT INTO #TempOrderDetails
+        SELECT TOP 1
+            P.product_id,
+            P.product_name,
+            POD.quantity AS QuantityOrdered,
+            POD.QuantityDelivered,
+            C.CellID,
+            C.CellName,
+            POD.priceHistoryId,
+            PH.price
+        FROM PurchaseOrderDetail POD
+        INNER JOIN PriceHistory PH ON POD.priceHistoryId = PH.priceHistoryId
+        INNER JOIN Product P ON PH.product_id = P.product_id
+        LEFT JOIN Cells C ON C.product_id = P.product_id
+        WHERE POD.PurchaseOrderID = @PurchaseOrderID
+          AND PH.product_id = @current_product_id
+          AND POD.QuantityDelivered < POD.quantity
+        ORDER BY C.CellID
+
+        FETCH NEXT FROM product_cursor INTO @current_product_id
+    END
+
+    CLOSE product_cursor
+    DEALLOCATE product_cursor
+
+    -- Trả về kết quả từ bảng tạm
+    SELECT * FROM #TempOrderDetails
+
+    -- Xóa bảng tạm
+    DROP TABLE #TempOrderDetails
 END;
+GO
+
+GRANT EXEC ON OBJECT::dbo.sp_GetPurchaseOrderDetails TO  WarehouseEmployee;
+
 GO
 
 EXEC sp_GetPurchaseOrderDetails @PurchaseOrderID = 1;
 
-GRANT EXEC ON OBJECT::dbo.sp_GetPurchaseOrderDetails TO  WarehouseEmployee;
 
 --===============Xóa Phiếu Nhập========================
 CREATE PROCEDURE sp_DeleteWarehouseReceipt
@@ -1355,40 +1419,107 @@ GRANT EXEC ON OBJECT::dbo.SP_GetOrderIDs TO  WarehouseEmployee;
 --GET DETAIL ORDER BY DELIVERY NOTE
 GO
 
+--CREATE PROCEDURE SP_GetOrderDetailsWE
+--    @OrderID INT
+--AS
+--BEGIN
+--    SELECT 
+--        p.product_id,
+--        p.product_name,
+--        od.Quantity AS order_quantity,
+--        c.CellID,
+--        c.CellName,
+--        w.WarehouseID,
+--        w.WarehouseName,
+--        od.priceHistoryId
+--    FROM 
+--        OrderDetail od
+--    JOIN 
+--        PriceHistory ph ON od.priceHistoryId = ph.priceHistoryId
+--    JOIN 
+--        Product p ON ph.product_id = p.product_id
+--    JOIN 
+--        Cells c ON p.product_id = c.product_id
+--    JOIN 
+--        Shelve s ON c.ShelvesID = s.ShelvesID
+--    JOIN 
+--        Warehouse w ON s.WarehouseID = w.WarehouseID
+--    WHERE 
+--        od.Order_Id = @OrderID
+--        AND c.Quantity >= od.Quantity
+--END
+
 CREATE PROCEDURE SP_GetOrderDetailsWE
     @OrderID INT
 AS
 BEGIN
-    SELECT 
-        p.product_id,
-        p.product_name,
-        od.Quantity AS order_quantity,
-        c.CellID,
-        c.CellName,
-        w.WarehouseID,
-        w.WarehouseName,
-        od.priceHistoryId
-    FROM 
-        OrderDetail od
-    JOIN 
-        PriceHistory ph ON od.priceHistoryId = ph.priceHistoryId
-    JOIN 
-        Product p ON ph.product_id = p.product_id
-    JOIN 
-        Cells c ON p.product_id = c.product_id
-    JOIN 
-        Shelve s ON c.ShelvesID = s.ShelvesID
-    JOIN 
-        Warehouse w ON s.WarehouseID = w.WarehouseID
-    WHERE 
-        od.Order_Id = @OrderID
-        AND c.Quantity >= od.Quantity
+    -- Tạo bảng tạm để lưu trữ kết quả
+    CREATE TABLE #TempOrderDetails (
+        product_id INT,
+        product_name NVARCHAR(255),
+        order_quantity INT,
+        CellID INT,
+        CellName NVARCHAR(255),
+        WarehouseID INT,
+        WarehouseName NVARCHAR(255),
+        priceHistoryId INT
+    )
+
+    -- Duyệt qua từng sản phẩm trong đơn hàng
+    DECLARE @current_product_id INT
+    DECLARE product_cursor CURSOR FOR
+    SELECT DISTINCT p.product_id
+    FROM OrderDetail od
+    JOIN PriceHistory ph ON od.priceHistoryId = ph.priceHistoryId
+    JOIN Product p ON ph.product_id = p.product_id
+    WHERE od.Order_Id = @OrderID
+
+    OPEN product_cursor
+    FETCH NEXT FROM product_cursor INTO @current_product_id
+
+    WHILE @@FETCH_STATUS = 0
+    BEGIN
+        -- Chèn thông tin chi tiết sản phẩm vào bảng tạm từ ô đầu tiên có đủ số lượng yêu cầu
+        INSERT INTO #TempOrderDetails
+        SELECT TOP 1
+            p.product_id,
+            p.product_name,
+            od.Quantity AS order_quantity,
+            c.CellID,
+            c.CellName,
+            w.WarehouseID,
+            w.WarehouseName,
+            od.priceHistoryId
+        FROM OrderDetail od
+        JOIN PriceHistory ph ON od.priceHistoryId = ph.priceHistoryId
+        JOIN Product p ON ph.product_id = p.product_id
+        JOIN Cells c ON p.product_id = c.product_id
+        JOIN Shelve s ON c.ShelvesID = s.ShelvesID
+        JOIN Warehouse w ON s.WarehouseID = w.WarehouseID
+        WHERE 
+            od.Order_Id = @OrderID
+            AND p.product_id = @current_product_id
+            AND c.Quantity >= od.Quantity
+        ORDER BY c.CellID
+
+        FETCH NEXT FROM product_cursor INTO @current_product_id
+    END
+
+    CLOSE product_cursor
+    DEALLOCATE product_cursor
+
+    -- Trả về kết quả từ bảng tạm
+    SELECT * FROM #TempOrderDetails
+
+    -- Xóa bảng tạm
+    DROP TABLE #TempOrderDetails
 END
+GO
 
 
 GRANT EXEC ON OBJECT::dbo.SP_GetOrderDetailsWE TO  WarehouseEmployee;
 
-EXEC SP_GetOrderDetailsWE @OrderID = 26;
+EXEC SP_GetOrderDetailsWE @OrderID = 47;
 
 
 --================GÁN QUYỀN==========================================================
@@ -1450,7 +1581,8 @@ GO
 --Phân quyền
 GRANT EXEC ON OBJECT::dbo.GetWarehouseByName TO  WarehouseEmployee;
 go
---=========Product ExpriryDate============
+
+--==============================Product ExpriryDate=====================================
 CREATE PROCEDURE GetProductsExpiringInNextMonth
 AS
 BEGIN
@@ -1481,6 +1613,27 @@ END
 GRANT EXEC ON OBJECT::dbo.GetProductsExpiringInNextMonth TO  WarehouseEmployee;
 
 EXEC GetProductsExpiringInNextMonth
+go
+
+--==================Get Info Products By ProductID In Warehouse===============================
+--Get List product
+CREATE PROCEDURE GetProductList
+AS
+BEGIN
+    SELECT 
+        product_id AS ProductId,
+        product_name AS ProductName
+    FROM 
+        Product
+    WHERE 
+        DeleteTime IS NULL
+    ORDER BY 
+        product_name ASC
+END
+
+GRANT EXEC ON OBJECT::dbo.GetProductList TO  WarehouseEmployee;
+
+exec GetProductList
 go
 --==================Get Info Products By ProductID===============================
 CREATE PROCEDURE GetInfoProductsByProductID
@@ -1534,3 +1687,6 @@ EXEC GetInfoProductsByProductID
 
 -- Display the output message
 SELECT @Message AS 'OutputMessage';
+go
+
+

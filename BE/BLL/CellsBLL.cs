@@ -1,5 +1,6 @@
 ﻿using BLL.Interface;
 using BLL.LoginBLL;
+using DLL.Models;
 using DTO.Cells;
 using DTO.Product;
 using DTO.Responses;
@@ -55,6 +56,59 @@ namespace BLL
             }
 
             return response;
+        }
+
+
+        public BaseResponseModel GetAllProducts()
+        {
+            List<ProductsResponseModel> listProduct = new List<ProductsResponseModel>();
+            try
+            {
+                using (var conn = new SqlConnection(ConnectionStringHelper.Get()))
+                {
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand("GetProductList", conn))
+                    {
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                ProductsResponseModel productsResponseModel = new ProductsResponseModel()
+                                {
+                                    ProductId = Convert.ToInt32(reader["ProductId"]),
+                                    ProductName = reader["ProductName"] as string ?? string.Empty
+                                };
+                                listProduct.Add(productsResponseModel);
+                            }
+                        }
+                    }
+                }
+
+                BaseResponseModel response = new BaseResponseModel()
+                {
+                    IsSuccess = true,
+                    Message = "Success!",
+                    Data = listProduct
+                };
+
+                if (listProduct.Count < 0)
+                {
+                    response.IsSuccess = true;
+                    response.Message = "Không có sản phẩm nào!!!";
+                }
+
+                return response;
+
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponseModel()
+                {
+                    IsSuccess = false,
+                    Message = $"Lỗi trong quá trình lấy thông tin sản phẩm!!!: {ex}"
+                };
+            }
         }
 
         public BaseResponseModel GetCellByShelve(int shelveID)
@@ -119,6 +173,67 @@ namespace BLL
                 {
                     IsSuccess = false,
                     Message = $"Lỗi trong quá trình lấy thông tin sản phẩm trong ô của kệ trong kho: {ex.Message}"
+                };
+            }
+        }
+
+        public BaseResponseModel GetInfoProductsByProductID(int productId)
+        {
+            List<InfoProductsResponseModel> productOfWarehouseList = new List<InfoProductsResponseModel>();
+            try
+            {
+                using (var conn = new SqlConnection(ConnectionStringHelper.Get()))
+                {
+                    conn.Open();
+                    using (var cmd = new SqlCommand("GetInfoProductsByProductID", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        // Add the input parameter for warehouseID
+                        cmd.Parameters.AddWithValue("@product_id", productId);
+
+                        // Add parameter OUTPUT to receive notifications from the procedure
+                        SqlParameter messageParam = new SqlParameter("@Message", SqlDbType.NVarChar, 100)
+                        {
+                            Direction = ParameterDirection.Output
+                        };
+                        cmd.Parameters.Add(messageParam);
+
+                        // Execute the command and read the result
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                // Add each shelf to the list
+                                productOfWarehouseList.Add(new InfoProductsResponseModel()
+                                {
+                                    ProductName = reader.GetString(reader.GetOrdinal("product_name")),
+                                    Image = reader.IsDBNull(reader.GetOrdinal("image")) ? null : reader.GetString(reader.GetOrdinal("image")),
+                                    WarehouseName = reader.GetString(reader.GetOrdinal("WarehouseName")),
+                                    CellName = reader.GetString(reader.GetOrdinal("CellName")),
+                                    ShelvesName = reader.GetString(reader.GetOrdinal("ShelvesName")),
+                                    TotalQuantity = reader.IsDBNull(reader.GetOrdinal("totalQuantity")) ? (int?)null : reader.GetInt32(reader.GetOrdinal("TotalQuantity")),
+                                    ExpriryDate = reader.IsDBNull(reader.GetOrdinal("ExpriryDate")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("ExpriryDate"))
+                                });
+                            }
+                        }
+
+                        // Return the response with data and message from OUTPUT
+                        return new BaseResponseModel()
+                        {
+                            IsSuccess = true,
+                            Message = messageParam.Value.ToString(),
+                            Data = productOfWarehouseList // Return the list  product in warehouse
+                        };
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponseModel()
+                {
+                    IsSuccess = false,
+                    Message = $"Lỗi trong quá trình lấy thông tin sản phẩm trong kho: {ex.Message}"
                 };
             }
         }

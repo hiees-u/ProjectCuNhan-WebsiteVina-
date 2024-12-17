@@ -207,6 +207,40 @@ export function ContructorProductsExpriryDateResponseModule(): ProductsExpriryDa
   };
 }
 
+//LIST PRODUCT
+export interface Products{
+  productId: number;
+  productName: string;
+}
+export function ContructorProductsResponseModule(): Products {
+  return {
+    productId: 0,
+    productName: ''
+  };
+}
+
+//InfoProduct In Warehouse
+export interface InfoProducts {
+  productName: string;
+  image: string;
+  warehouseName: string;
+  cellName: string;
+  shelvesName: string;
+  totalQuantity: number;
+  expriryDate: Date;
+}
+export function ContructorInfoProductsResponseModule(): InfoProducts {
+  return {
+    productName: '',
+    image: '',
+    warehouseName: '',
+    cellName: '',
+    shelvesName: '',
+    totalQuantity: 0,
+    expriryDate: new Date()
+  };
+}
+
 @NgModule({
   declarations: [],
   imports: [],
