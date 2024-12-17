@@ -29,9 +29,9 @@ Thành Viên Nhóm:
    
 .......... - Mai Thế Vinh
  - Nhân viên: 
-      + Nhập kho, 
-      + Xuất kho
- - Quản lý kho: cảnh báo sản phẩm sắp hết hạn sử dụng, quản lý vị trí lưu trữ sản phẩm trên ngăn kệ
+      + Nhập kho ✓ 
+      + Xuất kho ✓
+ - Quản lý kho: cảnh báo sản phẩm sắp hết hạn sử dụng, quản lý vị trí lưu trữ sản phẩm trên ngăn kệ ✓
  - Khảo sát, phân tích, thiết kế hệ thống. ✓
    
 .......... - Nguyễn Hồ Phúc Thịnh

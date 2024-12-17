@@ -64,6 +64,14 @@
         <i class="fa-solid fa-industry"></i>
         <span>Quản lý nhà cung cấp</span>
       </li>
+      <li
+        class="dashboard-item no-select"
+        [ngClass]="{ active: dashboardItem === 8 }"
+        (click)="navigateToReport()"
+      >
+        <i class="fa-regular fa-building"></i>
+        <span>Thống Kê</span>
+      </li>
     </ul>
   </div>
   <div class="r-content">
