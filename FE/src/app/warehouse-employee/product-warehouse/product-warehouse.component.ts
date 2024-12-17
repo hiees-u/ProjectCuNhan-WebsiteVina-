@@ -22,41 +22,41 @@ import {
 export class ProductWarehouseComponent {
   constructor(private warehouseEmployeeService: WarehouseEmployeeService) { }
 
-  products: Products[] = [];
+  // products: Products[] = [];
   inFoProducts: InfoProducts[] = [];
-  selectedProduct: number = 0;
+  // selectedProduct: number = 0;
 
   async getProducts() {
-    const data = await this.warehouseEmployeeService.getAllProducts();
-    this.products = data.data;
+    const data = await this.warehouseEmployeeService.getInfoProducts();
+    this.inFoProducts = data.data;
   }
-  async onProductChange(event: Event) {
-    const target = event.target as HTMLSelectElement;
-    if (target) {
-      const ProductId = Number(target.value);
-      this.selectedProduct = ProductId;
+  // async onProductChange(event: Event) {
+  //   const target = event.target as HTMLSelectElement;
+  //   if (target) {
+  //     const ProductId = Number(target.value);
+  //     this.selectedProduct = ProductId;
 
-      if (ProductId > 0) {
-        try {
-          const data = await this.warehouseEmployeeService.getInfoProductsByProductID(ProductId);
-          if (data && data.data && Array.isArray(data.data)) {
-            // Áp dụng hàm map với cấu trúc mặc định
-            this.inFoProducts = data.data.map((product: Partial<InfoProducts>) => {
-              const detail = ContructorInfoProductsResponseModule();
-              return { ...detail, ...product }; // Kết hợp cấu trúc mặc định và dữ liệu API
-            });
-          } else {
-            this.inFoProducts = [];
-          }
-        } catch (error) {
-          console.error('Error fetching order details:', error);
-          this.inFoProducts = [];
-        }
-      } else {
-        this.inFoProducts = [];
-      }
-    }
-  }
+  //     if (ProductId > 0) {
+  //       try {
+  //         const data = await this.warehouseEmployeeService.getInfoProductsByProductID(ProductId);
+  //         if (data && data.data && Array.isArray(data.data)) {
+  //           // Áp dụng hàm map với cấu trúc mặc định
+  //           this.inFoProducts = data.data.map((product: Partial<InfoProducts>) => {
+  //             const detail = ContructorInfoProductsResponseModule();
+  //             return { ...detail, ...product }; // Kết hợp cấu trúc mặc định và dữ liệu API
+  //           });
+  //         } else {
+  //           this.inFoProducts = [];
+  //         }
+  //       } catch (error) {
+  //         console.error('Error fetching order details:', error);
+  //         this.inFoProducts = [];
+  //       }
+  //     } else {
+  //       this.inFoProducts = [];
+  //     }
+  //   }
+  // }
 
 
   ngOnInit(): void {

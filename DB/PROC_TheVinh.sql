@@ -1385,6 +1385,7 @@ EXEC sp_ExportWarehouseGoodsByOrder
 --=======================XUẤT KHO======================================
 --========Get ORDER IDs==================
 --DROP PROCEDURE SP_GetOrderIDs
+go
 CREATE PROCEDURE SP_GetOrderIDs
 AS
 BEGIN
@@ -1580,16 +1581,20 @@ BEGIN
         ModifiedBy,
         CreateTime,
         ModifiedTime,
-        DeleteTime
+        DeleteTime,
+        CASE 
+            WHEN ExpriryDate < GETDATE() THEN N'Đã hết hạn'
+            WHEN DATEDIFF(day, GETDATE(), ExpriryDate) <= 30 THEN N'Sắp hết hạn'
+            ELSE N'Còn hạn'
+        END AS Status
     FROM 
         Product
     WHERE 
-        DATEDIFF(day, GETDATE(), ExpriryDate) <= 30
-        AND ExpriryDate > GETDATE()
-        AND DeleteTime IS NULL
+        DeleteTime IS NULL
     ORDER BY 
         ExpriryDate ASC
 END
+
 
 GRANT EXEC ON OBJECT::dbo.GetProductsExpiringInNextMonth TO  WarehouseEmployee;
 
@@ -1617,28 +1622,70 @@ GRANT EXEC ON OBJECT::dbo.GetProductList TO  WarehouseEmployee;
 exec GetProductList
 go
 --==================Get Info Products By ProductID===============================
-CREATE PROCEDURE GetInfoProductsByProductID
-    @product_id INT,
-    @Message NVARCHAR(100) OUTPUT
+--CREATE PROCEDURE GetInfoProductsByProductID
+--    @product_id INT,
+--    @Message NVARCHAR(100) OUTPUT
+--AS
+--BEGIN
+--    -- Kiểm tra xem sản phẩm có tồn tại hay không
+--    IF NOT EXISTS (SELECT 1 FROM Product WHERE product_id = @product_id)
+--    BEGIN
+--        SET @Message = N'Không tìm thấy sản phẩm với Mã sản phẩm đã cho!';
+--        RETURN;
+--    END
+
+--    -- Truy vấn thông tin kệ, ô và sản phẩm
+--    SELECT 
+--        w.WarehouseName,
+--        s.ShelvesName,
+--        c.CellName,
+--        p.product_name,
+--        p.image,
+--        c.Quantity,
+--        p.totalQuantity,
+--        p.ExpriryDate,
+--        c.ModifiedBy AS CellModifiedBy,
+--        c.CreateTime AS CellCreateTime,
+--        c.ModifiedTime AS CellModifiedTime,
+--        c.DeleteTime AS CellDeleteTime
+--    FROM Warehouse w
+--    INNER JOIN Shelve s ON w.WarehouseID = s.WarehouseID
+--    INNER JOIN Cells c ON s.ShelvesID = c.ShelvesID
+--    INNER JOIN Product p ON c.product_id = p.product_id
+--    WHERE 
+--        p.product_id = @product_id
+--        AND s.DeleteTime IS NULL 
+--        AND c.DeleteTime IS NULL 
+--        AND p.DeleteTime IS NULL
+--    ORDER BY s.ShelvesName, c.CellName;
+
+--    SET @Message = N'Đã lấy thông tin sản phẩm theo Mã sản phẩm thành công!';
+--END;
+
+--GRANT EXEC ON OBJECT::dbo.GetInfoProductsByProductID TO  WarehouseEmployee;
+
+--DECLARE @Message NVARCHAR(100);
+--EXEC GetInfoProductsByProductID
+--    @product_id = 3,  -- Replace this with the actual product_id
+--    @Message = @Message OUTPUT;
+
+---- Display the output message
+--SELECT @Message AS 'OutputMessage';
+--go
+
+GO
+CREATE PROCEDURE GetAllProductsInfo
 AS
 BEGIN
-    -- Kiểm tra xem sản phẩm có tồn tại hay không
-    IF NOT EXISTS (SELECT 1 FROM Product WHERE product_id = @product_id)
-    BEGIN
-        SET @Message = N'Không tìm thấy sản phẩm với Mã sản phẩm đã cho!';
-        RETURN;
-    END
-
-    -- Truy vấn thông tin kệ, ô và sản phẩm
     SELECT 
+        p.product_id AS ProductId,
+        p.product_name AS ProductName,
+        p.image AS Image,
         w.WarehouseName,
-        s.ShelvesName,
         c.CellName,
-        p.product_name,
-        p.image,
-        c.Quantity,
-        p.totalQuantity,
-        p.ExpriryDate,
+        s.ShelvesName,
+        p.totalQuantity AS TotalQuantity,
+        p.ExpriryDate AS ExpiryDate,
         c.ModifiedBy AS CellModifiedBy,
         c.CreateTime AS CellCreateTime,
         c.ModifiedTime AS CellModifiedTime,
@@ -1648,26 +1695,13 @@ BEGIN
     INNER JOIN Cells c ON s.ShelvesID = c.ShelvesID
     INNER JOIN Product p ON c.product_id = p.product_id
     WHERE 
-        p.product_id = @product_id
-        AND s.DeleteTime IS NULL 
+        s.DeleteTime IS NULL 
         AND c.DeleteTime IS NULL 
         AND p.DeleteTime IS NULL
     ORDER BY s.ShelvesName, c.CellName;
-
-    SET @Message = N'Đã lấy thông tin sản phẩm theo Mã sản phẩm thành công!';
 END;
 GO
 
-GRANT EXEC ON OBJECT::dbo.GetInfoProductsByProductID TO  WarehouseEmployee;
+GRANT EXEC ON OBJECT::dbo.GetAllProductsInfo TO  WarehouseEmployee;
 
-
-DECLARE @Message NVARCHAR(100);
-EXEC GetInfoProductsByProductID
-    @product_id = 3,  -- Replace this with the actual product_id
-    @Message = @Message OUTPUT;
-
--- Display the output message
-SELECT @Message AS 'OutputMessage';
-go
-
-
+EXEC GetAllProductsInfo

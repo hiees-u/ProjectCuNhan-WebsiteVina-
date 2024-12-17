@@ -19,5 +19,6 @@
         public DateTime CreateTime { get; set; }
         public DateTime? ModifiedTime { get; set; }
         public DateTime? DeleteTime { get; set; }
+        public string Status { get; set; } = null!;
     }
 }

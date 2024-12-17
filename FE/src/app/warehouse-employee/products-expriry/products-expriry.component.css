@@ -192,3 +192,15 @@
 .btn-search .search i {
     font-size: 18px;
 }
+
+.bg-red {
+    background-color: #FF8080;
+}
+
+.bg-yellow {
+    background-color: #FFFF8F;
+}
+
+.bg-green {
+    background-color: #AFE1AF;
+}

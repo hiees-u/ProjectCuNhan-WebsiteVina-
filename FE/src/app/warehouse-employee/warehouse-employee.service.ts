@@ -436,8 +436,8 @@ export class WarehouseEmployeeService {
   }
 
   //Get InfoProduct in Warehouse  
-  async getInfoProductsByProductID(productId: number): Promise<BaseResponseModel> {
-    const url = `https://localhost:7060/api/Cell/GetInfoProductsByProductID?productId=${productId}`;
+  async getInfoProducts(): Promise<BaseResponseModel> {
+    const url = `https://localhost:7060/api/Cell/GetInfoProducts`;
     try {
       const response = await fetch(url, {
         method: 'GET',

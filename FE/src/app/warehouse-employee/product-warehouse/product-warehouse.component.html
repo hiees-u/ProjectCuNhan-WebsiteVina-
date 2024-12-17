@@ -5,7 +5,7 @@
     </header>
     <form id="deliveryForm">
       <div class="grid grid-cols-2">
-        <div class="form-group">
+        <!-- <div class="form-group">
           <label for="salesOrder">Chọn sản phẩm</label>
           <select id="salesOrder" name="PurchaseOrderId" 
           [(ngModel)]="selectedProduct"
@@ -15,10 +15,10 @@
               {{ product.productName }}
             </option>
           </select>
-        </div>
+        </div> -->
       </div>
   
-      <h3>Thông tin sản phẩm</h3>
+      <!-- <h3>Thông tin sản phẩm</h3> -->
       <table>
         <thead>
           <tr>
@@ -33,7 +33,7 @@
         </thead>
         <tbody>
           <tr *ngFor="let product of inFoProducts">
-            <td>{{ product.productName }}</td>
+            <td class="txt_left">{{ product.productName }}</td>
             <!-- <td>{{ product.productName }}</td> -->
             <td>{{ product.warehouseName }}</td>
             <td>{{ product.shelvesName }}</td>   
