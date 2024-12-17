@@ -186,6 +186,61 @@ export function ContructorPurchaseOrderDetailResponseModule(): PurchaseOrderDeta
   };
 }
 
+export interface ProductsExpriryDate {
+  productId: number;
+  productName: string;
+  image: string;
+  modifiedBy: string;
+  expriryDate: Date;
+  createTime: string;
+  modifiedTime: string;
+}
+export function ContructorProductsExpriryDateResponseModule(): ProductsExpriryDate {
+  return {
+    productId: 0,
+    productName: '',
+    image: '',
+    modifiedBy: '',
+    expriryDate: new Date(),
+    createTime: '',
+    modifiedTime: '',
+  };
+}
+
+//LIST PRODUCT
+export interface Products{
+  productId: number;
+  productName: string;
+}
+export function ContructorProductsResponseModule(): Products {
+  return {
+    productId: 0,
+    productName: ''
+  };
+}
+
+//InfoProduct In Warehouse
+export interface InfoProducts {
+  productName: string;
+  image: string;
+  warehouseName: string;
+  cellName: string;
+  shelvesName: string;
+  totalQuantity: number;
+  expriryDate: Date;
+}
+export function ContructorInfoProductsResponseModule(): InfoProducts {
+  return {
+    productName: '',
+    image: '',
+    warehouseName: '',
+    cellName: '',
+    shelvesName: '',
+    totalQuantity: 0,
+    expriryDate: new Date()
+  };
+}
+
 @NgModule({
   declarations: [],
   imports: [],
