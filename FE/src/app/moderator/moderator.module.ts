@@ -1,5 +1,9 @@
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { BaseChartDirective } from 'ng2-charts';
 
+import { FormsModule } from '@angular/forms';
+import { ViewReportComponent } from './view-report/view-report.component';
 //Customer type
 export interface CustomerType {
   typeCustomerId: 0;
@@ -178,6 +182,9 @@ export function ContructorProductModerator(): ProductModerator {
 
 @NgModule({
   declarations: [],
-  imports: [],
+  imports: [
+    CommonModule,
+    FormsModule,
+  ],
 })
 export class ModeratorModule {}

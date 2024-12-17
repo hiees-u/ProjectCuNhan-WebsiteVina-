@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-
 import { LoginComponent } from './auth/login/login.component';
 import { RegistreComponent } from './auth/registre/registre.component';
 import CustomerRoutingModule from './customer/customer-routing.module';
@@ -14,6 +13,7 @@ import { CustomerModeratorComponent } from './moderator/customer-moderator/custo
 import { DepartmentModeratorComponent } from './moderator/department-moderator/department-moderator.component';
 import { EmployeeModeratorComponent } from './moderator/employee-moderator/employee-moderator.component';
 import { SupplierModeratorComponent } from './moderator/supplier-moderator/supplier-moderator.component';
+import { ViewReportComponent } from './moderator/view-report/view-report.component';
 import { WarehouseManagementComponent } from './warehouse-employee/warehouse-management/warehouse-management.component';
 import { AddWarehouseComponent } from './warehouse-employee/add-warehouse/add-warehouse.component';
 import { OutWarehouseComponent } from './warehouse-employee/out-warehouse/out-warehouse.component';
@@ -52,6 +52,7 @@ export const routes: Routes = [
       { path: 'department-moderator', component: DepartmentModeratorComponent },
       { path: 'employee-moderator', component: EmployeeModeratorComponent },
       { path: 'supplier-moderator', component: SupplierModeratorComponent },
+      { path: 'view-report', component: ViewReportComponent },
       { path: '', redirectTo: 'product-moderator', pathMatch: 'full' },
     ],
   },

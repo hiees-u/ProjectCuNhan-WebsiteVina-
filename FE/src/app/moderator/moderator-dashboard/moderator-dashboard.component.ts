@@ -63,6 +63,10 @@ export class ModeratorDashboardComponent {
     this.changeDashboardItem(7);
     this.router.navigate(['/moderator/supplier-moderator']);
   }
+  navigateToReport() {
+    this.changeDashboardItem(8);
+    this.router.navigate(['/moderator/view-report']);
+  }
 
   logOutHandler() {
     this.router.navigate(['/login']);
