@@ -3,6 +3,7 @@
     public class OrderResponseModelv4
     {
         public int OrderId { get; set; }
+        public string name { get; set; } = string.Empty;
         public string Phone { get; set; } = string.Empty;
         public string Addres { get; set; } = string.Empty;
         public decimal TotalPayment { get; set; }

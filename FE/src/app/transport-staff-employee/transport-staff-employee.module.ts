@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 export interface OrderResponseModelTS {
   orderId: number;
+  name: string;
   phone: string;
   addres: string;
   totalPayment: number;
