@@ -50,12 +50,12 @@ export class ViewReportComponent {
       },
     },
   };
-  
-  
+
+
 
   months = Array.from({ length: 12 }, (_, i) => i + 1);
 
-  constructor(private moderatorService: ModeratorService) {}
+  constructor(private moderatorService: ModeratorService) { }
 
   async generateReport() {
     try {
@@ -70,47 +70,44 @@ export class ViewReportComponent {
           data = await this.moderatorService.getDailySalesReport(date);
           this.prepareBarChart(data);
           break;
-  
-        case 'weekly':
-          if (!this.startDate || !this.endDate) {
-            alert('Hãy chọn khoảng thời gian!');
-            return;
-          }
-          // Chuyển startDate và endDate thành đối tượng Date nếu là chuỗi
-          const start = new Date(this.startDate);
-          const end = new Date(this.endDate);
-          data = await this.moderatorService.getWeeklySalesReport(start, end);
-          console.log('Dữ liệu nhận được:', data);
-          this.prepareLineChart(data);
-          break;
-  
-        case 'monthly':
-          if (!this.selectedMonth || !this.selectedYear) {
-            alert('Hãy chọn tháng và năm!');
-            return;
-          }
-          data = await this.moderatorService.getMonthlySalesReport(this.selectedMonth, this.selectedYear);
-          console.log('Dữ liệu nhận được:', data);
-          this.prepareLineChart(data);
-          break;
-  
-        case 'yearly':
-          if (!this.selectedYear) {
-            alert('Hãy nhập năm!');
-            return;
-          }
-          data = await this.moderatorService.getYearlySalesReport(this.selectedYear);
-          console.log('Dữ liệu nhận được:', data);
-          this.prepareLineChart(data);
-          break;
-      }
-    } catch (error) {
-      console.error('Error generating report:', error);
-      alert('Có lỗi xảy ra, vui lòng thử lại!');
+          case 'weekly':
+        if (!this.startDate || !this.endDate) {
+          alert('Hãy chọn khoảng thời gian!');
+          return;
+        }
+        const startdate = new Date(this.startDate);
+        const enddate = new Date(this.endDate);
+        data = await this.moderatorService.getWeeklySalesReport(startdate,enddate);
+        this.prepareLineChart(data);
+        break;
+
+      case 'monthly':
+        if (!this.selectedMonth || !this.selectedYear) {
+          alert('Hãy chọn tháng và năm!');
+          return;
+        }
+        const month = this.selectedMonth;
+        const year = this.selectedYear;
+        data = await this.moderatorService.getMonthlySalesReport(month, year);
+        this.prepareLineChart(data);
+        break;
+
+      case 'yearly':
+        if (!this.selectedYear) {
+          alert('Hãy nhập năm!');
+          return;
+        }
+        data = await this.moderatorService.getYearlySalesReport(this.selectedYear);
+        this.prepareLineChart(data);
+        break;
     }
+  } catch (error) {
+    console.error('Error generating report:', error);
+    alert('Có lỗi xảy ra, vui lòng thử lại!');
   }
-  
-  
+}
+
+
   prepareBarChart(data: any) {
     if (!data?.data?.length) {
       alert('Không có dữ liệu để hiển thị biểu đồ!');
@@ -118,39 +115,35 @@ export class ViewReportComponent {
     }
     this.chartType = 'bar';
     this.chartData = {
-      labels: data.data.map((d: any) => d.productName),
+      labels: data.data.map((item: any) => item.productName),
       datasets: [
         {
           label: 'Số lượng bán',
-          data: data.data.map((d: any) => d.totalSales),
+          data: data.data.map((item: any) => item.totalSales),
           backgroundColor: 'rgba(75, 192, 192, 0.2)',
-          borderColor: 'rgba(75, 192, 192, 1)'
+          borderColor: 'rgba(75, 192, 192, 1)',
+        },
+      ],
+    };
+
+  }
+
+  prepareLineChart(data: any) {
+    if (!data?.data?.length) {
+      alert('Không có dữ liệu để hiển thị biểu đồ!');
+      return;
+    }
+    this.chartType = 'line';
+    this.chartData = {
+      labels: data.data.map((item: any) => item.startDate), // Hoặc xử lý để format ngày
+      datasets: [
+        {
+          label: 'Doanh thu',
+          data: data.data.map((item: any) => item.totalRevenue),
+          borderColor: 'rgba(54, 162, 235, 1)',
+          backgroundColor: 'rgba(54, 162, 235, 0.2)',
         },
       ],
     };
   }
-  
-  prepareLineChart(data: any) {
-    if (!data?.length) {
-      alert('Không có dữ liệu để hiển thị biểu đồ!');
-      return;
-    }
-  
-    // Tạo danh sách các sản phẩm và tổng số bán cho biểu đồ
-    const productNames = data.map((d: any) => d.productName);
-    const totalSales = data.map((d: any) => d.totalSales);
-  
-    this.chartType = 'line'; // Biểu đồ đường
-    this.chartData = {
-      labels: productNames,  // Tên sản phẩm sẽ là trục x
-      datasets: [{
-        label: 'Số lượng bán',
-        data: totalSales, // Dữ liệu số lượng bán sẽ là trục y
-        borderColor: 'rgba(54, 162, 235, 1)',  // Màu đường biểu đồ
-        backgroundColor: 'rgba(54, 162, 235, 0.2)', // Màu nền  // Không điền màu dưới đường
-      }]
-    };
-  }
-  
-  
 }

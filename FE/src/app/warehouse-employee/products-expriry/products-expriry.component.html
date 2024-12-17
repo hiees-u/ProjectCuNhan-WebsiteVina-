@@ -1,0 +1,29 @@
+<!-- Top Bar -->
+<header class="top-bar">
+    <h2 class="top-bar-title">Quản Lý Sản Phẩm Trong Kho</h2>
+  </header>
+  <!-- Kho Information Section -->
+  <div class="section">
+    <h3 class="section-title">Danh Sách Trạng Thái Sản Phẩm</h3>
+  
+    <table class="table">
+      <thead>
+        <tr class="table-header">
+          <th class="table-cell">Mã Sản Phẩm</th>
+          <th class="table-cell">Tên Sản Phẩm</th>
+          <th class="table-cell">Số Lượng</th>
+          <th class="table-cell">Ngày Hết Hạn</th>
+          <th class="table-cell">Trạng Thái</th>
+        </tr>
+      </thead>
+      <tbody class="text-gray-700">
+        <tr *ngFor="let pE of productsExpriry" [ngClass]="{'bg-red': pE.status === 'Đã hết hạn', 'bg-yellow': pE.status === 'Sắp hết hạn', 'bg-green': pE.status === 'Còn hạn'}" >
+          <td class="table-cell">{{ pE.productId }}</td>
+          <td class="table-cell">{{ pE.productName }}</td>
+          <td class="table-cell">{{ pE.totalQuantity }}</td>
+          <td class="table-cell">{{ pE.expriryDate }}</td>
+          <td class="table-cell">{{ pE.status }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>

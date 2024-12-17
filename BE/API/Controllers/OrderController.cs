@@ -1,5 +1,4 @@
-﻿using Azure.Core;
-using BLL.Interface;
+﻿using BLL.Interface;
 using DTO.Order;
 using DTO.Responses;
 using Microsoft.AspNetCore.Authorization;
@@ -16,6 +15,24 @@ namespace API.Controllers
         public OrderController(IOrder order)
         {
             this.order = order;
+        }
+
+        [HttpPost("GiaoHang")]
+        [Authorize(Roles = "TransportStaff")]
+        public IActionResult GiaoHang(int IdOrder)
+        {
+            BaseResponseModel res = order.Delivery(IdOrder);
+
+            return res.IsSuccess ? Ok(res) : BadRequest(res);
+        }
+
+        [HttpGet("getOrdersByTS")]
+        [Authorize(Roles = "TransportStaff")]
+        public IActionResult GetOrdersByTS(int pageNumber = 1, int pageSize = 8)
+        {
+            BaseResponseModel res = order.getOrdersByTS(pageNumber, pageSize);
+
+            return res.IsSuccess ? Ok(res) : BadRequest(res);
         }
 
         [HttpGet]

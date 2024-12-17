@@ -1,7 +1,10 @@
 ﻿using BLL.Interface;
 using BLL.LoginBLL;
+using DLL.Models;
 using DTO.Cells;
+using DTO.Product;
 using DTO.Responses;
+using DTO.WareHouse;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -53,6 +56,59 @@ namespace BLL
             }
 
             return response;
+        }
+
+
+        public BaseResponseModel GetAllProducts()
+        {
+            List<ProductsResponseModel> listProduct = new List<ProductsResponseModel>();
+            try
+            {
+                using (var conn = new SqlConnection(ConnectionStringHelper.Get()))
+                {
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand("GetProductList", conn))
+                    {
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                ProductsResponseModel productsResponseModel = new ProductsResponseModel()
+                                {
+                                    ProductId = Convert.ToInt32(reader["ProductId"]),
+                                    ProductName = reader["ProductName"] as string ?? string.Empty
+                                };
+                                listProduct.Add(productsResponseModel);
+                            }
+                        }
+                    }
+                }
+
+                BaseResponseModel response = new BaseResponseModel()
+                {
+                    IsSuccess = true,
+                    Message = "Success!",
+                    Data = listProduct
+                };
+
+                if (listProduct.Count < 0)
+                {
+                    response.IsSuccess = true;
+                    response.Message = "Không có sản phẩm nào!!!";
+                }
+
+                return response;
+
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponseModel()
+                {
+                    IsSuccess = false,
+                    Message = $"Lỗi trong quá trình lấy thông tin sản phẩm!!!: {ex}"
+                };
+            }
         }
 
         public BaseResponseModel GetCellByShelve(int shelveID)
@@ -121,6 +177,58 @@ namespace BLL
             }
         }
 
+        public BaseResponseModel GetInfoProducts()
+        {
+            List<InfoProductsResponseModel> productOfWarehouseList = new List<InfoProductsResponseModel>();
+            try
+            {
+                using (var conn = new SqlConnection(ConnectionStringHelper.Get()))
+                {
+                    conn.Open();
+                    using (var cmd = new SqlCommand("GetAllProductsInfo", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        // Execute the command and read the result
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                // Add each shelf to the list
+                                productOfWarehouseList.Add(new InfoProductsResponseModel()
+                                {
+                                    ProductID = Convert.ToInt32(reader["ProductId"]),
+                                    ProductName = reader.GetString(reader.GetOrdinal("ProductName")),
+                                    Image = reader.IsDBNull(reader.GetOrdinal("Image")) ? null : reader.GetString(reader.GetOrdinal("Image")),
+                                    WarehouseName = reader.GetString(reader.GetOrdinal("WarehouseName")),
+                                    CellName = reader.GetString(reader.GetOrdinal("CellName")),
+                                    ShelvesName = reader.GetString(reader.GetOrdinal("ShelvesName")),
+                                    TotalQuantity = reader.IsDBNull(reader.GetOrdinal("TotalQuantity")) ? (int?)null : reader.GetInt32(reader.GetOrdinal("TotalQuantity")),
+                                    ExpriryDate = reader.IsDBNull(reader.GetOrdinal("ExpiryDate")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("ExpiryDate"))
+                                });
+                            }
+                        }
+
+                        // Return the response with data and message from OUTPUT
+                        return new BaseResponseModel()
+                        {
+                            IsSuccess = true,
+                            Message = "Lấy thông tin sản phẩm trong kho thành công",
+                            Data = productOfWarehouseList // Return the list  product in warehouse
+                        };
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponseModel()
+                {
+                    IsSuccess = false,
+                    Message = $"Lỗi trong quá trình lấy thông tin sản phẩm trong kho: {ex.Message}"
+                };
+            }
+        }
+
         public BaseResponseModel GetProductsByWarehouseID(int warehouseID)
         {
             List<ProductOfWarehouseResponseModel> productOfWarehouseList = new List<ProductOfWarehouseResponseModel>();
@@ -183,6 +291,65 @@ namespace BLL
                 {
                     IsSuccess = false,
                     Message = $"Lỗi trong quá trình lấy thông tin sản phẩm trong kho: {ex.Message}"
+                };
+            }
+        }
+
+        public BaseResponseModel GetProductsExpriryDate()
+        {
+            List<ProductViewUserResponseModel> listProductsExpriryDate = new List<ProductViewUserResponseModel>();
+            try
+            {
+                using (var conn = new SqlConnection(ConnectionStringHelper.Get()))
+                {
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand("GetProductsExpiringInNextMonth", conn))
+                    {
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                ProductViewUserResponseModel productsExpriryDateResponseModel = new ProductViewUserResponseModel()
+                                {
+                                    ProductId = Convert.ToInt32(reader["product_id"]),
+                                    ProductName = reader["product_name"] as string ?? string.Empty,
+                                    Image = reader["image"] as string ?? string.Empty,
+                                    TotalQuantity = Convert.ToInt32(reader["totalQuantity"]),                                    
+                                    ModifiedBy = reader["ModifiedBy"] as string ?? string.Empty,
+                                    ExpriryDate = reader.IsDBNull(reader.GetOrdinal("ExpriryDate")) ? (DateTime?)null : Convert.ToDateTime(reader["ExpriryDate"]),
+                                    Status = reader["Status"] as string ?? string.Empty,
+                                    CreateTime = (DateTime)reader["CreateTime"],
+                                    ModifiedTime = reader.IsDBNull(reader.GetOrdinal("ModifiedTime")) ? (DateTime?)null : Convert.ToDateTime(reader["ModifiedTime"])
+                                };
+                                listProductsExpriryDate.Add(productsExpriryDateResponseModel);
+                            }
+                        }
+                    }
+                }
+
+                BaseResponseModel response = new BaseResponseModel()
+                {
+                    IsSuccess = true,
+                    Message = "Success!",
+                    Data = listProductsExpriryDate
+                };
+
+                if (listProductsExpriryDate.Count < 0)
+                {
+                    response.IsSuccess = true;
+                    response.Message = "Không có sản phẩm nào hết hạn!!!";
+                }
+
+                return response;
+
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponseModel()
+                {
+                    IsSuccess = false,
+                    Message = $"Lỗi trong quá trình lấy thông tin sản phẩm hết hạn!!!: {ex}"
                 };
             }
         }

@@ -56,5 +56,26 @@ namespace API.Controllers
             var result = this.i_cell.Delete(cellID);
             return result.IsSuccess ? Ok(result) : BadRequest(result);
         }
+        [HttpGet("GetProductsExpriryDate")]
+        [Authorize(Roles = "WarehouseEmployee")]
+        public IActionResult GetProductsExpriryDate()
+        {
+            BaseResponseModel res = this.i_cell.GetProductsExpriryDate();
+            return res.IsSuccess ? Ok(res) : BadRequest(res);
+        }
+        [HttpGet("GetInfoProducts")]
+        [Authorize(Roles = "WarehouseEmployee")]
+        public IActionResult GetInfoProducts()
+        {
+            BaseResponseModel res = this.i_cell.GetInfoProducts();
+            return res.IsSuccess ? Ok(res) : BadRequest(res);
+        }
+        [HttpGet("GetAllProducts")]
+        [Authorize(Roles = "WarehouseEmployee")]
+        public IActionResult GetAllProducts()
+        {
+            BaseResponseModel res = this.i_cell.GetAllProducts();
+            return res.IsSuccess ? Ok(res) : BadRequest(res);
+        }
     }
 }

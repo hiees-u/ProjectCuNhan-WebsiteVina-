@@ -903,20 +903,25 @@ export class ModeratorService {
   async getMonthlySalesReport(month: number, year: number): Promise<any> {
     const url = `${this.apiUrl}Report/Monthly?Month=${month}&Year=${year}`;
     const response = await fetch(url, {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${this.token}` },
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${this.token}` },
     });
-    return await response.json();
-  }
-  
-  async getYearlySalesReport(year: number): Promise<any> {
+    const data = await response.json();
+    console.log('Dữ liệu thống kê theo tháng:', data); // Thêm log dữ liệu
+    return data;
+}
+
+async getYearlySalesReport(year: number): Promise<any> {
     const url = `${this.apiUrl}Report/Yearly?Year=${year}`;
     const response = await fetch(url, {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${this.token}` },
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${this.token}` },
     });
-    return await response.json();
-  }
+    const data = await response.json();
+    console.log('Dữ liệu thống kê theo năm:', data); // Thêm log dữ liệu
+    return data;
+}
+
   
 
 }

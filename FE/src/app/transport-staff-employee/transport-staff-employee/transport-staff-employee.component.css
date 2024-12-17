@@ -1,0 +1,112 @@
+.container {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+}
+
+.btn-content {
+  width: 30px;
+  height: calc(100%);
+  margin-right: 10px;
+  background-color: var(--main-color);
+  cursor: pointer;
+  display: flex;
+  color: #fff;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  height: 30px;
+  top: 10px;
+  right: 0;
+}
+
+.btn-content:hover {
+  animation: jumpRight 0.5s ease-in-out infinite;
+}
+
+.header {
+  height: 50px;
+  color: var(--main-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5em;
+  font-family: cursive;
+  border-bottom: 1px solid #ddd;
+}
+
+.body {
+  padding: 15px;
+  width: calc(100% - 30px);
+  height: calc(100% - 30px);
+}
+
+table {
+  width: 100%;
+}
+
+tr td {
+  padding: 10px 0;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+}
+
+thead tr th:nth-child(1) {
+  width: 10%;
+}
+
+thead tr th:nth-child(2) {
+  width: 15%;
+}
+
+thead tr th:nth-child(3) {
+  width: 15%;
+}
+
+thead tr th:nth-child(4) {
+  width: 10%;
+}
+
+thead tr th:nth-child(5) {
+  width: 24%;
+}
+
+thead tr th:nth-child(6) {
+  width: 10%;
+}
+
+thead tr th:nth-child(7) {
+  width: 10%;
+}
+
+thead tr th:nth-child(8) {
+  width: 6%;
+}
+
+thead tr th {
+  color: var(--secon-color);
+  padding-bottom: 15px;
+}
+
+.button {
+  padding: 5px 10px;
+  font-size: 1.1em;
+  font-family: var(--main-style);
+  color: var(--main-color);
+  cursor: pointer;
+  background-color: #ddd;
+  border-radius: 5px;
+  transition: all .5s ease-in-out;
+}
+
+.button:hover {
+  background-color: var(--main-color);
+  color: #fff;
+}
+
+.notification {
+  position: absolute;
+  top: 50px;
+  right: 0;
+}
