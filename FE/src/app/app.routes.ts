@@ -20,6 +20,7 @@ import { OutWarehouseComponent } from './warehouse-employee/out-warehouse/out-wa
 import { InWarehouseComponent } from './warehouse-employee/in-warehouse/in-warehouse.component';
 import { ProductsExpriryComponent } from './warehouse-employee/products-expriry/products-expriry.component';
 import { ProductWarehouseComponent } from './warehouse-employee/product-warehouse/product-warehouse.component';
+import { TransportStaffEmployeeComponent } from './transport-staff-employee/transport-staff-employee/transport-staff-employee.component';
 
 export const routes: Routes = [
   ...CustomerRoutingModule,
@@ -35,6 +36,10 @@ export const routes: Routes = [
     path: 'customer',
     loadChildren: () =>
       import('./customer/customer-routing.module').then((m) => m.default),
+  },
+  {
+    path: 'transportstaff',
+    component: TransportStaffEmployeeComponent
   },
   {
     path: 'moderator',

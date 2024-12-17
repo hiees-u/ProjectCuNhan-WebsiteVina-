@@ -31,3 +31,38 @@ BEGIN
 END;
 go
 GRANT EXECUTE ON OBJECT::dbo.UpdateOrderState TO TransportStaff;
+
+GO--###########
+--DROP PROC sp_GetOrders
+CREATE PROCEDURE sp_GetOrderTS
+    @PageNumber INT,
+    @PageSize INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Tính toán số bản ghi bỏ qua
+    DECLARE @Offset INT;
+    SET @Offset = (@PageNumber - 1) * @PageSize;
+
+    SELECT 
+        O.Order_ID AS ID, 
+        O.Phone AS Phone, 
+        A.Note + '/' + A.HouseNumber + ', ' + C.CommuneName + ', ' + D.DistrictName + ', ' + P.ProvinceName AS Addres, 
+        O.Total_Payment AS Totalpayment, 
+        O.Create_At, 
+        O.paymentStatus
+    FROM [Order] O
+    JOIN Address A ON O.Adress_ID = A.AddressID
+    JOIN Commune C ON A.CommuneID = C.CommuneID
+    JOIN District D ON C.DistrictID = D.DistrictID
+    JOIN Province P ON D.ProvinceID = P.ProvinceID
+    ORDER BY O.Create_At
+    OFFSET @Offset ROWS FETCH NEXT @PageSize ROWS ONLY;
+END;
+
+GRANT EXECUTE ON OBJECT::dbo.sp_GetOrderTS TO TransportStaff;
+
+EXEC sp_GetOrderTS 1, 10
+
+select * From Roles

@@ -12,6 +12,7 @@ using iText.Layout.Element;
 using iText.Layout.Properties;
 using System.Data;
 using System.Data.SqlClient;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 
 namespace BLL
@@ -685,6 +686,56 @@ namespace BLL
             }
         }
 
+        public BaseResponseModel getOrdersByTS(int pageNumber = 1, int pageSize = 8)
+        {
+            try
+            {
+                List<OrderResponseModelv4> lst = new List<OrderResponseModelv4>();
+                using (var conn = new SqlConnection(ConnectionStringHelper.Get()))
+                {
+                    using (SqlCommand command = new SqlCommand("sp_GetOrderTS", conn))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.AddWithValue("@PageNumber", pageNumber);
+                        command.Parameters.AddWithValue("@PageSize", pageSize);
+
+                        conn.Open();
+
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                OrderResponseModelv4 res = new OrderResponseModelv4
+                                {
+                                    OrderId = reader["ID"] != DBNull.Value ? Convert.ToInt32(reader["ID"]) : 0,
+                                    Phone = reader["Phone"].ToString() ?? string.Empty,
+                                    Addres = reader["Addres"].ToString() ?? string.Empty,
+                                    TotalPayment = reader["Totalpayment"] != DBNull.Value ? Convert.ToDecimal(reader["Totalpayment"]) : 0,
+                                    CreateAt = reader["Create_At"] != DBNull.Value ? Convert.ToDateTime(reader["Create_At"]) : DateTime.MinValue,
+                                    paymentStatus = reader["paymentStatus"] != DBNull.Value ? Convert.ToBoolean(reader["paymentStatus"]) : false
+                                };
+
+                                lst.Add(res);
+                            }
+                        }
+                        return new BaseResponseModel()
+                        {
+                            IsSuccess = true,
+                            Message = "Lấy danh sách đơn đặt hàng thành công..!",
+                            Data = lst
+                        };
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponseModel()
+                {
+                    IsSuccess = false,
+                    Message = "Đã xảy ra lỗi..!"
+                };
+            }
+        }
     }
 }
 
