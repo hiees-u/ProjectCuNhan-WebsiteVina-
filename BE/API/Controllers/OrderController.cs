@@ -17,6 +17,15 @@ namespace API.Controllers
             this.order = order;
         }
 
+        [HttpPost("GiaoHang")]
+        [Authorize(Roles = "TransportStaff")]
+        public IActionResult GiaoHang(int IdOrder)
+        {
+            BaseResponseModel res = order.Delivery(IdOrder);
+
+            return res.IsSuccess ? Ok(res) : BadRequest(res);
+        }
+
         [HttpGet("getOrdersByTS")]
         [Authorize(Roles = "TransportStaff")]
         public IActionResult GetOrdersByTS(int pageNumber = 1, int pageSize = 8)
