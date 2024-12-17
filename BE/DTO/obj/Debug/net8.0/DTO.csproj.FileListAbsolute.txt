@@ -1,0 +1,16 @@
+D:\HOC\Do An\doan 1612\ProjectCuNhan-WebsiteVina-\BE\DTO\bin\Debug\net8.0\DTO.deps.json
+D:\HOC\Do An\doan 1612\ProjectCuNhan-WebsiteVina-\BE\DTO\bin\Debug\net8.0\DTO.dll
+D:\HOC\Do An\doan 1612\ProjectCuNhan-WebsiteVina-\BE\DTO\bin\Debug\net8.0\DTO.pdb
+D:\HOC\Do An\doan 1612\ProjectCuNhan-WebsiteVina-\BE\DTO\bin\Debug\net8.0\DLL.dll
+D:\HOC\Do An\doan 1612\ProjectCuNhan-WebsiteVina-\BE\DTO\bin\Debug\net8.0\DLL.pdb
+D:\HOC\Do An\doan 1612\ProjectCuNhan-WebsiteVina-\BE\DTO\obj\Debug\net8.0\DTO.csproj.AssemblyReference.cache
+D:\HOC\Do An\doan 1612\ProjectCuNhan-WebsiteVina-\BE\DTO\obj\Debug\net8.0\DTO.GeneratedMSBuildEditorConfig.editorconfig
+D:\HOC\Do An\doan 1612\ProjectCuNhan-WebsiteVina-\BE\DTO\obj\Debug\net8.0\DTO.AssemblyInfoInputs.cache
+D:\HOC\Do An\doan 1612\ProjectCuNhan-WebsiteVina-\BE\DTO\obj\Debug\net8.0\DTO.AssemblyInfo.cs
+D:\HOC\Do An\doan 1612\ProjectCuNhan-WebsiteVina-\BE\DTO\obj\Debug\net8.0\DTO.csproj.CoreCompileInputs.cache
+D:\HOC\Do An\doan 1612\ProjectCuNhan-WebsiteVina-\BE\DTO\obj\Debug\net8.0\DTO.sourcelink.json
+D:\HOC\Do An\doan 1612\ProjectCuNhan-WebsiteVina-\BE\DTO\obj\Debug\net8.0\DTO.csproj.Up2Date
+D:\HOC\Do An\doan 1612\ProjectCuNhan-WebsiteVina-\BE\DTO\obj\Debug\net8.0\DTO.dll
+D:\HOC\Do An\doan 1612\ProjectCuNhan-WebsiteVina-\BE\DTO\obj\Debug\net8.0\refint\DTO.dll
+D:\HOC\Do An\doan 1612\ProjectCuNhan-WebsiteVina-\BE\DTO\obj\Debug\net8.0\DTO.pdb
+D:\HOC\Do An\doan 1612\ProjectCuNhan-WebsiteVina-\BE\DTO\obj\Debug\net8.0\ref\DTO.dll
