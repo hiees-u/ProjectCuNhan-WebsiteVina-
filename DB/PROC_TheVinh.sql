@@ -1040,6 +1040,7 @@ EXEC sp_InsertWarehouseReceipt
 go
 --======================================================================
 go
+--DROP PROCEDURE sp_GetUndeliveredPurchaseOrders
 CREATE PROCEDURE sp_GetUndeliveredPurchaseOrders
 AS
 BEGIN
@@ -1054,29 +1055,7 @@ GRANT EXEC ON OBJECT::dbo.sp_GetUndeliveredPurchaseOrders TO  WarehouseEmployee;
 exec sp_GetUndeliveredPurchaseOrders
 go
 --=========================================
---CREATE PROCEDURE sp_GetPurchaseOrderDetails
---    @PurchaseOrderID INT
---AS
---BEGIN
---    SELECT 
---        P.product_id,
---        P.product_name,
---        POD.quantity AS QuantityOrdered,
---        POD.QuantityDelivered,
---        C.CellID,
---        C.CellName,
---        POD.priceHistoryId,
---        PH.price
---    FROM PurchaseOrderDetail POD
---    INNER JOIN PriceHistory PH 
---        ON POD.priceHistoryId = PH.priceHistoryId
---    INNER JOIN Product P 
---        ON PH.product_id = P.product_id
---    LEFT JOIN Cells C 
---        ON C.product_id = P.product_id
---    WHERE POD.PurchaseOrderID = @PurchaseOrderID
---      AND POD.QuantityDelivered < POD.quantity;
---END;
+--DROP PROCEDURE sp_GetPurchaseOrderDetails
 CREATE PROCEDURE sp_GetPurchaseOrderDetails
     @PurchaseOrderID INT
 AS
@@ -1308,7 +1287,7 @@ CREATE TYPE dbo.DeliveryOrderDetailType AS TABLE (
     CellID INT
 );
 GO
-
+--DROP PROCEDURE sp_ExportWarehouseGoodsByOrder
 CREATE PROCEDURE sp_ExportWarehouseGoodsByOrder
     @WarehouseID INT,
 	@Note NVARCHAR(50),
@@ -1405,6 +1384,7 @@ EXEC sp_ExportWarehouseGoodsByOrder
 
 --=======================XUẤT KHO======================================
 --========Get ORDER IDs==================
+--DROP PROCEDURE SP_GetOrderIDs
 CREATE PROCEDURE SP_GetOrderIDs
 AS
 BEGIN
@@ -1449,6 +1429,7 @@ GO
 --        AND c.Quantity >= od.Quantity
 --END
 
+--DROP PROCEDURE SP_GetOrderDetailsWE
 CREATE PROCEDURE SP_GetOrderDetailsWE
     @OrderID INT
 AS
