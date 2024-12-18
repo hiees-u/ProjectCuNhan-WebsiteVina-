@@ -25,6 +25,7 @@ Thành Viên Nhóm:
  - Nhân viên: 
       + Xử lý đơn hàng, xuất hóa đơn ✓
  - Chức năng chatbox giao tiếp với khách hàng. ✓
+ - Nhân viên giao hàng
  - Thiết kế, cài đặt cơ sở dữ liệu. ✓
    
 .......... - Mai Thế Vinh
@@ -37,7 +38,6 @@ Thành Viên Nhóm:
 .......... - Nguyễn Hồ Phúc Thịnh
  - Quản trị người dùng
  - thanh toán (online) ✓
- - Giao hàng (Tìm hiểu API giao hàng..)
  - Thống kê số lượng bán theo ngày, tuần của từng loại mặt hàng
  - Thống kê loại khách hàng tiêu thụ 
  - Thống kê số lượng khách hàng mới/cũ theo từng năm
