@@ -1,4 +1,5 @@
-<div class="view-report">
+<div class="page-report">
+  <div class="view-report">
     <h2>Thống Kê Doanh Thu</h2>
   
     <!-- Bộ chọn loại thống kê -->
@@ -31,6 +32,7 @@
     <div *ngIf="reportType === 'weekly'">
       <label>Ngày bắt đầu:</label>
       <input type="date" [(ngModel)]="startDate" />
+      <p></p>
       <label>Ngày kết thúc:</label>
       <input type="date" [(ngModel)]="endDate" />
     </div>
@@ -55,12 +57,51 @@
     <button (click)="generateReport()">Thống Kê</button>
   
     <!-- Hiển thị biểu đồ -->
-    <div *ngIf="chartData">
-      <canvas baseChart
-        [data]="chartData"
-        [type]="chartType"
-        [options]="chartOptions">
-      </canvas>
+    <div class="chart-container">
+      <div *ngIf="chartData">
+        <canvas baseChart [data]="chartData" [type]="chartType" [options]="chartOptions" width="600" height="300"></canvas>
+      </div>
     </div>
   </div>
   
+  <div class="scrollable-table">
+    <table *ngIf="reportType !== 'yearly' && tableData?.length" class="report-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Tên Sản Phẩm</th>
+          <th>Số Lượng Bán</th>
+          <th>Doanh Thu (VND)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of tableData; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ item.productName }}</td>
+          <td>{{ item.totalSales }}</td>
+          <td>{{ item.totalRevenue | number }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <!-- Hiển thị bảng tổng quan theo năm -->
+  <div class="scrollable-table">
+    <table *ngIf="reportType === 'yearly' && tableData?.length" class="report-table">
+      <thead>
+        <tr>
+          <th>Tháng</th>
+          <th>Tổng Số Lượng Bán</th>
+          <th>Tổng Doanh Thu (VND)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of tableData">
+          <td>Tháng {{ item.month }}</td>
+          <td>{{ item.totalSales }}</td>
+          <td>{{ item.totalRevenue | number }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -13,5 +13,13 @@ namespace BLL.Interface
 
         public BaseResponseModel GetYearlySalesReport(int Year);
 
+        public BaseResponseModel GetDailySalesReportByCustomerTye(DateTime InputDate);
+
+        public BaseResponseModel GetRangeSalesReportByCustomerTye(DateTime StartDate, DateTime EndDate);
+
+        public BaseResponseModel GetMonthSalesReportByCustomerTye(int Month, int Year);
+
+        public BaseResponseModel GetYearSalesReportByCustomerTye(int Year);
+
     }
 }
