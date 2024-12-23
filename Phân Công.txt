@@ -1,4 +1,4 @@
- Hiếu:
+Hiếu:
  - Đăng nhập, đăng xuất, đổi mật khẩu ✓
  - Khách hàng:
 	+ Tra cứu sản phẩm, Loại sản phẩm, ✓
@@ -15,14 +15,13 @@
 
 Vinh:
  - Quản lý kho:
-		+ Nhập kho,  ✓
-		+ Xuất kho  ✓
-		+ Cảnh báo sản phẩm sắp hết hạn sử dụng,  ✓
-		+ quản lý vị trí lưu trữ sản phẩm trên ngăn kệ ✓
- - Khảo sát, phân tích, thiết kế hệ thống. ✓
+	+ Nhập kho,  ✓
+	+ Xuất kho  ✓
+	+ Cảnh báo sản phẩm sắp hết hạn sử dụng,  ✓
+	+ quản lý vị trí lưu trữ sản phẩm trên ngăn kệ ✓
  - Chức năng chatbox giao tiếp với khách hàng.  ✓ (Hiếu)
- - Nhân viên: 
-      + Xử lý đơn hàng ✓ (Hiếu)
+ - Nhân viên Xử lý đơn hàng. ✓ (Hiếu)
+ - Khảo sát, phân tích, thiết kế hệ thống. ✓
 Thịnh:
  - Quản trị người dùng ✓
  - thanh toán online ✓
@@ -33,5 +32,10 @@ mặt hàng ✓
  - Thống kê số lượng khách hàng mới/cũ theo từng năm. ✓
  - Khảo sát, phân tích, thiết kế hệ thống. ✓
 
+PAYMENT:
 
-
+Ngân hàng	NCB
+Số thẻ	9704198526191432198
+Tên chủ thẻ	NGUYEN VAN A
+Ngày phát hành	07/15
+Mật khẩu OTP	123456
